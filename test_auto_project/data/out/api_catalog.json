@@ -1,0 +1,444 @@
+{
+  "catalog_version": 1,
+  "catalog_hash": "sha256:0fac75c1e61c0ff70499e7ef87ec909f022c5b87fd492e1d9c0182a394bb41fd",
+  "generated_at": "2026-10-19T21:15:08+09:00",
+  "spec_sources": [
+    {
+      "service": "hshop-openapi",
+      "document_id": "hmall-openapi.json",
+      "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    }
+  ],
+  "apis": [
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do",
+      "operation_id": "selectVenSellItemQryList",
+      "api_name": "판매상품조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+      "operation_id": "selectItem",
+      "api_name": "상품 상세 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
+      "operation_id": "selectUnitStocks",
+      "api_name": "[상품 속성별 재고관리] 상품코드 점검",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+      "operation_id": "insertSellUitmDtl",
+      "api_name": "[상품 속성별 재고관리] 속성 등록",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
+      "operation_id": "updateUnitStockByExcel",
+      "api_name": "[상품 속성별 재고관리] 속성별 재입고요청 저장",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
+      "operation_id": "insertItnDispModReqList",
+      "api_name": "상품 전시상태 수정 요청",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+      "operation_id": "updateVenSellItemList",
+      "api_name": "상품 판매구분 변경 요청",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
+      "operation_id": "selectItemCsfCdList",
+      "api_name": "상품 분류 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
+      "operation_id": "selectItemCsfUnitList",
+      "api_name": "상품 분류 단위 목록 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
+      "operation_id": "selectInfNotfBsicDtlList",
+      "api_name": "상품필수정보 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
+      "operation_id": "updateItemPrcHist",
+      "api_name": "상품 가격 수정 요청",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+      "operation_id": "selectItemInfNotfBsicDtlAllList",
+      "api_name": "상품분류별 필수입력항목 전체 리스트",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
+      "operation_id": "selectMkcoList",
+      "api_name": "제조사 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+      "operation_id": "selectBrndList",
+      "api_name": "브랜드 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+      "operation_id": "selectMdList",
+      "api_name": "MD 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
+      "operation_id": "selectUseTermList",
+      "api_name": "소비기한 템플릿 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+      "operation_id": "selectDptsPchList",
+      "api_name": "백화점 펀칭코드 조회",
+      "description": "백화점 상품의 펀칭코드 조회",
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+      "operation_id": "selectCopnList",
+      "api_name": "쿠폰 목록 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+      "operation_id": "selectCnryCodeList",
+      "api_name": "제조국 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+      "operation_id": "selectVenAdrList",
+      "api_name": "협력사 주소지 조회",
+      "description": null,
+      "domain": "af",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
+      "operation_id": "updateVenAdrMng",
+      "api_name": "협력사 주소지 수정",
+      "description": null,
+      "domain": "af",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+      "operation_id": "insertVenAdrMng",
+      "api_name": "협력사 주소지 등록",
+      "description": null,
+      "domain": "af",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+      "operation_id": "getSdlvcVenMngDtlList",
+      "api_name": "협력사 소액장바구니 조회",
+      "description": null,
+      "domain": "unknown",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+      "operation_id": "multiVenSdlvcMngInf",
+      "api_name": "협력사 소액장바구니 등록/수정",
+      "description": null,
+      "domain": "unknown",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+      "operation_id": "uploadItemImgUrl",
+      "api_name": "상품 이미지 수정(이미지URL)",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+      "operation_id": "multiItemImg",
+      "api_name": "상품 이미지 수정(DB)",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
+      "operation_id": "selectItemQnaQstnList",
+      "api_name": "상품qna 질문 목록 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
+      "operation_id": "selectItemQnaAnswList",
+      "api_name": "상품qna 답변 목록 조회",
+      "description": null,
+      "domain": "pd",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+      "operation_id": "multiItemQnaAnsw",
+      "api_name": "상품문의 답변 등록,수정",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+      "operation_id": "selectSectMstList",
+      "api_name": "매장 정보 조회",
+      "description": null,
+      "domain": "unknown",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
+      "operation_id": "selectItemArltList",
+      "api_name": "상품별 실적 조회",
+      "description": null,
+      "domain": "cs",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+      "operation_id": "multiItem",
+      "api_name": "상품 등록",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
+      "operation_id": "updateItemByVen",
+      "api_name": "상품 수정",
+      "description": null,
+      "domain": "pd",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "operation_id": "selectOshpDtlList",
+      "api_name": "출고조회",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-출고조회",
+      "domain": "ds",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+      "operation_id": "selectWtdwDtlList",
+      "api_name": "회수조회",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-회수조회",
+      "domain": "ds",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "operation_id": "multiOshpProcess",
+      "api_name": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+      "domain": "ds",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+      "operation_id": "multiOshpBackProcess",
+      "api_name": "출고취소처리",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-출고취소처리",
+      "domain": "ds",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+      "operation_id": "multiWtdwProcess",
+      "api_name": "회수처리",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-회수처리",
+      "domain": "ds",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+      "operation_id": "selectCnclList",
+      "api_name": "취소조회",
+      "description": "홈쇼핑/Hmall 협력사 물류처리-취소조회",
+      "domain": "ds",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "operation_id": "selectTcktOshpList",
+      "api_name": "주문조회",
+      "description": "홈쇼핑/Hmall 티켓 물류처리-주문조회",
+      "domain": "ds",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+      "operation_id": "multiTcktOrdProcess",
+      "api_name": "주문처리",
+      "description": "홈쇼핑/Hmall 티켓 물류처리-주문처리",
+      "domain": "ds",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+      "operation_id": "selectTcktWtdwList",
+      "api_name": "회수조회",
+      "description": "홈쇼핑/Hmall 티켓 물류처리-회수조회",
+      "domain": "ds",
+      "kind": "read",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "operation_id": "multiTcktWtdwProcess",
+      "api_name": "회수처리",
+      "description": "홈쇼핑/Hmall 티켓 물류처리-회수처리",
+      "domain": "ds",
+      "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    }
+  ]
+}

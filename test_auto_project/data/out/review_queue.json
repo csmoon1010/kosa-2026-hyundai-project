@@ -1,0 +1,57 @@
+[
+  {
+    "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+    "item": "domain",
+    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+    "item": "domain",
+    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+    "item": "domain",
+    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  }
+]

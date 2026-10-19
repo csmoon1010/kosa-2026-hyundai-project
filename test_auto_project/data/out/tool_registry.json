@@ -1,0 +1,1319 @@
+{
+  "connections": [
+    {
+      "service": "hshop-openapi",
+      "domain": "pd",
+      "base_url": "HMALL_API_BASE_URL",
+      "base_url_default": "http://openapi.hmall.com/front",
+      "timeout_ms": 5000,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "auth_headers": [
+        "oauserId",
+        "oauseKey"
+      ],
+      "default_headers": {},
+      "allowed_environments": [
+        "DEV"
+      ],
+      "source": "domain"
+    },
+    {
+      "service": "hshop-openapi",
+      "domain": "af",
+      "base_url": "HMALL_API_BASE_URL",
+      "base_url_default": "http://openapi.hmall.com/front",
+      "timeout_ms": 5000,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "auth_headers": [
+        "oauserId",
+        "oauseKey"
+      ],
+      "default_headers": {},
+      "allowed_environments": [
+        "DEV"
+      ],
+      "source": "service"
+    },
+    {
+      "service": "hshop-openapi",
+      "domain": "unknown",
+      "base_url": "HMALL_API_BASE_URL",
+      "base_url_default": "http://openapi.hmall.com/front",
+      "timeout_ms": 5000,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "auth_headers": [
+        "oauserId",
+        "oauseKey"
+      ],
+      "default_headers": {},
+      "allowed_environments": [
+        "DEV"
+      ],
+      "source": "service"
+    },
+    {
+      "service": "hshop-openapi",
+      "domain": "cs",
+      "base_url": "HMALL_API_BASE_URL",
+      "base_url_default": "http://openapi.hmall.com/front",
+      "timeout_ms": 5000,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "auth_headers": [
+        "oauserId",
+        "oauseKey"
+      ],
+      "default_headers": {},
+      "allowed_environments": [
+        "DEV"
+      ],
+      "source": "domain"
+    },
+    {
+      "service": "hshop-openapi",
+      "domain": "ds",
+      "base_url": "HMALL_API_BASE_URL",
+      "base_url_default": "http://openapi.hmall.com/front",
+      "timeout_ms": 5000,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "auth_headers": [
+        "oauserId",
+        "oauseKey"
+      ],
+      "default_headers": {},
+      "allowed_environments": [
+        "DEV"
+      ],
+      "source": "service"
+    }
+  ],
+  "tools": [
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/selectVenSellItemQryList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectVenSellItemQryList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/selectItem.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItem",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/selectUnitStocks.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectUnitStocks",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/insertSellUitmDtl.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertSellUitmDtl",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/updateUnitStockByExcel.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateUnitStockByExcel",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/insertItnDispModReqList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertItnDispModReqList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdc/updateVenSellItemList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateVenSellItemList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pda/selectItemCsfCdList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemCsfCdList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pda/selectItemCsfUnitList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemCsfUnitList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/selectInfNotfBsicDtlList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectInfNotfBsicDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/updateItemPrcHist.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateItemPrcHist",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemInfNotfBsicDtlAllList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectMkcoList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectMkcoList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectBrndList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectBrndList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectMdList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectMdList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectUseTermList.do",
+      "content_type": "application/xml",
+      "body_format": "xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectUseTermList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectDptsPchList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectDptsPchList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectCopnList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCopnList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pda/selectCnryCodeList.do",
+      "content_type": "application/xml",
+      "body_format": "xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCnryCodeList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+      "domain": "af",
+      "method": "POST",
+      "endpoint": "/vd/vda/selectVenAdrList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectVenAdrList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
+      "domain": "af",
+      "method": "POST",
+      "endpoint": "/vd/vda/updateVenAdrMng.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateVenAdrMng",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+      "domain": "af",
+      "method": "POST",
+      "endpoint": "/vd/vda/insertVenAdrMng.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertVenAdrMng",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+      "domain": "unknown",
+      "method": "POST",
+      "endpoint": "/hmgb/getSdlvcVenMngDtlList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "getSdlvcVenMngDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+      "domain": "unknown",
+      "method": "POST",
+      "endpoint": "/hmgb/multiVenSdlvcMngInf.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiVenSdlvcMngInf",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/uploadItemImgUrl.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "uploadItemImgUrl",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/multiItemImg.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItemImg",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdd/selectItemQnaQstnList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemQnaQstnList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdd/selectItemQnaAnswList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemQnaAnswList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdd/multiItemQnaAnsw.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItemQnaAnsw",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+      "domain": "unknown",
+      "method": "POST",
+      "endpoint": "/om/oma/selectSectMstList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectSectMstList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
+      "domain": "cs",
+      "method": "POST",
+      "endpoint": "/cs/csh/selectItemArltList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemArltList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/multiItem.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItem",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
+      "domain": "pd",
+      "method": "POST",
+      "endpoint": "/pd/pdb/updateItemByVen.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/code",
+        "equals": "0000"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateItemByVen",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectOshpDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/selectWtdwDtlList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectWtdwDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/result",
+        "equals": "Request Success"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiOshpProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiOshpBackProcess.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/result",
+        "equals": "Request Success"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiOshpBackProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiWtdwProcess.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": {
+        "path": "result/result",
+        "equals": "Request Success"
+      },
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiWtdwProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/selectCnclList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCnclList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/selectTcktOshpList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectTcktOshpList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiTcktOrdProcess.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiTcktOrdProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/selectTcktWtdwList.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 2,
+      "approval_required": false,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectTcktWtdwList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    },
+    {
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "domain": "ds",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "content_type": "application/xml",
+      "body_format": "nexacro-xml",
+      "base_url": "HMALL_API_BASE_URL",
+      "timeout_ms": 5000,
+      "retry_count": 0,
+      "approval_required": true,
+      "auth_type": "API_KEY_HEADER",
+      "auth_profile": "hmall-openapi-key",
+      "enabled": true,
+      "default_headers": {},
+      "success_rule": null,
+      "allowed_environments": [
+        "DEV"
+      ],
+      "schema_ref": null,
+      "source_metadata": {
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiTcktWtdwProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    }
+  ]
+}
