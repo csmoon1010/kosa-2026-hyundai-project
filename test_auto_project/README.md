@@ -20,9 +20,49 @@
 ```
 test_auto_project/
 ├── README.md
-└── prototype/
-    └── offline-ui.html   # 화면 프로토타입 (브라우저에서 바로 열림)
+├── requirements.txt
+├── prototype/
+│   └── offline-ui.html          # 화면 프로토타입 (브라우저에서 바로 열림)
+├── data/
+│   ├── specs/hmall-openapi.json # 입력 — HSHOP OPEN API (협력사용, OpenAPI 3.0.1, 43개)
+│   ├── config/
+│   │   ├── domains.yaml         # 도메인 분류 규칙 (도메인 → prefix 여러 개, prefix 는 도메인 하나)
+│   │   ├── services.yaml        # 도메인별 연결 설정 (base URL 환경변수 · timeout · 인증 · 허용 환경)
+│   │   └── overrides.yaml       # 사람 보정 (설명 · 별칭 · 되돌림 불가 · 구별 메모 · 사용 여부) — 재생성해도 유지
+│   └── out/                     # 산출물 (아래)
+├── src/tap/
+│   ├── models.py                # 산출물 데이터 모델 — 지은 · 혜정 공용 기준
+│   ├── spec/parser.py           # OpenAPI 파싱 (XML Dataset 펼치기, example 해석)
+│   ├── catalog/build.py         # API ID · 도메인 분류, Catalog · MetaData
+│   ├── registry/tools.py        # Tool Registry
+│   └── cli.py                   # 실행기
+└── tests/
 ```
+
+## 개발
+
+```bash
+cd test_auto_project
+uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
+PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
+.venv/bin/python -m pytest -q
+```
+
+### 1단계 산출물 (`data/out/`)
+
+세 문서는 모두 **`api_id` = `서비스:메서드:경로`** (예: `hshop-openapi:POST:/pd/pdb/multiItem.do`) 로 연결된다.
+생성 순서: 파싱 → 도메인 · 쓰기/조회 분류 → Tool Registry → API Metadata → API Catalog
+
+| 파일 | 내용 | 다음 사용처 |
+|---|---|---|
+| `api_operations.json` | 파싱 결과 — API별 헤더 · Dataset · 요청/응답 필드(한글 이름 · 타입 · 예시) | 혜정: Canonical Schema 변환 |
+| `tool_registry.json` | 도메인별 연결 설정 + API별 도구 (PK `api_id`, 재시도 · 승인 고정 규칙, 성공 판단 규칙) | 실행기 |
+| `api_metadata.json` | API 전체 메타정보 — 쓰기/조회 · 동작 · 별칭 · 되돌림 불가 · 구별 메모 · 출처 (Catalog 의 원본) | Agent API 선택 · 승인 화면 |
+| `api_catalog.json` | Agent 가 훑어보는 가벼운 목록 (Metadata 에서 복사, 내용이 바뀔 때만 버전 증가) | 경로 탐색 시 후보 좁히기 |
+| `review_queue.json` | 규칙으로 확정하지 못한 항목 (도메인 미분류 · 성공 규칙 없음 등) | 사람 검수 |
+
+Hmall 명세는 모든 API 가 POST 라서 쓰기/조회를 HTTP 메서드가 아니라 operationId 동사(select · insert · update · multi)와
+summary 의 한국어 동사로 판별한다.
 
 ## 프로토타입 보기
 
@@ -44,6 +84,9 @@ test_auto_project/
 | Parameter KB | 필드 의미 · 별칭 · 값 해석 · 기본값 · 조건부 필수 | 자동 + 전사 · 도메인 보정 |
 | Response Outputs | 응답에서 꺼내 다음 호출에 넘기는 값 | 자동 + 도메인 보정 |
 | State Vocabulary | 그래프 노드가 되는 상태 · 동의어 · 검증 | 자동 + 도메인 보정 |
+
+> 현재 입력 명세는 **외부 공개 OpenAPI**(HSHOP OPEN API)다. 내부 API 명세는 보안 문제로 아직 반출 전이며,
+> 받으면 `data/specs/` 의 명세와 `data/config/` 설정만 교체한다.
 
 ## 상태
 
