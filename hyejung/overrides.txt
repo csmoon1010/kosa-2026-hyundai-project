@@ -1,0 +1,2 @@
+langchain-community==0.3.31
+openai==2.52.0
