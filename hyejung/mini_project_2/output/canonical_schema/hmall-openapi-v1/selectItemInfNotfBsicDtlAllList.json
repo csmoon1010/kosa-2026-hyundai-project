@@ -1,0 +1,86 @@
+{
+  "documentId": "hmall-openapi-v1",
+  "documentTitle": "HSHOP OPEN API Swagger",
+  "apiId": "selectItemInfNotfBsicDtlAllList",
+  "method": "POST",
+  "endpoint": "/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+  "summary": "상품분류별 필수입력항목 전체 리스트",
+  "description": "상품분류별 필수입력항목 전체 리스트",
+  "tags": [
+    "PDASelectItem"
+  ],
+  "contentType": "application/xml",
+  "requestBodyRequired": true,
+  "parameters": [
+    {
+      "path": "$.headers.oauserId",
+      "location": "header",
+      "name": "oauserId",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "description": null,
+      "format": null,
+      "enum": null,
+      "example": null,
+      "sourceRef": null,
+      "xmlName": "oauserId",
+      "xmlPath": null,
+      "xmlAttribute": false
+    },
+    {
+      "path": "$.headers.oauseKey",
+      "location": "header",
+      "name": "oauseKey",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "description": null,
+      "format": null,
+      "enum": null,
+      "example": null,
+      "sourceRef": null,
+      "xmlName": "oauseKey",
+      "xmlPath": null,
+      "xmlAttribute": false
+    },
+    {
+      "path": "$.body.data1.id",
+      "location": "body",
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "description": null,
+      "format": null,
+      "enum": null,
+      "example": "dsCond",
+      "sourceRef": "#/components/schemas/selectItemInfNotfBsicDtlAllListRequest",
+      "xmlName": "id",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/@id",
+      "xmlAttribute": true
+    },
+    {
+      "path": "$.body.data1.data2.data3.venCd",
+      "location": "body",
+      "name": "venCd",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "description": "협력사코드",
+      "format": null,
+      "enum": null,
+      "example": "협력사코드(타입:string, 예:007627)",
+      "sourceRef": "#/components/schemas/selectItemInfNotfBsicDtlAllListRequest",
+      "xmlName": "venCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/venCd",
+      "xmlAttribute": false
+    }
+  ],
+  "source": {
+    "documentUrl": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+    "openapiVersion": "3.0.1",
+    "documentVersion": "v1"
+  },
+  "warnings": []
+}

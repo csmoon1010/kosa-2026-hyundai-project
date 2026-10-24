@@ -1,0 +1,24 @@
+{
+  "documentId": "hmall-openapi-v1",
+  "documentTitle": "HSHOP OPEN API Swagger",
+  "sourceUrl": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+  "sourceHash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+  "fetch": {
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "bytes": 237270
+  },
+  "generatedAt": "2026-10-24T08:08:13.721167+00:00",
+  "apiCount": 43,
+  "parameterCount": 908,
+  "warningCount": 2,
+  "warningsByApi": {
+    "selectCnryCodeList": [
+      "type 누락으로 string 처리: $.body",
+      "type 누락으로 string 처리: $.body"
+    ]
+  },
+  "rawPath": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2/output/swagger_raw.json",
+  "databasePath": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2/output/canonical_schema.db",
+  "apiJsonDirectory": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2/output/canonical_schema/hmall-openapi-v1"
+}

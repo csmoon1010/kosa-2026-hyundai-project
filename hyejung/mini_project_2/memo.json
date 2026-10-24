@@ -1,0 +1,70 @@
+[('hmall-openapi-v1',
+  'selectItem',
+  'PASS',
+  '{
+        "summary": {
+            "document_id": "hmall-openapi-v1",
+            "api_id": "selectItem",
+            "validation_status": "PASS",
+            "total_fields": 4,
+            "valid_count": 3,
+            "required_empty_count": 0,
+            "error_count": 0,
+            "unknown_field_count": 0
+        },
+        "rows": [
+            {
+                "path": "$.body.data1.id",
+                "xmlPath": "/Root/Dataset[@id=\\"dsCond\\"]/@id",
+                "name": "id",
+                "xmlName": "id",
+                "expected_type": "string",
+                "required": false,
+                "expected_value": null,
+                "actual_value": "dsCond",
+                "xmlAttribute": true,
+                "status": "VALID",
+                "message": "검증 통과"
+            },
+            {
+                "path": "$.body.data1.data2.data3.slitmCd",
+                "xmlPath": "/Root/Dataset[@id=\\"dsCond\\"]/rows/row/slitmCd",
+                "name": "slitmCd",
+                "xmlName": "slitmCd",
+                "expected_type": "string",
+                "required": false,
+                "expected_value": null,
+                "actual_value": "2015700001",
+                "xmlAttribute": false,
+                "status": "VALID",
+                "message": "검증 통과"
+            },
+            {
+                "path": "$.body.data1.data2.data3.itemCsfDCd",
+                "xmlPath": "/Root/Dataset[@id=\\"dsCond\\"]/rows/row/itemCsfDCd",
+                "name": "itemCsfDCd",
+                "xmlName": "itemCsfDCd",
+                "expected_type": "string",
+                "required": false,
+                "expected_value": null,
+                "actual_value": null,
+                "xmlAttribute": false,
+                "status": "OPTIONAL_MISSING",
+                "message": "XML에서 Canonical 경로를 찾지 못했습니다."
+            },
+            {
+                "path": "$.body.data1.data2.data3.venCd",
+                "xmlPath": "/Root/Dataset[@id=\\"dsCond\\"]/rows/row/venCd",
+                "name": "venCd",
+                "xmlName": "venCd",
+                "expected_type": "string",
+                "required": false,
+                "expected_value": null,
+                "actual_value": "001442",
+                "xmlAttribute": false,
+                "status": "VALID",
+                "message": "검증 통과"
+            }
+        ]
+    }')
+]
