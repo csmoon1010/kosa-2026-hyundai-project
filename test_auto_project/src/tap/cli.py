@@ -91,6 +91,54 @@ def build(spec_path: Path, out_dir: Path, domains_cfg: Path, services_cfg: Path,
     }
 
 
+def plan_request(utterance: str, knowledge: Path, out_dir: Path, goal_json: str | None = None,
+                 model: str | None = None) -> dict:
+    """자연어 한 문장 → 목표 → 경로 → Scenario IR. data/out/ 의 1단계 산출물을 쓴다."""
+    import hashlib
+
+    from tap.goal.extract import extract_goal, openai_parse
+    from tap.graph.build import load_knowledge, validate_graph
+    from tap.graph.plan import Goal, plan
+    from tap.ir.build import build_ir
+
+    ops = _load(out_dir / "api_operations.json")
+    meta = _load(out_dir / "api_metadata.json")
+    cat = _load(out_dir / "api_catalog.json") or {}
+    if ops is None or meta is None:
+        raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
+    graph = load_knowledge(knowledge)
+    errors = [i for i in validate_graph(graph, meta, ops) if i["level"] == "error"]
+    if errors:
+        raise SystemExit(f"그래프 오류: {errors}")
+
+    goal = Goal.model_validate_json(goal_json) if goal_json else extract_goal(utterance, graph, openai_parse(model))
+    ir = build_ir(utterance, goal, graph, plan(graph, goal), ops, meta, cat.get("catalog_version"))
+    ir_dir = out_dir / "ir"
+    ir_dir.mkdir(parents=True, exist_ok=True)
+    name = hashlib.sha1(utterance.encode("utf-8")).hexdigest()[:8]
+    _dump(ir_dir / f"{name}.json", ir)
+    return {"file": str(ir_dir / f"{name}.json"), "ir": ir}
+
+
+def _print_ir(ir) -> None:
+    g = ir.goal
+    print(f"\n▶ {ir.request}")
+    print(f"  목표: target={g.target} must_pass={g.must_pass} count={g.count}  근거={g.source_phrases}"
+          + (f"  표현 못한 조건={g.unsupported}" if g.unsupported else ""))
+    if ir.status != "ok":
+        print(f"  ✕ 거절: {ir.reason}")
+        return
+    p = ir.plan
+    print(f"  A {p.strategy}: 시작 {p.start} · 쓰기 {p.writes}회 · 상태 {' → '.join(p.states)}")
+    for s in ir.steps:
+        extra = f" 되돌리기={s.compensate_with.rsplit(':', 1)[-1]}" if s.compensate_with else ""
+        print(f"    {s.no}. [{s.kind}] {s.name} {s.selector or ''}{extra}")
+    if ir.alternative:
+        a = ir.alternative
+        print(f"  B 대안 {a.strategy}: 시작 {a.start} · 쓰기 {a.writes}회 · 상태 {' → '.join(a.states)}")
+    print(f"  실행 시 입력: {list(ir.run_inputs)} · 미해결 {len(ir.unresolved)}개 · 승인 필요={ir.requires_approval}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(prog="tap")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -100,7 +148,19 @@ def main() -> None:
     b.add_argument("--domains", default=str(ROOT / "data/config/domains.yaml"))
     b.add_argument("--services", default=str(ROOT / "data/config/services.yaml"))
     b.add_argument("--overrides", default=str(ROOT / "data/config/overrides.yaml"))
+    pl = sub.add_parser("plan", help="자연어 → 목표 → 경로 → Scenario IR")
+    pl.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
+    pl.add_argument("--knowledge", default=str(ROOT / "data/knowledge/ord_stat.yaml"))
+    pl.add_argument("--out", default=str(ROOT / "data/out"))
+    pl.add_argument("--goal", default=None, help="LLM 없이 목표 JSON 을 직접 지정")
+    pl.add_argument("--model", default=None)
     a = ap.parse_args()
+    if a.cmd == "plan":
+        for u in a.utterance:
+            r = plan_request(u, Path(a.knowledge), Path(a.out), a.goal, a.model)
+            _print_ir(r["ir"])
+            print(f"  → {r['file']}")
+        return
     if a.cmd == "build":
         r = build(Path(a.spec), Path(a.out), Path(a.domains), Path(a.services), Path(a.overrides))
         print(json.dumps(r, ensure_ascii=False, indent=2))
