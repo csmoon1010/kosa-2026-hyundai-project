@@ -45,6 +45,7 @@ test_auto_project/
 cd test_auto_project
 uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
+PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # 자연어 → 목표 → 경로 → Scenario IR (data/out/ir/)
 .venv/bin/python -m pytest -q
 ```
 
@@ -60,6 +61,16 @@ PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
 | `api_metadata.json` | API 전체 메타정보 — 쓰기/조회 · 동작 · 별칭 · 되돌림 불가 · 구별 메모 · 출처 (Catalog 의 원본) | Agent API 선택 · 승인 화면 |
 | `api_catalog.json` | Agent 가 훑어보는 가벼운 목록 (Metadata 에서 복사, 내용이 바뀔 때만 버전 증가) | 경로 탐색 시 후보 좁히기 |
 | `review_queue.json` | 규칙으로 확정하지 못한 항목 (도메인 미분류 · 성공 규칙 없음 등) | 사람 검수 |
+
+### 한 바퀴 — 자연어 → Scenario IR (주문상태 그래프)
+
+`data/knowledge/ord_stat.yaml`: 사람이 확인한 업무 지식 — 주문상태 코드(ORD_STAT_GBCD), 동작별 전이
+(출고진행 P1 25→30 · 출고완료 P2 30→45 · 배송완료 P3 45→50, 취소 PB1~PB3), 상태별 조회 방법(출고조회 prgrGb P0~P3).
+
+1. **목표 추출 (LLM)** — 상태 이름 목록 안에서만 target · must_pass · count 를 고른다. 근거 구절이 원문에 없으면 버린다.
+2. **경로 계산 (BFS)** — A 진행시키기(출고대기 25 주문을 찾아 API 로 진행, 기본) / B 찾아 쓰기(목표 상태를 바로 조회, 대안).
+   API 로 만들 수도 조회로 찾을 수도 없는 상태(예: 결제완료 20)는 거절한다.
+3. **Scenario IR (초안)** — 조회 → 쓰기(고정 선택값 + 앞 호출 응답 연결 + 되돌리기 간선) → 도달 확인.
 
 Hmall 명세는 모든 API 가 POST 라서 쓰기/조회를 HTTP 메서드가 아니라 operationId 동사(select · insert · update · multi)와
 summary 의 한국어 동사로 판별한다.
