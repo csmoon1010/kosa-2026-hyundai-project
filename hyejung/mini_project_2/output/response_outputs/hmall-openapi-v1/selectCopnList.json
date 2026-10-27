@@ -1,0 +1,894 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "selectCopnList",
+  "generated_at": "2026-10-27T14:31:21.411567+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectCopnList.do",
+      "description": "Open API 성공 응답 XML",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/selectCopnListResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "copnNm": {
+                            "description": "쿠폰명",
+                            "example": "쿠폰명(예:1% 바로사용쿠폰)",
+                            "type": "string"
+                          },
+                          "copnNo": {
+                            "description": "쿠폰번호",
+                            "example": "쿠폰번호(예:00003551)",
+                            "type": "string"
+                          },
+                          "copnTypeGbcd": {
+                            "description": "쿠폰타입구분코드",
+                            "example": "쿠폰타입구분코드(예:03)",
+                            "type": "string"
+                          },
+                          "copnTypeGbnm": {
+                            "description": "쿠폰타입구분명",
+                            "example": "쿠폰타입구분명(예:일반-바로사용)",
+                            "type": "string"
+                          },
+                          "famtFxrtGbcd": {
+                            "description": "정액정률구분코드",
+                            "example": "정액정률구분코드(예:1)",
+                            "type": "string"
+                          },
+                          "famtFxrtGbnm": {
+                            "description": "정액정률구분명",
+                            "example": "정액정률구분명(예:정률)",
+                            "type": "string"
+                          },
+                          "famtFxrtNm": {
+                            "description": "정액정률명",
+                            "example": "정액정률명(예:[할인율]1%)",
+                            "type": "string"
+                          },
+                          "famtFxrtVal": {
+                            "description": "정액정률값",
+                            "example": "정액정률값(예:1)",
+                            "type": "string"
+                          },
+                          "rnum": {
+                            "description": "row번호",
+                            "example": "row번호(예:1)",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "dsList",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              },
+              "data4": {
+                "$ref": "#/components/schemas/successCommonResponse"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          },
+          "#/components/schemas/successCommonResponse": {
+            "properties": {
+              "data2": {
+                "properties": {
+                  "data6": {
+                    "properties": {
+                      "code": {
+                        "description": "응답코드",
+                        "example": "code(예:0000)",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "응답메시지",
+                        "example": "message(예:Success)",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "row"
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "rows"
+                }
+              },
+              "id": {
+                "example": "result",
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Dataset"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/selectCopnListResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdh~1selectCopnList.do/post/responses/200"
+      },
+      "warnings": []
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectCopnList.do",
+      "description": "Open API 실패 응답 XML(Http Status Code는 200으로 응답)",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/failCommonResponse": {
+            "properties": {
+              "code": {
+                "description": "응답코드",
+                "example": "응답코드(예:0000)",
+                "type": "string"
+              },
+              "detail": {
+                "description": "상세메시지",
+                "example": "상세메시지(예:permission denied)",
+                "type": "string"
+              },
+              "message": {
+                "description": "응답메시지",
+                "example": "응답메시지(예:permission denied)",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "error"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/failCommonResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdh~1selectCopnList.do/post/responses/200_fail"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.copnNm",
+      "generated_name": "copnNm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/copnNm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "쿠폰명",
+      "enabled": true,
+      "definition_hash": "cfb923ded3148a463c1c6fda6aae519084938f98c4b12c9776495914e54664dd",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "copnNm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "쿠폰명(예:1% 바로사용쿠폰)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/copnNm",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.copnNo",
+      "generated_name": "copnNo",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/copnNo",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "쿠폰번호",
+      "enabled": true,
+      "definition_hash": "8bee78147f6f5a1b0baebd3352d626053fbe101d0123f8988467381dd4af8a17",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "copnNo",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "쿠폰번호(예:00003551)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/copnNo",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.copnTypeGbcd",
+      "generated_name": "copnTypeGbcd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/copnTypeGbcd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "쿠폰타입구분코드",
+      "enabled": true,
+      "definition_hash": "78cae4797cc9219e007e29e3af01e1b41fd591a53eff06655041c32c3d693ea5",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "copnTypeGbcd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "쿠폰타입구분코드(예:03)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/copnTypeGbcd",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.copnTypeGbnm",
+      "generated_name": "copnTypeGbnm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/copnTypeGbnm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "쿠폰타입구분명",
+      "enabled": true,
+      "definition_hash": "f5650e14435f65abff2a47e69107e807ba1b4dc6dde1d64422c733ead8d77289",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "copnTypeGbnm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "쿠폰타입구분명(예:일반-바로사용)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/copnTypeGbnm",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.famtFxrtGbcd",
+      "generated_name": "famtFxrtGbcd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/famtFxrtGbcd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "정액정률구분코드",
+      "enabled": true,
+      "definition_hash": "c78371bfe45bd0c59645a15cb72e321be30fd7dc62b63c7c7cacd03eb39c3dce",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "famtFxrtGbcd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "정액정률구분코드(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/famtFxrtGbcd",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.famtFxrtGbnm",
+      "generated_name": "famtFxrtGbnm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/famtFxrtGbnm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "정액정률구분명",
+      "enabled": true,
+      "definition_hash": "cc860443f2283a3a783538dcad90f0fe4ac8aa4a511181ebca9041e93ad9328d",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "famtFxrtGbnm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "정액정률구분명(예:정률)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/famtFxrtGbnm",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.famtFxrtNm",
+      "generated_name": "famtFxrtNm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/famtFxrtNm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "정액정률명",
+      "enabled": true,
+      "definition_hash": "f04556ee308972bff2d2e0b2cdfc0f8b73fabc42ca6006757bedccc01b4cf423",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "famtFxrtNm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "정액정률명(예:[할인율]1%)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/famtFxrtNm",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.famtFxrtVal",
+      "generated_name": "famtFxrtVal",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/famtFxrtVal",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "정액정률값",
+      "enabled": true,
+      "definition_hash": "53d2bbe63bc8a75ffc631aa8e511153b53affe3d1bb6574d689bb8b173ff3666",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "famtFxrtVal",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "정액정률값(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/famtFxrtVal",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.rnum",
+      "generated_name": "rnum",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/rnum",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "row번호",
+      "enabled": true,
+      "definition_hash": "80241ab6b3ce1e2378b26e74805c4d4746898b65da9e449fba481327aaebb7a4",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "rnum",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "row번호(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/data2/properties/data3/properties/rnum",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id_2798250cca9d",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "3f7ad998be4c2fc52ab33fe29b7376776e189ddde5883536e9685e1d2cad35d7",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_2798250cca9d",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "dsList",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCopnListResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/selectCopnListResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": true,
+      "definition_hash": "8cce7b17961b58459357f6acefc0e7147086c6e8b3d1eebf2c45d0d49a286949",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "code(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/code",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": true,
+      "definition_hash": "3bfe0cf8981285ccd9679c943b44eb40f2fc3764c435bcb30787142874f02bbb",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "message(예:Success)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/message",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.id",
+      "generated_name": "id_23591d4e3908",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "01bc6eedca3330ca519af097bc081c546e3a29852f4fd8b9fd8dc42dab52543f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_23591d4e3908",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/id",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/error/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": false,
+      "definition_hash": "86103c35939a9a19a57478a3056632a5c8b2c7d2740148b005c72d636a47f8fe",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답코드(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/code",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.detail",
+      "generated_name": "detail",
+      "name_override": null,
+      "response_path": "/error/detail",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상세메시지",
+      "enabled": false,
+      "definition_hash": "c969e69be9215cb9019b59fc0ae303ce7782fec470f7913e5bd0538a8228ef82",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "detail",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상세메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/detail",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCopnList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/error/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": false,
+      "definition_hash": "88a7d298c0b5b3192a9ae9d4aa0d74dd0640b1c39b30bef60fcd7ec96b5f3541",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.563323+00:00",
+      "updated_at": "2026-10-27T14:30:45.133177+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/message",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    }
+  ]
+}

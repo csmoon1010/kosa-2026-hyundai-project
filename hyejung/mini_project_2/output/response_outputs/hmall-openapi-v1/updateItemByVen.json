@@ -1,0 +1,215 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "updateItemByVen",
+  "generated_at": "2026-10-27T14:31:21.522885+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "updateItemByVen",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pdb/updateItemByVen.do",
+      "description": "Open API 요청 성공",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.889669+00:00",
+      "updated_at": "2026-10-27T14:30:45.432761+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/updateItemByVenResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "code": {
+                            "example": "0000",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "Success",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "result",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/updateItemByVenResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdb~1updateItemByVen.do/post/responses/200"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "updateItemByVen",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "3982c66c5cc5dc66a664febb189b05bf76e83dc8ed0340eb392cee9d1e3560b4",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.889669+00:00",
+      "updated_at": "2026-10-27T14:30:45.432761+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "0000",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/updateItemByVenResponse/properties/data1/properties/data2/properties/data3/properties/code",
+        "source_ref": "#/components/schemas/updateItemByVenResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "updateItemByVen",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "acea2106127202d001958b3ae8c89afe3728ffa65e614e6e2420d73a667665bf",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.889669+00:00",
+      "updated_at": "2026-10-27T14:30:45.432761+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "Success",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/updateItemByVenResponse/properties/data1/properties/data2/properties/data3/properties/message",
+        "source_ref": "#/components/schemas/updateItemByVenResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "updateItemByVen",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "50f76ebc46b8b1ef09822d3306b23caaf9dd0bbb944056a5e174930cf60126a6",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.889669+00:00",
+      "updated_at": "2026-10-27T14:30:45.432761+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/updateItemByVenResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/updateItemByVenResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    }
+  ]
+}

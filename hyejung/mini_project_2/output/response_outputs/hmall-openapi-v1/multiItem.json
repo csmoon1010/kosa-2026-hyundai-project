@@ -1,0 +1,336 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "multiItem",
+  "generated_at": "2026-10-27T14:31:21.377487+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pdb/multiItem.do",
+      "description": "Open API 요청 성공",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:30:44.992928+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/multiItemResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "slitmCd": {
+                            "example": "판매상품코드(예:2211221122)",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "dsItem",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              },
+              "data2": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "code": {
+                            "example": "0000",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "Success",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "result",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/multiItemResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdb~1multiItem.do/post/responses/200"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.slitmCd",
+      "generated_name": "slitmCd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsItem\"]/rows/row/slitmCd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "판매상품코드",
+      "enabled": false,
+      "definition_hash": "8677179e86bd17ca77cc44439378270bb0c298f93e8b752bd0f9f63876830854",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:31:05.797595+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "slitmCd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "판매상품코드(예:2211221122)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/multiItemResponse/properties/data1/properties/data2/properties/data3/properties/slitmCd",
+        "source_ref": "#/components/schemas/multiItemResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id_2798250cca9d",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsItem\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "0b3e85b4761bad031c27ebf66d7032e864a97223588081165c82dacb90be0bbf",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:30:44.992928+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_2798250cca9d",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "dsItem",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/multiItemResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/multiItemResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.data2.data3.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "c51d38215ebffb1eb82fc8ba6fa1e029743a19b18c88c1f02322ae5b7622d628",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:30:44.992928+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "0000",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/multiItemResponse/properties/data2/properties/data2/properties/data3/properties/code",
+        "source_ref": "#/components/schemas/multiItemResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.data2.data3.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "ce8c18a1b3b789ecd4415241205ff7d1eeff272d12ffda46fb2e81c1e507320b",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:30:44.992928+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "Success",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/multiItemResponse/properties/data2/properties/data2/properties/data3/properties/message",
+        "source_ref": "#/components/schemas/multiItemResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiItem",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.id",
+      "generated_name": "id_127ba7fa0769",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "eeb40955275e44c91cbdfc10aae844c9ab06a5839cb79dcd7281824a650310ff",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.408470+00:00",
+      "updated_at": "2026-10-27T14:30:44.992928+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_127ba7fa0769",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/multiItemResponse/properties/data2/properties/id",
+        "source_ref": "#/components/schemas/multiItemResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    }
+  ]
+}

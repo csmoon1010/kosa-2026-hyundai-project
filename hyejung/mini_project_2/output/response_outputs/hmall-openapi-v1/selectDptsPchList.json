@@ -1,0 +1,800 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "selectDptsPchList",
+  "generated_at": "2026-10-27T14:31:21.414743+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectDptsPchList.do",
+      "description": "Open API 성공 응답 XML",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/selectDptsPchListResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "bcdBsicMndrYn": {
+                            "description": "바코드기준필수여부",
+                            "example": "바코드기준필수여부(예:Y)",
+                            "type": "string"
+                          },
+                          "bcdExcldLoc": {
+                            "description": "",
+                            "example": "",
+                            "type": "string"
+                          },
+                          "bcdLen": {
+                            "description": "바코드길이",
+                            "example": "바코드길이(예:13)",
+                            "type": "string"
+                          },
+                          "dptsPchCd": {
+                            "description": "백화점펀칭코드",
+                            "example": "백화점펀칭코드(예:107854)",
+                            "type": "string"
+                          },
+                          "dptsPchNm": {
+                            "description": "백화점펀칭명",
+                            "example": "백화점펀칭명",
+                            "type": "string"
+                          },
+                          "engDptsPchNm": {
+                            "description": "영문백화점펀칭명",
+                            "example": "영문백화점펀칭명",
+                            "type": "string"
+                          },
+                          "rnum": {
+                            "description": "row번호",
+                            "example": "row번호(예:1)",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "dsList",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              },
+              "data4": {
+                "$ref": "#/components/schemas/successCommonResponse"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          },
+          "#/components/schemas/successCommonResponse": {
+            "properties": {
+              "data2": {
+                "properties": {
+                  "data6": {
+                    "properties": {
+                      "code": {
+                        "description": "응답코드",
+                        "example": "code(예:0000)",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "응답메시지",
+                        "example": "message(예:Success)",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "row"
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "rows"
+                }
+              },
+              "id": {
+                "example": "result",
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Dataset"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/selectDptsPchListResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdh~1selectDptsPchList.do/post/responses/200"
+      },
+      "warnings": []
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "method": "POST",
+      "endpoint": "/pd/pdh/selectDptsPchList.do",
+      "description": "Open API 실패 응답 XML(Http Status Code는 200으로 응답)",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/failCommonResponse": {
+            "properties": {
+              "code": {
+                "description": "응답코드",
+                "example": "응답코드(예:0000)",
+                "type": "string"
+              },
+              "detail": {
+                "description": "상세메시지",
+                "example": "상세메시지(예:permission denied)",
+                "type": "string"
+              },
+              "message": {
+                "description": "응답메시지",
+                "example": "응답메시지(예:permission denied)",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "error"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/failCommonResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdh~1selectDptsPchList.do/post/responses/200_fail"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.bcdBsicMndrYn",
+      "generated_name": "bcdBsicMndrYn",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/bcdBsicMndrYn",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "바코드기준필수여부",
+      "enabled": true,
+      "definition_hash": "a9c798f8e0fbdccfade59eaf52986299bc127563d12bf103c30f04cedc4fdbf6",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "bcdBsicMndrYn",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "바코드기준필수여부(예:Y)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/bcdBsicMndrYn",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.bcdExcldLoc",
+      "generated_name": "bcdExcldLoc",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/bcdExcldLoc",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "",
+      "enabled": true,
+      "definition_hash": "584a18c396cf6a23e196a0386072488ca0c25252d383b42f7735357afb2c3ce7",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "bcdExcldLoc",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/bcdExcldLoc",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.bcdLen",
+      "generated_name": "bcdLen",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/bcdLen",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "바코드길이",
+      "enabled": true,
+      "definition_hash": "e2b2f830a8465d72d021f93bdb3ae67b9a32c8c5a4c63b4a9e081a2b5355e7f6",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "bcdLen",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "바코드길이(예:13)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/bcdLen",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.dptsPchCd",
+      "generated_name": "dptsPchCd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/dptsPchCd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "백화점펀칭코드",
+      "enabled": true,
+      "definition_hash": "59a702d3ce88d4f6e48e1e95c7b4e1a804c67e4531a0125be602cf4612837d3f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "dptsPchCd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "백화점펀칭코드(예:107854)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/dptsPchCd",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.dptsPchNm",
+      "generated_name": "dptsPchNm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/dptsPchNm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "백화점펀칭명",
+      "enabled": true,
+      "definition_hash": "2ef87d98e21ec16cd1b6936a200fe025ed15446911283185fa324d075518f013",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "dptsPchNm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "백화점펀칭명",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/dptsPchNm",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.engDptsPchNm",
+      "generated_name": "engDptsPchNm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/engDptsPchNm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "영문백화점펀칭명",
+      "enabled": true,
+      "definition_hash": "239b1c9753ad700b7720668979040e0ea73442a02833e368fa9b0cdc65244539",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "engDptsPchNm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "영문백화점펀칭명",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/engDptsPchNm",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.rnum",
+      "generated_name": "rnum",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/rnum",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "row번호",
+      "enabled": true,
+      "definition_hash": "80241ab6b3ce1e2378b26e74805c4d4746898b65da9e449fba481327aaebb7a4",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "rnum",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "row번호(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/data2/properties/data3/properties/rnum",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id_2798250cca9d",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "3f7ad998be4c2fc52ab33fe29b7376776e189ddde5883536e9685e1d2cad35d7",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_2798250cca9d",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "dsList",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectDptsPchListResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/selectDptsPchListResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": true,
+      "definition_hash": "8cce7b17961b58459357f6acefc0e7147086c6e8b3d1eebf2c45d0d49a286949",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "code(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/code",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": true,
+      "definition_hash": "3bfe0cf8981285ccd9679c943b44eb40f2fc3764c435bcb30787142874f02bbb",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "message(예:Success)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/message",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.id",
+      "generated_name": "id_23591d4e3908",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "01bc6eedca3330ca519af097bc081c546e3a29852f4fd8b9fd8dc42dab52543f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_23591d4e3908",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/id",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/error/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": false,
+      "definition_hash": "86103c35939a9a19a57478a3056632a5c8b2c7d2740148b005c72d636a47f8fe",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답코드(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/code",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.detail",
+      "generated_name": "detail",
+      "name_override": null,
+      "response_path": "/error/detail",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상세메시지",
+      "enabled": false,
+      "definition_hash": "c969e69be9215cb9019b59fc0ae303ce7782fec470f7913e5bd0538a8228ef82",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "detail",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상세메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/detail",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectDptsPchList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/error/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": false,
+      "definition_hash": "88a7d298c0b5b3192a9ae9d4aa0d74dd0640b1c39b30bef60fcd7ec96b5f3541",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.575780+00:00",
+      "updated_at": "2026-10-27T14:30:45.143870+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/message",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    }
+  ]
+}

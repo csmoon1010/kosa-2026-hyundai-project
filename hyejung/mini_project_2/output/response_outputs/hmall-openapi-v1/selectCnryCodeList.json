@@ -1,0 +1,659 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "selectCnryCodeList",
+  "generated_at": "2026-10-27T14:31:21.408275+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pda/selectCnryCodeList.do",
+      "description": "Open API 성공 응답 XML",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/selectCnryCodeListResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "cnryCd": {
+                            "description": "제조국코드",
+                            "example": "제조국코드(예:0082)",
+                            "type": "string"
+                          },
+                          "cnryNm": {
+                            "description": "제조국명",
+                            "example": "제조국명(예:한국)",
+                            "type": "string"
+                          },
+                          "useYn": {
+                            "description": "사용여부",
+                            "example": "사용여부(예:Y)",
+                            "type": "string"
+                          },
+                          "userSortOrdg": {
+                            "description": "사용자정렬순서",
+                            "example": "사용자정렬순서(예:1)",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "dsList",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              },
+              "data4": {
+                "$ref": "#/components/schemas/successCommonResponse"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          },
+          "#/components/schemas/successCommonResponse": {
+            "properties": {
+              "data2": {
+                "properties": {
+                  "data6": {
+                    "properties": {
+                      "code": {
+                        "description": "응답코드",
+                        "example": "code(예:0000)",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "응답메시지",
+                        "example": "message(예:Success)",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "row"
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "rows"
+                }
+              },
+              "id": {
+                "example": "result",
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Dataset"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/selectCnryCodeListResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pda~1selectCnryCodeList.do/post/responses/200"
+      },
+      "warnings": []
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "method": "POST",
+      "endpoint": "/pd/pda/selectCnryCodeList.do",
+      "description": "Open API 실패 응답 XML(Http Status Code는 200으로 응답)",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/failCommonResponse": {
+            "properties": {
+              "code": {
+                "description": "응답코드",
+                "example": "응답코드(예:0000)",
+                "type": "string"
+              },
+              "detail": {
+                "description": "상세메시지",
+                "example": "상세메시지(예:permission denied)",
+                "type": "string"
+              },
+              "message": {
+                "description": "응답메시지",
+                "example": "응답메시지(예:permission denied)",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "error"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/failCommonResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pda~1selectCnryCodeList.do/post/responses/200_fail"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.cnryCd",
+      "generated_name": "cnryCd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/cnryCd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "제조국코드",
+      "enabled": true,
+      "definition_hash": "4576a6761899cc28b8c9ef85b8033d22a6de5ffa685b1e71fb12be0260ee239c",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "cnryCd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "제조국코드(예:0082)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCnryCodeListResponse/properties/data1/properties/data2/properties/data3/properties/cnryCd",
+        "source_ref": "#/components/schemas/selectCnryCodeListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.cnryNm",
+      "generated_name": "cnryNm",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/cnryNm",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "제조국명",
+      "enabled": true,
+      "definition_hash": "98f45ac8e94f1d06a93b6e7ca3f1f4f981af8092ef8baa25f8c1e046c2d7c73f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "cnryNm",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "제조국명(예:한국)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCnryCodeListResponse/properties/data1/properties/data2/properties/data3/properties/cnryNm",
+        "source_ref": "#/components/schemas/selectCnryCodeListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.useYn",
+      "generated_name": "useYn",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/useYn",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "사용여부",
+      "enabled": true,
+      "definition_hash": "709f4a56966188f784f80161e64aa2ea54ff6945fd11bf5be19435344ee0a08c",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "useYn",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "사용여부(예:Y)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCnryCodeListResponse/properties/data1/properties/data2/properties/data3/properties/useYn",
+        "source_ref": "#/components/schemas/selectCnryCodeListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.userSortOrdg",
+      "generated_name": "userSortOrdg",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/rows/row/userSortOrdg",
+      "path_type": "XPATH",
+      "type": "integer",
+      "format": null,
+      "description": "사용자정렬순서",
+      "enabled": true,
+      "definition_hash": "cf655a940c909d1dd4bb7b61df6c5025d58fa72ca1c6d48d5b1b334f4c5d5d50",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "userSortOrdg",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "사용자정렬순서(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "integer",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCnryCodeListResponse/properties/data1/properties/data2/properties/data3/properties/userSortOrdg",
+        "source_ref": "#/components/schemas/selectCnryCodeListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id_2798250cca9d",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsList\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "3f7ad998be4c2fc52ab33fe29b7376776e189ddde5883536e9685e1d2cad35d7",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_2798250cca9d",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "dsList",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectCnryCodeListResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/selectCnryCodeListResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": true,
+      "definition_hash": "8cce7b17961b58459357f6acefc0e7147086c6e8b3d1eebf2c45d0d49a286949",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "code(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/code",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": true,
+      "definition_hash": "3bfe0cf8981285ccd9679c943b44eb40f2fc3764c435bcb30787142874f02bbb",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "message(예:Success)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/message",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.id",
+      "generated_name": "id_23591d4e3908",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "01bc6eedca3330ca519af097bc081c546e3a29852f4fd8b9fd8dc42dab52543f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_23591d4e3908",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/id",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/error/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": false,
+      "definition_hash": "86103c35939a9a19a57478a3056632a5c8b2c7d2740148b005c72d636a47f8fe",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답코드(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/code",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.detail",
+      "generated_name": "detail",
+      "name_override": null,
+      "response_path": "/error/detail",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상세메시지",
+      "enabled": false,
+      "definition_hash": "c969e69be9215cb9019b59fc0ae303ce7782fec470f7913e5bd0538a8228ef82",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "detail",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상세메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/detail",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectCnryCodeList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/error/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": false,
+      "definition_hash": "88a7d298c0b5b3192a9ae9d4aa0d74dd0640b1c39b30bef60fcd7ec96b5f3541",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.551660+00:00",
+      "updated_at": "2026-10-27T14:30:45.122795+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/message",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    }
+  ]
+}

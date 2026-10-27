@@ -1,0 +1,800 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "selectInfNotfBsicDtlList",
+  "generated_at": "2026-10-27T14:31:21.417570+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/pd/pdb/selectInfNotfBsicDtlList.do",
+      "description": "Open API 성공 응답 XML",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/selectInfNotfBsicDtlListResponse": {
+            "properties": {
+              "data1": {
+                "properties": {
+                  "data2": {
+                    "properties": {
+                      "data3": {
+                        "properties": {
+                          "blcwdIdxYn": {
+                            "description": "블랙키워드제외여부",
+                            "example": "블랙키워드제외여부(예:Y)",
+                            "type": "string"
+                          },
+                          "infNotfBsicCd": {
+                            "description": "상품필수정보번호",
+                            "example": "상품필수정보번호(예:035)",
+                            "type": "string"
+                          },
+                          "infNotfBsicTitl": {
+                            "description": "상품필수정보제목",
+                            "example": "상품필수정보제목(예:(38) 기타 재화)",
+                            "type": "string"
+                          },
+                          "itstCd": {
+                            "description": "상품설명서번호",
+                            "example": "상품설명서번호(예:005)",
+                            "type": "string"
+                          },
+                          "itstTitl": {
+                            "description": "상품설명서제목",
+                            "example": "상품설명서제목(예:품명 및 모델명)",
+                            "type": "string"
+                          },
+                          "minInsrByteLen": {
+                            "description": "최소설명서길이",
+                            "example": "최소설명서길이(예:2)",
+                            "type": "integer"
+                          },
+                          "sortOrdg": {
+                            "description": "정렬순번",
+                            "example": "정렬순번(예:1)",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object",
+                        "xml": {
+                          "name": "row"
+                        }
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "rows"
+                    }
+                  },
+                  "id": {
+                    "example": "dsInfNotfBsicDtl",
+                    "type": "string",
+                    "xml": {
+                      "attribute": true
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "Dataset"
+                }
+              },
+              "data4": {
+                "$ref": "#/components/schemas/successCommonResponse"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Response2XML"
+            }
+          },
+          "#/components/schemas/successCommonResponse": {
+            "properties": {
+              "data2": {
+                "properties": {
+                  "data6": {
+                    "properties": {
+                      "code": {
+                        "description": "응답코드",
+                        "example": "code(예:0000)",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "응답메시지",
+                        "example": "message(예:Success)",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "row"
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "rows"
+                }
+              },
+              "id": {
+                "example": "result",
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Dataset"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/selectInfNotfBsicDtlListResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdb~1selectInfNotfBsicDtlList.do/post/responses/200"
+      },
+      "warnings": []
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "method": "POST",
+      "endpoint": "/pd/pdb/selectInfNotfBsicDtlList.do",
+      "description": "Open API 실패 응답 XML(Http Status Code는 200으로 응답)",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/failCommonResponse": {
+            "properties": {
+              "code": {
+                "description": "응답코드",
+                "example": "응답코드(예:0000)",
+                "type": "string"
+              },
+              "detail": {
+                "description": "상세메시지",
+                "example": "상세메시지(예:permission denied)",
+                "type": "string"
+              },
+              "message": {
+                "description": "응답메시지",
+                "example": "응답메시지(예:permission denied)",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "error"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/failCommonResponse"
+        },
+        "source_pointer": "#/paths/~1pd~1pdb~1selectInfNotfBsicDtlList.do/post/responses/200_fail"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.blcwdIdxYn",
+      "generated_name": "blcwdIdxYn",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/blcwdIdxYn",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "블랙키워드제외여부",
+      "enabled": true,
+      "definition_hash": "6f5d885ae198b6aa372746a0dc4b2593b3082f66b8e904f2427749c434fcc331",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "blcwdIdxYn",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "블랙키워드제외여부(예:Y)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/blcwdIdxYn",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.infNotfBsicCd",
+      "generated_name": "infNotfBsicCd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/infNotfBsicCd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상품필수정보번호",
+      "enabled": true,
+      "definition_hash": "cf1cf873313df453be00aa81c3997996664a9655db34670763baba23ef03d0f1",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "infNotfBsicCd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상품필수정보번호(예:035)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/infNotfBsicCd",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.infNotfBsicTitl",
+      "generated_name": "infNotfBsicTitl",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/infNotfBsicTitl",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상품필수정보제목",
+      "enabled": true,
+      "definition_hash": "e456cb6dcdf48b80f77ade4fd08f9f5f064340c46c049e139c0f91c5f317794e",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "infNotfBsicTitl",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상품필수정보제목(예:(38) 기타 재화)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/infNotfBsicTitl",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.itstCd",
+      "generated_name": "itstCd",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/itstCd",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상품설명서번호",
+      "enabled": true,
+      "definition_hash": "50a38cec441bcb1a35f9545a57ab6e78cbb2af539886c0b0fe84c456f210fd3b",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "itstCd",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상품설명서번호(예:005)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/itstCd",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.itstTitl",
+      "generated_name": "itstTitl",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/itstTitl",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상품설명서제목",
+      "enabled": true,
+      "definition_hash": "4c6abba06e400200f659a0a81143ec3d8bdcc2cc18890433e66064f4aa1537a8",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "itstTitl",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상품설명서제목(예:품명 및 모델명)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/itstTitl",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.minInsrByteLen",
+      "generated_name": "minInsrByteLen",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/minInsrByteLen",
+      "path_type": "XPATH",
+      "type": "integer",
+      "format": null,
+      "description": "최소설명서길이",
+      "enabled": true,
+      "definition_hash": "15890a7ed1d85a7108a6b29c005c4883b9a2d069af40cd8e9adf01117c7ee76e",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "minInsrByteLen",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "최소설명서길이(예:2)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "integer",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/minInsrByteLen",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.data2.data3.sortOrdg",
+      "generated_name": "sortOrdg",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/rows/row/sortOrdg",
+      "path_type": "XPATH",
+      "type": "integer",
+      "format": null,
+      "description": "정렬순번",
+      "enabled": true,
+      "definition_hash": "5658cbc4678f85224afb73daa06c3d0846a9bee4fba20a501f9d6060bf14db6a",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "sortOrdg",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "정렬순번(예:1)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "integer",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/data2/properties/data3/properties/sortOrdg",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data1.id",
+      "generated_name": "id_2798250cca9d",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"dsInfNotfBsicDtl\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "180e70574d288b08c77453a14d8435964a3aeced9ae378fc7f36e7e3bf59fd4e",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_2798250cca9d",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "dsInfNotfBsicDtl",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/selectInfNotfBsicDtlListResponse/properties/data1/properties/id",
+        "source_ref": "#/components/schemas/selectInfNotfBsicDtlListResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": true,
+      "definition_hash": "8cce7b17961b58459357f6acefc0e7147086c6e8b3d1eebf2c45d0d49a286949",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "code(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/code",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.data2.data6.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/rows/row/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": true,
+      "definition_hash": "3bfe0cf8981285ccd9679c943b44eb40f2fc3764c435bcb30787142874f02bbb",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "message(예:Success)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/data2/properties/data6/properties/message",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data4.id",
+      "generated_name": "id_23591d4e3908",
+      "name_override": null,
+      "response_path": "/Response2XML/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "01bc6eedca3330ca519af097bc081c546e3a29852f4fd8b9fd8dc42dab52543f",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id_23591d4e3908",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/successCommonResponse/properties/id",
+        "source_ref": "#/components/schemas/successCommonResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/error/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": false,
+      "definition_hash": "86103c35939a9a19a57478a3056632a5c8b2c7d2740148b005c72d636a47f8fe",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답코드(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/code",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.detail",
+      "generated_name": "detail",
+      "name_override": null,
+      "response_path": "/error/detail",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상세메시지",
+      "enabled": false,
+      "definition_hash": "c969e69be9215cb9019b59fc0ae303ce7782fec470f7913e5bd0538a8228ef82",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "detail",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상세메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/detail",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "selectInfNotfBsicDtlList",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/error/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": false,
+      "definition_hash": "88a7d298c0b5b3192a9ae9d4aa0d74dd0640b1c39b30bef60fcd7ec96b5f3541",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.589417+00:00",
+      "updated_at": "2026-10-27T14:30:45.154237+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/message",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    }
+  ]
+}

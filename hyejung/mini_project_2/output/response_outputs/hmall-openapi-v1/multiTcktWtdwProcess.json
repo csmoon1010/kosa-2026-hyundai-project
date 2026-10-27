@@ -1,0 +1,432 @@
+{
+  "document_id": "hmall-openapi-v1",
+  "api_id": "multiTcktWtdwProcess",
+  "generated_at": "2026-10-27T14:31:21.390450+00:00",
+  "query": {
+    "include_inactive": true,
+    "include_failures": true
+  },
+  "responses": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "description": "Open API 요청 성공",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/dsTcktCommSuccessResponse": {
+            "properties": {
+              "data2": {
+                "properties": {
+                  "data6": {
+                    "properties": {
+                      "failure": {
+                        "description": "실패",
+                        "example": "예: 20",
+                        "type": "string"
+                      },
+                      "request": {
+                        "description": "요청",
+                        "example": "예: 100",
+                        "type": "string"
+                      },
+                      "success": {
+                        "description": "성공",
+                        "example": "예: 80",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "xml": {
+                      "name": "row"
+                    }
+                  }
+                },
+                "type": "object",
+                "xml": {
+                  "name": "rows"
+                }
+              },
+              "id": {
+                "example": "result",
+                "type": "string",
+                "xml": {
+                  "attribute": true
+                }
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "Dataset"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/dsTcktCommSuccessResponse"
+        },
+        "source_pointer": "#/paths/~1sc~1scb~1scbd~1multiTcktWtdwProcess.do/post/responses/200"
+      },
+      "warnings": []
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "method": "POST",
+      "endpoint": "/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "description": "Open API 실패 응답 XML(Http Status Code는 200으로 응답)",
+      "source_type": "SWAGGER",
+      "source_url": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "extraction_status": "COMPLETE",
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "schema": {
+        "references": {
+          "#/components/schemas/failCommonResponse": {
+            "properties": {
+              "code": {
+                "description": "응답코드",
+                "example": "응답코드(예:0000)",
+                "type": "string"
+              },
+              "detail": {
+                "description": "상세메시지",
+                "example": "상세메시지(예:permission denied)",
+                "type": "string"
+              },
+              "message": {
+                "description": "응답메시지",
+                "example": "응답메시지(예:permission denied)",
+                "type": "string"
+              }
+            },
+            "type": "object",
+            "xml": {
+              "name": "error"
+            }
+          }
+        },
+        "schema": {
+          "$ref": "#/components/schemas/failCommonResponse"
+        },
+        "source_pointer": "#/paths/~1sc~1scb~1scbd~1multiTcktWtdwProcess.do/post/responses/200_fail"
+      },
+      "warnings": []
+    }
+  ],
+  "outputs": [
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.data6.failure",
+      "generated_name": "failure",
+      "name_override": null,
+      "response_path": "/Dataset[@id=\"result\"]/rows/row/failure",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "실패",
+      "enabled": true,
+      "definition_hash": "cb4076d7407163c31cff3b493e51ac6362647ea6bd5270b12245c29fd0a03035",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "failure",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "예: 20",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/dsTcktCommSuccessResponse/properties/data2/properties/data6/properties/failure",
+        "source_ref": "#/components/schemas/dsTcktCommSuccessResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.data6.request",
+      "generated_name": "request",
+      "name_override": null,
+      "response_path": "/Dataset[@id=\"result\"]/rows/row/request",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "요청",
+      "enabled": true,
+      "definition_hash": "aba631da08eab606a1175693dba99af375ffd1fa64430a795169b1b51b688ef2",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "request",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "예: 100",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/dsTcktCommSuccessResponse/properties/data2/properties/data6/properties/request",
+        "source_ref": "#/components/schemas/dsTcktCommSuccessResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.data2.data6.success",
+      "generated_name": "success",
+      "name_override": null,
+      "response_path": "/Dataset[@id=\"result\"]/rows/row/success",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "성공",
+      "enabled": true,
+      "definition_hash": "ba0ba61c903c80408c72df967310372a0ae1f0233f190c18308c575036af435a",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "success",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "예: 80",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/dsTcktCommSuccessResponse/properties/data2/properties/data6/properties/success",
+        "source_ref": "#/components/schemas/dsTcktCommSuccessResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200",
+      "content_type": "application/xml",
+      "schema_path": "$.id",
+      "generated_name": "id",
+      "name_override": null,
+      "response_path": "/Dataset[@id=\"result\"]/@id",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": null,
+      "enabled": true,
+      "definition_hash": "3f0ac11abbd1e976ac3005cbf7728807ea43230e4e04f0bb84164d153699590e",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "SUCCESS",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "id",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "result",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/dsTcktCommSuccessResponse/properties/id",
+        "source_ref": "#/components/schemas/dsTcktCommSuccessResponse",
+        "xml": {
+          "attribute": true
+        }
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.code",
+      "generated_name": "code",
+      "name_override": null,
+      "response_path": "/error/code",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답코드",
+      "enabled": false,
+      "definition_hash": "86103c35939a9a19a57478a3056632a5c8b2c7d2740148b005c72d636a47f8fe",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "code",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답코드(예:0000)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/code",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.detail",
+      "generated_name": "detail",
+      "name_override": null,
+      "response_path": "/error/detail",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "상세메시지",
+      "enabled": false,
+      "definition_hash": "c969e69be9215cb9019b59fc0ae303ce7782fec470f7913e5bd0538a8228ef82",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "detail",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "상세메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/detail",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    },
+    {
+      "document_id": "hmall-openapi-v1",
+      "api_id": "multiTcktWtdwProcess",
+      "response_key": "200_fail",
+      "content_type": "application/xml",
+      "schema_path": "$.message",
+      "generated_name": "message",
+      "name_override": null,
+      "response_path": "/error/message",
+      "path_type": "XPATH",
+      "type": "string",
+      "format": null,
+      "description": "응답메시지",
+      "enabled": false,
+      "definition_hash": "88a7d298c0b5b3192a9ae9d4aa0d74dd0640b1c39b30bef60fcd7ec96b5f3541",
+      "review_required": false,
+      "is_active": true,
+      "created_at": "2026-10-27T14:12:42.480751+00:00",
+      "updated_at": "2026-10-27T14:30:45.061553+00:00",
+      "status_code": "200",
+      "response_kind": "FAILURE",
+      "source_type": "SWAGGER",
+      "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+      "response_is_active": true,
+      "extraction_status": "COMPLETE",
+      "name": "message",
+      "metadata": {
+        "cardinality": "UNKNOWN",
+        "constraints": {},
+        "enum": null,
+        "example": "응답메시지(예:permission denied)",
+        "extraction_review_required": false,
+        "namespaces": {},
+        "nullable": false,
+        "raw_type": "string",
+        "required": false,
+        "required_declared": false,
+        "source_pointer": "#/components/schemas/failCommonResponse/properties/message",
+        "source_ref": "#/components/schemas/failCommonResponse",
+        "xml": {}
+      }
+    }
+  ]
+}
