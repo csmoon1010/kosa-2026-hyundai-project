@@ -69,6 +69,7 @@ class ScenarioIR(BaseModel):
     unresolved: list[str] = Field(default_factory=list)
     requires_approval: bool = False
     reason: str | None = None
+    graph_reason: str | None = None             # 이 그래프를 고른 이유 (그래프가 여럿일 때 LLM 이 고름)
 
 
 def _summary(p: Path) -> PlanSummary:
@@ -135,11 +136,12 @@ def build_ir(request: str, goal: Goal, graph: StateGraph, result: PlanResult,
                           compensate_with=back.id if back else None,
                           requires_approval=meta.get(e.api_id, {}).get("kind") == "write"))
 
-    # verify — 같은 키로 다시 찾아 마지막 상태 확인
+    # verify — 같은 키로 다시 찾아 마지막 상태 확인. 키를 정하지 않은 그래프(화면 저장본)는 쓰기에 넘긴 앞 응답 값을 키로 쓴다
     target = graph.node(goal.target)
+    vkeys = graph.verify_key_fields or sorted({n for s in steps if s.kind == "call" for n, p in s.params.items() if p.source == "bind"})
     if target.lookup:
         vparams = {n: Param(source="fixed", value=v) for n, v in target.lookup.selector.items()}
-        vparams.update({k: Param(source="bind", ref=f"step1.{k}") for k in graph.verify_key_fields})
+        vparams.update({k: Param(source="bind", ref=f"step1.{k}") for k in vkeys})
         steps.append(Step(no=len(steps) + 1, kind="verify", api_id=target.lookup.api_id,
                           name=f"{target.name}({target.code}) 도달 확인 — {graph.state_field} = {target.code}",
                           selector=target.lookup.selector, params=vparams, for_each="step1.rows",

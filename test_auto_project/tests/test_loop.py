@@ -130,3 +130,15 @@ def test_plan_request_end_to_end_without_llm(out):
     r = plan_request("결제완료 상태 주문 만들어줘.", KNOW, out, goal_json=goal)
     saved = j(r["file"])
     assert saved["status"] == "rejected" and saved["steps"] == []
+
+
+def test_plan_without_entry_states_same_results():
+    """진입 상태를 정하지 않아도 (화면에서 만든 그래프) 찾을 수 있는 상태 중 정렬순서가 가장 앞인 곳에서 출발한다."""
+    import yaml
+    from tap.graph.build import graph_from_dict
+    k = yaml.safe_load(KNOW.read_text(encoding="utf-8")); k["graph"]["entry_states"] = []
+    g = graph_from_dict(k)
+    assert plan(g, Goal(graph_id=G, target="45", must_pass=["50"])).primary.states == ["25", "30", "45", "50", "45"]
+    r = plan(g, Goal(graph_id=G, target="25"))
+    assert (r.primary.start, r.primary.writes, r.alternative) == ("25", 0, None)       # 출고대기는 바로 찾기 — 취소를 거꾸로 돌지 않는다
+    assert plan(g, Goal(graph_id=G, target="20")).status == "rejected"

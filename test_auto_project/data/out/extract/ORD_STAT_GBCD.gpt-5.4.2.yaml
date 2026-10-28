@@ -1,0 +1,174 @@
+# 자동 추출 (실험) — 공통코드 + 명세만, 모델 gpt-5.4. 사람 확인 전
+graph:
+  id: ORD_STAT_GBCD
+  name: 주문상태구분코드
+  domain: od
+  entity: 주문/주문상세의 주문상태구분코드(ORD_STAT_GBCD)
+  state_field: lastDlvstPrgrGbcd
+  entry_states:
+  - '25'
+  - '55'
+  - '70'
+  - '20'
+  verify_key_fields:
+  - ordNo
+  - ordPtcSeq
+  - dlvstNo
+  - dlvstPtcSeq
+  - venCd
+  - ven2Cd
+code_group:
+  id: ORD_STAT_GBCD
+  name: 주문상태구분코드
+  codes:
+    '10': 접수
+    '20': 결제완료
+    '25': 출고대기
+    '26': 매장승인
+    '27': 매장출발
+    '30': 출고진행
+    '45': 출고
+    '50': 배송완료
+    '55': 회수요청
+    '57': 회수집하
+    '60': 회수확인
+    '63': 회수완료
+    '70': 취소회수요청
+    '73': 취소회수집하
+    '75': 취소회수완료
+    '77': 취소출고
+    '79': 취소출고배송완료
+    '80': 완료
+    '81': 취소완료
+    '82': 수선완료
+    '91': A/S취소
+    '92': 반품전환
+    '93': 교환전환
+transitions:
+- api: hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do
+  selector:
+    procGb: P1
+  name: 주문확인 처리
+  from: '25'
+  to: '30'
+  source: llm
+  basis: guess
+  evidence: 명세 요약이 '주문확인(P1)/출고완료(P2)/배송완료(P3) 처리'. 출고조회 응답의 lastDlvstPrgrGbcd 예시가
+    25이고, 주문확인 후 출고 진행 상태로 가는 것이 이름상 가장 자연스러움.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do
+  selector:
+    procGb: P2
+  name: 출고완료 처리
+  from: '30'
+  to: '45'
+  source: llm
+  basis: guess
+  evidence: 명세 요약이 '출고완료(P2)'이며 공통코드에 45=출고, 30=출고진행이 존재. 이름상 30→45 추정.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do
+  selector:
+    procGb: P3
+  name: 배송완료 처리
+  from: '45'
+  to: '50'
+  source: llm
+  basis: guess
+  evidence: 명세 요약이 '배송완료(P3)'이며 공통코드에 45=출고, 50=배송완료가 존재. 이름상 45→50 추정.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do
+  selector:
+    procGb: PB1
+  name: 출고취소처리
+  from: '25'
+  to: '77'
+  source: llm
+  basis: guess
+  evidence: 명세 요약이 '출고취소처리'. 공통코드에 77=취소출고가 있어 가장 직접적으로 대응됨. 어느 전제상태에서 가능한지는 명세에 없으나
+    출고조회에서 주로 25 상태를 다루므로 25→77 추정.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do
+  selector: {}
+  name: 회수처리
+  from: '55'
+  to: '57'
+  source: llm
+  basis: guess
+  evidence: 명세 요약이 '회수처리'. 공통코드에 55=회수요청, 57=회수집하, 60=회수확인, 63=회수완료가 있고 API 요청에 송장번호/택배사
+    입력이 있어 집하 진행 등록 성격으로 보임. 따라서 55→57 추정.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do
+  selector:
+    procGb: P1
+  name: 티켓 주문처리
+  from: '20'
+  to: '20'
+  source: llm
+  basis: guess
+  evidence: 티켓 주문처리 API는 procGb=P1만 보이나 응답/조회에 대응 상태코드 전이가 명시되지 않음. selectTcktOshpList
+    예시에 lastOrdStatGbcd=20만 확인되어 실제 상태 전이는 판단 불가. 그래프 재료상 확인된 상태를 보존 표기로 둠.
+- api: hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do
+  selector:
+    procGb: P0
+  name: 티켓 회수처리
+  from: '60'
+  to: '63'
+  source: llm
+  basis: guess
+  evidence: selectTcktWtdwList 응답에 sendGb 예시가 '회수완료', lastOrdStatGbcd 예시가 63. write
+    API가 회수처리(procGb=P0)이므로 티켓 회수 최종 완료로 이어지는 60→63 또는 중간단계 가능성 중, 예시 문구상 완료가 직접 확인되어
+    60→63 추정.
+lookups:
+- api: hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do
+  selector: {}
+  states:
+  - '25'
+  - '30'
+  - '45'
+  - '50'
+  basis: guess
+  evidence: 응답 필드 lastDlvstPrgrGbcd가 현재/마지막 진행상태로 보임. API 설명이 출고조회이고 write API가 주문확인/출고완료/배송완료를
+    처리하므로 이 조회에서 최소 25/30/45/50이 나올 가능성이 높음. 예시는 25만 직접 확인.
+- api: hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do
+  selector: {}
+  states:
+  - '55'
+  - '57'
+  - '60'
+  - '63'
+  basis: guess
+  evidence: 응답 필드 lastDlvstPrgrGbcd 사용. API 설명이 회수조회이고 공통코드에 회수 흐름 55/57/60/63 존재.
+    예시는 55만 직접 확인.
+- api: hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do
+  selector: {}
+  states:
+  - '70'
+  - '73'
+  - '75'
+  - '77'
+  - '79'
+  - '81'
+  basis: guess
+  evidence: API 설명이 취소조회. 공통코드상 취소 관련 상태는 70/73/75/77/79/81. 다만 응답에는 ORD_STAT_GBCD
+    자체 필드가 없고 dlvTypeGbcdNm='취소'만 보여 상세 상태 구분은 추정.
+- api: hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do
+  selector: {}
+  states:
+  - '20'
+  basis: spec
+  evidence: 응답 필드 lastOrdStatGbcd 예시가 20. 티켓 주문조회에서 현재 주문상태를 이 필드로 조회.
+- api: hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do
+  selector: {}
+  states:
+  - '63'
+  basis: spec
+  evidence: 응답 필드 lastOrdStatGbcd 예시가 63, sendGb 예시가 '회수완료'.
+open_questions:
+- 출고조회(selectOshpDtlList)와 회수조회(selectWtdwDtlList)의 상태 필드가 lastDlvstPrgrGbcd인데, 이것이
+  ORD_STAT_GBCD와 1:1로 동일한지 명세에 명시가 없다.
+- 티켓 조회의 상태 필드 lastOrdStatGbcd와 일반 물류 조회의 lastDlvstPrgrGbcd가 같은 ORD_STAT_GBCD 코드셋을
+  쓰는지 명세에 명시가 없다.
+- multiOshpProcess의 P1/P2/P3가 정확히 25→30→45→50인지 명세에 직접 적혀 있지 않다.
+- multiOshpBackProcess의 출고취소처리가 정확히 어떤 코드(77/79/81 등)로 바꾸는지 불명확하다.
+- multiWtdwProcess의 회수처리가 55→57인지, 57→60인지, 또는 한 번 호출로 여러 단계 반영되는지 불명확하다.
+- 취소조회(selectCnclList) 응답에는 ORD_STAT_GBCD 상태 필드가 직접 없어서 취소 관련 세부 상태(70/73/75/77/79/81)를
+  구분 조회할 수 있는지 불명확하다.
+- 공통코드의 10 접수, 20 결제완료, 26 매장승인, 27 매장출발, 80 완료, 81 취소완료, 82 수선완료, 91 A/S취소, 92 반품전환,
+  93 교환전환에 대응하는 쓰기 API가 이 자료 범위에서는 확인되지 않는다.
+- entry_states 중 일반 배송 주문의 최초 노출 상태가 25인지, 그 이전 10/20도 일반 주문조회 API에서 다룰 수 있는지 불명확하다.
+  자료상 물류 조회 예시는 25부터 확인된다.

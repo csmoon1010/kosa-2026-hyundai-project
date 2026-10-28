@@ -1,19 +1,54 @@
 # 사람 보정 — 자동 생성 결과 위에 덮어쓴다. 다시 생성해도 지워지지 않는다.
 #
-# 키는 api_id. 적은 항목만 바뀐다. 아래 6개 외의 키, 잘못된 값, 명세에 없는 api_id 가 있으면 빌드가 멈춘다.
+# 키는 api_id. 적은 항목만 바뀐다. 아래 7개 외의 키, 잘못된 값, 명세에 없는 api_id 가 있으면 빌드가 멈춘다.
 #   description   설명 보정 (자동 설명이 부실할 때)
 #   aliases       별칭 추가 — 자동 별칭과 합쳐진다
 #   irreversible  되돌림 불가: 미확인 · 가능 · 불가
 #   memo          구별 메모 — 간선의 후보끼리 구분
 #   enabled       false 면 Agent 후보에서 뺀다 (문서상 tool_enabled 도 이 키로 바꾼다)
 #   success_rule  성공 판단 규칙을 직접 지정 {path, equals}
+#   selectors     구분값 — 한 API 가 여러 일을 할 때 이번 일을 고르는 요청 필드와 값
+#                 []  = 구분값 없음 (API 하나가 동작 하나)으로 확인
+#                 [{field, complete, values: [{value, name, aliases}]}] — 자동 추출 위에 value 로 맞춰 합친다
+#                 이름을 고치면 명세 이름은 aliases 로 남는다. complete 를 안 적으면 true (값 목록 전부)
 #
 # 예)
 #   "hshop-openapi:POST:/pd/pdb/multiItem.do":
 #     aliases: [상품 생성, 신규 상품 입력]
 #     memo: 단건 등록. 속성(옵션)만 추가할 때는 insertSellUitmDtl
-#   "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do":
+#   "hshop-openapi:POST:/pd/pdb/updateItemByVen.do":
 #     irreversible: 불가
-#     memo: procGb 로 P1 주문확인 · P2 출고완료 · P3 배송완료 를 구분
+#     selectors: []
 
-apis: {}
+apis:
+  # 주문상태 그래프 — 권지은 소스 확인 (2026-10-25). 명세 summary 의 '주문확인(P1)' 은 실제로 출고진행
+  "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do":
+    selectors:
+      - field: procGb
+        values:
+          - {value: P1, name: 출고진행}
+          - {value: P2, name: 출고완료}
+          - {value: P3, name: 배송완료}
+  "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do":
+    selectors:
+      - field: procGb
+        values:
+          - {value: PB1, name: 출고취소}
+          - {value: PB2, name: 출고완료취소}
+          - {value: PB3, name: 배송완료취소}
+  # 조회 범위 — 서버가 마지막 상태(lastDlvstPrgrGbcd)로 걸러 준다
+  "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do":
+    selectors:
+      - field: prgrGb
+        values:
+          - {value: P0, name: 출고대기(25)만}
+          - {value: P1, name: 출고진행(30)만}
+          - {value: P2, name: 출고(45)만}
+          - {value: P3, name: 배송완료(50)만}
+  "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do":
+    selectors:
+      - field: prgrGb
+        values:
+          - {value: P0, name: 회수요청(55 · 56)만}
+          - {value: P1, name: 회수집하 · 회수확인(57 · 60)만}
+          - {value: P2, name: 회수완료(63)만}

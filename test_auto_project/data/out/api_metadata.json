@@ -5,9 +5,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -17,7 +19,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectVenSellItemQryList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
@@ -25,9 +27,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -37,7 +41,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItem",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
@@ -45,9 +49,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -57,7 +63,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectUnitStocks",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
@@ -65,9 +71,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "등록",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -77,7 +85,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "insertSellUitmDtl",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
@@ -85,9 +93,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "요청",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -97,7 +107,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "updateUnitStockByExcel",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
@@ -105,9 +115,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "요청",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -117,7 +129,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "insertItnDispModReqList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
@@ -125,9 +137,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "요청",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -137,7 +151,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "updateVenSellItemList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
@@ -145,9 +159,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -157,7 +173,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemCsfCdList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
@@ -165,9 +181,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -177,7 +195,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemCsfUnitList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
@@ -185,9 +203,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -197,7 +217,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectInfNotfBsicDtlList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
@@ -205,9 +225,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "요청",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -217,7 +239,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "updateItemPrcHist",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
@@ -225,9 +247,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -237,7 +261,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemInfNotfBsicDtlAllList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
@@ -245,9 +269,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -257,7 +283,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectMkcoList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
@@ -265,9 +291,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -277,7 +305,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectBrndList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
@@ -285,9 +313,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -297,7 +327,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectMdList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
@@ -305,9 +335,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -317,7 +349,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectUseTermList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
@@ -325,9 +357,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "백화점 상품의 펀칭코드 조회",
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -337,7 +371,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectDptsPchList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
@@ -345,9 +379,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -357,7 +393,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectCopnList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
@@ -365,9 +401,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -377,7 +415,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectCnryCodeList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
@@ -385,9 +423,11 @@
     "domain": "af",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -397,7 +437,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectVenAdrList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
@@ -405,9 +445,11 @@
     "domain": "af",
     "kind": "write",
     "action": "수정",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -417,7 +459,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "updateVenAdrMng",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
@@ -425,9 +467,11 @@
     "domain": "af",
     "kind": "write",
     "action": "등록",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -437,17 +481,19 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "insertVenAdrMng",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
     "api_name": "협력사 소액장바구니 조회",
-    "domain": "unknown",
+    "domain": "hm",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -457,17 +503,33 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "getSdlvcVenMngDtlList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
     "api_name": "협력사 소액장바구니 등록/수정",
-    "domain": "unknown",
+    "domain": "hm",
     "kind": "write",
     "action": "등록",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [
+      {
+        "field": "rowFlag",
+        "label": "rowFlag",
+        "complete": false,
+        "values": [
+          {
+            "value": "I",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -477,7 +539,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiVenSdlvcMngInf",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
@@ -485,9 +547,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "수정",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -497,7 +561,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "uploadItemImgUrl",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
@@ -505,9 +569,25 @@
     "domain": "pd",
     "kind": "write",
     "action": "수정",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [
+      {
+        "field": "rowType",
+        "label": "rowType",
+        "complete": false,
+        "values": [
+          {
+            "value": "INSERT",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -517,7 +597,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiItemImg",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
@@ -525,9 +605,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -537,7 +619,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemQnaQstnList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
@@ -545,9 +627,11 @@
     "domain": "pd",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -557,7 +641,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemQnaAnswList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
@@ -565,9 +649,25 @@
     "domain": "pd",
     "kind": "write",
     "action": "등록·수정",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [
+      {
+        "field": "rowFlag",
+        "label": "rowFlag",
+        "complete": false,
+        "values": [
+          {
+            "value": "I",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -577,27 +677,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiItemQnaAnsw",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
-  },
-  {
-    "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
-    "api_name": "매장 정보 조회",
-    "domain": "unknown",
-    "kind": "read",
-    "action": "조회",
-    "metadata_version": 1,
-    "description": null,
-    "aliases": [],
-    "input_concepts": [],
-    "output_concepts": [],
-    "irreversible": "가능",
-    "memo": null,
-    "tool_enabled": true,
-    "search_text": "selectSectMstList 매장 정보 조회",
-    "source_type": "SWAGGER",
-    "document_id": "hmall-openapi.json",
-    "operation_id": "selectSectMstList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
@@ -605,9 +685,11 @@
     "domain": "cs",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -617,7 +699,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectItemArltList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
@@ -625,9 +707,25 @@
     "domain": "pd",
     "kind": "write",
     "action": "등록",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [
+      {
+        "field": "rowType",
+        "label": "rowType",
+        "complete": false,
+        "values": [
+          {
+            "value": "INSERT",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -637,7 +735,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiItem",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
@@ -645,9 +743,11 @@
     "domain": "pd",
     "kind": "write",
     "action": "수정",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": null,
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -657,7 +757,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "updateItemByVen",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
@@ -665,19 +765,53 @@
     "domain": "ds",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-출고조회",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "prgrGb",
+        "label": "진행구분코드",
+        "complete": true,
+        "values": [
+          {
+            "value": "P0",
+            "name": "출고대기(25)만",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "P1",
+            "name": "출고진행(30)만",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "P2",
+            "name": "출고(45)만",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "P3",
+            "name": "배송완료(50)만",
+            "aliases": [],
+            "source": "override"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "override",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "selectOshpDtlList 출고조회 홈쇼핑/Hmall 협력사 물류처리-출고조회",
+    "search_text": "selectOshpDtlList 출고조회 홈쇼핑/Hmall 협력사 물류처리-출고조회 출고대기(25)만 출고진행(30)만 출고(45)만 배송완료(50)만",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectOshpDtlList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
@@ -685,19 +819,47 @@
     "domain": "ds",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-회수조회",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "prgrGb",
+        "label": "진행구분코드",
+        "complete": true,
+        "values": [
+          {
+            "value": "P0",
+            "name": "회수요청(55 · 56)만",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "P1",
+            "name": "회수집하 · 회수확인(57 · 60)만",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "P2",
+            "name": "회수완료(63)만",
+            "aliases": [],
+            "source": "override"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "override",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "selectWtdwDtlList 회수조회 홈쇼핑/Hmall 협력사 물류처리-회수조회",
+    "search_text": "selectWtdwDtlList 회수조회 홈쇼핑/Hmall 협력사 물류처리-회수조회 회수요청(55 · 56)만 회수집하 · 회수확인(57 · 60)만 회수완료(63)만",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectWtdwDtlList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
@@ -705,19 +867,49 @@
     "domain": "ds",
     "kind": "write",
     "action": "처리",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": true,
+        "values": [
+          {
+            "value": "P1",
+            "name": "출고진행",
+            "aliases": [
+              "주문확인"
+            ],
+            "source": "override"
+          },
+          {
+            "value": "P2",
+            "name": "출고완료",
+            "aliases": [],
+            "source": "spec"
+          },
+          {
+            "value": "P3",
+            "name": "배송완료",
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "override",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "multiOshpProcess 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+    "search_text": "multiOshpProcess 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 출고진행 주문확인 출고완료 배송완료",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiOshpProcess",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
@@ -725,19 +917,49 @@
     "domain": "ds",
     "kind": "write",
     "action": "처리",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-출고취소처리",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": true,
+        "values": [
+          {
+            "value": "PB1",
+            "name": "출고취소",
+            "aliases": [
+              "출고취소처리"
+            ],
+            "source": "override"
+          },
+          {
+            "value": "PB2",
+            "name": "출고완료취소",
+            "aliases": [],
+            "source": "override"
+          },
+          {
+            "value": "PB3",
+            "name": "배송완료취소",
+            "aliases": [],
+            "source": "override"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "override",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "multiOshpBackProcess 출고취소처리 홈쇼핑/Hmall 협력사 물류처리-출고취소처리",
+    "search_text": "multiOshpBackProcess 출고취소처리 홈쇼핑/Hmall 협력사 물류처리-출고취소처리 출고취소 출고취소처리 출고완료취소 배송완료취소",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiOshpBackProcess",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
@@ -745,9 +967,11 @@
     "domain": "ds",
     "kind": "write",
     "action": "처리",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-회수처리",
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
@@ -757,7 +981,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiWtdwProcess",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
@@ -765,9 +989,11 @@
     "domain": "ds",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 협력사 물류처리-취소조회",
     "aliases": [],
+    "selectors": [],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -777,7 +1003,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectCnclList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
@@ -785,9 +1011,25 @@
     "domain": "ds",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 티켓 물류처리-주문조회",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": false,
+        "values": [
+          {
+            "value": "P1",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -797,7 +1039,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectTcktOshpList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
@@ -805,19 +1047,35 @@
     "domain": "ds",
     "kind": "write",
     "action": "처리",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 티켓 물류처리-주문처리",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": false,
+        "values": [
+          {
+            "value": "P1",
+            "name": "주문처리",
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "multiTcktOrdProcess 주문처리 홈쇼핑/Hmall 티켓 물류처리-주문처리",
+    "search_text": "multiTcktOrdProcess 주문처리 홈쇼핑/Hmall 티켓 물류처리-주문처리 주문처리",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiTcktOrdProcess",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
@@ -825,9 +1083,25 @@
     "domain": "ds",
     "kind": "read",
     "action": "조회",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 티켓 물류처리-회수조회",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": false,
+        "values": [
+          {
+            "value": "P0",
+            "name": null,
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "가능",
@@ -837,7 +1111,7 @@
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "selectTcktWtdwList",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   },
   {
     "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
@@ -845,18 +1119,34 @@
     "domain": "ds",
     "kind": "write",
     "action": "처리",
-    "metadata_version": 1,
+    "metadata_version": 3,
     "description": "홈쇼핑/Hmall 티켓 물류처리-회수처리",
     "aliases": [],
+    "selectors": [
+      {
+        "field": "procGb",
+        "label": "진행구분코드",
+        "complete": false,
+        "values": [
+          {
+            "value": "P0",
+            "name": "회수처리",
+            "aliases": [],
+            "source": "spec"
+          }
+        ]
+      }
+    ],
+    "selectors_source": "auto",
     "input_concepts": [],
     "output_concepts": [],
     "irreversible": "미확인",
     "memo": null,
     "tool_enabled": true,
-    "search_text": "multiTcktWtdwProcess 회수처리 홈쇼핑/Hmall 티켓 물류처리-회수처리",
+    "search_text": "multiTcktWtdwProcess 회수처리 홈쇼핑/Hmall 티켓 물류처리-회수처리 회수처리",
     "source_type": "SWAGGER",
     "document_id": "hmall-openapi.json",
     "operation_id": "multiTcktWtdwProcess",
-    "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+    "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
   }
 ]

@@ -1,0 +1,27 @@
+# 상품가격승인 그래프 재료 — 사람이 확인한 업무 지식 (자동 생성 아님)
+# 출처: 권지은, 2026-10-28 — 공통코드 ITEM_ATHZ_GBCD 코드 목록만. 전이 · 진입 상태 · 조회 방법은 아직 미확인 (화면에서 업무 담당자가 채운다)
+
+graph:
+  id: ITEM_ATHZ_GBCD
+  name: 상품가격승인
+  domain: pd                      # 담당 = 상태 코드 그룹의 주인
+  entity: 판매상품
+  state_field: itemAthzGbcd          # 판매상품조회 응답 (명세 예시 80 = 승인완료)
+  entry_states: []                # 미확인
+  verify_key_fields: [slitmCd]    # 판매상품코드
+
+code_group:
+  id: ITEM_ATHZ_GBCD
+  name: 상품가격승인구분코드
+  codes:
+    "0": 등록(MD승인대기)
+    "11": 팀장승인대기
+    "21": 보류
+    "31": 반송
+    "41": 취소
+    "80": 승인완료
+    "99": 예외
+
+transitions: []   # 미확인 — 누가(협력사 API / 내부 MD · 팀장 승인 / 시스템) 어떤 상태로 바꾸는지
+
+lookups: []       # 판매상품조회 응답에만 있고 요청으로 거르는 필드는 없음 — 전체 조회 후 고르기

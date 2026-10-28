@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>상태 그래프 만들기</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+  /* 단독 화면 — 편집기 본체는 graph-editor.js (오프라인 UI 와 같은 코드). 토큰은 offline-ui.html 과 같다 */
+  :root{
+    --bg:#F4F6FA; --panel:#FFFFFF; --panel-2:#F7F9FC; --panel-3:#EEF2F7;
+    --ink:#111827; --ink-2:#374151; --muted:#6B7280; --hair:#D9DFE7; --hair-2:#E8ECF2;
+    --accent:#2563EB; --accent-soft:#EAF1FE; --good:#15803D; --good-soft:#E7F6EC;
+    --signal:#C2570C; --signal-soft:#FFF1E4; --danger:#DC2626; --danger-soft:#FDECEC;
+    --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ color-scheme:dark;
+      --bg:#0E1116; --panel:#161B22; --panel-2:#11161C; --panel-3:#1F2630; --ink:#E6EAF0; --ink-2:#C1C8D2; --muted:#8B95A3;
+      --hair:#2A323D; --hair-2:#20262F; --accent:#6EA2FF; --accent-soft:#16233A; --good:#4ADE80; --good-soft:#12291A;
+      --signal:#F0A35A; --signal-soft:#2E2010; --danger:#F47A7A; --danger-soft:#331717; }
+  }
+  :root[data-theme="dark"]{ color-scheme:dark;
+    --bg:#0E1116; --panel:#161B22; --panel-2:#11161C; --panel-3:#1F2630; --ink:#E6EAF0; --ink-2:#C1C8D2; --muted:#8B95A3;
+    --hair:#2A323D; --hair-2:#20262F; --accent:#6EA2FF; --accent-soft:#16233A; --good:#4ADE80; --good-soft:#12291A;
+    --signal:#F0A35A; --signal-soft:#2E2010; --danger:#F47A7A; --danger-soft:#331717; }
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;
+    padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:18px 48px;}
+  #app{max-width:1440px;margin:0 auto;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+<script src="tap-data.js"></script>
+<script src="graph-editor.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>GraphEditor.mount(document.getElementById("app"), {});</script>
+</body>
+</html>

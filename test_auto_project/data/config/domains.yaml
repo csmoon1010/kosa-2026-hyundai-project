@@ -31,7 +31,7 @@ domains:
     prefixes: [/dt]
   hm:
     name: 전시
-    prefixes: [/hm]
+    prefixes: [/hm, /hmgb]   # /hmgb: 협력사 소액장바구니 (2026-10-28 지은)
   is:
     name: 보험
     prefixes: [/is]

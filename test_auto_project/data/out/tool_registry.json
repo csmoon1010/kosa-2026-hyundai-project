@@ -38,7 +38,7 @@
     },
     {
       "service": "hshop-openapi",
-      "domain": "unknown",
+      "domain": "hm",
       "base_url": "HMALL_API_BASE_URL",
       "base_url_default": "http://openapi.hmall.com/front",
       "timeout_ms": 5000,
@@ -118,7 +118,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectVenSellItemQryList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -147,7 +147,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItem",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -176,7 +176,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectUnitStocks",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -205,7 +205,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "insertSellUitmDtl",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -234,7 +234,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "updateUnitStockByExcel",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -263,7 +263,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "insertItnDispModReqList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -292,7 +292,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "updateVenSellItemList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -321,7 +321,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemCsfCdList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -350,7 +350,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemCsfUnitList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -379,7 +379,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectInfNotfBsicDtlList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -408,7 +408,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "updateItemPrcHist",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -437,7 +437,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemInfNotfBsicDtlAllList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -466,7 +466,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectMkcoList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -495,7 +495,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectBrndList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -524,7 +524,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectMdList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -553,7 +553,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectUseTermList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -582,7 +582,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectDptsPchList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -611,7 +611,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectCopnList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -640,7 +640,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectCnryCodeList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -669,7 +669,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectVenAdrList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -698,7 +698,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "updateVenAdrMng",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -724,12 +724,12 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "insertVenAdrMng",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
       "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
-      "domain": "unknown",
+      "domain": "hm",
       "method": "POST",
       "endpoint": "/hmgb/getSdlvcVenMngDtlList.do",
       "content_type": "application/xml",
@@ -753,12 +753,12 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "getSdlvcVenMngDtlList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
       "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
-      "domain": "unknown",
+      "domain": "hm",
       "method": "POST",
       "endpoint": "/hmgb/multiVenSdlvcMngInf.do",
       "content_type": "application/xml",
@@ -782,7 +782,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiVenSdlvcMngInf",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -811,7 +811,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "uploadItemImgUrl",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -840,7 +840,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiItemImg",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -869,7 +869,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemQnaQstnList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -898,7 +898,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemQnaAnswList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -927,36 +927,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiItemQnaAnsw",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
-      }
-    },
-    {
-      "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
-      "domain": "unknown",
-      "method": "POST",
-      "endpoint": "/om/oma/selectSectMstList.do",
-      "content_type": "application/xml",
-      "body_format": "nexacro-xml",
-      "base_url": "HMALL_API_BASE_URL",
-      "timeout_ms": 5000,
-      "retry_count": 2,
-      "approval_required": false,
-      "auth_type": "API_KEY_HEADER",
-      "auth_profile": "hmall-openapi-key",
-      "enabled": true,
-      "default_headers": {},
-      "success_rule": {
-        "path": "result/code",
-        "equals": "0000"
-      },
-      "allowed_environments": [
-        "DEV"
-      ],
-      "schema_ref": null,
-      "source_metadata": {
-        "document_id": "hmall-openapi.json",
-        "operation_id": "selectSectMstList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -985,7 +956,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectItemArltList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1014,7 +985,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiItem",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1043,7 +1014,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "updateItemByVen",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1069,7 +1040,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectOshpDtlList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1095,7 +1066,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectWtdwDtlList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1124,7 +1095,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiOshpProcess",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1153,7 +1124,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiOshpBackProcess",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1182,7 +1153,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiWtdwProcess",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1208,7 +1179,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectCnclList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1234,7 +1205,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectTcktOshpList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1260,7 +1231,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiTcktOrdProcess",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1286,7 +1257,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "selectTcktWtdwList",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     },
     {
@@ -1312,7 +1283,7 @@
       "source_metadata": {
         "document_id": "hmall-openapi.json",
         "operation_id": "multiTcktWtdwProcess",
-        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
       }
     }
   ]

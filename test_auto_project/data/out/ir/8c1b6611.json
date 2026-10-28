@@ -17,7 +17,7 @@
     "unsupported": []
   },
   "graph_id": "ORD_STAT_GBCD",
-  "catalog_version": 1,
+  "catalog_version": 2,
   "plan": {
     "strategy": "advance",
     "start": "25",

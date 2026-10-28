@@ -38,13 +38,14 @@ def goal_schema(graph: StateGraph) -> type[BaseModel]:
 
 
 def build_messages(utterance: str, graph: StateGraph) -> list[dict[str, str]]:
-    states = "\n".join(f"- {n.name} ({n.code})" for n in graph.nodes)
+    states = "\n".join(f"- {n.name} ({n.code})" + (f" · 다른 표현: {', '.join(n.synonyms)}" if n.synonyms else "")
+                       for n in graph.nodes)
     actions = "\n".join(f"- {e.name}: {graph.node(e.from_code).name} → {graph.node(e.to_code).name}"
                         for e in graph.edges if e.kind == "api")
     system = f"""당신은 테스트 데이터 요청을 '목표 상태'로 바꾸는 역할만 한다.
 대상: {graph.entity} ({graph.name} 그래프)
 
-[상태 목록 — 이 이름 중에서만 고른다]
+[상태 목록 — 이 이름 중에서만 고른다. '다른 표현'으로 말해도 고르는 값은 앞의 상태 이름]
 {states}
 
 [참고: 상태를 바꾸는 동작]
@@ -57,7 +58,8 @@ def build_messages(utterance: str, graph: StateGraph) -> list[dict[str, str]]:
 3. count 는 요청의 건수. 없으면 1.
 4. source_phrases 에는 판단 근거가 된 구절을 요청 원문에서 글자 그대로 복사한다.
 5. 만들 수 있는지는 판단하지 않는다. 요청이 가리키는 상태를 그대로 고른다.
-6. 상태 목록으로 표현할 수 없는 조건은 unsupported 에 적는다."""
+6. 상태 목록으로 표현할 수 없는 조건은 unsupported 에 적는다.
+7. 요청이 상태 이름 대신 '다른 표현'을 쓰면 그 상태로 본다 (예: 다른 표현에 '발송된' 이 있으면 출고)."""
     return [{"role": "system", "content": system}, {"role": "user", "content": utterance}]
 
 
@@ -102,6 +104,40 @@ def to_goal(out: BaseModel | dict[str, Any], utterance: str, graph: StateGraph) 
     return Goal(graph_id=graph.graph_id, target=code, must_pass=[m for m in must if m != code],
                 count=int(d.get("count") or 1), source_phrases=d["source_phrases"],
                 unsupported=d.get("unsupported") or [])
+
+
+def graph_schema(graphs: list[StateGraph]) -> type[BaseModel]:
+    ids = tuple(g.graph_id for g in graphs) + ("없음",)
+    return create_model("GraphChoice",
+                        graph_id=(Literal[ids], Field(description="요청이 말하는 대상 · 상태에 맞는 그래프. 맞는 게 없으면 '없음'")),  # type: ignore[valid-type]
+                        reason=(str, Field(description="고른 이유 — 요청의 어떤 말이 어떤 그래프의 대상 · 상태와 맞는지")))
+
+
+def graph_messages(utterance: str, graphs: list[StateGraph]) -> list[dict[str, str]]:
+    lines = []
+    for g in graphs:
+        states = ", ".join(n.name + (f"({'/'.join(n.synonyms)})" if n.synonyms else "") for n in g.nodes)
+        lines.append(f"- {g.graph_id}: {g.name} — 대상 {g.entity} · 상태 {states}")
+    system = f"""당신은 테스트 데이터 요청이 어떤 상태 그래프에 해당하는지 고르는 역할만 한다.
+그래프 하나 = 어떤 대상의 상태 코드 그룹 하나다.
+
+[그래프 목록]
+{chr(10).join(lines)}
+
+규칙
+1. 요청이 말하는 대상(주문 · 상품 …)과 상태가 들어 있는 그래프 하나를 고른다.
+2. 맞는 그래프가 없으면 '없음'을 고른다. 억지로 고르지 않는다.
+3. reason 에 요청의 어떤 말 때문에 골랐는지 적는다."""
+    return [{"role": "system", "content": system}, {"role": "user", "content": utterance}]
+
+
+def choose_graph(utterance: str, graphs: list[StateGraph], llm: LLMParse) -> tuple[StateGraph | None, str]:
+    """요청에 맞는 그래프 고르기. 그래프가 하나뿐이면 묻지 않는다."""
+    if len(graphs) == 1:
+        return graphs[0], "그래프가 하나뿐"
+    out = llm(graph_messages(utterance, graphs), graph_schema(graphs)).model_dump()
+    g = next((x for x in graphs if x.graph_id == out["graph_id"]), None)
+    return g, out["reason"]
 
 
 def extract_goal(utterance: str, graph: StateGraph, llm: LLMParse) -> Goal:

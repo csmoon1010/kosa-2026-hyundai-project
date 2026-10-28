@@ -1,0 +1,313 @@
+{
+  "summary": {
+    "transitions": {
+      "정답": 6,
+      "정확": 3,
+      "틀림": 1,
+      "없음": 2,
+      "추가": 3
+    },
+    "lookups": {
+      "정답": 7,
+      "정확": 2,
+      "틀림": 0,
+      "없음": 5,
+      "추가": 2
+    },
+    "fields": 0,
+    "paths": {
+      "A": 2,
+      "B": 0
+    }
+  },
+  "transitions": [
+    {
+      "item": "multiOshpProcess.do procGb=P1",
+      "status": "정확",
+      "gold": "25→30",
+      "got": "25→30",
+      "gold_name": "출고진행",
+      "got_name": "주문확인",
+      "basis": "guess",
+      "evidence": "API 설명은 '주문확인(P1)/출고완료(P2)/배송완료(P3) 처리'. 코드 목록에는 주문확인 상태가 없고, 출고대기(25) 다음 물류 진행 상태가 출고진행(30)이므로 P1을 25→30으로 추정했다."
+    },
+    {
+      "item": "multiOshpProcess.do procGb=P2",
+      "status": "정확",
+      "gold": "30→45",
+      "got": "30→45",
+      "gold_name": "출고완료",
+      "got_name": "출고완료",
+      "basis": "guess",
+      "evidence": "API 설명에 '출고완료(P2)'가 명시되어 있고 코드 목록에 출고 계열 상태는 출고진행(30), 출고(45), 배송완료(50)가 있다. P2를 출고진행 후 출고 상태인 45로 추정했다."
+    },
+    {
+      "item": "multiOshpProcess.do procGb=P3",
+      "status": "정확",
+      "gold": "45→50",
+      "got": "45→50",
+      "gold_name": "배송완료",
+      "got_name": "배송완료",
+      "basis": "guess",
+      "evidence": "API 설명에 '배송완료(P3)'가 명시되어 있고 코드 목록에 배송완료(50)가 있다. 직전 물류 상태를 출고(45)로 추정했다."
+    },
+    {
+      "item": "multiOshpBackProcess.do procGb=PB1",
+      "status": "틀림",
+      "gold": "30→25",
+      "got": "45→30",
+      "gold_name": "출고취소",
+      "got_name": "출고취소처리",
+      "basis": "guess",
+      "evidence": "API 설명은 '출고취소처리', 요청 예시는 procGb=PB1. 'BackProcess' 명칭상 출고완료 처리를 되돌리는 동작으로 보고 출고(45)에서 출고진행(30)으로 롤백한다고 추정했다. 코드 목록의 '취소출고(77)'와는 어순·의미가 달라 확정 불가하다."
+    },
+    {
+      "item": "multiOshpBackProcess.do procGb=PB2",
+      "status": "없음",
+      "gold": "45→30",
+      "got": null,
+      "gold_name": "출고완료취소",
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "multiOshpBackProcess.do procGb=PB3",
+      "status": "없음",
+      "gold": "50→45",
+      "got": null,
+      "gold_name": "배송완료취소",
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "multiWtdwProcess.do",
+      "status": "추가",
+      "gold": null,
+      "got": "55→57",
+      "gold_name": null,
+      "got_name": "회수처리",
+      "basis": "guess",
+      "evidence": "API 설명은 '회수처리'. 회수조회 예시에서 lastDlvstPrgrGbcd=55(회수요청)가 나오고, 요청에 송장번호·택배배송사코드가 있어 협력사 회수 접수/집하 처리로 보인다. 코드 목록상 회수요청 다음 상태인 회수집하(57)로 추정했다."
+    },
+    {
+      "item": "multiTcktOrdProcess.do procGb=P1",
+      "status": "추가",
+      "gold": null,
+      "got": "20→80",
+      "gold_name": null,
+      "got_name": "티켓 주문처리",
+      "basis": "guess",
+      "evidence": "티켓 주문조회(selectTcktOshpList) 요청 procGb=P1 예시 응답에 lastOrdStatGbcd=20(결제완료)이 있다. 티켓은 물리 출고 상태를 거치지 않을 수 있어 주문처리 후 일반 완료 상태인 80(완료)로 추정했다."
+    },
+    {
+      "item": "multiTcktWtdwProcess.do procGb=P0",
+      "status": "추가",
+      "gold": null,
+      "got": "55→63",
+      "gold_name": null,
+      "got_name": "티켓 회수처리",
+      "basis": "guess",
+      "evidence": "API 설명은 '티켓 물류처리-회수처리'. 티켓 회수조회(selectTcktWtdwList) 예시 응답에 sendGb=회수완료, lastOrdStatGbcd=63이 있어 티켓 회수처리의 결과를 회수완료(63)로 추정했다. 전제 상태는 회수요청(55)으로 추정했다."
+    }
+  ],
+  "lookups": [
+    {
+      "item": "selectOshpDtlList.do prgrGb=P0",
+      "status": "정확",
+      "gold": [
+        "25"
+      ],
+      "got": [
+        "25"
+      ],
+      "gold_name": null,
+      "got_name": null,
+      "basis": "spec",
+      "evidence": "출고조회 요청 예시에 prgrGb=P0가 있고 응답 예시에 lastDlvstPrgrGbcd=25가 있다. 코드 목록에서 25는 출고대기."
+    },
+    {
+      "item": "selectOshpDtlList.do prgrGb=P1",
+      "status": "없음",
+      "gold": [
+        "30"
+      ],
+      "got": null,
+      "gold_name": null,
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "selectOshpDtlList.do prgrGb=P2",
+      "status": "없음",
+      "gold": [
+        "45"
+      ],
+      "got": null,
+      "gold_name": null,
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "selectOshpDtlList.do prgrGb=P3",
+      "status": "없음",
+      "gold": [
+        "50"
+      ],
+      "got": null,
+      "gold_name": null,
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "selectWtdwDtlList.do prgrGb=P0",
+      "status": "정확",
+      "gold": [
+        "55"
+      ],
+      "got": [
+        "55"
+      ],
+      "gold_name": null,
+      "got_name": null,
+      "basis": "spec",
+      "evidence": "회수조회 요청 예시에 prgrGb=P0가 있고 응답 예시에 lastDlvstPrgrGbcd=55가 있다. 코드 목록에서 55는 회수요청."
+    },
+    {
+      "item": "selectWtdwDtlList.do prgrGb=P1",
+      "status": "없음",
+      "gold": [
+        "57",
+        "60"
+      ],
+      "got": null,
+      "gold_name": null,
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "selectWtdwDtlList.do prgrGb=P2",
+      "status": "없음",
+      "gold": [
+        "63"
+      ],
+      "got": null,
+      "gold_name": null,
+      "got_name": null,
+      "basis": null,
+      "evidence": null
+    },
+    {
+      "item": "selectTcktOshpList.do procGb=P1",
+      "status": "추가",
+      "gold": null,
+      "got": [
+        "20"
+      ],
+      "gold_name": null,
+      "got_name": null,
+      "basis": "spec",
+      "evidence": "티켓 주문조회 요청 예시에 procGb=P1가 있고 응답 예시에 lastOrdStatGbcd=20이 있다. 코드 목록에서 20은 결제완료."
+    },
+    {
+      "item": "selectTcktWtdwList.do procGb=P0",
+      "status": "추가",
+      "gold": null,
+      "got": [
+        "63"
+      ],
+      "gold_name": null,
+      "got_name": null,
+      "basis": "spec",
+      "evidence": "티켓 회수조회 요청 예시에 procGb=P0가 있고 응답 예시에 lastOrdStatGbcd=63, sendGb=회수완료가 있다. 코드 목록에서 63은 회수완료."
+    }
+  ],
+  "fields": [
+    {
+      "item": "state_field",
+      "gold": "lastDlvstPrgrGbcd",
+      "got": "lastOrdStatGbcd; lastDlvstPrgrGbcd",
+      "status": "틀림"
+    },
+    {
+      "item": "entry_states",
+      "gold": [
+        "25"
+      ],
+      "got": [
+        "20",
+        "25",
+        "55"
+      ],
+      "status": "틀림"
+    },
+    {
+      "item": "verify_key_fields",
+      "gold": [
+        "ordNo",
+        "ordPtcSeq"
+      ],
+      "got": [
+        "venCd",
+        "ven2Cd",
+        "ordNo",
+        "ordPtcSeq",
+        "dlvstNo",
+        "dlvstPtcSeq"
+      ],
+      "status": "틀림"
+    }
+  ],
+  "paths": [
+    {
+      "goal": "45",
+      "gold_A": "25 조회(prgrGb=P0) → procGb=P1 → procGb=P2",
+      "got_A": "25 조회(prgrGb=P0) → procGb=P1 → procGb=P2",
+      "gold_B": "45 조회(prgrGb=P2)",
+      "got_B": "없음",
+      "status_A": "같음",
+      "status_B": "다름"
+    },
+    {
+      "goal": "45 (거쳐야 함 50)",
+      "gold_A": "25 조회(prgrGb=P0) → procGb=P1 → procGb=P2 → procGb=P3 → procGb=PB3",
+      "got_A": "거절",
+      "gold_B": "50 조회(prgrGb=P3) → procGb=PB3",
+      "got_B": "거절",
+      "status_A": "다름",
+      "status_B": "다름"
+    },
+    {
+      "goal": "50",
+      "gold_A": "25 조회(prgrGb=P0) → procGb=P1 → procGb=P2 → procGb=P3",
+      "got_A": "25 조회(prgrGb=P0) → procGb=P1 → procGb=P2 → procGb=P3",
+      "gold_B": "50 조회(prgrGb=P3)",
+      "got_B": "없음",
+      "status_A": "같음",
+      "status_B": "다름"
+    },
+    {
+      "goal": "20",
+      "gold_A": "거절",
+      "got_A": "20 조회(procGb=P1)",
+      "gold_B": "거절",
+      "got_B": "없음",
+      "status_A": "다름",
+      "status_B": "다름"
+    }
+  ],
+  "open_questions": [
+    "출고·회수 조회의 lastDlvstPrgrGbcd가 ORD_STAT_GBCD와 동일한 코드 그룹인지, 아니면 값만 일부 같은 배송지시진행구분코드인지 확인이 필요하다.",
+    "multiOshpProcess의 procGb=P1/P2/P3가 각각 정확히 어떤 ORD_STAT_GBCD로 전이되는지 명세에 코드값으로 적혀 있지 않다.",
+    "multiOshpBackProcess procGb=PB1의 결과가 출고 롤백(예: 45→30)인지, 주문상태 '취소출고(77)'인지 확인이 필요하다.",
+    "multiWtdwProcess가 회수요청(55)을 회수집하(57), 회수확인(60), 회수완료(63) 중 어디까지 변경하는지 명세만으로 확정할 수 없다.",
+    "티켓 주문처리 multiTcktOrdProcess procGb=P1의 결과 상태가 완료(80)인지 다른 상태인지 확인이 필요하다.",
+    "취소조회(selectCnclList)는 취소 데이터를 조회하지만 응답에 lastOrdStatGbcd 같은 현재 상태 필드가 없어 70/73/75/77/79/81 계열 상태와의 매핑을 만들 수 없다.",
+    "상태 10(접수), 26(매장승인), 27(매장출발), 60(회수확인), 70(취소회수요청), 73(취소회수집하), 75(취소회수완료), 77(취소출고), 79(취소출고배송완료), 81(취소완료), 82(수선완료), 91(A/S취소), 92(반품전환), 93(교환전환)을 변경하거나 조회하는 API와 전이 조건은 제공 자료에서 확인되지 않는다."
+  ]
+}

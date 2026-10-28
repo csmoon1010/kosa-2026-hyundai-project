@@ -1,7 +1,8 @@
 """경로 계산 — LLM 이 아니라 그래프 탐색이 호출 순서를 정한다. 같은 목표는 항상 같은 경로.
 
 전략
-  A. advance (기본) — 진입 상태(예: 25 출고대기)의 기존 데이터를 조회로 찾아 API 로 진행시킨다
+  A. advance (기본) — 기존 데이터를 조회로 찾아 API 로 진행시킨다. 출발은 진입 상태(entry_states)가 있으면 거기,
+                      없으면 조회로 찾을 수 있고 목표까지 갈 수 있는 상태 중 공통코드 정렬순서가 가장 앞인 곳
   B. lookup  (대안) — 조회 가능한 상태 중 쓰기 호출이 가장 적은 곳에서 시작한다
                       (목표 상태를 바로 조회할 수 있으면 쓰기 0회)
 둘 다 안 되면 거절하고 이유를 남긴다.
@@ -72,7 +73,7 @@ def search(graph: StateGraph, start: str, goal: Goal) -> tuple[list[Edge], list[
     return None
 
 
-def _best(graph: StateGraph, starts: list[str], goal: Goal, strategy) -> Path | None:
+def _best(graph: StateGraph, starts: list[str], goal: Goal, strategy, most: bool = False) -> Path | None:
     found: list[Path] = []
     for s in starts:
         node = graph.node(s)
@@ -81,8 +82,9 @@ def _best(graph: StateGraph, starts: list[str], goal: Goal, strategy) -> Path | 
         r = search(graph, s, goal)
         if r:
             found.append(Path(strategy=strategy, start=s, lookup=node.lookup, edges=r[0], states=r[1]))
-    # 쓰기가 적은 순, 같으면 앞 단계에서 시작하는 쪽 (더 '만든' 데이터에 가깝다)
-    found.sort(key=lambda p: (p.writes, graph.node(p.start).stage if graph.node(p.start).stage is not None else 99))
+    # B: 쓰기가 적은 순 (같으면 정렬순서 앞) / A(진입 상태 없음): 공통코드 정렬순서가 앞인 순 (같으면 쓰기 많은 쪽)
+    order = {n.code: i for i, n in enumerate(graph.nodes)}
+    found.sort(key=lambda p: (order.get(p.start, 99), -p.writes) if most else (p.writes, order.get(p.start, 99)))
     return found[0] if found else None
 
 
@@ -92,8 +94,9 @@ def plan(graph: StateGraph, goal: Goal) -> PlanResult:
         if c not in codes:
             return PlanResult(status="rejected", reason=f"그래프 {graph.graph_id} 에 없는 상태: {c}")
 
-    a = _best(graph, graph.entry_states, goal, "advance")
-    b = _best(graph, [n.code for n in graph.nodes if n.lookup], goal, "lookup")
+    findable = [n.code for n in graph.nodes if n.lookup]
+    a = _best(graph, graph.entry_states, goal, "advance") if graph.entry_states else _best(graph, findable, goal, "advance", most=True)
+    b = _best(graph, findable, goal, "lookup")
     if b and a and (b.start, [e.id for e in b.edges]) == (a.start, [e.id for e in a.edges]):
         b = None                                # 대안이 기본과 같으면 따로 안내하지 않는다
     if a:
@@ -103,7 +106,10 @@ def plan(graph: StateGraph, goal: Goal) -> PlanResult:
 
     t = graph.node(goal.target)
     why = [f"{t.name}({t.code}) 은(는)"]
-    if t.stage is None:
+    if not graph.entry_states:
+        reach = {e.to_code for e in graph.edges if e.kind == "api"}
+        why.append("API 화살표로 갈 수 있는 상태가 아닙니다." if t.code not in reach else "목표 조건(거쳐야 할 상태)을 만족하는 API 경로가 없습니다.")
+    elif t.stage is None:
         entry = ", ".join(f"{graph.node(s).name}({s})" for s in graph.entry_states)
         why.append(f"API 로 만들 수 없는 상태입니다 — 우리가 다룰 수 있는 첫 상태는 {entry} 이고, 그 앞은 외부(고객 주문 · 결제 등)에서 생깁니다.")
     else:

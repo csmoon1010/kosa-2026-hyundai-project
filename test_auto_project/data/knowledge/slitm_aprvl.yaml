@@ -1,0 +1,29 @@
+# 판매상품승인 그래프 재료 — 사람이 확인한 업무 지식 (자동 생성 아님)
+# 출처: 권지은, 2026-10-28 — 공통코드 SLITM_APRVL_GBCD 코드 목록만. 전이 · 진입 상태 · 조회 방법은 아직 미확인 (화면에서 업무 담당자가 채운다)
+
+graph:
+  id: SLITM_APRVL_GBCD
+  name: 판매상품승인
+  domain: pd                      # 담당 = 상태 코드 그룹의 주인
+  entity: 판매상품
+  state_field: slitmAprvlGbcd        # 판매상품조회 응답 (명세 예시 2 = 승인완료)
+  entry_states: []                # 미확인
+  verify_key_fields: [slitmCd]    # 판매상품코드
+
+code_group:
+  id: SLITM_APRVL_GBCD
+  name: 판매상품승인구분코드
+  codes:
+    "0": 임시저장
+    "1": 팀장승인대기
+    "2": 승인완료
+    "3": 취소
+    "4": 시스템처리중
+    "5": 반송
+    "6": MD대기
+    "7": 시스템 처리 대기
+    "9": 실패
+
+transitions: []   # 미확인 — 누가(협력사 API / 내부 MD · 팀장 승인 / 시스템) 어떤 상태로 바꾸는지
+
+lookups: []       # 판매상품조회 요청에 같은 필드(slitmAprvlGbcd)가 있어 상태 코드로 바로 거를 수 있어 보임 — 확인 전

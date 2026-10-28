@@ -65,7 +65,8 @@ def test_split_dataset_note():
 # ------------------------------------------------------------------ 파싱 · api_id
 
 def test_api_id_is_service_method_path(ops):
-    assert len(ops) == 43 and len({o.api_id for o in ops}) == 43
+    assert len(ops) == 42 and len({o.api_id for o in ops}) == 42                # /om 은 명세에서 삭제 (2026-10-28)
+    assert not any(o.path.startswith("/om/") for o in ops)
     o = op_of(ops, "multiItem")
     assert o.api_id == "hshop-openapi:POST:/pd/pdb/multiItem.do"
     assert (o.service, o.spec_source) == (SVC, SPEC.name)
@@ -112,8 +113,7 @@ def test_domain_by_prefix(ops):
     assert (g["multiItem"].domain, g["multiItem"].confidence) == ("pd", "높음")
     assert g["multiOshpProcess"].domain == "ds"                    # /sc → 물류/SCM
     assert g["insertVenAdrMng"].domain == "af"                     # /vd → 재경
-    for oid in ("multiVenSdlvcMngInf", "selectSectMstList"):       # /hmgb · /om 미지정
-        assert (g[oid].domain, g[oid].confidence) == ("unknown", "낮음")
+    assert (g["multiVenSdlvcMngInf"].domain, g["multiVenSdlvcMngInf"].confidence) == ("hm", "높음")   # /hmgb → 전시
 
 
 def test_domain_rules_validation(tmp_path):
@@ -174,10 +174,10 @@ def test_domain_conn_override():
 
 def test_three_documents_linked_by_api_id(tmp_path):
     r, load = run(tmp_path)
-    assert r["operations"] == 43 and r["kinds"] == {"read": 25, "write": 18}
+    assert r["operations"] == 42 and r["kinds"] == {"read": 24, "write": 18}
     reg, meta, cat = load("tool_registry"), load("api_metadata"), load("api_catalog")
     ids = [t["api_id"] for t in reg["tools"]]
-    assert len(set(ids)) == 43                                     # Tool Registry PK = api_id
+    assert len(set(ids)) == 42                                     # Tool Registry PK = api_id
     assert ids == [m["api_id"] for m in meta] == [a["api_id"] for a in cat["apis"]]
     assert "tool_id" not in reg["tools"][0] and "tool_id" not in meta[0] and "tool_name" not in meta[0]
 
