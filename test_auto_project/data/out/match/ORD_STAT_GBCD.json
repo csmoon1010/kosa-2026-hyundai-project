@@ -1,0 +1,187 @@
+{
+  "summary": {
+    "전이": {
+      "전체": 6,
+      "1순위 정확": 6,
+      "3순위 안": 6,
+      "API만 맞음": 0
+    },
+    "조회": {
+      "전체": 8,
+      "1순위 정확": 8,
+      "3순위 안": 8,
+      "API만 맞음": 0
+    }
+  },
+  "rows": [
+    {
+      "kind": "전이",
+      "item": "25→30 출고진행",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpProcess.do {'procGb': 'P1'}",
+      "top": [
+        "multiOshpProcess.do {'procGb': 'P1'} 출고진행 1.00",
+        "multiOshpProcess.do {'procGb': 'P2'} 출고완료 0.31"
+      ]
+    },
+    {
+      "kind": "전이",
+      "item": "30→45 출고완료",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpProcess.do {'procGb': 'P2'}",
+      "top": [
+        "multiOshpProcess.do {'procGb': 'P2'} 출고완료 1.00",
+        "multiOshpProcess.do {'procGb': 'P1'} 출고진행 0.57",
+        "multiOshpProcess.do {'procGb': 'P3'} 배송완료 0.57"
+      ]
+    },
+    {
+      "kind": "전이",
+      "item": "45→50 배송완료",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpProcess.do {'procGb': 'P3'}",
+      "top": [
+        "multiOshpProcess.do {'procGb': 'P3'} 배송완료 1.00",
+        "multiOshpProcess.do {'procGb': 'P1'} 출고진행 0.57",
+        "multiOshpProcess.do {'procGb': 'P2'} 출고완료 0.57"
+      ]
+    },
+    {
+      "kind": "전이",
+      "item": "30→25 출고취소",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpBackProcess.do {'procGb': 'PB1'}",
+      "top": [
+        "multiOshpBackProcess.do {'procGb': 'PB1'} 출고취소 1.00",
+        "multiOshpBackProcess.do {'procGb': 'PB2'} 출고완료취소 0.80",
+        "multiOshpBackProcess.do {'procGb': 'PB3'} 배송완료취소 0.80"
+      ]
+    },
+    {
+      "kind": "전이",
+      "item": "45→30 출고완료취소",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpBackProcess.do {'procGb': 'PB2'}",
+      "top": [
+        "multiOshpBackProcess.do {'procGb': 'PB2'} 출고완료취소 1.00",
+        "multiOshpProcess.do {'procGb': 'P2'} 출고완료 0.44",
+        "multiOshpBackProcess.do {'procGb': 'PB3'} 배송완료취소 0.42"
+      ]
+    },
+    {
+      "kind": "전이",
+      "item": "50→45 배송완료취소",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "multiOshpBackProcess.do {'procGb': 'PB3'}",
+      "top": [
+        "multiOshpBackProcess.do {'procGb': 'PB3'} 배송완료취소 1.00",
+        "multiOshpBackProcess.do {'procGb': 'PB2'} 출고완료취소 0.50",
+        "multiOshpProcess.do {'procGb': 'P3'} 배송완료 0.44"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "25 출고대기",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectOshpDtlList.do {'prgrGb': 'P0'}",
+      "top": [
+        "selectOshpDtlList.do {'prgrGb': 'P0'} 출고대기(25)만 1.00",
+        "selectOshpDtlList.do {'prgrGb': 'P2'} 출고(45)만 0.67"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "30 출고진행",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectOshpDtlList.do {'prgrGb': 'P1'}",
+      "top": [
+        "selectOshpDtlList.do {'prgrGb': 'P1'} 출고진행(30)만 1.00",
+        "selectOshpDtlList.do {'prgrGb': 'P2'} 출고(45)만 0.67"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "45 출고",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectOshpDtlList.do {'prgrGb': 'P2'}",
+      "top": [
+        "selectOshpDtlList.do {'prgrGb': 'P2'} 출고(45)만 1.00",
+        "selectOshpDtlList.do {'prgrGb': 'P0'} 출고대기(25)만 0.67",
+        "selectOshpDtlList.do {'prgrGb': 'P1'} 출고진행(30)만 0.67"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "50 배송완료",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectOshpDtlList.do {'prgrGb': 'P3'}",
+      "top": [
+        "selectOshpDtlList.do {'prgrGb': 'P3'} 배송완료(50)만 1.00"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "55 회수요청",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectWtdwDtlList.do {'prgrGb': 'P0'}",
+      "top": [
+        "selectWtdwDtlList.do {'prgrGb': 'P0'} 회수요청(55 · 56)만 1.00"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "57 회수집하",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectWtdwDtlList.do {'prgrGb': 'P1'}",
+      "top": [
+        "selectWtdwDtlList.do {'prgrGb': 'P1'} 회수집하 · 회수확인(57 · 60)만 0.80"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "60 회수확인",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectWtdwDtlList.do {'prgrGb': 'P1'}",
+      "top": [
+        "selectWtdwDtlList.do {'prgrGb': 'P1'} 회수집하 · 회수확인(57 · 60)만 0.80"
+      ]
+    },
+    {
+      "kind": "조회",
+      "item": "63 회수완료",
+      "result": "정확",
+      "rank": 1,
+      "status": "찾음",
+      "want": "selectWtdwDtlList.do {'prgrGb': 'P2'}",
+      "top": [
+        "selectWtdwDtlList.do {'prgrGb': 'P2'} 회수완료(63)만 1.00"
+      ]
+    }
+  ]
+}

@@ -1,18 +1,43 @@
 [
   {
-    "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
-    "item": "domain",
-    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
-  },
-  {
     "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
-    "item": "domain",
-    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
+    "item": "selectors",
+    "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
   },
   {
-    "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
-    "item": "domain",
-    "reason": "경로 · 태그 규칙 없음 — 검수 필요"
+    "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+    "item": "selectors",
+    "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+    "item": "selectors",
+    "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+    "item": "selectors",
+    "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
   },
   {
     "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",

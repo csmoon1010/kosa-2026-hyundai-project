@@ -23,6 +23,7 @@ class StateNode(BaseModel):
     name: str
     lookup: Lookup | None = None                # 조회로 찾을 수 있으면
     stage: int | None = None                    # 진입 상태에서 몇 번째 단계인지 (앞으로 가는 간선 기준)
+    synonyms: list[str] = Field(default_factory=list)   # 자연어에서 이 상태를 가리키는 다른 표현 (State Vocabulary 동의어)
 
 
 class Edge(BaseModel):
