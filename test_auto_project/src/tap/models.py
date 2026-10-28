@@ -66,6 +66,24 @@ class DomainGuess(BaseModel):
 # ------------------------------------------------------------------ API Metadata
 
 
+class SelectorValue(BaseModel):
+    """구분값 하나 — 이 값을 넣으면 API 가 하는 일."""
+
+    value: str                                  # P1
+    name: str | None = None                     # 출고진행
+    aliases: list[str] = Field(default_factory=list)   # 다른 이름 (사람이 이름을 고치면 명세 이름이 여기로)
+    source: Literal["spec", "override"] = "spec"       # spec: 명세 summary · 예시값 / override: 사람 보정
+
+
+class Selector(BaseModel):
+    """한 API 가 여러 일을 할 때, 이번 일을 고르는 요청 필드 (예: procGb). 간선 = api_id + 구분값."""
+
+    field: str                                  # procGb
+    label: str | None = None                    # 진행구분코드
+    complete: bool = False                      # 값 목록이 전부인지 — false 면 검수 대상
+    values: list[SelectorValue] = Field(default_factory=list)
+
+
 class ApiMetaData(BaseModel):
     """API 의 전체 검색 · 실행 메타정보. Catalog 의 원본이다.
 
@@ -83,6 +101,9 @@ class ApiMetaData(BaseModel):
     description: str | None = None              # api_name 과 같으면 비운다
     # knowledge
     aliases: list[str] = Field(default_factory=list)          # API 선택 시 참고하는 도움말
+    # selectors — None: 아직 판단 안 함 / []: 구분값 없음 (API 하나가 동작 하나) / [...]: 필드 · 값 목록
+    selectors: list[Selector] | None = None
+    selectors_source: Literal["auto", "override"] | None = None   # auto: 규칙으로 추출 / override: 사람 확인
     input_concepts: list[str] = Field(default_factory=list)   # 1차 비움 — 2차에 Canonical Schema 에서 요약
     output_concepts: list[str] = Field(default_factory=list)  # 1차 비움 — 2차에 Response Outputs 에서 요약
     # safety

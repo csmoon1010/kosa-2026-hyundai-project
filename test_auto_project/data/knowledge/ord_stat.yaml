@@ -4,7 +4,7 @@
 graph:
   id: ORD_STAT_GBCD               # 그래프 하나 = 상태 코드 그룹 하나
   name: 주문상태
-  domain: ds
+  domain: od                      # 담당 = 상태 코드 그룹의 주인 (동작 API 는 물류 ds 것을 붙임)
   entity: 주문
   state_field: lastDlvstPrgrGbcd  # 조회 응답에서 마지막 상태를 읽는 필드
   entry_states: ["25"]            # 외부(고객 주문 · 결제)에서 들어와 우리가 API 로 처음 다룰 수 있는 상태
