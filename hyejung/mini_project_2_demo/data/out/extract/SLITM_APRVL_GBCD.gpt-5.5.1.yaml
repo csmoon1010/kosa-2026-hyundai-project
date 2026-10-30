@@ -1,0 +1,109 @@
+# 자동 추출 (실험) — 공통코드 + 명세만, 모델 gpt-5.5. 사람 확인 전
+graph:
+  id: SLITM_APRVL_GBCD
+  name: 판매상품승인구분코드
+  domain: pd
+  entity: 판매상품
+  state_field: slitmAprvlGbcd
+  entry_states: []
+  verify_key_fields:
+  - slitmCd
+  - venCd
+  - ven2Cd
+code_group:
+  id: SLITM_APRVL_GBCD
+  name: 판매상품승인구분코드
+  codes:
+    '0': 임시저장
+    '1': 팀장승인대기
+    '2': 승인완료
+    '3': 취소
+    '4': 시스템처리중
+    '5': 반송
+    '6': MD대기
+    '7': 시스템 처리 대기
+    '9': 실패
+transitions: []
+lookups:
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '0'
+  states:
+  - '0'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 0=임시저장.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '1'
+  states:
+  - '1'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 1=팀장승인대기.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '2'
+  states:
+  - '2'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드, 예:2)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드,
+    예:2), slitmAprvlGbnm(상품승인구분명, 예:승인완료)가 있음. 공통코드에서 2=승인완료.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '3'
+  states:
+  - '3'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 3=취소.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '4'
+  states:
+  - '4'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 4=시스템처리중.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '5'
+  states:
+  - '5'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 5=반송.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '6'
+  states:
+  - '6'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 6=MD대기.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '7'
+  states:
+  - '7'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 7=시스템 처리 대기.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    slitmAprvlGbcd: '9'
+  states:
+  - '9'
+  basis: spec
+  evidence: 요청 필드에 slitmAprvlGbcd(판매상품승인구분코드)가 있고, 응답 필드에 slitmAprvlGbcd(상품승인구분코드),
+    slitmAprvlGbnm(상품승인구분명)가 있음. 공통코드에서 9=실패.
+open_questions:
+- 자료에 SLITM_APRVL_GBCD 값을 직접 변경하는 쓰기 API가 명시되어 있지 않음. 상품 등록(multiItem.do) 또는 상품 수정(updateItemByVen.do)이
+  승인상태를 간접 변경하는지 확인 필요.
+- 상품 등록 후 최초 판매상품승인구분코드가 0(임시저장), 1(팀장승인대기), 6(MD대기), 7(시스템 처리 대기) 중 무엇인지 자료만으로 확정할
+  수 없음.
+- 승인완료(2), 반송(5), 취소(3), 실패(9), 시스템처리중(4)으로 가는 실제 승인/반송/취소/시스템 처리 API와 전제 상태가 자료에
+  없음.
+- 정렬 순서는 제공되었지만 전이 순서가 아니므로 0→1→2 같은 순차 전이는 확정하지 않음.
+- 상세 조회(selectItem.do) 응답에는 SLITM_APRVL_GBCD 현재 상태 필드가 명확히 보이지 않으므로, 상태 확인 조회는 판매상품조회(selectVenSellItemQryList.do)
+  기준으로만 정리함.

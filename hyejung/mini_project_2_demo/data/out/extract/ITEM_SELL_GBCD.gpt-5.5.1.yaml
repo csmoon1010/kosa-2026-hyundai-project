@@ -1,0 +1,104 @@
+# 자동 추출 (실험) — 공통코드 + 명세만, 모델 gpt-5.5. 사람 확인 전
+graph:
+  id: ITEM_SELL_GBCD
+  name: 상품판매구분코드
+  domain: pd
+  entity: 판매상품
+  state_field: itemSellGbcd
+  entry_states:
+  - '00'
+  verify_key_fields:
+  - slitmCd
+  - venCd
+code_group:
+  id: ITEM_SELL_GBCD
+  name: 상품판매구분코드
+  codes:
+    '00': 판매중
+    '11': 일시중단
+    '19': 영구중단
+transitions:
+- api: hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do
+  selector:
+    itemSellGbcd: '00'
+  name: 상품 판매구분을 판매중으로 변경 요청
+  from: '11'
+  to: '00'
+  source: llm
+  basis: guess
+  evidence: API summary가 '상품 판매구분 변경 요청'이고 요청 필드에 itemSellGbcd(상품판매구분코드)가 있음. 공통코드에서
+    00=판매중, 11=일시중단. 11 일시중단 상품을 00 판매중으로 재개하는 전이는 명칭 기반 추정이며, 명세에 허용 전제 상태가 직접 적혀
+    있지는 않음.
+- api: hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do
+  selector:
+    itemSellGbcd: '11'
+  name: 상품 판매구분을 일시중단으로 변경 요청
+  from: '00'
+  to: '11'
+  source: llm
+  basis: guess
+  evidence: API summary가 '상품 판매구분 변경 요청'이고 요청 필드에 itemSellGbcd(상품판매구분코드, 예:11)가 있음.
+    공통코드에서 00=판매중, 11=일시중단. 판매중 상품을 일시중단으로 변경하는 전이는 코드명 기반 추정이며, 명세에 허용 전제 상태가 직접
+    적혀 있지는 않음.
+- api: hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do
+  selector:
+    itemSellGbcd: '19'
+  name: 상품 판매구분을 영구중단으로 변경 요청
+  from: '00'
+  to: '19'
+  source: llm
+  basis: guess
+  evidence: API summary가 '상품 판매구분 변경 요청'이고 요청 필드에 itemSellGbcd가 있음. 공통코드에서 19=영구중단.
+    판매중에서 영구중단으로의 변경은 코드명 기반 추정이며, 명세에 허용 전제 상태가 직접 적혀 있지는 않음.
+- api: hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do
+  selector:
+    itemSellGbcd: '19'
+  name: 상품 판매구분을 영구중단으로 변경 요청
+  from: '11'
+  to: '19'
+  source: llm
+  basis: guess
+  evidence: API summary가 '상품 판매구분 변경 요청'이고 요청 필드에 itemSellGbcd가 있음. 공통코드에서 11=일시중단,
+    19=영구중단. 일시중단에서 영구중단으로의 변경은 코드명 기반 추정이며, 명세에 허용 전제 상태가 직접 적혀 있지는 않음.
+lookups:
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    itemSellGbcdIn: '00'
+  states:
+  - '00'
+  basis: spec
+  evidence: 요청 필드에 itemSellGbcdIn(상품판매구분코드)가 있고, 응답 필드에 itemSellGbcd(상품판매구분코드), itemSellGbnm(상품판매구분명)이
+    있음. 공통코드에서 00=판매중.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    itemSellGbcdIn: '11'
+  states:
+  - '11'
+  basis: spec
+  evidence: 요청 필드에 itemSellGbcdIn(상품판매구분코드)가 있고, 응답 예시에 itemSellGbcd=11, itemSellGbnm=일시중단이
+    있음. 공통코드에서도 11=일시중단.
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector:
+    itemSellGbcdIn: '19'
+  states:
+  - '19'
+  basis: spec
+  evidence: 요청 필드에 itemSellGbcdIn(상품판매구분코드)가 있고, 응답 필드에 itemSellGbcd(상품판매구분코드), itemSellGbnm(상품판매구분명)이
+    있음. 공통코드에서 19=영구중단.
+- api: hshop-openapi:POST:/pd/pdb/selectItem.do
+  selector: {}
+  states:
+  - '00'
+  - '11'
+  - '19'
+  basis: spec
+  evidence: 상품 상세 조회 응답 필드에 itemSellGbcd(상품판매구분코드, 예:00)가 있음. 공통코드 ITEM_SELL_GBCD의
+    값은 00, 11, 19.
+open_questions:
+- updateVenSellItemList.do에서 각 목표 상태(itemSellGbcd=00/11/19)로 변경할 때 실제로 허용되는 전제 상태
+  목록은 명세에 없다. 특히 19(영구중단)에서 00(판매중) 또는 11(일시중단)으로 되돌릴 수 있는지 확인이 필요하다.
+- 상품 등록(multiItem.do) 요청에 itemSellGbcd가 있으나, 신규 상품의 기본/허용 최초 상태가 00만인지, 11 또는 19도
+  가능한지는 명세에 명확하지 않다.
+- selectVenSellItemQryList.do의 itemSellGbcdIn 요청 예시는 상품판매구분코드 형식(00/11/19)과 달라 보이는
+  값이 기재되어 있어, 실제 필터 입력 형식이 단일 코드인지 다중 코드인지 확인이 필요하다.
+- 속성 재고 API의 sellGbcd 필드가 ITEM_SELL_GBCD와 동일 코드 그룹인지 여부가 명세상 확정되지 않아 그래프에서 제외했다.

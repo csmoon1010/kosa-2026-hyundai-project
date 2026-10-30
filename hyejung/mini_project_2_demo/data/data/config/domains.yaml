@@ -1,0 +1,54 @@
+# API 도메인 분류 규칙 — 사람이 고칠 수 있는 설정 데이터
+#
+# - 도메인 하나는 prefix 를 여러 개 가질 수 있다.
+# - prefix 하나는 도메인 하나에만 속한다. (겹치면 빌드가 실패한다)
+# - prefix 는 경로의 첫 구간 단위로 맞춘다: /hm 은 /hm/... 에만 맞고 /hmgb/... 에는 맞지 않는다.
+# - 어느 prefix 에도 맞지 않는 API 는 unknown(낮음) 으로 두고 review_queue.json 에 올린다.
+#
+# prefix 는 아직 확정 전이라 우선 '/{도메인 코드}' 로 채웠다.
+
+domains:
+  af:
+    name: 재경
+    prefixes: [/af, /vd]     # /vd: 협력사 주소지
+  am:
+    name: 제휴
+    prefixes: [/am]
+  bm:
+    name: 방송
+    prefixes: [/bm]
+  co:
+    name: 공통
+    prefixes: [/co]
+  cs:
+    name: 상담
+    prefixes: [/cs]
+  ds:
+    name: 물류/SCM
+    prefixes: [/ds, /sc]     # /sc: 출고 · 회수 · 주문확인 처리
+  dt:
+    name: 데이터방송
+    prefixes: [/dt]
+  hm:
+    name: 전시
+    prefixes: [/hm, /hmgb]   # /hmgb: 협력사 소액장바구니 (2026-10-28 지은)
+  is:
+    name: 보험
+    prefixes: [/is]
+  mk:
+    name: 마케팅
+    prefixes: [/mk]
+  od:
+    name: 주문
+    prefixes: [/od]
+  pd:
+    name: 상품
+    prefixes: [/pd]
+  auth:
+    name: 인증
+    prefixes: [/auth]
+
+# 태그 → 도메인 (prefix 로 못 정했을 때만, 신뢰도 중간). 비워 둔다.
+# Hmall 공개 명세는 태그가 경로와 어긋나는 경우가 많아(협력사 API 에 상품 태그 등)
+# 태그로 채우면 미분류 API 가 엉뚱한 도메인으로 숨어 버린다.
+tags: {}

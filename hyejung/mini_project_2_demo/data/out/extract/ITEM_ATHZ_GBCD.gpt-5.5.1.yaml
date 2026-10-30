@@ -1,0 +1,50 @@
+# 자동 추출 (실험) — 공통코드 + 명세만, 모델 gpt-5.5. 사람 확인 전
+graph:
+  id: ITEM_ATHZ_GBCD
+  name: 상품가격승인구분코드
+  domain: pd
+  entity: 판매상품 가격승인
+  state_field: itemAthzGbcd
+  entry_states:
+  - '0'
+  verify_key_fields:
+  - slitmCd
+  - venCd
+code_group:
+  id: ITEM_ATHZ_GBCD
+  name: 상품가격승인구분코드
+  codes:
+    '0': 등록(MD승인대기)
+    '11': 팀장승인대기
+    '21': 보류
+    '31': 반송
+    '41': 취소
+    '80': 승인완료
+    '99': 예외
+transitions: []
+lookups:
+- api: hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do
+  selector: {}
+  states:
+  - '0'
+  - '11'
+  - '21'
+  - '31'
+  - '41'
+  - '80'
+  - '99'
+  basis: spec
+  evidence: 판매상품조회 응답에 itemAthzGbcd(예:80), itemAthzGbnm(예:승인완료)가 있으며, 공통코드 ITEM_ATHZ_GBCD에
+    0 등록(MD승인대기), 11 팀장승인대기, 21 보류, 31 반송, 41 취소, 80 승인완료, 99 예외가 정의되어 있다.
+open_questions:
+- ITEM_ATHZ_GBCD 상태를 직접 변경하는 쓰기 API가 명세에 명시되어 있지 않다. updateItemPrcHist.do(상품 가격 수정
+  요청), multiItem.do(상품 등록), updateItemByVen.do(상품 수정) 등이 관련 가능성이 있으나 요청/응답에 itemAthzGbcd가
+  없고 결과 상태가 적혀 있지 않다.
+- updateItemPrcHist.do 및 multiItem.do의 prcAthzGbcd(가격결재구분코드, 예:00)가 ITEM_ATHZ_GBCD와
+  같은 코드인지 확인이 필요하다. 공통코드 값은 0/11/21/31/41/80/99인데 명세 예시는 00이라 불일치한다.
+- 0 등록(MD승인대기) → 11 팀장승인대기 → 80 승인완료, 또는 21 보류/31 반송/41 취소/99 예외로 가는 승인 처리 API와 전제
+  상태가 자료에 없다.
+- selectVenSellItemQryList.do는 itemAthzGbcd를 응답으로 제공하지만, 요청 필드에 itemAthzGbcd 상태 필터가
+  보이지 않는다. 특정 승인상태별 조회가 가능한 별도 선택값/필터가 있는지 확인이 필요하다.
+- entry_states는 코드명 '0 등록(MD승인대기)'을 근거로 최초 진입 상태로 보았으나, 실제 상품 등록 또는 가격수정 요청 후 0이 생성되는지는
+  명세에 명시되어 있지 않다.

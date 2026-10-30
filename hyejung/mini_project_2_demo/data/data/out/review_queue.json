@@ -1,0 +1,82 @@
+[
+  {
+    "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+    "item": "selectors",
+    "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+    "item": "selectors",
+    "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+    "item": "selectors",
+    "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+    "item": "selectors",
+    "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+    "item": "selectors",
+    "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  },
+  {
+    "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+    "item": "success_rule",
+    "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+  }
+]

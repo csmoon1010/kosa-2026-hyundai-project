@@ -1,0 +1,28 @@
+# 연결 설정 — Tool Registry 의 사람이 입력하는 부분.
+# 실행 결과물(data/out/tool_registry.json)은 이 설정 + 명세에서 나온 API 목록을 합친 것이다.
+#
+# 값 결정 순서:  도메인 설정 > 서비스 기본값 > 명세에서 추정한 값
+#   - base_url 은 '환경변수 이름' 이다. 실제 주소는 .env 에 두고, 없으면 명세의 servers[0].url 을 쓴다.
+#   - 인증 값(oauserId · oauseKey 의 실제 값)은 여기 적지 않는다. auth.profile 이름으로 .env 에서 찾는다.
+#   - allowed_environments 에 운영(PROD · PRD · REAL · OPER)을 넣어도 정책상 항상 빠진다.
+#
+# 지금은 공개 명세 하나에 모든 도메인이 들어 있다. 내부 명세를 받아 도메인별로 서비스가 나뉘면
+# 도메인마다 base_url 을 다른 환경변수 이름으로 채우면 된다.
+
+services:
+  - name: hshop-openapi
+    spec: hmall-openapi.json       # document_id
+    defaults:
+      base_url: HMALL_API_BASE_URL
+      timeout_ms: 5000
+      auth:
+        type: API_KEY_HEADER
+        profile: hmall-openapi-key
+        headers: [oauserId, oauseKey]
+      default_headers: {}
+      allowed_environments: [DEV]
+    domains:                       # 도메인 코드는 domains.yaml 과 같다. 적은 항목만 기본값을 덮어쓴다.
+      pd:                          # 없는 도메인(미분류 unknown 포함)은 defaults 를 쓴다.
+        timeout_ms: 5000
+      cs:
+        timeout_ms: 5000

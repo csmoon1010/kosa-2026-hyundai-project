@@ -1,0 +1,24 @@
+{
+  "ir_version": "0.1-draft",
+  "status": "rejected",
+  "request": "결제완료 상태 주문 만들어줘.",
+  "goal": {
+    "graph_id": "ORD_STAT_GBCD",
+    "target": "20",
+    "must_pass": [],
+    "count": 1,
+    "source_phrases": [
+      "결제완료 상태 주문"
+    ],
+    "unsupported": []
+  },
+  "graph_id": "ORD_STAT_GBCD",
+  "catalog_version": 2,
+  "plan": null,
+  "steps": [],
+  "alternative": null,
+  "run_inputs": {},
+  "unresolved": [],
+  "requires_approval": false,
+  "reason": "결제완료(20) 은(는) API 로 만들 수 없는 상태입니다 — 우리가 다룰 수 있는 첫 상태는 출고대기(25) 이고, 그 앞은 외부(고객 주문 · 결제 등)에서 생깁니다. 이 상태를 조회로 찾는 방법도 등록되어 있지 않습니다."
+}

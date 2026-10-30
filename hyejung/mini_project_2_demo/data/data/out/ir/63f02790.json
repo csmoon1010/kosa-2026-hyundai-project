@@ -1,0 +1,452 @@
+{
+  "ir_version": "0.1-draft",
+  "status": "ok",
+  "request": "배송완료된 주문 2건 만들어줘.",
+  "goal": {
+    "graph_id": "ORD_STAT_GBCD",
+    "target": "50",
+    "must_pass": [],
+    "count": 2,
+    "source_phrases": [
+      "배송완료된 주문",
+      "2건"
+    ],
+    "unsupported": []
+  },
+  "graph_id": "ORD_STAT_GBCD",
+  "catalog_version": 2,
+  "plan": {
+    "strategy": "advance",
+    "start": "25",
+    "states": [
+      "25",
+      "30",
+      "45",
+      "50"
+    ],
+    "edges": [
+      "ORD_STAT_GBCD:25>30:P1",
+      "ORD_STAT_GBCD:30>45:P2",
+      "ORD_STAT_GBCD:45>50:P3"
+    ],
+    "writes": 3
+  },
+  "steps": [
+    {
+      "no": 1,
+      "kind": "lookup",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "name": "출고대기(25) 주문 조회",
+      "selector": {
+        "prgrGb": "P0"
+      },
+      "params": {
+        "venCd": {
+          "source": "run_input",
+          "value": null,
+          "ref": null,
+          "label": "협력사코드"
+        },
+        "ven2Cd": {
+          "source": "run_input",
+          "value": null,
+          "ref": null,
+          "label": "2차협력사코드"
+        },
+        "fromDate": {
+          "source": "run_input",
+          "value": null,
+          "ref": null,
+          "label": "조회 시작일 (기본: 7일 전)"
+        },
+        "toDate": {
+          "source": "run_input",
+          "value": null,
+          "ref": null,
+          "label": "조회 종료일 (기본: 오늘)"
+        },
+        "mdaGb": {
+          "source": "empty",
+          "value": null,
+          "ref": null,
+          "label": "매입처"
+        },
+        "prgrGb": {
+          "source": "fixed",
+          "value": "P0",
+          "ref": null,
+          "label": "진행구분코드"
+        },
+        "dlvFormGbcd": {
+          "source": "empty",
+          "value": null,
+          "ref": null,
+          "label": "배송형태구분코드"
+        },
+        "ordNo": {
+          "source": "empty",
+          "value": null,
+          "ref": null,
+          "label": "주문번호"
+        },
+        "ordPtcSeq": {
+          "source": "empty",
+          "value": null,
+          "ref": null,
+          "label": "주문상세순번"
+        },
+        "drctBuyYn": {
+          "source": "empty",
+          "value": null,
+          "ref": null,
+          "label": "직접구매여부"
+        }
+      },
+      "for_each": null,
+      "pick": 2,
+      "outputs": [
+        "dlvstNo",
+        "dlvstPtcSeq",
+        "dsrvDlvcoCd",
+        "invcNo",
+        "ordNo",
+        "ordPtcSeq",
+        "ven2Cd",
+        "venCd"
+      ],
+      "expect_state": "25",
+      "compensate_with": null,
+      "requires_approval": false
+    },
+    {
+      "no": 2,
+      "kind": "call",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "name": "출고진행",
+      "selector": {
+        "procGb": "P1"
+      },
+      "params": {
+        "chk": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "체크"
+        },
+        "venCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.venCd",
+          "label": "협력사코드"
+        },
+        "ven2Cd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ven2Cd",
+          "label": "2차협력사코드"
+        },
+        "dlvstNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstNo",
+          "label": "dlvstNo"
+        },
+        "dlvstPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstPtcSeq",
+          "label": "배송지시상세순번"
+        },
+        "ordNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordNo",
+          "label": "주문번호"
+        },
+        "ordPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordPtcSeq",
+          "label": "주문상세순번"
+        },
+        "procGb": {
+          "source": "fixed",
+          "value": "P1",
+          "ref": null,
+          "label": "진행구분코드"
+        },
+        "invcNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.invcNo",
+          "label": "송장번호"
+        },
+        "dsrvDlvcoCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dsrvDlvcoCd",
+          "label": "택배배송사코드"
+        },
+        "rgstId": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록ID"
+        },
+        "rgstIp": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록IP"
+        }
+      },
+      "for_each": "step1.rows",
+      "pick": null,
+      "outputs": [],
+      "expect_state": "30",
+      "compensate_with": "ORD_STAT_GBCD:30>25:PB1",
+      "requires_approval": true
+    },
+    {
+      "no": 3,
+      "kind": "call",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "name": "출고완료",
+      "selector": {
+        "procGb": "P2"
+      },
+      "params": {
+        "chk": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "체크"
+        },
+        "venCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.venCd",
+          "label": "협력사코드"
+        },
+        "ven2Cd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ven2Cd",
+          "label": "2차협력사코드"
+        },
+        "dlvstNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstNo",
+          "label": "dlvstNo"
+        },
+        "dlvstPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstPtcSeq",
+          "label": "배송지시상세순번"
+        },
+        "ordNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordNo",
+          "label": "주문번호"
+        },
+        "ordPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordPtcSeq",
+          "label": "주문상세순번"
+        },
+        "procGb": {
+          "source": "fixed",
+          "value": "P2",
+          "ref": null,
+          "label": "진행구분코드"
+        },
+        "invcNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.invcNo",
+          "label": "송장번호"
+        },
+        "dsrvDlvcoCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dsrvDlvcoCd",
+          "label": "택배배송사코드"
+        },
+        "rgstId": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록ID"
+        },
+        "rgstIp": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록IP"
+        }
+      },
+      "for_each": "step1.rows",
+      "pick": null,
+      "outputs": [],
+      "expect_state": "45",
+      "compensate_with": "ORD_STAT_GBCD:45>30:PB2",
+      "requires_approval": true
+    },
+    {
+      "no": 4,
+      "kind": "call",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "name": "배송완료",
+      "selector": {
+        "procGb": "P3"
+      },
+      "params": {
+        "chk": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "체크"
+        },
+        "venCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.venCd",
+          "label": "협력사코드"
+        },
+        "ven2Cd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ven2Cd",
+          "label": "2차협력사코드"
+        },
+        "dlvstNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstNo",
+          "label": "dlvstNo"
+        },
+        "dlvstPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dlvstPtcSeq",
+          "label": "배송지시상세순번"
+        },
+        "ordNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordNo",
+          "label": "주문번호"
+        },
+        "ordPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordPtcSeq",
+          "label": "주문상세순번"
+        },
+        "procGb": {
+          "source": "fixed",
+          "value": "P3",
+          "ref": null,
+          "label": "진행구분코드"
+        },
+        "invcNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.invcNo",
+          "label": "송장번호"
+        },
+        "dsrvDlvcoCd": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.dsrvDlvcoCd",
+          "label": "택배배송사코드"
+        },
+        "rgstId": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록ID"
+        },
+        "rgstIp": {
+          "source": "unresolved",
+          "value": null,
+          "ref": null,
+          "label": "등록IP"
+        }
+      },
+      "for_each": "step1.rows",
+      "pick": null,
+      "outputs": [],
+      "expect_state": "50",
+      "compensate_with": "ORD_STAT_GBCD:50>45:PB3",
+      "requires_approval": true
+    },
+    {
+      "no": 5,
+      "kind": "verify",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "name": "배송완료(50) 도달 확인 — lastDlvstPrgrGbcd = 50",
+      "selector": {
+        "prgrGb": "P3"
+      },
+      "params": {
+        "prgrGb": {
+          "source": "fixed",
+          "value": "P3",
+          "ref": null,
+          "label": null
+        },
+        "ordNo": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordNo",
+          "label": null
+        },
+        "ordPtcSeq": {
+          "source": "bind",
+          "value": null,
+          "ref": "step1.ordPtcSeq",
+          "label": null
+        }
+      },
+      "for_each": "step1.rows",
+      "pick": null,
+      "outputs": [],
+      "expect_state": "50",
+      "compensate_with": null,
+      "requires_approval": false
+    }
+  ],
+  "alternative": {
+    "strategy": "lookup",
+    "start": "50",
+    "states": [
+      "50"
+    ],
+    "edges": [],
+    "writes": 0
+  },
+  "run_inputs": {
+    "venCd": "협력사코드",
+    "ven2Cd": "2차협력사코드",
+    "fromDate": "조회 시작일 (기본: 7일 전)",
+    "toDate": "조회 종료일 (기본: 오늘)"
+  },
+  "unresolved": [
+    "출고진행: chk(체크)",
+    "출고진행: rgstId(등록ID)",
+    "출고진행: rgstIp(등록IP)",
+    "출고완료: chk(체크)",
+    "출고완료: rgstId(등록ID)",
+    "출고완료: rgstIp(등록IP)",
+    "배송완료: chk(체크)",
+    "배송완료: rgstId(등록ID)",
+    "배송완료: rgstIp(등록IP)"
+  ],
+  "requires_approval": true,
+  "reason": null
+}
