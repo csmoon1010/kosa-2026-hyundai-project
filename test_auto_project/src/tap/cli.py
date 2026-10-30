@@ -96,14 +96,42 @@ def build(spec_path: Path, out_dir: Path, domains_cfg: Path, services_cfg: Path,
     }
 
 
-GRAPH_DIRS = [ROOT / "data/knowledge", ROOT / "data/out/graphs"]   # 사람이 확인한 그래프 + 화면 저장본 (같은 id 는 저장본이 이김)
+GRAPH_DIR = ROOT / "data/graphs"        # 상태 그래프는 여기 한 곳 — 손으로 쓴 것 · 화면에서 그린 것 모두 <코드그룹ID>.yaml
+GOLDEN = ROOT / "data/golden/ORD_STAT_GBCD.yaml"   # 채점 · 테스트용 정답지 (고정 복사본)
 
 
-def plan_request(utterance: str, knowledge: Path | list[Path], out_dir: Path, goal_json: str | None = None,
+def _apply_synonyms(graphs, rules_cfg: Path | None) -> None:
+    """화면에서 넣은 State Vocabulary 동의어 → 그래프 고르기 · 목표 추출 · 의도 분석에 보여 준다."""
+    if not rules_cfg:
+        return
+    from tap.catalog.rules import load_rules, synonyms_of
+    rules = load_rules(rules_cfg)
+    for g in graphs:
+        for code, words in synonyms_of(rules, g.graph_id).items():
+            n = next((x for x in g.nodes if x.code == code), None)
+            if n:
+                n.synonyms = words
+
+
+def analyze_intent(utterance: str, graph_dirs: list[Path] | None = None, domains_cfg: Path | None = None,
+                   rules_cfg: Path | None = None, model: str | None = None, llm=None) -> dict:
+    """자연어 한 문장 → 업무 목록(TaskPlan). 업무 도메인 목록 + 그래프 목록만 LLM 에 준다."""
+    from tap.catalog.build import load_domain_rules
+    from tap.goal.extract import extract_tasks, openai_parse
+    from tap.graph.build import load_graphs
+
+    graphs, _notes = load_graphs(graph_dirs or [GRAPH_DIR])
+    _apply_synonyms(graphs, rules_cfg)
+    domains = load_domain_rules(domains_cfg or ROOT / "data/config/domains.yaml")["domains"]
+    plan_, notes = extract_tasks(utterance, domains, graphs, llm or openai_parse(model))
+    return {"plan": plan_, "notes": notes}
+
+
+def plan_request(utterance: str, graphs_from: Path | list[Path], out_dir: Path, goal_json: str | None = None,
                  model: str | None = None, rules_cfg: Path | None = None) -> dict:
     """자연어 한 문장 → (그래프 고르기) → 목표 → 경로 → Scenario IR. data/out/ 의 1단계 산출물을 쓴다.
 
-    knowledge: 그래프 yaml 하나 또는 폴더 목록. 그래프가 여럿이면 LLM 이 요청에 맞는 그래프를 먼저 고른다.
+    graphs_from: 그래프 yaml 하나 또는 폴더 목록 (보통 [GRAPH_DIR]). 그래프가 여럿이면 LLM 이 요청에 맞는 그래프를 먼저 고른다.
     """
     import hashlib
 
@@ -117,17 +145,10 @@ def plan_request(utterance: str, knowledge: Path | list[Path], out_dir: Path, go
     cat = _load(out_dir / "api_catalog.json") or {}
     if ops is None or meta is None:
         raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
-    graphs, _notes = load_graphs(knowledge if isinstance(knowledge, (list, tuple)) else [knowledge])
+    graphs, _notes = load_graphs(graphs_from if isinstance(graphs_from, (list, tuple)) else [graphs_from])
     if not graphs:
         raise ValueError("시나리오 생성에 쓸 상태 그래프가 없습니다")
-    if rules_cfg:                                   # 화면에서 넣은 State Vocabulary 동의어 → 그래프 고르기 · 목표 추출에 보여 준다
-        from tap.catalog.rules import load_rules, synonyms_of
-        rules = load_rules(rules_cfg)
-        for g in graphs:
-            for code, words in synonyms_of(rules, g.graph_id).items():
-                n = next((x for x in g.nodes if x.code == code), None)
-                if n:
-                    n.synonyms = words
+    _apply_synonyms(graphs, rules_cfg)
 
     if goal_json:
         goal = Goal.model_validate_json(goal_json)
@@ -273,21 +294,24 @@ def main() -> None:
     b.add_argument("--rules", default=str(ROOT / "data/config/rules.ui.yaml"), help="화면에서 넣은 규칙")
     pl = sub.add_parser("plan", help="자연어 → 목표 → 경로 → Scenario IR")
     pl.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
-    pl.add_argument("--knowledge", default=None, help="그래프 yaml (안 주면 data/knowledge + data/out/graphs 전부)")
+    pl.add_argument("--graphs", default=None, help="그래프 yaml 또는 폴더 (안 주면 data/graphs 전부)")
     pl.add_argument("--out", default=str(ROOT / "data/out"))
     pl.add_argument("--goal", default=None, help="LLM 없이 목표 JSON 을 직접 지정")
     pl.add_argument("--model", default=None)
+    it = sub.add_parser("intent", help="자연어 → 업무 목록 (도메인 · 그래프 · 목표 상태 · 제약)")
+    it.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
+    it.add_argument("--model", default=None)
     ex = sub.add_parser("extract-graph", help="(실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점")
     ex.add_argument("--codes", default=str(ROOT / "data/codes/common_codes.csv"))
     ex.add_argument("--group", default="ORD_STAT_GBCD")
     ex.add_argument("--domain", default="od", help="그래프 담당 도메인 = 상태 코드 그룹의 주인")
-    ex.add_argument("--golden", default=str(ROOT / "data/knowledge/ord_stat.yaml"))
+    ex.add_argument("--golden", default=str(GOLDEN))
     ex.add_argument("--out", default=str(ROOT / "data/out"))
     ex.add_argument("--model", default=None)
     ex.add_argument("--runs", type=int, default=1, help="같은 입력으로 몇 번 돌릴지 (흔들림 확인)")
     ex.add_argument("--rescore", nargs="+", default=None, help="LLM 없이 이미 추출한 yaml 을 다시 채점")
     mg = sub.add_parser("match-graph", help="화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점")
-    mg.add_argument("--golden", default=str(ROOT / "data/knowledge/ord_stat.yaml"))
+    mg.add_argument("--golden", default=str(GOLDEN))
     mg.add_argument("--out", default=str(ROOT / "data/out"))
     mg.add_argument("--domains", default="pd,od,ds")
     sub.add_parser("ui-data", help="실제 산출물 → prototype/tap-data.js (오프라인 UI 가 읽는다)")
@@ -323,9 +347,16 @@ def main() -> None:
             if "score" in r:
                 _print_score(r)
         return
+    if a.cmd == "intent":
+        for u in a.utterance:
+            r = analyze_intent(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model)
+            print(r["plan"].model_dump_json(indent=2))
+            for n in r["notes"]:
+                print(f"  (검사) {n}")
+        return
     if a.cmd == "plan":
         for u in a.utterance:
-            r = plan_request(u, Path(a.knowledge) if a.knowledge else GRAPH_DIRS, Path(a.out), a.goal, a.model, ROOT / "data/config/rules.ui.yaml")
+            r = plan_request(u, Path(a.graphs) if a.graphs else [GRAPH_DIR], Path(a.out), a.goal, a.model, ROOT / "data/config/rules.ui.yaml")
             _print_ir(r["ir"])
             print(f"  → {r['file']}")
         return

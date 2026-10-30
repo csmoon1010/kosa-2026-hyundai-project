@@ -248,7 +248,7 @@
     root.classList.add("ge"); if (opts.embedded) root.classList.add("embedded");
     if (!D){ root.innerHTML = `<div class="gcard emptyst"><h2>산출물이 없습니다</h2><p class="note">tap-data.js 를 먼저 만드세요: <span class="mono">PYTHONPATH=src python -m tap.cli ui-data</span></p></div>`; return; }
 
-    /* 그래프 목록 = 사람이 확인한 그래프(data/knowledge) + 화면에서 저장한 그래프(data/out/graphs) + 공통코드 대기 */
+    /* 그래프 목록 = data/graphs 의 그래프 (화면에서 한 번 저장한 것은 drafts 로도 와서 배치까지 복원) + 공통코드 대기 */
     const fromK = (k, extra) => Object.assign({ id: k.graph.id, name: k.graph.name, dom: k.graph.domain, loaded: true, k }, extra || {});
     const GRAPHS = D.graphs.map(g => fromK(g));
     (D.drafts || []).forEach(dr => { if (!dr || !dr.graph) return; const g = GRAPHS.find(x => x.id === dr.graph.id);
@@ -275,7 +275,7 @@
       if (g.draft) return fromDraft(g, base);
       return fromKnowledge(g, base);
     }
-    /* 저장본이 없으면 사람이 확인한 그래프(data/knowledge) 그대로 — 시나리오 생성이 쓰는 것과 같은 그래프를 보여 준다 */
+    /* 화면에서 저장한 적 없는 그래프(손으로 쓴 data/graphs 파일) — 시나리오 생성이 쓰는 것과 같은 그래프를 보여 준다 */
     function fromKnowledge(g, base){
       const k = g.k, ts = k.transitions || [], lks = k.lookups || [];
       if (!ts.length && !lks.length) return base;
@@ -842,7 +842,7 @@
             <li>상태 필드 ${S.stateField.st === "확정" ? `<span class="mono">${esc(S.stateField.v)}</span>` : "확정 전 — 빠짐"}</li>
           </ul>
           ${err.length ? `<div class="box warn"><b>먼저 끝내야 할 것 ${err.length}개</b>${err.map(x => `<p class="ev">${esc(x.msg)}</p>`).join("")}</div>` : ""}
-          <p class="note">저장하면 승인본으로 고정됩니다. ${S.server ? "로컬 서버에 연결돼 있어 data/out/graphs/ 에 씁니다." : "로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다."}</p>
+          <p class="note">저장하면 승인본으로 고정됩니다. ${S.server ? `로컬 서버에 연결돼 있어 data/graphs/${esc(graph().id)}.yaml 에 씁니다. 이미 있는 파일이면 사람이 확인한 API · 조회 · 진입 상태는 그대로 두고 합칩니다.` : "로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다."}</p>
           <details><summary style="font-size:12.5px;font-weight:500">저장될 내용 보기</summary><pre class="yaml">${esc(yaml())}</pre></details>
           <div class="row"><button class="gbtn pri" id="${id("save")}" ${err.length ? "disabled" : ""}>확인 후 저장</button><button class="gbtn ghost" data-x>취소</button></div></div>`;
         el("save").onclick = async () => {
