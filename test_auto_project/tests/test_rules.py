@@ -102,6 +102,6 @@ def test_synonyms_reach_goal_prompt():
              {"doc": "sv", "item": "syn", "target": "ITEM_SELL_GBCD:11", "body": "판매 멈춤"}]
     syn = synonyms_of(rules, "ORD_STAT_GBCD")
     assert syn == {"30": ["피킹 중", "출고 작업 중", "포장 중"]}                       # 그래프별 · 여러 규칙 합침
-    g = load_knowledge(Path(__file__).resolve().parents[1] / "data/knowledge/ord_stat.yaml")
+    g = load_knowledge(Path(__file__).resolve().parents[1] / "data/golden/ORD_STAT_GBCD.yaml")
     next(n for n in g.nodes if n.code == "30").synonyms = syn["30"]
     assert "- 출고진행 (30) · 다른 표현: 피킹 중, 출고 작업 중, 포장 중" in build_messages("x", g)[0]["content"]

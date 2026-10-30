@@ -12,7 +12,7 @@ from tap.graph.plan import Goal
 from tap.graph.score import score
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOW = ROOT / "data/knowledge/ord_stat.yaml"
+KNOW = ROOT / "data/golden/ORD_STAT_GBCD.yaml"
 CODES = ROOT / "data/codes/common_codes.csv"
 G = "ORD_STAT_GBCD"
 OSHP = "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"

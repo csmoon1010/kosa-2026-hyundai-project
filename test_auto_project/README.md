@@ -52,6 +52,7 @@ cd test_auto_project
 uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
 PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # 자연어 → 목표 → 경로 → Scenario IR (data/out/ir/)
+PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주문한 뒤 배송완료까지"   # 자연어 → 업무 목록 (도메인 · 그래프 · 목표 상태 · 제약)
 PYTHONPATH=src .venv/bin/python -m tap.cli extract-graph --runs 2     # (실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli match-graph               # 화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli serve                     # 오프라인 UI + 실제 계산 → http://127.0.0.1:8765/
@@ -73,10 +74,10 @@ PYTHONPATH=src .venv/bin/python -m tap.cli serve                     # 오프라
 
 ### 한 바퀴 — 자연어 → Scenario IR (주문상태 그래프)
 
-`data/knowledge/ord_stat.yaml`: 사람이 확인한 업무 지식 — 주문상태 코드(ORD_STAT_GBCD), 동작별 전이
+`data/graphs/ORD_STAT_GBCD.yaml`: 사람이 확인한 업무 지식 — 주문상태 코드(ORD_STAT_GBCD), 동작별 전이
 (출고진행 P1 25→30 · 출고완료 P2 30→45 · 배송완료 P3 45→50, 취소 PB1~PB3), 상태별 조회 방법(출고조회 prgrGb P0~P3).
 
-0. **그래프 고르기 (LLM)** — 사람이 확인한 그래프(data/knowledge) + 화면 저장본(data/out/graphs, 같은 id 는 저장본 우선) 중 요청에 맞는 것 하나. 없으면 거절.
+0. **그래프 고르기 (LLM)** — data/graphs 의 그래프 중 요청에 맞는 것 하나. 없으면 거절.
 1. **목표 추출 (LLM)** — 상태 이름 목록 안에서만 target · must_pass · count 를 고른다. 근거 구절이 원문에 없으면 버린다.
 2. **경로 계산 (BFS)** — A 진행시키기(출고대기 25 주문을 찾아 API 로 진행, 기본) / B 찾아 쓰기(목표 상태를 바로 조회, 대안).
    API 로 만들 수도 조회로 찾을 수도 없는 상태(예: 결제완료 20)는 거절한다.
@@ -114,7 +115,7 @@ summary 의 한국어 동사로 판별한다.
 | 영역 | 파일로 열 때 | `tap.cli serve` 로 열 때 |
 |---|---|---|
 | 시나리오 생성 결과 | 미리 계산해 둔 문장(data/out/ir)만 실제 결과, 나머지는 시연 | 아무 문장이나 목표 추출(LLM) → 경로 → Scenario IR |
-| 관리자 › 도메인 › 상태 그래프 만들기 | 실제 그래프 · 실제 Metadata 로 API 후보 찾기 | + 저장하면 data/out/graphs/ 에 파일로 (정답지 data/knowledge 는 그대로) |
+| 관리자 › 도메인 › 상태 그래프 만들기 | 실제 그래프 · 실제 Metadata 로 API 후보 찾기 | + 저장하면 data/graphs/<그룹ID>.yaml 에 (있던 파일이면 합침) |
 | 데이터 조회 — Catalog · MetaData · Tool Registry · State Vocabulary | 실제 산출물 | 같음 (매번 새로 읽음) |
 | 관리자 › 전사 › 1단계 산출물 · 검수 목록 | 실제 산출물 | 같음 |
 | 관리자 › 규칙 입력 (API Catalog · MetaData · State Vocabulary · Parameter KB) | 실제 API · 상태 · 필드를 대상으로, 저장은 이 화면에만 | `data/config/rules.ui.yaml` 에 저장 → Catalog · MetaData 항목은 바로 다시 빌드해 반영 |
@@ -141,7 +142,10 @@ overrides 위에 합친다. 잘못된 규칙이면 빌드가 거절하고 파일
 
 **새 그래프**: 공통코드 테이블(`data/codes/common_codes.csv`)에 있는데 아직 그래프가 없는 그룹을 골라 빈 캔버스에서 시작한다.
 상태 필드는 코드 그룹 ID 를 낙타 표기로 바꾼 응답 필드에서 추정한다 (SLITM_APRVL_GBCD → slitmAprvlGbcd).
-서버로 열고 저장하면 `data/out/graphs/<그룹ID>.yaml` 에 쓰고, 다음에 열 때 그 저장본(배치 · 화살표 · 외부 변화)으로 다시 연다.
+서버로 열고 저장하면 `data/graphs/<그룹ID>.yaml` 에 쓰고, 다음에 열 때 그 저장본(배치 · 화살표 · 외부 변화)으로 다시 연다.
+**그래프는 data/graphs 한 곳**: 손으로 쓴 파일도 화면에서 그린 것도 같은 폴더 · 같은 파일 이름(코드 그룹 ID)이다.
+있던 파일을 화면에서 저장하면 그 위에 합친다 — 화살표 · 이름 · 배치는 화면 값, 기존 파일에서 사람이 확인한 API · 조회 방법 · 진입 상태 · 상태 필드는 유지.
+이전 파일은 `data/out/graph_history/` 에 남는다. `data/golden/ORD_STAT_GBCD.yaml` 은 채점 · 테스트용 고정 복사본(정답지)이라 시나리오 생성에 쓰지 않는다.
 
 - 화면: 시나리오 등록 · 시나리오 실행 · 실행 이력 · 관리자 메뉴(전사 / 도메인)
 - 데이터는 시연용으로 심어 둔 값이며 실제 API를 호출하지 않습니다.

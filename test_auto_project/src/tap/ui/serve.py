@@ -5,7 +5,7 @@
   GET  /tap-data.js          산출물을 매번 새로 읽어 내려준다
   GET  /api/health           화면이 서버 모드인지 확인
   POST /api/plan             {utterance, goal?} → 목표 추출(LLM) → 경로 → Scenario IR (goal 을 주면 LLM 없이)
-  POST /api/graph/save       {graph_id, yaml} → data/out/graphs/<id>.yaml (정답지 data/knowledge 는 건드리지 않는다)
+  POST /api/graph/save       {graph_id, yaml} → data/graphs/<id>.yaml (기존 파일 위에 합침 — 사람이 확인한 API · 조회 · 진입 상태 유지, 이전 파일은 data/out/graph_history/)
   POST /api/rules            {place, doc, item, dom, target, body} → data/config/rules.ui.yaml + 다시 빌드 → 새 TAP_DATA
   POST /api/rules/delete     {id} → 화면 규칙 삭제 + 다시 빌드
   POST /api/baseline         {api_id, body} → data/baselines/<api>.json
@@ -18,8 +18,12 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import Any
+
+import yaml
 
 from tap.ui.export import ui_data
 
@@ -111,6 +115,32 @@ def save_baseline(root: Path, api_id: str, body: dict) -> Path:
     return dest
 
 
+def save_graph(root: Path, graph_id: str, text: str) -> dict[str, Any]:
+    """화면 저장 → data/graphs/<id>.yaml. 같은 그래프 파일이 있으면 그 위에 합치고, 이전 파일은 이력으로 남긴다."""
+    from tap.graph.build import graph_from_dict, merge_saved
+    gid = re.sub(r"[^A-Za-z0-9_\-]", "", graph_id)
+    new = yaml.safe_load(text) or {}
+    if (new.get("graph") or {}).get("id") != gid:
+        raise ValueError(f"그래프 id 가 맞지 않습니다: {gid} ≠ {(new.get('graph') or {}).get('id')}")
+    dest = root / "data/graphs" / f"{gid}.yaml"
+    old_text = dest.read_text(encoding="utf-8") if dest.exists() else None
+    merged, kept = merge_saved(yaml.safe_load(old_text) if old_text else None, new)
+    graph_from_dict(merged)                                 # 그래프로 안 읽히는 파일은 쓰지 않는다
+    backup = None
+    if old_text:
+        hist = root / "data/out/graph_history"
+        hist.mkdir(parents=True, exist_ok=True)
+        backup = hist / f"{gid}.{datetime.now().strftime('%Y%m%d-%H%M%S')}.yaml"
+        backup.write_text(old_text, encoding="utf-8")
+    head = [l for l in text.splitlines() if l.startswith("#")][:2]
+    if kept:
+        head.append("# 사람이 확인한 값 유지 (기존 파일): " + " · ".join(kept))
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text("\n".join(head) + "\n" + yaml.safe_dump(merged, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    return {"file": str(dest.relative_to(root)), "kept": kept,
+            "backup": str(backup.relative_to(root)) if backup else None}
+
+
 def make_handler(root: Path):
     proto = root / "prototype"
 
@@ -149,7 +179,7 @@ def make_handler(root: Path):
                 if self.path == "/api/plan":
                     from tap.cli import plan_request
                     goal = json.dumps(body["goal"], ensure_ascii=False) if body.get("goal") else None
-                    r = plan_request(body["utterance"], [root / "data/knowledge", root / "data/out/graphs"], root / "data/out", goal,
+                    r = plan_request(body["utterance"], [root / "data/graphs"], root / "data/out", goal,
                                      rules_cfg=root / "data/config/rules.ui.yaml")
                     return self._json(200, r["ir"].model_dump(mode="json"))
                 if self.path == "/api/rules":
@@ -175,11 +205,7 @@ def make_handler(root: Path):
                     r = rebuild(root)
                     return self._json(200, {"build": r, "changed": r["catalog_version"] != before.get("catalog_version"), "data": ui_data(root)})
                 if self.path == "/api/graph/save":
-                    gid = re.sub(r"[^A-Za-z0-9_\-]", "", body["graph_id"])
-                    dest = root / "data/out/graphs" / f"{gid}.yaml"
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    dest.write_text(body["yaml"], encoding="utf-8")
-                    return self._json(200, {"file": str(dest.relative_to(root))})
+                    return self._json(200, save_graph(root, body["graph_id"], body["yaml"]))
                 return self._json(404, {"error": "없는 경로"})
             except Exception as e:                              # 화면에 그대로 보여 준다
                 return self._json(400 if isinstance(e, ValueError) else 500, {"error": str(e) if isinstance(e, ValueError) else f"{type(e).__name__}: {e}"})

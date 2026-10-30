@@ -11,7 +11,7 @@ from tap.graph.plan import Goal, plan
 from tap.ir.build import build_ir
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOW = ROOT / "data/knowledge/ord_stat.yaml"
+KNOW = ROOT / "data/golden/ORD_STAT_GBCD.yaml"
 G = "ORD_STAT_GBCD"
 
 

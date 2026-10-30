@@ -4231,7 +4231,7 @@ const shortApi = a => String(a || '').split(':').pop();
 const realMeta = dom => TAP ? TAP.metadata.filter(m => !dom || m.domain === REAL_DOM[dom]) : [];
 const realGraphs = dom => TAP ? TAP.graphs.filter(g => !dom || g.graph.domain === REAL_DOM[dom]) : [];
 const realTag = () => '';
-/* 시나리오 생성이 쓰는 그래프 — 화면 저장본(data/out/graphs)이 사람이 확인한 그래프보다 앞선다 */
+/* 시나리오 생성이 쓰는 그래프 — data/graphs 한 곳 (화면에서 저장한 것은 drafts 에 배치까지 있음) */
 const graphById = id => TAP ? ((TAP.drafts || []).find(x => x && x.graph && x.graph.id === id) || TAP.graphs.find(x => x.graph.id === id)) : null;   /* 전부 실제 산출물이라 따로 표시하지 않는다 */
 const selStr = sel => Object.entries(sel || {}).map(([k, v]) => `${k}=${v}`).join(', ');
 
@@ -4284,7 +4284,7 @@ const REAL_DOCS = {
           <td class="v" style="font-size:11px">${lk ? esc(shortApi(lk.api).split('/').pop() + ' ' + selStr(lk.selector)) : MUTED}</td></tr>`); }); });
     return { count: gs.length ? `그래프 ${gs.length}개 · 상태 ${gs.reduce((a, g) => a + Object.keys(g.code_group.codes).length, 0)}개` : '',
       body: tbl(['그래프','상태','코드','동의어','만드는 동작','조회 방법'], rows, '이 도메인이 주인인 상태 그래프가 없습니다. 화살표에 붙는 API 는 어느 도메인 것이든 쓸 수 있습니다.'),
-      note: `${realTag()} data/knowledge/*.yaml — 사람이 확인한 상태 그래프 (지금은 주문상태 ORD_STAT_GBCD 하나, 담당 주문 od). `
+      note: `${realTag()} data/graphs/*.yaml — 상태 그래프 (손으로 쓴 것 · 화면에서 그린 것 모두 여기, 파일 이름 = 코드 그룹 ID). `
           + `상태 · 코드는 공통코드, 동작 · 조회 방법은 소스 확인. 화면에서는 이 도메인의 <b>상태 그래프 만들기</b>에서 편집한다. `
           + `<b>동의어</b>는 도메인 › 규칙 입력 › State Vocabulary 에서 넣고, 시나리오 생성 때 목표 추출(LLM)에 상태 목록과 함께 보여 준다.` };
   }
@@ -4320,7 +4320,7 @@ function renderRealAdmin(){
       return `<p class="eyebrow" style="margin:18px 0 7px">상태 그래프 — API 를 자동으로 못 찾은 화살표 · 조회 ${gr.length}건</p>`
         + tbl(['그래프','종류','항목','상태','이유'], gr.map(x => `<tr><td class="v" style="font-size:11.5px">${esc(x.graph)}</td><td class="v">${esc(x.kind)}</td><td style="font-size:12.5px">${esc(x.item)}</td>
           <td><span class="st ${x.status === '없음' ? 'st-rb' : 'st-rj'}">${x.status === '없음' ? '못 찾음' : '애매'}</span></td><td style="font-size:11.5px">${esc(x.why)}</td></tr>`), '검수할 것이 없습니다.')
-        + `<p class="note" style="margin-top:8px">업무 담당자가 상태 그래프에서 확정 · 저장한 화살표 기준입니다 (사람이 확인한 그래프 + data/out/graphs 저장본). `
+        + `<p class="note" style="margin-top:8px">업무 담당자가 상태 그래프에서 확정 · 저장한 화살표 기준입니다 (data/graphs). `
         + `API Metadata 에 별칭 · 구분값을 보정(각 도메인 › 규칙 입력 또는 overrides.yaml)하면 다시 찾습니다.</p>`; })()}`;
 }
 
