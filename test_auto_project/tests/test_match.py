@@ -9,7 +9,7 @@ from tap.cli import build
 from tap.graph.match import evaluate, match_edge, match_lookup, sim, status_of
 
 ROOT = Path(__file__).resolve().parents[1]
-GOLD = yaml.safe_load((ROOT / "data/knowledge/ord_stat.yaml").read_text(encoding="utf-8"))
+GOLD = yaml.safe_load((ROOT / "data/golden/ORD_STAT_GBCD.yaml").read_text(encoding="utf-8"))
 SCOPE = ["pd", "od", "ds"]
 
 
@@ -68,8 +68,8 @@ def test_lookup_by_state_field_filter():
 
 def test_product_graphs_load_with_codes_only():
     from tap.graph.build import load_knowledge
-    for f, n in (("slitm_aprvl.yaml", 9), ("item_athz.yaml", 7)):
-        g = load_knowledge(ROOT / "data/knowledge" / f)
+    for f, n in (("SLITM_APRVL_GBCD.yaml", 9), ("ITEM_ATHZ_GBCD.yaml", 7)):
+        g = load_knowledge(ROOT / "data/graphs" / f)
         assert (g.domain, len(g.nodes), g.edges) == ("pd", n, [])
 
 

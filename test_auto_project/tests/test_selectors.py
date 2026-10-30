@@ -82,7 +82,7 @@ def test_graph_checks_selector_against_metadata(tmp_path):
     _, _, out = run(tmp_path, {OSHP: {"selectors": [{"field": "procGb", "values": [{"value": "P1", "name": "출고진행"}]}]}})
     meta = json.loads((out / "api_metadata.json").read_text(encoding="utf-8"))
     ops = json.loads((out / "api_operations.json").read_text(encoding="utf-8"))
-    issues = validate_graph(load_knowledge(ROOT / "data/knowledge/ord_stat.yaml"), meta, ops)
+    issues = validate_graph(load_knowledge(ROOT / "data/golden/ORD_STAT_GBCD.yaml"), meta, ops)
     msgs = {(i["level"], i["message"]) for i in issues}
     # BackProcess 는 PB1 만 알고 목록 미완성 → PB2 · PB3 는 경고
     assert ("warn", "구분값 procGb=PB2 가 API Metadata selectors 에 없음 (값 목록 미완성)") in msgs
@@ -91,5 +91,5 @@ def test_graph_checks_selector_against_metadata(tmp_path):
 def test_repo_overrides_make_order_graph_clean():
     meta = json.loads((ROOT / "data/out/api_metadata.json").read_text(encoding="utf-8"))
     ops = json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))
-    issues = validate_graph(load_knowledge(ROOT / "data/knowledge/ord_stat.yaml"), meta, ops)
+    issues = validate_graph(load_knowledge(ROOT / "data/golden/ORD_STAT_GBCD.yaml"), meta, ops)
     assert not [i for i in issues if "selectors" in i["message"]]

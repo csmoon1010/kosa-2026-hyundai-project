@@ -1,4 +1,4 @@
-"""오프라인 UI 에 실제 산출물을 입힌다 — data/out · data/knowledge 를 window.TAP_DATA 한 덩어리로.
+"""오프라인 UI 에 실제 산출물을 입힌다 — data/out · data/graphs 를 window.TAP_DATA 한 덩어리로.
 
 화면은 이 값이 있으면 구현된 영역(데이터 조회 · 상태 그래프 · 시나리오 생성 결과 · 검수 목록)을 실제 산출물로 그리고,
 없으면 예전처럼 시연 데이터를 쓴다. 실행 · 이력 · Baseline · Parameter KB 는 아직 시연 데이터.
@@ -67,7 +67,7 @@ def ui_data(root: Path) -> dict[str, Any]:
     cat = _load(out / "api_catalog.json", {})
     review = _load(out / "review_queue.json", [])
     by = {m["api_id"]: m for m in meta}
-    graphs = [yaml.safe_load(p.read_text(encoding="utf-8")) for p in sorted((root / "data/knowledge").glob("*.yaml"))]
+    graphs = [yaml.safe_load(p.read_text(encoding="utf-8")) for p in sorted((root / "data/graphs").glob("*.yaml"))]
     kinds, doms = {}, {}
     for m in meta:
         kinds[m["kind"]] = kinds.get(m["kind"], 0) + 1
@@ -92,7 +92,7 @@ def ui_data(root: Path) -> dict[str, Any]:
         "baselines": {b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
         "scenarios": [x for x in (_load(p) for p in sorted((root / "data/scenarios").glob("*.json"), reverse=True)) if x],
         "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
-        "drafts": [yaml.safe_load(p.read_text(encoding="utf-8")) for p in sorted((out / "graphs").glob("*.yaml"))],
+        "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
         "ai": {gid: _ai(out, gid) for gid in dict.fromkeys([g["graph"]["id"] for g in graphs]
                                                            + [c["id"] for c in _code_groups(root / "data/codes/common_codes.csv")])},
         "irs": [_load(p) for p in sorted((out / "ir").glob("*.json"))],

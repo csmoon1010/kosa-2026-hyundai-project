@@ -1,6 +1,6 @@
 """그래프 재료 자동 추출 (실험) — 공통코드 테이블(노드) + 명세(API)만 주고 LLM 이 간선 · 조회 방법을 제안한다.
 
-사람이 확인한 data/knowledge/*.yaml 을 정답지로 삼아 score.py 로 채점한다.
+정답지(data/golden/*.yaml — 사람이 확인한 그래프의 고정 복사본)와 비교해 score.py 로 채점한다.
 - 상태 코드 · api_id 는 목록(Literal) 안에서만 고른다 — 없는 코드 · API 를 지어내지 못한다
 - 근거(basis)를 스스로 밝힌다: spec(명세에 글자로 적힘) · guess(이름 · 순서로 추측)
 - 결과는 knowledge 형식 dict — 사람이 쓴 yaml 과 같은 형식이라 graph_from_dict 로 바로 그래프가 된다
