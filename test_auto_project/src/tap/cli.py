@@ -17,6 +17,7 @@ import argparse
 import collections
 import json
 from pathlib import Path
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -46,7 +47,8 @@ def _load(path: Path):
 
 
 def build(spec_path: Path, out_dir: Path, domains_cfg: Path, services_cfg: Path,
-          overrides_cfg: Path | None = None, now: str | None = None, rules_cfg: Path | None = None) -> dict:
+          overrides_cfg: Path | None = None, now: str | None = None, rules_cfg: Path | None = None,
+          permissions_cfg: Path | None = None) -> dict:
     """rules_cfg: 화면에서 넣은 규칙(rules.ui.yaml) — Catalog · MetaData 항목을 overrides 위에 합친다."""
     from tap.catalog.rules import load_rules, merge_overrides, rule_overrides
 
@@ -64,8 +66,10 @@ def build(spec_path: Path, out_dir: Path, domains_cfg: Path, services_cfg: Path,
     guesses = {o.api_id: classify_domain(o, rules) for o in ops}
     kinds = {o.api_id: classify_kind(o)[0] for o in ops}
 
+    from tap.apis.gate import load_permissions
+    perms = load_permissions(permissions_cfg or ROOT / "data/config/permissions.yaml")
     conns, tools = build_tool_registry(ops, {k: g.domain for k, g in guesses.items()}, kinds, spec_hash,
-                                       services, base_url(spec), overrides)
+                                       services, base_url(spec), overrides, perms)
     prev_meta = {m["api_id"]: m for m in (_load(out_dir / "api_metadata.json") or [])}
     meta, review = build_metadata(ops, guesses, {t.api_id: t.enabled for t in tools},
                                   {spec_path.name: spec_hash}, overrides, prev_meta)
@@ -113,18 +117,134 @@ def _apply_synonyms(graphs, rules_cfg: Path | None) -> None:
                 n.synonyms = words
 
 
-def analyze_intent(utterance: str, graph_dirs: list[Path] | None = None, domains_cfg: Path | None = None,
-                   rules_cfg: Path | None = None, model: str | None = None, llm=None) -> dict:
-    """자연어 한 문장 → 업무 목록(TaskPlan). 업무 도메인 목록 + 그래프 목록만 LLM 에 준다."""
-    from tap.catalog.build import load_domain_rules
-    from tap.goal.extract import extract_tasks, openai_parse
-    from tap.graph.build import load_graphs
+LLM_CFG = ROOT / "data/config/llm.yaml"      # 요청당 예산 · 모델 가격
 
-    graphs, _notes = load_graphs(graph_dirs or [GRAPH_DIR])
+
+def _graphs(graph_dirs: list[Path] | None, rules_cfg: Path | None, out_dir: Path | None = None):
+    """경로 탐색 · API 선택에 쓰는 그래프 — API 없는 화살표도 남긴다 (API 선택이 '보류'로 알린다).
+
+    조회 방법이 적혀 있지 않은 그래프(화면에서 그린 것)는 '조회로 찾을 수 있는 상태'를 지금 매칭기로 정한다.
+    """
+    from tap.graph.build import load_graphs
+    from tap.graph.match import attach_lookups
+    graphs, _ = load_graphs(graph_dirs or [GRAPH_DIR], keep_unmatched=True)
     _apply_synonyms(graphs, rules_cfg)
+    out_dir = out_dir or ROOT / "data/out"
+    meta, ops = _load(out_dir / "api_metadata.json"), _load(out_dir / "api_operations.json")
+    if meta is not None and ops is not None:
+        attach_lookups(graphs, meta, ops, ["pd", "od", "ds"])
+    return graphs
+
+
+def _traced(utterance: str, model: str | None, llm, trace):
+    """트레이스(없으면 새로) + 트레이스로 감싼 LLM. 실제 OpenAI 는 SDK 재시도를 끄고 트레이스가 재시도 · 예산을 맡는다."""
+    from tap.goal.extract import openai_parse
+    from tap.trace import Trace, load_llm_config
+    if trace is None:
+        budget, pricing = load_llm_config(LLM_CFG)
+        trace = Trace(utterance, budget, pricing)
+    return trace, trace.wrap(llm or openai_parse(model, sdk_retries=0))
+
+
+def analyze_intent(utterance: str, domains_cfg: Path | None = None, model: str | None = None, llm=None, trace=None) -> dict:
+    """자연어 한 문장 → 업무 목록(TaskPlan). 업무 도메인 목록만 LLM 에 준다 (그래프는 경로 탐색 단계가 본다)."""
+    from tap.catalog.build import load_domain_rules
+    from tap.goal.extract import extract_tasks
+
+    trace, llm = _traced(utterance, model, llm, trace)
     domains = load_domain_rules(domains_cfg or ROOT / "data/config/domains.yaml")["domains"]
-    plan_, notes = extract_tasks(utterance, domains, graphs, llm or openai_parse(model))
-    return {"plan": plan_, "notes": notes}
+    with trace.span("① 의도 분석"):
+        plan_, notes = extract_tasks(utterance, domains, llm)
+    return {"plan": plan_, "notes": notes, "trace": trace}
+
+
+def analyze_paths(utterance: str, graph_dirs: list[Path] | None = None, domains_cfg: Path | None = None,
+                  rules_cfg: Path | None = None, model: str | None = None, llm=None, tasks_json: str | None = None,
+                  trace=None, out_dir: Path | None = None) -> dict:
+    """자연어 → 업무 목록 → 업무마다 그래프 · 출발 · 목표 상태 · 경로. tasks_json 을 주면 업무 의도 분석(LLM)을 건너뛴다."""
+    from tap.goal.extract import TaskPlan
+    from tap.graph.paths import find_paths
+
+    trace, wrapped = _traced(utterance, model, llm, trace)
+    if tasks_json:
+        tp, notes = TaskPlan.model_validate_json(tasks_json), []
+    else:
+        r = analyze_intent(utterance, domains_cfg, llm=wrapped, trace=_NoWrap(trace))
+        tp, notes = r["plan"], r["notes"]
+    graphs = _graphs(graph_dirs, rules_cfg, out_dir)
+    with trace.span("② 경로 탐색"):
+        pp, pnotes = find_paths(tp, graphs, wrapped)
+    return {"tasks": tp, "paths": pp, "notes": notes + pnotes, "trace": trace}
+
+
+class _NoWrap:
+    """이미 감싼 LLM 을 넘길 때 — 같은 트레이스에 단계(span)만 더하고 두 번 감싸지 않는다."""
+
+    def __init__(self, trace):
+        self._t = trace
+
+    def wrap(self, llm):
+        return llm
+
+    def __getattr__(self, name):
+        return getattr(self._t, name)
+
+
+def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir: Path | None = None,
+                   rules_cfg: Path | None = None, model: str | None = None, llm=None, tasks_json: str | None = None,
+                   trace=None, trace_dir: Path | None = None) -> dict:
+    """자연어 → 업무 목록 → 경로 → 단계마다 API. 1단계 산출물(Catalog · Metadata · operations)을 쓴다.
+
+    트레이스(호출별 단계 · 토큰 · 지연 · 비용, 단계별 시간)는 끝나면(예산 초과로 멈춰도) trace_dir 에 남긴다.
+    """
+    from tap.apis.select import select_apis
+    from tap.trace import BudgetExceeded
+
+    out_dir = out_dir or ROOT / "data/out"
+    ops, meta, cat = _load(out_dir / "api_operations.json"), _load(out_dir / "api_metadata.json"), _load(out_dir / "api_catalog.json")
+    if ops is None or meta is None or cat is None:
+        raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
+    trace, wrapped = _traced(utterance, model, llm, trace)
+    result: dict[str, Any] = {"trace": trace}
+    try:
+        from tap.apis.gate import blocked_gate, detect_injections, gate_for, load_permissions
+        from tap.apis.select import ApiSelection, Unresolved
+        from tap.goal.extract import TaskPlan
+        from tap.graph.paths import PathPlan
+        perms = load_permissions(ROOT / "data/config/permissions.yaml")
+        if tasks_json:
+            tp, notes = TaskPlan.model_validate_json(tasks_json), []
+        else:
+            ri = analyze_intent(utterance, llm=wrapped, trace=_NoWrap(trace))
+            tp, notes = ri["plan"], ri["notes"]
+        hits = detect_injections(utterance, tp.injections, perms)
+        if hits:                                # 요청 속 지시문 — ② ③ 을 하지 않고 요청 전체를 차단
+            pp = PathPlan(original_question=utterance, paths=[], unresolved=list(tp.unresolved))
+            sel = ApiSelection(original_question=utterance, status="차단", api_selection_results=[],
+                               unresolved=[Unresolved(path_sequence=None, step=None, reason=f"요청 속 지시문 감지 — 전체 차단 ({h})") for h in hits])
+            trace.finish("차단 (인젝션)")
+            result.update(tasks=tp, paths=pp, apis=sel, gate=blocked_gate(sel, hits), trace=trace, notes=notes, injections=hits)
+            return result
+        r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
+                          tasks_json=tp.model_dump_json(), out_dir=out_dir)
+        r["notes"] = notes + r["notes"]
+        graphs = _graphs(graph_dirs, rules_cfg, out_dir)
+        with trace.span("③ API 선택"):
+            sel = select_apis(r["tasks"], r["paths"], graphs, meta, ops, cat, wrapped)
+        gate = gate_for(sel, r["paths"], graphs, meta, perms)
+        trace.finish(sel.status)
+        result.update(r, apis=sel, gate=gate, trace=trace, injections=[])
+    except BudgetExceeded as e:
+        trace.finish()
+        e.trace = trace                         # 멈춘 요청도 트레이스로 채점 · 보고할 수 있게
+        raise
+    except Exception as e:
+        trace.finish(f"실패: {type(e).__name__}: {str(e)[:160]}")
+        e.trace = trace
+        raise
+    finally:
+        result["trace_file"] = str(trace.save(trace_dir or out_dir / "traces"))
+    return result
 
 
 def plan_request(utterance: str, graphs_from: Path | list[Path], out_dir: Path, goal_json: str | None = None,
@@ -282,6 +402,11 @@ def _print_score(r: dict) -> None:
         print(f"  ? {q}")
 
 
+def datetime_now() -> str:
+    from datetime import datetime
+    return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(prog="tap")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -298,9 +423,30 @@ def main() -> None:
     pl.add_argument("--out", default=str(ROOT / "data/out"))
     pl.add_argument("--goal", default=None, help="LLM 없이 목표 JSON 을 직접 지정")
     pl.add_argument("--model", default=None)
-    it = sub.add_parser("intent", help="자연어 → 업무 목록 (도메인 · 그래프 · 목표 상태 · 제약)")
+    it = sub.add_parser("intent", help="자연어 → 업무 목록 (도메인 · 신규/기존 · 제약)")
     it.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
     it.add_argument("--model", default=None)
+    pa = sub.add_parser("path", help="자연어 → 업무 목록 → 업무마다 그래프 · 출발 · 목표 상태 · 경로")
+    pa.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
+    pa.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
+    pa.add_argument("--model", default=None)
+    rn = sub.add_parser("run", help="자연어 → API 선택 → 등록 때 승인 → 실행 때 확인 → 드라이런. 모자라면 실행 거부")
+    rn.add_argument("utterance", help="자연어 요청")
+    rn.add_argument("--approve", action="store_true", help="등록 때: 시나리오 승인 (쓰기가 있으면)")
+    rn.add_argument("--steps", default="", help="등록 때: 직접 확인한 단계 key (예: 1-1,1-2) — 가선택 · LLM 선택")
+    rn.add_argument("--confirm", default="", help="실행 때: 이번 실행에서 확인한 R2 단계 key (되돌릴 수 없는 호출)")
+    rn.add_argument("--approver", default="권지은")
+    rn.add_argument("--model", default=None)
+    ev = sub.add_parser("eval", help="태스크셋 채점 — 결과(단계별 정답) · 궤적 · 비용 · 지연")
+    ev.add_argument("--tasks", default=str(ROOT / "data/eval/tasks.yaml"))
+    ev.add_argument("--ids", default=None, help="일부만 (예: N01,R02)")
+    ev.add_argument("--model", default=None)
+    ev.add_argument("--out", default=str(ROOT / "data/out/eval"))
+    ev.add_argument("--rescore", default=None, help="저장된 채점 결과(json)를 지금 태스크셋 기준으로 다시 채점 (LLM 안 부름)")
+    se = sub.add_parser("select", help="자연어 → 업무 목록 → 경로 → 단계마다 API (+ 구분값)")
+    se.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
+    se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
+    se.add_argument("--model", default=None)
     ex = sub.add_parser("extract-graph", help="(실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점")
     ex.add_argument("--codes", default=str(ROOT / "data/codes/common_codes.csv"))
     ex.add_argument("--group", default="ORD_STAT_GBCD")
@@ -349,8 +495,89 @@ def main() -> None:
         return
     if a.cmd == "intent":
         for u in a.utterance:
-            r = analyze_intent(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model)
+            r = analyze_intent(u, model=a.model)
             print(r["plan"].model_dump_json(indent=2))
+            for n in r["notes"]:
+                print(f"  (검사) {n}")
+        return
+    if a.cmd == "run":
+        from tap.apis.gate import GateError, approve, dry_run
+        r = analyze_select(a.utterance, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model)
+        g, sel = r["gate"], r["apis"]
+        print(f"■ {a.utterance}\n  선택 결과 {sel.status} · 승인 게이트 {g.status}")
+        for st in g.steps:
+            api = f"{st.api_id.rsplit('/', 1)[-1]} {st.selector}" if st.api_id else "-"
+            print(f"  [{st.key}] {st.kind} '{st.edge}' → {api} | {st.tier or '-'} · 등록 때 {st.requirement}"
+                  + (" · 실행 때 확인" if st.confirm_on_run else "") + f" | {'; '.join(st.reasons)}")
+        for b_ in g.blocked:
+            print(f"  차단: {b_}")
+        try:                                    # 등록 때 승인 — 승인본 고정
+            ap = approve(g, a.approver, a.approve, [k for k in a.steps.split(",") if k]) if g.status != "자동" else None
+        except GateError as e:
+            print(f"  ✗ 실행 거부 (등록 때 승인) — {e}")
+            print(r["trace"].summary())
+            return
+        if ap:
+            d = ROOT / "data/approved"
+            d.mkdir(parents=True, exist_ok=True)
+            f = d / f"{ap.selection_hash.split(':')[1][:12]}.json"
+            f.write_text(json.dumps({"request": a.utterance, "approval": ap.model_dump(), "gate": g.model_dump(),
+                                     "selection": sel.dump()}, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"  ✓ 등록 때 승인 {ap.approver} · {ap.at} → {f.relative_to(ROOT)}")
+        try:                                    # 실행 때 확인 — R2 는 실행할 때마다
+            calls = dry_run(sel, g, ap, [k for k in a.confirm.split(",") if k])
+        except GateError as e:
+            print(f"  ✗ 실행 거부 — {e}")
+            print(r["trace"].summary())
+            return
+        print("  드라이런 (실제 호출 안 함):")
+        for c in calls:
+            print(f"    {c['key']} {c['kind']} {c['api_id'].rsplit('/', 1)[-1]} {c['selector']} ({c['tier']})")
+        print(r["trace"].summary())
+        return
+    if a.cmd == "eval":
+        import os
+        from tap import evaluate as E
+        cases = E.load_tasks(a.tasks)
+        if a.ids:
+            cases = [c for c in cases if c["id"] in a.ids.split(",")]
+        results = []
+        if a.rescore:
+            saved = json.loads(Path(a.rescore).read_text(encoding="utf-8"))
+            results = E.rescore(saved, cases)
+            cases = []
+        for c in cases:
+            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model,
+                                                       trace_dir=Path(a.out) / "traces"))
+            t = r["trajectory"]
+            print(f"  {c['id']} {'O' if r['passed'] else 'X'} {r['final_status']} · LLM {t['llm_calls']} · {t['ms']}ms"
+                  + (f" · 처음 틀린 단계 {r['first_fail']}" if r["first_fail"] else "") + (f" · 뚫림 {r['violations']}" if r.get("violations") else ""), flush=True)
+            results.append(r)
+        summary = E.summarize(results)
+        meta = {"at": datetime_now(), "model": a.model or os.environ.get("OPENAI_DEFAULT_MODEL") or (saved["meta"].get("model") if a.rescore else None),
+                "tasks_file": a.tasks, **({"rescored_from": a.rescore} if a.rescore else {})}
+        j, m = E.save(results, summary, meta, a.out)
+        print(m.read_text(encoding="utf-8").split("\n\n| id |")[0])
+        print(f"→ {m}\n→ {j}")
+        return
+    if a.cmd == "select":
+        for u in a.utterance:
+            from tap.trace import BudgetExceeded
+            try:
+                r = analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks)
+            except BudgetExceeded as e:
+                print(f"■ {u}\n  {e}")
+                continue
+            print(json.dumps({"tasks": r["tasks"].model_dump(), "paths": r["paths"].dump(), "apis": r["apis"].dump()},
+                             ensure_ascii=False, indent=2))
+            for n in r["notes"]:
+                print(f"  (검사) {n}")
+            print(r["trace"].summary() + f"\n  → {r['trace_file']}")
+        return
+    if a.cmd == "path":
+        for u in a.utterance:
+            r = analyze_paths(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks)
+            print(json.dumps({"tasks": r["tasks"].model_dump(), "paths": r["paths"].dump()}, ensure_ascii=False, indent=2))
             for n in r["notes"]:
                 print(f"  (검사) {n}")
         return

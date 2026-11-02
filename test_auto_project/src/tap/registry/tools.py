@@ -95,7 +95,7 @@ def body_format(op: ApiOperation) -> str | None:
 
 def build_tool_registry(ops: list[ApiOperation], domains: dict[str, str], kinds: dict[str, str],
                         spec_hash: str, services: list[dict[str, Any]], spec_base_url: str,
-                        overrides: dict[str, dict[str, Any]] | None = None
+                        overrides: dict[str, dict[str, Any]] | None = None, permissions: dict[str, Any] | None = None
                         ) -> tuple[list[ConnSettings], list[ToolSpec]]:
     """(도메인별 연결 설정, 도구 목록). domains · kinds 는 api_id → 값."""
     overrides = overrides or {}
@@ -111,11 +111,14 @@ def build_tool_registry(ops: list[ApiOperation], domains: dict[str, str], kinds:
         enabled = not (conn.auth_type != "NONE" and not conn.auth_profile)
         if "enabled" in ov:
             enabled = bool(ov["enabled"]) and enabled
+        from tap.apis.gate import base_tier, load_permissions
+        tier, _ = base_tier({"api_id": op.api_id, "api_name": op.summary, "operation_id": op.operation_id, "domain": dom,
+                             "kind": kind, "irreversible": ov.get("irreversible")}, permissions or load_permissions(None))
         tools.append(ToolSpec(
             api_id=op.api_id, domain=dom, method=op.method, endpoint=op.path,
             content_type=op.request_content_type, body_format=body_format(op),
             base_url=conn.base_url, timeout_ms=conn.timeout_ms,
-            retry_count=RETRY[kind], approval_required=kind == "write",
+            retry_count=RETRY[kind], approval_required=tier != "R0", permission_tier=tier,
             auth_type=conn.auth_type, auth_profile=conn.auth_profile, enabled=enabled,
             default_headers=conn.default_headers,
             success_rule=ov.get("success_rule") or infer_success_rule(op),

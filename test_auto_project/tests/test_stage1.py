@@ -184,7 +184,10 @@ def test_three_documents_linked_by_api_id(tmp_path):
     writes = {m["api_id"] for m in meta if m["kind"] == "write"}
     for t in reg["tools"]:                                         # 고정 규칙
         assert t["retry_count"] == (0 if t["api_id"] in writes else 2)
-        assert t["approval_required"] == (t["api_id"] in writes)
+        scope = t["domain"] in ("pd", "od", "ds")                          # 권한 등급: 범위 밖 R3 · 조회 R0 · 쓰기 R1(되돌림 불가면 R2)
+        assert t["permission_tier"] == ("R3" if not scope else "R0" if t["api_id"] not in writes else t["permission_tier"])
+        assert t["permission_tier"] in (("R1", "R2") if scope and t["api_id"] in writes else ("R0", "R3"))
+        assert t["approval_required"] == (t["permission_tier"] != "R0")
         assert t["base_url"] == "HMALL_API_BASE_URL" and t["allowed_environments"] == ["DEV"]
     mi = next(t for t in reg["tools"] if t["api_id"] == aid("/pd/pdb/multiItem.do"))
     assert (mi["body_format"], mi["auth_type"], mi["auth_profile"]) == \

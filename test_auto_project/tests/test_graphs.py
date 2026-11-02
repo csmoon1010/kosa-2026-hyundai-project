@@ -124,3 +124,28 @@ def test_merge_saved_keeps_human_checked_values():
     assert ["10"] in states and not any(lk["api"] == "x:POST:/look.do" and lk["states"] == ["50"] for lk in m["lookups"])
     assert any("API" in k for k in kept) and any("entry_states" in k for k in kept)
     assert merge_saved(None, new) == (new, [])                                                          # 새 그래프는 그대로
+
+
+def test_flow_only_graph_gets_lookups_at_planning_time(tmp_path):
+    """화면에서 그린 그래프는 노드 흐름만 저장한다 — 조회로 찾을 수 있는 상태는 경로 탐색 때 매칭기로 정한다."""
+    import yaml as Y
+    from tap.graph.match import attach_lookups
+    raw = Y.safe_load(DRAFT)
+    raw["lookups"] = []
+    for t in raw["transitions"]:
+        t.pop("api", None), t.pop("selector", None), t.pop("api_status", None)
+    d = tmp_path / "g"
+    d.mkdir()
+    (d / "ITEM_SELL_GBCD.yaml").write_text(Y.safe_dump(raw, allow_unicode=True), encoding="utf-8")
+    graphs, _ = load_graphs([ROOT / "data/graphs", d], keep_unmatched=True)
+    meta = json.loads((ROOT / "data/out/api_metadata.json").read_text(encoding="utf-8"))
+    ops = json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))
+    ordg = next(g for g in graphs if g.graph_id == "ORD_STAT_GBCD")
+    before = {n.code: n.lookup for n in ordg.nodes}
+    notes = attach_lookups(graphs, meta, ops, ["pd", "od", "ds"])
+    sell = next(g for g in graphs if g.graph_id == "ITEM_SELL_GBCD")
+    found = {n.code: n.lookup for n in sell.nodes if n.lookup}
+    assert set(found) >= {"00", "19"} and all(not lk.pinned for lk in found.values())      # 미리 정하지 않은 조회 — ③ 이 다시 고른다
+    assert found["00"].selector == {"itemSellGbcdIn": "00"}
+    assert {n.code: n.lookup for n in ordg.nodes} == before                                 # 사람이 조회 방법을 적은 그래프는 그대로
+    assert any(x.startswith("ITEM_SELL_GBCD: 조회 방법이 적혀 있지 않아") for x in notes)

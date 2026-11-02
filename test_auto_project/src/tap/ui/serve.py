@@ -4,6 +4,9 @@
 
   GET  /tap-data.js          산출물을 매번 새로 읽어 내려준다
   GET  /api/health           화면이 서버 모드인지 확인
+  POST /api/select           {utterance} → ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 (+ 트레이스)
+  POST /api/approve          {selection_hash, scenario, steps, approver} → 등록 때 승인 (서버가 계산한 게이트로 확인) → 승인본 data/approved/
+  POST /api/run              {selection_hash, confirm} → 실행 때 확인 (승인본 · 해시 · R2 단계 확인) → 드라이런
   POST /api/plan             {utterance, goal?} → 목표 추출(LLM) → 경로 → Scenario IR (goal 을 주면 LLM 없이)
   POST /api/graph/save       {graph_id, yaml} → data/graphs/<id>.yaml (기존 파일 위에 합침 — 사람이 확인한 API · 조회 · 진입 상태 유지, 이전 파일은 data/out/graph_history/)
   POST /api/rules            {place, doc, item, dom, target, body} → data/config/rules.ui.yaml + 다시 빌드 → 새 TAP_DATA
@@ -141,8 +144,10 @@ def save_graph(root: Path, graph_id: str, text: str) -> dict[str, Any]:
             "backup": str(backup.relative_to(root)) if backup else None}
 
 
-def make_handler(root: Path):
+def make_handler(root: Path, llm=None):
+    """llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI."""
     proto = root / "prototype"
+    pending: dict[str, dict[str, Any]] = {}    # selection_hash → 서버가 계산한 선택 결과 · 게이트 (승인은 이것으로만 확인한다)
 
     class Handler(SimpleHTTPRequestHandler):
         def __init__(self, *a, **kw):
@@ -173,9 +178,66 @@ def make_handler(root: Path):
                 self.path = "/offline-ui.html"
             return super().do_GET()
 
+        def _select(self, body: dict[str, Any]) -> None:
+            from tap.cli import analyze_select
+            utt = str(body.get("utterance") or "").strip()
+            if not utt:
+                raise ValueError("자연어 요청이 비어 있습니다")
+            try:
+                r = analyze_select(utt, [root / "data/graphs"], root / "data/out", root / "data/config/rules.ui.yaml",
+                                   llm=llm, trace_dir=root / "data/out/traces")
+            except Exception as e:                  # 검사 거절 · 예산 초과도 트레이스와 함께 화면에 보여 준다
+                tr = getattr(e, "trace", None)
+                return self._json(400, {"error": f"{type(e).__name__}: {e}", "trace": tr.to_dict() if tr else None})
+            g = r["gate"]
+            pending[g.selection_hash] = {"request": utt, "apis": r["apis"], "gate": g}
+            return self._json(200, {"request": utt, "tasks": r["tasks"].model_dump(), "paths": r["paths"].dump(),
+                                    "apis": r["apis"].dump(), "gate": g.model_dump(), "trace": r["trace"].to_dict(),
+                                    "notes": r["notes"], "trace_file": str(Path(r["trace_file"]).relative_to(root))})
+
+        def _pending(self, body: dict[str, Any]) -> dict[str, Any]:
+            p = pending.get(str(body.get("selection_hash") or ""))
+            if p is None:
+                raise ValueError("이 선택 결과를 서버가 모릅니다 (서버가 다시 시작됐거나 다른 결과) — 다시 분석하세요")
+            return p
+
+        def _approve(self, body: dict[str, Any]) -> None:
+            """등록 때 승인 — 계획이 맞는가. 승인본을 data/approved/ 에 고정한다 (실행은 /api/run)."""
+            from tap.apis.gate import GateError, approve
+            p = self._pending(body)
+            g = p["gate"]
+            try:
+                ap = approve(g, str(body.get("approver") or "화면"), bool(body.get("scenario")), list(body.get("steps") or []))
+            except GateError as e:
+                return self._json(400, {"error": str(e), "refused": True})
+            p["approval"] = ap
+            d = root / "data/approved"
+            d.mkdir(parents=True, exist_ok=True)
+            f = d / f"{ap.selection_hash.split(':')[1][:12]}.json"
+            f.write_text(json.dumps({"request": p["request"], "approval": ap.model_dump(), "gate": g.model_dump(),
+                                     "selection": p["apis"].dump()}, ensure_ascii=False, indent=2), encoding="utf-8")
+            return self._json(200, {"approval": ap.model_dump(), "file": str(f.relative_to(root)), "confirm_steps": g.confirm_steps})
+
+        def _run(self, body: dict[str, Any]) -> None:
+            """실행 때 확인 — 승인본이 있는지, 그 뒤 바뀌지 않았는지, R2 단계를 이번 실행에서 확인했는지. 통과하면 드라이런."""
+            from tap.apis.gate import GateError, dry_run
+            p = self._pending(body)
+            try:
+                calls = dry_run(p["apis"], p["gate"], p.get("approval"), list(body.get("confirm") or []))
+            except GateError as e:
+                return self._json(400, {"error": str(e), "refused": True})
+            return self._json(200, {"calls": calls, "confirmed": list(body.get("confirm") or []),
+                                    "approval": p["approval"].model_dump() if p.get("approval") else None})
+
         def do_POST(self):
             body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
             try:
+                if self.path == "/api/select":
+                    return self._select(body)
+                if self.path == "/api/approve":
+                    return self._approve(body)
+                if self.path == "/api/run":
+                    return self._run(body)
                 if self.path == "/api/plan":
                     from tap.cli import plan_request
                     goal = json.dumps(body["goal"], ensure_ascii=False) if body.get("goal") else None

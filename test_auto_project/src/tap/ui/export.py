@@ -34,18 +34,6 @@ def _digest(o: dict[str, Any], m: dict[str, Any]) -> dict[str, Any]:
             "req": fl(o["request_fields"]), "res": fl(o["response_fields"])}
 
 
-def _ai(out: Path, graph_id: str) -> dict[str, Any] | None:
-    """그래프 재료 추출(실험) 결과 — gpt-5.5 를 먼저, 없으면 아무거나 하나."""
-    files = sorted((out / "extract").glob(f"{graph_id}.*.yaml"), key=lambda p: ("gpt-5.5" not in p.name, p.name))
-    if not files:
-        return None
-    k = yaml.safe_load(files[0].read_text(encoding="utf-8"))
-    model = files[0].name[len(graph_id) + 1:].rsplit(".", 2)[0]
-    return {"model": model, "file": files[0].name, "transitions": k.get("transitions") or [],
-            "lookups": k.get("lookups") or [], "state_field": k["graph"].get("state_field"),
-            "questions": k.get("open_questions") or []}
-
-
 def _code_groups(path: Path) -> list[dict[str, Any]]:
     """공통코드 테이블 export 전체 — 그룹별 (사용여부 Y, 정렬순서대로). '새 그래프' 에서 고른다."""
     if not path.exists():
@@ -93,8 +81,6 @@ def ui_data(root: Path) -> dict[str, Any]:
         "scenarios": [x for x in (_load(p) for p in sorted((root / "data/scenarios").glob("*.json"), reverse=True)) if x],
         "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
         "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
-        "ai": {gid: _ai(out, gid) for gid in dict.fromkeys([g["graph"]["id"] for g in graphs]
-                                                           + [c["id"] for c in _code_groups(root / "data/codes/common_codes.csv")])},
         "irs": [_load(p) for p in sorted((out / "ir").glob("*.json"))],
     }
 

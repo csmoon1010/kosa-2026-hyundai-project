@@ -19,7 +19,7 @@ def test_ui_data_has_implemented_areas():
     assert len(d["metadata"]) == len(d["catalog"]) == len(d["tools"]) == d["build"]["operations"] == 42
     doms = {g["graph"]["id"]: g["graph"]["domain"] for g in d["graphs"]}
     assert doms == {"ORD_STAT_GBCD": "od", "SLITM_APRVL_GBCD": "pd", "ITEM_ATHZ_GBCD": "pd"}
-    assert d["ai"]["ORD_STAT_GBCD"]["model"] == "gpt-5.5" and d["ai"]["ORD_STAT_GBCD"]["questions"]
+    assert "ai" not in d                                                               # 그래프 캔버스는 노드 흐름만 — AI 제안을 주지 않는다
     assert {o["kind"] for o in d["ops"]} == {"read", "write"} and all(len(f) == 3 for o in d["ops"] for f in o["req"])
     groups = {g["id"]: g for g in d["codes"]}
     assert set(groups) >= set(doms) and groups["SLITM_APRVL_GBCD"]["order"][:3] == ["0", "1", "2"]   # 정렬순서 유지
@@ -92,3 +92,54 @@ def test_server_graph_save_merges_into_data_graphs(server):
     assert ids == {"ORD_STAT_GBCD", "SLITM_APRVL_GBCD", "ITEM_ATHZ_GBCD", "ITEM_SELL_GBCD"}
     d = json.loads(call(base + "/tap-data.js").split("= ", 1)[1].rstrip().rstrip(";"))
     assert {x["graph"]["id"] for x in d["drafts"]} == {"ORD_STAT_GBCD", "ITEM_SELL_GBCD"}         # 화면에서 저장한 것만 저장본
+
+
+Q = "배송완료된 주문 3건을 배송완료 취소시켜줘"
+
+
+def fake_llm(messages, schema):
+    """① 의도 분석 · ② 상태 고르기 — 주문상태 API 는 고정이라 ③ LLM 은 부르지 않는다."""
+    if schema.__name__ == "TaskPlanOut":
+        return schema.model_validate({"original_question": Q, "unresolved": [], "tasks": [
+            {"sequence": 1, "domain": "OD", "origin": "기존", "action": "배송완료취소", "conditions": "c", "constraints": [],
+             "depends_on": [], "count": 3, "source_phrases": [Q]}]})
+    return schema.model_validate({"unresolved": [], "choices": [
+        {"sequence": 1, "graph_id": "ORD_STAT_GBCD", "from_state": "배송완료", "to_state": "출고", "must_pass": [],
+         "state_phrases": ["배송완료된 주문"], "reason": "r"}]})
+
+
+@pytest.fixture()
+def agent_server(tmp_path):
+    root = tmp_path / "root"
+    shutil.copytree(ROOT / "data", root / "data")
+    (root / "prototype").mkdir()
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(root, llm=fake_llm))
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    yield f"http://127.0.0.1:{httpd.server_address[1]}", root
+    httpd.shutdown()
+
+
+def test_server_select_and_approval_gate(agent_server):
+    import urllib.error
+    base, root = agent_server
+    r = json.loads(call(base + "/api/select", {"utterance": Q}))
+    assert r["tasks"]["tasks"][0]["action"] == "배송완료취소" and r["paths"]["paths"][0]["to_state"] == "출고"
+    assert [x["selection_status"] for x in r["apis"]["api_selection_results"]] == ["고정", "고정"]
+    g = r["gate"]
+    assert g["status"] == "승인 필요" and [s["tier"] for s in g["steps"]] == ["R0", "R1"]
+    assert [s["name"] for s in r["trace"]["spans"]] == ["① 의도 분석", "② 경로 탐색", "③ API 선택"] and r["trace"]["totals"]["llm_calls"] == 2
+    h = g["selection_hash"]
+    with pytest.raises(urllib.error.HTTPError) as e:                                     # 승인 없이 실행 → 거부
+        call(base + "/api/run", {"selection_hash": h})
+    assert e.value.code == 400 and "승인 없이 실행할 수 없습니다" in json.loads(e.value.read().decode("utf-8"))["error"]
+    with pytest.raises(urllib.error.HTTPError) as e:                                     # 승인이 모자람 → 거부
+        call(base + "/api/approve", {"selection_hash": h, "scenario": False})
+    body = json.loads(e.value.read().decode("utf-8"))
+    assert body["refused"] and "시나리오 승인" in body["error"]
+    ok = json.loads(call(base + "/api/approve", {"selection_hash": h, "scenario": True, "approver": "지은"}))
+    assert ok["approval"]["approver"] == "지은" and ok["confirm_steps"] == [] and (root / ok["file"]).exists()
+    run = json.loads(call(base + "/api/run", {"selection_hash": h, "confirm": []}))      # R1 만 — 실행 때 추가 확인 없음
+    assert [c["key"] for c in run["calls"]] == ["1-0", "1-1"]
+    with pytest.raises(urllib.error.HTTPError) as e2:                                    # 서버가 모르는 결과는 승인 불가
+        call(base + "/api/approve", {"selection_hash": "sha256:가짜", "scenario": True})
+    assert "서버가 모릅니다" in json.loads(e2.value.read().decode("utf-8"))["error"]
