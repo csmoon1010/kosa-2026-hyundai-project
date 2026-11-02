@@ -1,0 +1,225 @@
+"""도구 권한 등급 · 승인 게이트 — API 선택 결과를 실행하기 전에 사람이 무엇을 승인해야 하는지 코드가 정한다.
+
+등급 (data/config/permissions.yaml)
+  R0 조회 · R1 되돌릴 수 있는 쓰기 · R2 되돌릴 수 없는 쓰기 · R3 금지(범위 밖 · 삭제)
+승인은 두 번이다.
+  등록 때 (approve — 승인본 고정): 계획이 맞는가.
+    쓰기가 있으면 시나리오 승인, 사람이 확인하지 않은 선택(가선택 · LLM 이 고른 API)은 그 단계를 직접 확인.
+    R3 · 보류(API 없음) · 경로 없음 · 범위 밖 업무는 차단 — 승인할 수 없다.
+  실행 때 (assert_executable — 실행할 때마다): 지금 해도 되는가.
+    R2 단계는 실행할 때마다 확인한다 (승인본이 여러 번 실행될 수 있고, 등록과 실행 사이에 데이터가 바뀔 수 있어서).
+    R1 은 승인본이면 추가 확인 없음, R0 은 자동.
+LLM 은 등급 · 승인에 관여하지 않는다. 요청에 "승인 없이 실행해"가 있어도 게이트는 바뀌지 않는다.
+승인은 선택 결과의 해시에 묶인다 — 승인 뒤에 API 가 바뀌면 실행이 거부된다.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from collections import deque
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Literal
+
+import yaml
+from pydantic import BaseModel, Field
+
+from tap.apis.select import ApiSelection
+from tap.graph.model import NEW, StateGraph
+from tap.graph.paths import PathPlan
+
+Tier = Literal["R0", "R1", "R2", "R3"]
+Need = Literal["자동", "시나리오 승인", "단계 승인", "차단"]
+
+
+class GateError(ValueError):
+    pass
+
+
+class StepGate(BaseModel):
+    key: str                                    # '업무-단계' (예: 1-2)
+    path_sequence: int
+    step: int
+    kind: str
+    edge: str
+    api_id: str | None
+    selector: dict[str, str]
+    tier: Tier | None
+    requirement: Need                           # 등록 때 필요한 승인
+    confirm_on_run: bool = False                # R2 — 실행할 때마다 확인
+    reasons: list[str]
+
+
+class Gate(BaseModel):
+    status: Literal["자동", "승인 필요", "차단", "실행할 것 없음"]
+    steps: list[StepGate]
+    blocked: list[str]                          # 차단 이유 (업무 · 단계)
+    need_scenario: bool
+    need_steps: list[str]                       # 등록 때 직접 확인해야 하는 단계 key (가선택 · LLM 선택)
+    confirm_steps: list[str] = Field(default_factory=list)   # 실행할 때마다 확인해야 하는 단계 key (R2)
+    selection_hash: str
+
+
+class Approval(BaseModel):
+    selection_hash: str
+    approver: str
+    at: str
+    scenario: bool
+    steps: list[str] = Field(default_factory=list)
+
+
+INJECTION_PATTERNS = ["이전 지시", "무시하고", "시스템 지시", "새 규칙", "###", "답하라", "승인 없이", "승인 절차 없이",
+                      "승인 단계는 건너", "graph_id", "api_id", "procGb="]
+
+
+def load_permissions(path: str | Path | None) -> dict[str, Any]:
+    p = Path(path) if path else None
+    raw = (yaml.safe_load(p.read_text(encoding="utf-8")) or {}) if p and p.exists() else {}
+    return {"allowed_domains": raw.get("allowed_domains") or ["pd", "od", "ds"],
+            "forbidden_words": raw.get("forbidden_words") or ["삭제", "delete", "remove", "폐기"],
+            "injection_patterns": raw.get("injection_patterns") or INJECTION_PATTERNS}
+
+
+def detect_injections(utterance: str, flagged: list[str], perms: dict[str, Any]) -> list[str]:
+    """요청 속 지시문 감지 — ① LLM 이 적은 지시문(원문에 있는 것만) + ② 코드 패턴. 하나라도 있으면 전체 차단."""
+    hits = [f"LLM 이 지시문으로 봄: '{x}'" for x in flagged]
+    low = utterance.lower()
+    hits += [f"지시문 패턴 '{w}'" for w in perms["injection_patterns"] if w.lower() in low]
+    return hits
+
+
+def blocked_gate(sel: ApiSelection, reasons: list[str]) -> Gate:
+    """요청 전체를 차단하는 게이트 (인젝션 감지) — 승인으로도 열 수 없다."""
+    return Gate(status="차단", steps=[], blocked=[f"요청 속 지시문 감지 — 전체 차단 ({r})" for r in reasons],
+                need_scenario=False, need_steps=[], confirm_steps=[], selection_hash=selection_hash(sel))
+
+
+def base_tier(meta: dict[str, Any] | None, perms: dict[str, Any]) -> tuple[Tier, list[str]]:
+    """API 만 보고 정하는 기본 등급 (Tool Registry 에도 같은 값)."""
+    if not meta:
+        return "R3", ["API Metadata 에 없음"]
+    text = f"{meta.get('api_name') or ''} {meta.get('operation_id') or ''} {meta['api_id']}".lower()
+    hit = [w for w in perms["forbidden_words"] if w.lower() in text]
+    if hit:
+        return "R3", [f"금지 낱말 {hit}"]
+    if meta.get("domain") not in perms["allowed_domains"]:
+        return "R3", [f"1차 범위 밖 도메인 {meta.get('domain')}"]
+    if meta.get("kind") == "read":
+        return "R0", ["조회"]
+    if meta.get("irreversible") == "불가":
+        return "R2", ["되돌릴 수 없는 API (Metadata irreversible 불가)"]
+    return "R1", ["쓰기"]
+
+
+def _way_back(g: StateGraph, frm: str, to: str) -> bool:
+    """도착 상태에서 출발 상태로 API 화살표만으로 돌아갈 수 있는지 — 되돌릴 수 있는 쓰기인지."""
+    if frm == NEW:
+        return False
+    seen, q = {to}, deque([to])
+    while q:
+        c = q.popleft()
+        if c == frm:
+            return True
+        for e in g.out_edges(c):
+            if e.to_code not in seen:
+                seen.add(e.to_code)
+                q.append(e.to_code)
+    return False
+
+
+def selection_hash(sel: ApiSelection) -> str:
+    rows = [(r.path_sequence, r.step, r.kind, r.selected.api_id if r.selected else None,
+             r.selected.selector if r.selected else None) for r in sel.api_selection_results]
+    return "sha256:" + hashlib.sha256(json.dumps([sel.original_question, rows], ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+
+
+def gate_for(sel: ApiSelection, pp: PathPlan, graphs: list[StateGraph], metadata: list[dict[str, Any]],
+             perms: dict[str, Any]) -> Gate:
+    meta = {m["api_id"]: m for m in metadata}
+    by_id = {g.graph_id: g for g in graphs}
+    paths = {p.sequence: p for p in pp.paths}
+    blocked: list[str] = []
+    for p in pp.paths:
+        if p.domain.lower() not in perms["allowed_domains"]:
+            blocked.append(f"{p.sequence}번 업무: 1차 범위 밖 도메인 {p.domain} (R3)")
+        if p.status == "경로 없음":
+            blocked.append(f"{p.sequence}번 업무: 경로 없음")
+    steps: list[StepGate] = []
+    for r in sel.api_selection_results:
+        key = f"{r.path_sequence}-{r.step}"
+        api = r.selected.api_id if r.selected else None
+        reasons: list[str] = []
+        if r.selected is None:
+            tier, need = None, "차단"
+            reasons.append("API 없음 (보류)")
+        else:
+            tier, reasons = base_tier(meta.get(api), perms)
+            p = paths.get(r.path_sequence)
+            if p and p.domain.lower() not in perms["allowed_domains"]:
+                tier, reasons = "R3", reasons + [f"업무 도메인 {p.domain} 이 1차 범위 밖"]
+            if tier == "R1":
+                g = by_id.get(p.graph_id or "") if p else None
+                if r.kind == "수정" or g is None:
+                    tier, reasons = "R2", reasons + ["그래프 없는 수정 — 되돌리는 방법을 모름"]
+                elif r.kind == "상태변경":
+                    a = NEW if r.from_ == NEW else g.code_of(r.from_ or "")
+                    b = g.code_of(r.to or "")
+                    if a and b and not _way_back(g, a, b):
+                        tier, reasons = "R2", reasons + [f"{r.to} 에서 {r.from_} 로 돌아가는 화살표 없음"]
+                    else:
+                        reasons.append(f"{r.to} → {r.from_} 로 되돌릴 수 있음")
+            need = {"R0": "자동", "R1": "시나리오 승인", "R2": "시나리오 승인", "R3": "차단"}[tier]
+            if tier == "R2":
+                reasons.append("되돌릴 수 없음 — 실행할 때마다 확인")
+            if need in ("자동", "시나리오 승인") and (r.selection_status == "가선택" or r.selected_by == "LLM"):
+                need = "단계 승인"
+                reasons.append(f"사람이 확인하지 않은 선택 ({r.selection_status} · {r.selected_by}) — API 가 맞는지 확인")
+        if need == "차단":
+            blocked.append(f"{key} '{r.edge}': " + "; ".join(reasons))
+        steps.append(StepGate(key=key, path_sequence=r.path_sequence, step=r.step, kind=r.kind, edge=r.edge, api_id=api,
+                              selector=r.selected.selector if r.selected else {}, tier=tier, requirement=need,
+                              confirm_on_run=tier == "R2", reasons=reasons))
+    need_steps = [s.key for s in steps if s.requirement == "단계 승인"]
+    need_scenario = any(s.requirement in ("시나리오 승인", "단계 승인") for s in steps)
+    status = "차단" if blocked else "실행할 것 없음" if not steps else "승인 필요" if need_scenario else "자동"
+    return Gate(status=status, steps=steps, blocked=list(dict.fromkeys(blocked)), need_scenario=need_scenario,
+                need_steps=need_steps, confirm_steps=[s.key for s in steps if s.confirm_on_run], selection_hash=selection_hash(sel))
+
+
+def approve(gate: Gate, approver: str, scenario: bool = False, steps: list[str] | tuple[str, ...] = ()) -> Approval:
+    """등록 때 승인 (승인본 고정). 차단이면 승인할 수 없고, 모자라면 무엇이 모자란지 알려 준다."""
+    if gate.status == "차단":
+        raise GateError("차단된 것이 있어 승인할 수 없습니다: " + " / ".join(gate.blocked))
+    missing = (["시나리오 승인"] if gate.need_scenario and not scenario else []) + \
+        [f"단계 {k} 승인" for k in gate.need_steps if k not in steps]
+    if missing:
+        raise GateError("승인이 모자랍니다: " + ", ".join(missing))
+    return Approval(selection_hash=gate.selection_hash, approver=approver,
+                    at=datetime.now().astimezone().isoformat(timespec="seconds"), scenario=scenario, steps=list(steps))
+
+
+def assert_executable(sel: ApiSelection, gate: Gate, approval: Approval | None,
+                      confirm: list[str] | tuple[str, ...] = ()) -> None:
+    """실행 직전 확인 — 실행기는 이것을 통과해야만 API 를 부른다. confirm: 이번 실행에서 확인한 R2 단계 key."""
+    if gate.status == "차단":
+        raise GateError("차단된 시나리오는 실행할 수 없습니다")
+    if gate.status == "자동":
+        return
+    if approval is None:
+        raise GateError("승인 없이 실행할 수 없습니다 — 필요한 승인: " + ", ".join(
+            (["시나리오"] if gate.need_scenario else []) + [f"단계 {k}" for k in gate.need_steps]))
+    if approval.selection_hash != selection_hash(sel) or approval.selection_hash != gate.selection_hash:
+        raise GateError("승인한 뒤 선택 결과가 바뀌었습니다 — 다시 승인하세요")
+    approve(gate, approval.approver, approval.scenario, approval.steps)     # 승인 내용이 지금 게이트를 만족하는지 다시 확인
+    missing = [k for k in gate.confirm_steps if k not in confirm]
+    if missing:
+        raise GateError("실행할 때 확인이 필요합니다 (되돌릴 수 없는 호출): " + ", ".join(f"단계 {k}" for k in missing)
+                        + " — 승인본 승인과 별개로 실행할 때마다 확인")
+
+
+def dry_run(sel: ApiSelection, gate: Gate, approval: Approval | None,
+            confirm: list[str] | tuple[str, ...] = ()) -> list[dict[str, Any]]:
+    """드라이런 — 실행 확인을 통과하면 부를 순서만 돌려준다 (실제 호출은 하지 않음)."""
+    assert_executable(sel, gate, approval, confirm)
+    return [{"key": s.key, "kind": s.kind, "edge": s.edge, "api_id": s.api_id, "selector": s.selector, "tier": s.tier}
+            for s in gate.steps]

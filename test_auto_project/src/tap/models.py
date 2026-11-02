@@ -182,7 +182,9 @@ class ToolSpec(BaseModel):
     base_url: str                               # 환경변수 이름
     timeout_ms: int
     retry_count: int                            # 고정 규칙: 쓰기 0 · 조회 2
-    approval_required: bool                     # 고정 규칙: 쓰기 True
+    approval_required: bool                     # 권한 등급 R0(조회)만 False
+    permission_tier: str | None = None          # R0 조회 · R1 쓰기 · R2 되돌릴 수 없는 쓰기 · R3 금지 (API 만 보고 정한 기본 등급,
+                                                # 실행 단계 등급은 경로까지 보고 승인 게이트가 다시 정한다 — tap.apis.gate)
     auth_type: AuthType
     auth_profile: str | None = None
     enabled: bool = True                        # tool_enabled 의 원본

@@ -1,7 +1,8 @@
 /* 상태 그래프 만들기 — 업무 담당자용 캔버스 편집기.
  *
- * 업무 담당자는 상태 · 화살표 · 업무 이름만 정한다. API 는 API Metadata(명세 + 개발 담당자 보정)에서
- * 시스템이 찾는다 (src/tap/graph/match.py 와 같은 규칙). 최종 선택은 시나리오 등록 때 Agent 가 하고 승인본에 고정.
+ * 업무 담당자는 상태 · 화살표 · 업무 이름만 정한다 (노드 흐름). API 와 '조회로 찾을 수 있는 상태'는 이 화면에서 다루지 않는다 —
+ * 시나리오를 만들 때 ② 경로 탐색 · ③ API 선택이 API Metadata 에서 정하고 승인본에 고정한다.
+ * matchEdge · matchLookup · reviewItems 는 개발 담당자 검수 목록(관리자 › 전사)에서만 쓴다.
  *
  * 데이터: window.TAP_DATA (tap.cli ui-data 로 생성). 쓰는 법:
  *   GraphEditor.mount(element, { domain: 'od' | null, embedded: false })
@@ -270,8 +271,8 @@
     function initial(gid){
       const g = GRAPHS.find(x => x.id === gid) || GRAPHS[0];
       const base = { graph: g.id, doms: S0.doms || ["pd", "od", "ds"], coach: true, filter: "", nodes: {}, edges: [], q: {},
-        stateField: { v: g.loaded ? guessField(g).v : null, st: "제안" }, sel: { kind: "none" },
-        test: { target: "", must: "", ai: true }, saved: null, showYaml: false, server: S0.server, creating: false };
+        stateField: { v: g.loaded ? guessField(g).v : null, st: "추정" }, sel: { kind: "none" },
+        test: { from: "", target: "", must: "" }, saved: null, showYaml: false, server: S0.server, creating: false };
       if (g.draft) return fromDraft(g, base);
       return fromKnowledge(g, base);
     }
@@ -312,85 +313,38 @@
     const NAME = c => (CODES().find(x => x[0] === c) || [])[1] || c;
     const ORDER = c => CODES().findIndex(x => x[0] === c);
     const sn = c => `${c} ${NAME(c)}`;
-    const AI = () => (D.ai && D.ai[S.graph]) || { transitions: [], lookups: [], questions: [], model: null };
-    const aiEdge = e => AI().transitions.find(x => String(x.from) === e.from && String(x.to) === e.to);
     const placed = () => Object.keys(S.nodes).sort((a, b) => ORDER(a) - ORDER(b));
     const edgeOf = k => S.edges.find(e => key(e.from, e.to) === k);
     const isExternal = e => S.nodes[e.from] && S.nodes[e.from].role === "ext";
     const workEdges = () => S.edges.filter(e => !isExternal(e));
     const entry = () => Object.keys(S.nodes).find(c => S.nodes[c].role === "entry") || "";
-    const candE = e => matchEdge(D, e.name, NAME(e.to), scopeDoms(), S.stateField.v, e.to);
-    const candL = c => matchLookup(D, NAME(c), c, S.stateField.v, scopeDoms());
 
     function counts(){
       const w = workEdges();
-      let found = 0, check = 0, none = 0;
-      w.filter(e => e.st === "확정" && e.name).forEach(e => { const s = statusOf(candE(e)); if (s === "찾음") found++; else if (s === "확인 필요") check++; else none++; });
-      return { ok: w.filter(e => e.st === "확정" && e.name).length, ai: w.filter(e => e.st === "제안").length,
-        noname: w.filter(e => !e.name).length, found, check, none, qs: AI().questions.filter((_, i) => !S.q[i]).length };
+      return { ok: w.filter(e => e.name).length, noname: w.filter(e => !e.name).length };
     }
 
-    /* 할 일 · 검증 */
+    /* 할 일 · 검증 — 노드 흐름만 본다 (API 는 시나리오를 만들 때) */
     function issues(){
-      const out = [], add = (lv, msg, sel, open) => out.push({ lv, msg, sel, open }), en = entry();
+      const out = [], add = (lv, msg, sel, open) => out.push({ lv, msg, sel, open });
       for (const e of workEdges()){
         const sel = { kind: "edge", id: key(e.from, e.to) }, lab = `${NAME(e.from)} → ${NAME(e.to)}`;
         if (!e.name){ add("err", `${lab}: 이 변화를 업무에서 뭐라고 부르는지 적으세요.`, sel); continue; }
-        if (e.st === "제안"){ add("warn", `${lab}: AI 가 제안한 화살표입니다. 맞는지 확인하세요.`, sel); continue; }
-        const st = statusOf(candE(e));
-        if (st === "없음") add("warn", `${lab} '${e.name}': 맞는 API 를 못 찾았습니다. 개발 담당자 검수로 넘어갑니다.`, sel);
-        else if (st === "확인 필요") add("warn", `${lab} '${e.name}': API 후보가 애매합니다. 개발 담당자 검수로 넘어갑니다.`, sel);
-      }
-      for (const e of workEdges().filter(e => e.name && e.st === "확정" && statusOf(candE(e)) === "찾음"))
         if (!S.edges.some(r => r.from === e.to && r.to === e.from && r.name))
-          add("warn", `${NAME(e.from)} → ${NAME(e.to)}: 되돌리는 화살표가 없어 실행 중 실패하면 이 단계는 되돌릴 수 없습니다.`, { kind: "edge", id: key(e.from, e.to) });
-      if (placed().length && !placed().some(c => lookupOf(c, true)))
-        add("err", `조회로 찾을 수 있는 상태가 하나도 없어 출발할 ${ENT()} 데이터가 없습니다. 개발 담당자 검수로 넘어갑니다.`, { kind: "node", id: placed()[0] });
-      const byApi = new Map();
-      workEdges().filter(e => e.name).forEach(e => { const c = candE(e); if (statusOf(c) !== "찾음") return;
-        if (S.stateField.v && Object.keys(c[0].sel).includes(S.stateField.v)) return;   // 상태 값을 직접 넣는 API — 같은 도착 상태면 같은 동작이 맞다
-        const k2 = c[0].api + "|" + selTxt(c[0].sel); byApi.set(k2, (byApi.get(k2) || []).concat([e])); });
-      byApi.forEach(es => { if (es.length > 1) add("warn", `${es.map(e => `${NAME(e.from)} → ${NAME(e.to)} '${e.name}'`).join(", ")}: 서로 다른 화살표가 같은 API 동작(${short(es[0] && candE(es[0])[0].api)} ${selTxt(candE(es[0])[0].sel)})으로 찾아졌습니다. 이름이 맞는지 확인하세요.`, { kind: "edge", id: key(es[1].from, es[1].to) }); });
-      if (S.stateField.st === "제안") add("warn", S.stateField.v ? `현재 상태를 읽는 필드(${S.stateField.v})가 확정 전입니다 (자동 추정 · AI 제안). '⋯ 더보기 › 그래프 설정'에서 확인하고 확정하세요.`
+          add("warn", `${lab}: 되돌리는 화살표가 없어 실행 중 실패하면 이 단계는 되돌릴 수 없습니다 (권한 등급 R2 — 실행할 때마다 확인).`, sel);
+      }
+      if (S.stateField.st !== "확정") add("warn", S.stateField.v ? `현재 상태를 읽는 필드(${S.stateField.v})가 확정 전입니다 (자동 추정). '⋯ 더보기 › 그래프 설정'에서 확인하고 확정하세요.`
         : "현재 상태를 읽는 필드가 없습니다. '그래프 설정'에서 고르세요.", { kind: "none" }, "set");
-      const reach = reachable(true), dead = placed().filter(c => S.nodes[c].role !== "ext" && !reach.has(c) && statusOf(candL(c)) === "없음");
-      if (dead.length) add("info", `만들 수도, 조회로 찾을 수도 없는 상태: ${dead.map(NAME).join(", ")}. 이 상태를 목표로 한 요청은 거절됩니다.`, { kind: "node", id: dead[0] });
-      const nq = AI().questions.filter((_, i) => !S.q[i]).length;
-      if (nq) add("warn", `AI 가 남긴 확인 질문 ${nq}개`, { kind: "none" }, "q");
       return out;
     }
 
-    /* 경로 계산 — plan.py 와 같은 규칙. 간선의 API 는 자동 후보 1순위 */
-    function usable(ai){
-      return S.edges.filter(e => !isExternal(e) && e.name && (e.st === "확정" || (ai && e.st === "제안"))).map(e => {
-        const c = candE(e), st = statusOf(c);
-        return c.length && !c[0].unknown && (st === "찾음" || (ai && st === "확인 필요")) ? Object.assign({}, e, { c: c[0], apist: st }) : null;
-      }).filter(Boolean);
-    }
-    function lookupOf(c, ai){ const cs = candL(c), st = statusOf(cs); return cs.length && !cs[0].unknown && (st === "찾음" || (ai && st === "확인 필요")) ? Object.assign({ apist: st }, cs[0]) : null; }
-    function reachable(ai){ const seen = new Set(placed().filter(c => lookupOf(c, ai))), q = [...seen], es = usable(ai);
-      while (q.length){ const c = q.shift(); es.filter(e => e.from === c).forEach(e => { if (!seen.has(e.to)){ seen.add(e.to); q.push(e.to); } }); } return seen; }
-    function search(start, target, must, es){
-      const first = [start, must ? start === must : true], q = [[first, []]], seen = new Set([first.join()]);
+    /* 시험해 보기 — 화살표만으로 출발 → 목표 경로 (어느 상태를 조회로 찾는지 · API 는 시나리오를 만들 때 정한다) */
+    function search(start, target, must){
+      const es = workEdges().filter(e => e.name), first = [start, must ? start === must : true], q = [[first, []]], seen = new Set([first.join()]);
       while (q.length){ const [[c, ok], path] = q.shift(); if (c === target && ok) return path; if (path.length >= 12) continue;
         for (const e of es.filter(e => e.from === c)){ const nx = [e.to, ok || e.to === must]; if (!seen.has(nx.join())){ seen.add(nx.join()); q.push([nx, [...path, e]]); } } }
       return null;
     }
-    function plan(target, must, ai){
-      const es = usable(ai), en = entry();
-      const mk = s => { const l = lookupOf(s, ai); if (!l) return null; const p = search(s, target, must, es); return p ? { start: s, look: l, path: p } : null; };
-      const all = placed().map(mk).filter(Boolean);
-      // A: 진입 상태를 따로 정하지 않는다 — 목표까지 갈 수 있는 찾을 수 있는 상태 중 공통코드 정렬순서가 가장 앞인 곳 / B: 쓰기가 가장 적은 곳
-      const A = en ? mk(en) : all.slice().sort((x, y) => ORDER(x.start) - ORDER(y.start) || y.path.length - x.path.length)[0] || null;
-      let B = all.slice().sort((x, y) => x.path.length - y.path.length || ORDER(x.start) - ORDER(y.start))[0] || null;
-      if (A && B && B.start === A.start && B.path.length === A.path.length) B = null;
-      if (A || B) return { ok: true, A, B };
-      const why = [reachable(ai).has(target) ? "거쳐야 할 상태를 지나는 경로가 없습니다." : `${sn(target)} 은(는) API 화살표로 갈 수 있는 상태가 아닙니다.`];
-      if (!lookupOf(target, ai)) why.push("조회로 찾는 방법도 없습니다.");
-      return { ok: false, why: why.join(" ") };
-    }
-    const fmtPath = p => `${sn(p.start)} 찾기 (${short(p.look.api)} ${selTxt(p.look.sel)})` + p.path.map(e => ` → ${e.name} (${short(e.c.api)} ${selTxt(e.c.sel)})`).join("")
-      + ` · 쓰기 ${p.path.length}회` + (p.path.some(e => e.st === "제안" || e.apist !== "찾음") || p.look.apist !== "찾음" ? " · 확인 전 항목 포함" : "");
 
     /* 뼈대 */
     function render(){
@@ -428,7 +382,7 @@
               <svg id="${id("svg")}" viewBox="0 0 ${VB.w} ${VB.h}" role="application" aria-label="${esc(g.name)} 그래프 캔버스">
                 <defs>
                   <pattern id="${id("dots")}" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.1" style="fill:var(--grid)"/></pattern>
-                  ${[["ok", "var(--accent)"], ["ai", "var(--ai)"], ["none", "var(--signal)"], ["ext", "var(--muted)"]].map(([k, col]) =>
+                  ${[["ok", "var(--accent)"], ["none", "var(--signal)"], ["ext", "var(--muted)"]].map(([k, col]) =>
                     `<marker id="${id("mk-" + k)}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:${col}"/></marker>`).join("")}
                 </defs>
                 <rect x="0" y="0" width="${VB.w}" height="${VB.h}" fill="url(#${id("dots")})"/>
@@ -474,7 +428,7 @@
           <span class="hint">화살표에 붙는 API 는 어느 도메인 것이든 쓸 수 있습니다.</span></div>
         <div class="box"><b>조회 결과에서 상태를 읽는 필드 (자동 추정)</b>
           <p class="ev">${guess && guess.v ? `<span class="mono">${esc(guess.v)}</span> — ${esc(guess.why)}` : `못 찾았습니다 — ${esc(guess ? guess.why : "")}. 만든 뒤 '그래프 설정'에서 고르세요.`}</p></div>
-        <p class="note">만들면 빈 캔버스가 열립니다. 왼쪽 공통코드를 끌어다 놓고 화살표를 이으세요. ${(D.ai || {})[N.cg] ? "AI 제안이 있습니다." : "이 그룹은 AI 제안이 없습니다 (tap.cli extract-graph 로 만들 수 있음)."}</p>
+        <p class="note">만들면 빈 캔버스가 열립니다. 왼쪽 공통코드를 끌어다 놓고 화살표를 이은 뒤, 화살표마다 업무에서 부르는 이름을 적으세요.</p>
         <div class="row"><button class="gbtn pri" id="${id("ncMake")}">만들기</button><button class="gbtn ghost" id="${id("ncCancel")}">취소</button></div>
       </section>`;
     }
@@ -500,28 +454,22 @@
       };
     }
     function refresh(){ renderPalette(); renderLayer(); renderInspector(); renderCounts(); }
-    /* 완료 = 이름 확정 + API 찾음. 확인 필요 = 이름 없음 · AI 제안 · API 애매 · 못 찾음 */
-    const isDone = e => e.name && e.st === "확정" && statusOf(candE(e)) === "찾음";
     function renderCounts(){
-      const w = workEdges(), done = w.filter(isDone).length, need = w.length - done;
-      const ai = w.filter(e => e.st === "제안").length, noname = w.filter(e => !e.name).length, api = need - ai - noname;
-      const nq = AI().questions.filter((_, i) => !S.q[i]).length;
-      el("counts").innerHTML = `<span>상태 <b>${placed().length}</b>개 · 화살표 <b>${w.length}</b>개 (완료 <b>${done}</b> ·
-        <button class="need" id="${id("needB")}" ${need ? "" : "disabled"} title="${need ? `AI 제안 ${ai} · 이름 없음 ${noname} · API 확인 ${api} — 누르면 차례로 이동` : ""}">${need ? `확인 필요 ${need}` : "확인 필요 0"}</button>)</span>
+      const w = workEdges(), named = w.filter(e => e.name).length, noname = w.length - named;
+      el("counts").innerHTML = `<span>상태 <b>${placed().length}</b>개 · 화살표 <b>${w.length}</b>개 (이름 확정 <b>${named}</b> ·
+        <button class="need" id="${id("needB")}" ${noname ? "" : "disabled"} title="${noname ? "누르면 이름 없는 화살표로 차례로 이동" : ""}">이름 없음 ${noname}</button>)</span>
         ${S.saved ? `<span class="st st-good">승인본 v${S.saved.v}</span>` : ""}
         <div class="more"><button class="gbtn sm" id="${id("moreB")}" aria-haspopup="true" aria-expanded="${!!S.menu}">⋯ 더보기</button>
           ${S.menu ? `<div class="menu" role="menu">
-            <button data-m="ai">AI 제안 불러오기</button>
             <button data-m="set">그래프 설정 (상태 필드)</button>
-            ${AI().questions.length ? `<button data-m="q">AI 확인 질문 (${nq})</button>` : ""}
             ${(opts.actions || []).map((a, i) => `<button data-act="${i}">${esc(a.label())}</button>`).join("")}
             <hr><button data-m="reset">${graph().draft ? "저장본으로 되돌리기" : (graph().k.transitions || []).length ? "확인된 그래프로 되돌리기" : "캔버스 비우기"}</button></div>` : ""}</div>`;
-      el("needB").onclick = () => { const list = w.filter(e => !isDone(e)); if (!list.length) return;
+      el("needB").onclick = () => { const list = w.filter(e => !e.name); if (!list.length) return;
         const cur = list.findIndex(e => S.sel.kind === "edge" && S.sel.id === key(e.from, e.to)), n = list[(cur + 1) % list.length];
         S.sel = { kind: "edge", id: key(n.from, n.to) }; renderLayer(); renderInspector(); };
       el("moreB").onclick = ev => { ev.stopPropagation(); S.menu = !S.menu; renderCounts(); };
       el("counts").querySelectorAll("[data-m]").forEach(b => b.onclick = () => { S.menu = false; renderCounts();
-        ({ ai: loadAI, set: openSettings, q: openQuestions, reset: () => { const g = graph(); S = initial(S.graph); render();
+        ({ set: openSettings, reset: () => { const g = graph(); S = initial(S.graph); render();
           toast(g.draft ? "저장본으로 되돌렸습니다." : (g.k.transitions || []).length ? "확인된 그래프로 되돌렸습니다." : "캔버스를 비웠습니다."); } })[b.dataset.m](); });
       el("counts").querySelectorAll("[data-act]").forEach(b => b.onclick = () => { S.menu = false; renderCounts(); opts.actions[+b.dataset.act].onClick(); });
     }
@@ -534,19 +482,6 @@
       if (el("testB")) el("testB").onclick = openTest;
       if (el("saveB")) el("saveB").onclick = openSave;
     }
-    function loadAI(){
-      let n = 0, skip = 0;
-      for (const x of AI().transitions){
-        const a = String(x.from), b = String(x.to);
-        if (!S.nodes[a] || !S.nodes[b]){ skip++; continue; }
-        const e = edgeOf(key(a, b));
-        if (!e){ S.edges.push({ from: a, to: b, name: x.name, st: "제안", origin: "AI 제안" }); n++; }
-        else if (!e.name){ e.name = x.name; e.st = "제안"; e.origin = "AI 제안"; n++; }
-      }
-      if (AI().state_field && !S.stateField.v) S.stateField = { v: AI().state_field, st: "제안" };
-      refresh(); toast(`AI 제안 화살표 ${n}개를 불러왔습니다` + (skip ? ` · 캔버스에 없는 상태라 건너뜀 ${skip}개` : "") + (AI().model ? ` (${AI().model}, 공통코드 + 명세만 보고 만든 것)` : ""));
-    }
-
     /* 팔레트 */
     function renderPalette(){
       const f = S.filter.trim();
@@ -607,23 +542,20 @@
       for (const e of S.edges){
         if (!S.nodes[e.from] || !S.nodes[e.to]) continue;
         const g = geom(e), k = key(e.from, e.to), on = sel.kind === "edge" && sel.id === k;
-        const apiSt = isExternal(e) || !e.name ? null : statusOf(candE(e));
-        const [col, dash, mk] = isExternal(e) ? ["var(--muted)", "2 4", "ext"] : !e.name || apiSt === "없음" ? ["var(--signal)", "6 4", "none"]
-          : e.st === "제안" ? ["var(--ai)", "6 4", "ai"] : apiSt === "찾음" ? ["var(--accent)", "", "ok"] : ["var(--signal)", "6 4", "none"];
+        const [col, dash, mk] = isExternal(e) ? ["var(--muted)", "2 4", "ext"] : !e.name ? ["var(--signal)", "6 4", "none"] : ["var(--accent)", "", "ok"];
         const label = isExternal(e) ? "외부" : e.name || "이름 없음";
         edges += `<path d="${g.d}" fill="none" style="stroke:${col}" stroke-width="${on ? 3.4 : 1.9}" ${dash ? `stroke-dasharray="${dash}"` : ""} marker-end="url(#${id("mk-" + mk)})"/>
-          <text x="${g.lx}" y="${g.ly + 4}" text-anchor="middle" font-size="12" font-weight="${on ? 700 : 500}" style="fill:${col};paint-order:stroke;stroke:var(--panel-2);stroke-width:5px;pointer-events:none">${esc(label)}${apiSt && apiSt !== "찾음" ? " ?" : ""}</text>`;
+          <text x="${g.lx}" y="${g.ly + 4}" text-anchor="middle" font-size="12" font-weight="${on ? 700 : 500}" style="fill:${col};paint-order:stroke;stroke:var(--panel-2);stroke-width:5px;pointer-events:none">${esc(label)}</text>`;
         hits += `<path class="hit" data-edge="${k}" d="${g.d}" fill="none" stroke="transparent" stroke-width="18"><title>${esc(NAME(e.from))} → ${esc(NAME(e.to))} · 눌러서 편집</title></path>`;
       }
       for (const c of placed()){
         const n = S.nodes[c], on = sel.kind === "node" && sel.id === c, ext = n.role === "ext", ent = c === en;
-        const ls = ext ? null : statusOf(candL(c)), x = n.x - NW / 2, y = n.y - NH / 2;
+        const x = n.x - NW / 2, y = n.y - NH / 2;
         nodes += `<g class="node" data-node="${c}" tabindex="0" role="button" aria-label="${esc(sn(c))}${ent ? " 진입 상태" : ""}">
           <rect x="${x}" y="${y}" width="${NW}" height="${NH}" rx="9" style="fill:${ent ? "var(--accent-soft)" : "var(--panel)"};stroke:${on ? "var(--ink)" : ext ? "var(--muted)" : "var(--accent)"}" stroke-width="${on ? 2.6 : ent ? 2.2 : 1.3}" ${ext ? 'stroke-dasharray="5 4"' : ""}/>
           <text x="${n.x}" y="${n.y - 4}" text-anchor="middle" font-size="14" font-weight="600" style="fill:${ext ? "var(--muted)" : "var(--ink)"};font-family:var(--mono)">${c}</text>
           <text x="${n.x}" y="${n.y + 14}" text-anchor="middle" font-size="12" style="fill:${ext ? "var(--muted)" : "var(--ink-2)"}">${esc(NAME(c))}</text>
           ${ent ? `<text x="${n.x}" y="${y - 7}" text-anchor="middle" font-size="11" font-weight="600" style="fill:var(--accent)">진입</text>` : ext ? `<text x="${n.x}" y="${y - 7}" text-anchor="middle" font-size="11" style="fill:var(--muted)">외부에서 생김</text>` : ""}
-          ${ls && ls !== "없음" ? `<circle cx="${x + 12}" cy="${y + 12}" r="4.5" style="fill:${ls === "찾음" ? "var(--good)" : "var(--panel)"};stroke:${ls === "찾음" ? "var(--good)" : "var(--signal)"}" stroke-width="1.6"><title>조회 API ${ls}</title></circle>` : ""}
         </g>
         ${on ? `<g class="xbtn" data-del="${c}" role="button" aria-label="${esc(sn(c))} 캔버스에서 빼기"><title>캔버스에서 빼기 (Delete)</title>
           <circle cx="${x + NW}" cy="${y}" r="10" style="fill:var(--panel);stroke:var(--danger)" stroke-width="1.6"/>
@@ -679,42 +611,13 @@
     function addEdge(a, b){
       if (a === b) return;
       if (edgeOf(key(a, b))){ S.sel = { kind: "edge", id: key(a, b) }; refresh(); return toast("이미 있는 화살표라 그 화살표를 열었습니다."); }
-      const x = AI().transitions.find(y => String(y.from) === a && String(y.to) === b);
       S.edges.push({ from: a, to: b, name: "", st: "확정", origin: "사람" }); S.sel = { kind: "edge", id: key(a, b) }; refresh();
       toast(S.nodes[a].role === "ext" ? "외부에서 생기는 상태에서 나온 화살표라 API 가 필요 없습니다."
-        : x ? `${NAME(a)} → ${NAME(b)} 화살표를 만들었습니다. 오른쪽에 AI 가 제안한 이름이 있어요.` : `${NAME(a)} → ${NAME(b)} 화살표를 만들었습니다. 업무에서 부르는 이름을 적으세요.`);
+        : `${NAME(a)} → ${NAME(b)} 화살표를 만들었습니다. 업무에서 부르는 이름을 적으세요.`);
     }
 
     /* 속성 패널 */
-    const pill = e => !e.name ? `<span class="st st-none">이름 없음</span>` : e.st === "제안" ? `<span class="st st-ai">AI 제안</span>` : `<span class="st st-ok">확정</span>`;
-    const apiPill = st => st === "찾음" ? `<span class="st st-good">API 찾음</span>` : st === "확인 필요" ? `<span class="st st-none">API 확인 필요</span>` : `<span class="st st-err">API 못 찾음</span>`;
-    /* API 한 줄 — 이름 · 도메인 · 메서드 + endpoint URL · 구분값 */
-    const DOM_KO = { pd: "상품", od: "주문", ds: "물류", af: "재경", cs: "상담", hm: "전시" };
-    function apiLine(c){
-      const m = D.metadata.find(x => x.api_id === c.api) || {}, t = (D.tools || []).find(x => x.api_id === c.api) || {};
-      const conn = (D.connections || []).find(x => x.domain === m.domain) || {};
-      const path = t.endpoint || String(c.api).split(":").slice(2).join(":"), url = (conn.base_url_default || "") + path;
-      return `<div><b>${esc(c.apiName)}</b></div>
-        <div class="note">도메인 ${esc(DOM_KO[m.domain] || m.domain || "?")} (${esc(m.domain || "?")})${!Object.keys(c.sel).length ? ""
-          : S.stateField.v && Object.keys(c.sel).includes(S.stateField.v) ? ` · 넣는 상태 값 <span class="mono">${esc(selTxt(c.sel))}</span>`
-          : ` · 구분값 <span class="mono">${esc(selTxt(c.sel))}</span>`}</div>
-        <div class="mono" style="font-size:11.5px;overflow-wrap:anywhere">${esc(t.method || "POST")} ${esc(url)}</div>`;
-    }
-    function candList(cs, kind, compact){
-      const st = statusOf(cs);
-      if (compact) return cs.length ? `<div class="cands" style="margin-top:6px">${cs.map((c, i) => `<div class="cand ${i === 0 ? "top" : ""}">
-          <div class="hd"><b>${esc(c.apiName)}</b><span class="mono note">${Math.round(c.score * 100)}</span></div>
-          <div class="sel">${esc(short(c.api))}${Object.keys(c.sel).length ? ` · ${esc(selTxt(c.sel))}` : " · 구분값 없음"}${c.action ? ` · ${esc(c.action)}` : ""}</div>
-          <div class="meter"><i style="width:${Math.round(c.score * 100)}%"></i></div><div class="why">${c.why.map(esc).join(" · ")}</div></div>`).join("")}</div>` : "";
-      return `<div class="box"><div class="row" style="justify-content:space-between"><b>${kind === "edge" ? "자동으로 찾은 API" : "자동으로 찾은 조회 API"}</b>${apiPill(st)}</div>
-        ${cs.length ? `<div class="cands">${cs.map((c, i) => `<div class="cand ${i === 0 ? "top" : ""}">
-          <div class="hd"><b>${esc(c.apiName)}</b><span class="mono note">${Math.round(c.score * 100)}</span></div>
-          <div class="sel">${esc(short(c.api))}${Object.keys(c.sel).length ? ` · ${esc(selTxt(c.sel))}` : " · 구분값 없음"}${c.action ? ` · ${esc(c.action)}` : ""}</div>
-          <div class="meter"><i style="width:${Math.round(c.score * 100)}%"></i></div>
-          <div class="why">${c.why.map(esc).join(" · ")}</div></div>`).join("")}</div>` : `<p class="ev">후보가 없습니다.</p>`}
-        <p class="note">${st === "찾음" ? "최종 선택은 시나리오 등록 때 Agent 가 후보 중에서 하고, 확인 후 저장할 때 고정됩니다."
-          : "개발 담당자 검수 목록에 올라갑니다. 담당자가 API Metadata 에 별칭이나 구분값을 보정하면 다시 찾습니다."}</p></div>`;
-    }
+    const pill = e => !e.name ? `<span class="st st-none">이름 없음</span>` : `<span class="st st-ok">확정</span>`;
     function renderInspector(){
       const s = S.sel;
       if (s.kind === "edge" && edgeOf(s.id)) return inspEdge(edgeOf(s.id));
@@ -732,7 +635,7 @@
           <p class="note">화살표를 누르면 여기서 이름을 적습니다. 상태는 끌어서 옮기고, 눌러서 나오는 × 로 뺍니다.</p>
         </section>`;
       el("insp").querySelectorAll("[data-todo]").forEach(b => b.onclick = () => { const x = shown[+b.dataset.todo];
-        if (x.open === "set") return openSettings(); if (x.open === "q") return openQuestions();
+        if (x.open === "set") return openSettings();
         if (x.sel) S.sel = x.sel; renderLayer(); renderInspector(); });
       if (el("allT")) el("allT").onclick = () => { S.allTodo = !S.allTodo; renderInspector(); };
     }
@@ -745,37 +648,26 @@
         el("closeI").onclick = () => { S.sel = { kind: "none" }; refresh(); };
         return;
       }
-      const A = aiEdge(e), rev = edgeOf(key(e.to, e.from)), cs = e.name ? candE(e) : [];
+      const rev = edgeOf(key(e.to, e.from));
       el("insp").innerHTML = `<section class="gcard form">
         <div class="row" style="justify-content:space-between"><h2>${esc(NAME(e.from))} → ${esc(NAME(e.to))}</h2>${pill(e)}</div>
-        ${A && e.st === "제안" ? `<div class="box ai"><b class="t">AI 가 제안한 화살표</b><div>이름 <b>${esc(A.name)}</b></div><p class="ev">${esc(A.evidence || "")}</p>
-          <div class="row"><button class="gbtn sm pri" id="${id("aiOk")}">맞아요, 확정</button><button class="gbtn sm" id="${id("aiNo")}">이 화살표는 없어요</button></div></div>` : ""}
         <div class="fld">
-          <div class="two"><input type="text" id="${id("fn")}" value="${esc(e.name)}" placeholder="업무에서 부르는 이름 · 예: 출고완료취소" aria-label="업무에서 부르는 이름"><button class="gbtn pri" id="${id("okE")}">${e.st === "확정" && e.name ? "이름 바꾸기" : "확정"}</button></div>
-          <span class="hint">이 이름으로 API 를 찾습니다. 화면 · 업무에서 쓰는 말 그대로 적어 주세요.</span></div>
-        ${e.name ? `<div class="box"><div class="row" style="justify-content:space-between"><b>자동으로 찾은 API</b>${apiPill(statusOf(cs))}</div>
-          ${cs.length ? apiLine(cs[0]) : "<div>후보 없음</div>"}
-          <p class="note">${statusOf(cs) === "찾음" ? "이 API 가 이 화살표의 동작으로 저장됩니다. 다르면 이름을 바꿔 보세요." : "개발 담당자 검수(관리자 › 전사)로 넘어갑니다. 담당자가 API Metadata 를 보정하면 다시 찾습니다."}</p>
-</div>`
-          : `<div class="box"><p class="ev">이름을 적으면 API 를 자동으로 찾습니다.</p></div>`}
+          <div class="two"><input type="text" id="${id("fn")}" value="${esc(e.name)}" placeholder="업무에서 부르는 이름 · 예: 출고완료취소" aria-label="업무에서 부르는 이름"><button class="gbtn pri" id="${id("okE")}">${e.name ? "이름 바꾸기" : "확정"}</button></div>
+          <span class="hint">화면 · 업무에서 쓰는 말 그대로 적어 주세요. 시나리오를 만들 때 이 이름으로 API 를 찾습니다.</span></div>
         ${!rev ? `<div class="box"><p class="ev">되돌리는 화살표(${esc(NAME(e.to))} → ${esc(NAME(e.from))})가 없습니다. 실행 중 실패하면 이 단계는 되돌릴 수 없어요. 필요하면 캔버스에서 ${esc(NAME(e.to))} 의 ● 을 끌어 ${esc(NAME(e.from))} 에 놓으세요.</p></div>` : ""}
         <div class="row"><button class="gbtn sm dng" id="${id("delE")}">화살표 지우기</button><button class="gbtn sm ghost" id="${id("closeI")}">닫기</button></div>
       </section>`;
       const fn = el("fn");
-      fn.oninput = () => { const box = fn.closest(".form"); void box; };
       fn.onkeydown = ev => { if (ev.key === "Enter"){ ev.preventDefault(); el("okE").click(); } };
       el("okE").onclick = () => {
         const v = fn.value.trim(); if (!v) return toast("업무에서 부르는 이름을 적으세요.");
-        e.origin = A ? (A.name === v ? "AI 제안 → 사람이 확인" : "AI 제안 → 사람이 고침") : "사람"; e.name = v; e.st = "확정";
-        const st = statusOf(candE(e));
-        next(); toast(`'${v}' 로 확정했습니다 · ${st === "찾음" ? "API 를 찾았습니다" : "API 는 개발 담당자 검수로 넘어갑니다"}`);
+        e.origin = "사람"; e.name = v; e.st = "확정";
+        next(); toast(`'${v}' 로 확정했습니다.`);
       };
-      if (el("aiOk")) el("aiOk").onclick = () => { e.st = "확정"; e.origin = "AI 제안 → 사람이 확인"; next(); toast(`'${e.name}' 를 확정했습니다.`); };
-      if (el("aiNo")) el("aiNo").onclick = () => { S.edges = S.edges.filter(x => x !== e); S.sel = { kind: "none" }; refresh(); toast("AI 제안 화살표를 지웠습니다."); };
       el("delE").onclick = () => { S.edges = S.edges.filter(x => x !== e); S.sel = { kind: "none" }; refresh(); toast("화살표를 지웠습니다."); };
       el("closeI").onclick = () => { S.sel = { kind: "none" }; refresh(); };
     }
-    function next(){ const n = workEdges().find(x => !x.name || x.st === "제안"); S.sel = n ? { kind: "edge", id: key(n.from, n.to) } : { kind: "none" }; refresh(); if (S.drawM) S.drawM(el("mb")); }
+    function next(){ const n = workEdges().find(x => !x.name); S.sel = n ? { kind: "edge", id: key(n.from, n.to) } : { kind: "none" }; refresh(); if (S.drawM) S.drawM(el("mb")); }
     function removeNode(c){
       const k = S.edges.filter(e => e.from === c || e.to === c).length; delete S.nodes[c]; S.edges = S.edges.filter(e => e.from !== c && e.to !== c);
       S.sel = { kind: "none" }; refresh(); toast(`${sn(c)} 을(를) 캔버스에서 뺐습니다${k ? ` (화살표 ${k}개 함께)` : ""}.`);
@@ -785,22 +677,15 @@
     /* 시험 · 검수 · 저장 */
     function yaml(){
       const g = graph(), q = s => JSON.stringify(String(s)), en = entry();
-      const selY = sel => `{${Object.entries(sel || {}).map(([k, v]) => `${k}: ${q(v)}`).join(", ")}}`;   // 값은 따옴표 — '00' 이 숫자 0 이 되지 않게
-      const ts = workEdges().filter(e => e.name && e.st === "확정"), skip = workEdges().length - ts.length;
+      const ts = workEdges().filter(e => e.name), skip = workEdges().length - ts.length;
       return [
-        `# ${g.name} 그래프 — 화면에서 저장 (${S.saved ? `승인본 v${S.saved.v}` : "저장 전 미리보기"}). 확정한 화살표만, AI 제안 · 이름 없음 ${skip}개는 빠짐`,
-        `# api 는 자동 후보 1순위 — 최종 선택은 시나리오 등록 때 Agent 가 candidates 중에서 한다`,
+        `# ${g.name} 그래프 — 화면에서 저장 (${S.saved ? `승인본 v${S.saved.v}` : "저장 전 미리보기"}). 노드 흐름만: 상태 · 화살표 · 업무 이름 (이름 없는 화살표 ${skip}개는 빠짐)`,
+        `# API 와 '조회로 찾을 수 있는 상태'는 저장하지 않는다 — 시나리오를 만들 때 ② 경로 탐색 · ③ API 선택이 정한다. 사람이 고정한 API · 조회 방법은 서버가 합칠 때 유지된다`,
         `version: ${S.saved ? S.saved.v : 0}`, `graph:`, `  id: ${g.id}`, `  name: ${q(g.name)}`, `  domain: ${g.dom}`, `  entity: ${q(g.k.graph.entity)}`,
-        `  state_field: ${S.stateField.st === "확정" ? S.stateField.v : "null   # AI 제안이라 빠짐"}`, `  entry_states: []   # 정하지 않음 — 찾을 수 있는 상태 중 가장 앞 단계에서 출발`,
+        `  state_field: ${S.stateField.st === "확정" ? S.stateField.v : "null   # 확정 전이라 빠짐"}`, `  entry_states: []   # 정하지 않음 — 찾을 수 있는 상태 중 가장 앞 단계에서 출발`,
         `  verify_key_fields: [${(g.k.graph.verify_key_fields || []).join(", ")}]`,
         `code_group:`, `  id: ${g.k.code_group.id}`, `  name: ${q(g.k.code_group.name)}`, `  codes:   # 공통코드 전부 — 캔버스에 없는 상태를 고른 요청은 이유와 함께 거절된다`, ...CODES().map(([c, n]) => `    ${q(c)}: ${q(n)}`),
-        `transitions:`, ...(ts.length ? ts.flatMap(e => { const cs = candE(e), st = statusOf(cs), top = cs[0];
-          return [`  - name: ${q(e.name)}`, `    from: ${q(e.from)}`, `    to: ${q(e.to)}`,
-            st === "없음" || !top ? `    api: null    # API 후보 없음 — 개발 담당자 검수` : `    api: ${q(top.api)}`,
-            `    selector: ${top && st !== "없음" ? selY(top.sel) : "{}"}`, `    api_status: ${st}`,
-            `    candidates: [${cs.map(c => q(short(c.api) + (Object.keys(c.sel).length ? " " + selTxt(c.sel) : ""))).join(", ")}]`]; }) : [`  []`]),
-        `lookups:`, ...placed().filter(c => S.nodes[c].role !== "ext").flatMap(c => { const cs = candL(c), st = statusOf(cs);
-          return st === "없음" ? [] : [`  - api: ${q(cs[0].api)}`, `    selector: ${selY(cs[0].sel)}`, `    states: [${q(c)}]`, `    api_status: ${st}`]; }),
+        `transitions:`, ...(ts.length ? ts.flatMap(e => [`  - name: ${q(e.name)}`, `    from: ${q(e.from)}`, `    to: ${q(e.to)}`]) : [`  []`]),
         `layout:   # 화면 배치`, ...placed().map(c => `  ${q(c)}: [${S.nodes[c].x}, ${S.nodes[c].y}]`),
       ].join("\n");
     }
@@ -815,34 +700,32 @@
     function closeM(){ const ov = el("ov"); if (ov) ov.remove(); S.drawM = null; }
     function openTest(){
       openM("시험해 보기", box => {
-        const T = S.test; if (!T.target || !S.nodes[T.target]) T.target = placed()[0] || "";
-        const r = T.target ? plan(T.target, T.must || null, T.ai) : null;
+        const T = S.test; if (!T.target || !S.nodes[T.target]) T.target = placed()[placed().length - 1] || ""; if (!T.from || !S.nodes[T.from]) T.from = placed()[0] || "";
+        const p = T.target && T.from ? search(T.from, T.target, T.must || null) : null;
         const o2 = (sel, none) => (none ? `<option value="">(없음)</option>` : "") + placed().map(c => `<option value="${c}" ${c === sel ? "selected" : ""}>${esc(sn(c))}</option>`).join("");
-        box.innerHTML = `<div class="form"><p class="note">요청이 들어왔을 때 이 그래프로 어떤 순서로 호출하는지 미리 봅니다. 실제 API 는 부르지 않습니다.</p>
-          <div class="two"><div class="fld"><label for="${id("tt")}">이 상태의 ${esc(ENT())}을(를) 만들고 싶다</label><select id="${id("tt")}">${o2(T.target)}</select></div>
-            <div class="fld"><label for="${id("tm")}">그 전에 거쳐야 할 상태</label><select id="${id("tm")}">${o2(T.must, true)}</select></div></div>
-          <label class="qq"><input type="checkbox" id="${id("tai")}" ${T.ai ? "checked" : ""}><span>확인 전인 화살표(AI 제안 · API 애매)도 포함해서 계산</span></label>
-          <div class="box path">${!r ? `<span class="note">상태를 먼저 캔버스에 놓으세요.</span>` : r.ok ? `
-            <div><span class="st st-ok">기본 · 진행시키기</span><br>${r.A ? esc(fmtPath(r.A)) : `<span class="note">찾을 수 있는 상태에서 API 로 갈 수 없습니다.</span>`}</div>
-            <div><span class="st st-ext">대안 · 바로 찾아 쓰기</span><br>${r.B ? esc(fmtPath(r.B)) : `<span class="note">없음</span>`}</div>`
-            : `<div><span class="st st-err">거절</span><br><span style="font-family:var(--sans)">${esc(r.why)}</span></div>`}</div>
-          <p class="note">예: 목표 "출고" + 거쳐야 할 상태 "배송완료" = "배송완료된 주문을 배송완료 취소해 줘".</p></div>`;
+        box.innerHTML = `<div class="form"><p class="note">그린 화살표만으로 출발 상태에서 목표 상태까지 어떤 순서로 가는지 봅니다. 어느 상태의 데이터를 조회로 찾을지와 화살표마다 부를 API 는 시나리오를 만들 때 정해집니다.</p>
+          <div class="two"><div class="fld"><label for="${id("tf")}">출발 상태</label><select id="${id("tf")}">${o2(T.from)}</select></div>
+            <div class="fld"><label for="${id("tt")}">목표 상태</label><select id="${id("tt")}">${o2(T.target)}</select></div></div>
+          <div class="fld"><label for="${id("tm")}">그 전에 거쳐야 할 상태</label><select id="${id("tm")}">${o2(T.must, true)}</select></div>
+          <div class="box path">${!T.target ? `<span class="note">상태를 먼저 캔버스에 놓으세요.</span>` : p ? `<div><span class="st st-ok">경로</span><br>${esc(sn(T.from))}${p.map(e => ` → ${esc(e.name)} → ${esc(sn(e.to))}`).join("")} <span class="note">· 화살표 ${p.length}개</span></div>`
+            : `<div><span class="st st-err">경로 없음</span><br><span style="font-family:var(--sans)">${esc(sn(T.from))} 에서 ${esc(sn(T.target))}(으)로 가는 화살표 길이 없습니다 (이름 없는 화살표는 빼고 계산).</span></div>`}</div>
+          <p class="note">예: 출발 "배송완료" → 목표 "출고" = "배송완료된 주문을 배송완료 취소해 줘".</p></div>`;
+        el("tf").onchange = () => { T.from = el("tf").value; S.drawM(box); };
         el("tt").onchange = () => { T.target = el("tt").value; S.drawM(box); };
         el("tm").onchange = () => { T.must = el("tm").value; S.drawM(box); };
-        el("tai").onchange = () => { T.ai = el("tai").checked; S.drawM(box); };
       });
     }
     function openSave(){
       openM("저장", box => {
-        const iss = issues(), err = iss.filter(x => x.lv === "err"), w = workEdges(), done = w.filter(isDone).length, conf = w.filter(e => e.name && e.st === "확정").length;
+        const iss = issues(), err = iss.filter(x => x.lv === "err"), w = workEdges(), conf = w.filter(e => e.name).length;
         box.innerHTML = `<div class="form">
           <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.8">
-            <li>저장되는 화살표 <b>${conf}</b>개 (확정한 것만) — 그중 API 찾음 ${done}개${conf - done ? `, 개발 담당자 검수 ${conf - done}개` : ""}</li>
-            ${w.length - conf ? `<li>저장 안 되는 화살표 ${w.length - conf}개 (AI 제안 · 이름 없음)</li>` : ""}
+            <li>저장되는 화살표 <b>${conf}</b>개 (이름을 적은 것) — API 는 저장하지 않고 시나리오를 만들 때 고릅니다</li>
+            ${w.length - conf ? `<li>저장 안 되는 화살표 ${w.length - conf}개 (이름 없음)</li>` : ""}
             <li>상태 필드 ${S.stateField.st === "확정" ? `<span class="mono">${esc(S.stateField.v)}</span>` : "확정 전 — 빠짐"}</li>
           </ul>
           ${err.length ? `<div class="box warn"><b>먼저 끝내야 할 것 ${err.length}개</b>${err.map(x => `<p class="ev">${esc(x.msg)}</p>`).join("")}</div>` : ""}
-          <p class="note">저장하면 승인본으로 고정됩니다. ${S.server ? `로컬 서버에 연결돼 있어 data/graphs/${esc(graph().id)}.yaml 에 씁니다. 이미 있는 파일이면 사람이 확인한 API · 조회 · 진입 상태는 그대로 두고 합칩니다.` : "로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다."}</p>
+          <p class="note">저장하면 승인본으로 고정됩니다. ${S.server ? `로컬 서버에 연결돼 있어 data/graphs/${esc(graph().id)}.yaml 에 씁니다. 이미 있는 파일이면 사람이 고정한 API · 조회 방법 · 진입 상태는 그대로 두고 합칩니다.` : "로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다."}</p>
           <details><summary style="font-size:12.5px;font-weight:500">저장될 내용 보기</summary><pre class="yaml">${esc(yaml())}</pre></details>
           <div class="row"><button class="gbtn pri" id="${id("save")}" ${err.length ? "disabled" : ""}>확인 후 저장</button><button class="gbtn ghost" data-x>취소</button></div></div>`;
         el("save").onclick = async () => {
@@ -861,18 +744,10 @@
           <select id="${id("sf")}">${[...m].map(([f, l]) => `<option value="${f}" ${f === S.stateField.v ? "selected" : ""}>${f} · ${esc(l.slice(0, 2).join(", "))}</option>`).join("")}</select>
           <span class="hint">자동으로 추정한 값입니다. 조회 API 를 찾고, 마지막에 목표 상태에 도착했는지 확인할 때 씁니다.</span></div>
           <div class="row">${S.stateField.st === "확정" ? `<span class="st st-ok">확정</span>` : `<button class="gbtn pri" id="${id("sfOk")}">확정</button>`}<button class="gbtn ghost" data-x>닫기</button></div></div>`;
-        el("sf").onchange = () => { S.stateField = { v: el("sf").value, st: "제안" }; refresh(); S.drawM(box); };
+        el("sf").onchange = () => { S.stateField = { v: el("sf").value, st: "추정" }; refresh(); S.drawM(box); };
         if (el("sfOk")) el("sfOk").onclick = () => { S.stateField.st = "확정"; refresh(); S.drawM(box); toast("상태 필드를 확정했습니다."); };
       });
     }
-    function openQuestions(){
-      openM("AI 확인 질문", box => {
-        box.innerHTML = `<div class="form"><p class="note">공통코드 · 명세만으로는 AI 가 정할 수 없던 것들입니다. 확인했으면 체크하세요.</p>
-          <div class="qs">${AI().questions.map((q, i) => `<label class="qq ${S.q[i] ? "done" : ""}"><input type="checkbox" data-q="${i}" ${S.q[i] ? "checked" : ""}><span>${esc(q)}</span></label>`).join("")}</div></div>`;
-        box.querySelectorAll("[data-q]").forEach(cb => cb.onchange = () => { S.q[cb.dataset.q] = cb.checked; refresh(); S.drawM(box); });
-      });
-    }
-
     let tt = null;
     function toast(msg){
       if (opts.toast) return opts.toast(msg);

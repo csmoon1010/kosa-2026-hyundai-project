@@ -182,6 +182,28 @@ def match_lookup(state_name: str, state_code: str, metadata: list[dict[str, Any]
     return [c for c in out if c.score >= 0.3][:top]
 
 
+def attach_lookups(graphs: list[Any], metadata: list[dict[str, Any]], operations: list[dict[str, Any]],
+                   domains: list[str] | None = None) -> list[str]:
+    """조회 방법이 하나도 적혀 있지 않은 그래프(화면에서 그린 것)는 '조회로 찾을 수 있는 상태'를 지금 매칭기로 정한다.
+
+    그래프 캔버스는 노드 흐름(상태 · 화살표 · 업무 이름)만 저장한다 — 어느 상태의 데이터를 조회로 찾는지는 경로 탐색 때 정한다.
+    사람이 조회 방법을 적어 둔 그래프(손으로 쓴 파일)는 그것만 쓴다. 붙인 조회는 pinned=False — ③ API 선택이 다시 고른다.
+    """
+    from tap.graph.model import Lookup
+    notes: list[str] = []
+    for g in graphs:
+        if any(n.lookup for n in g.nodes):
+            continue
+        found = []
+        for n in g.nodes:
+            cs = match_lookup(n.name, n.code, metadata, operations, g.state_field, domains)
+            if cs and status_of(cs) != "없음" and not cs[0].selector_unknown:
+                n.lookup = Lookup(api_id=cs[0].api_id, selector=cs[0].selector, states=[n.code], pinned=False)
+                found.append(n.name)
+        notes.append(f"{g.graph_id}: 조회 방법이 적혀 있지 않아 매칭기로 정함 — 찾을 수 있는 상태 {', '.join(found) or '없음'}")
+    return notes
+
+
 def evaluate(gold: dict[str, Any], metadata: list[dict[str, Any]], operations: list[dict[str, Any]],
              domains: list[str] | None = None) -> dict[str, Any]:
     """정답 그래프의 화살표 이름 · 상태만 주고 API 를 맞히는지. 1순위가 (API, 구분값) 모두 같으면 정확."""

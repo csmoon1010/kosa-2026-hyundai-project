@@ -1,0 +1,176 @@
+"""API 선택 — 경로의 단계마다 API (+ 구분값). 그래프 고정 · 규칙 · LLM(가짜) · 보류 (LLM 없이)."""
+import copy
+import json
+from pathlib import Path
+
+import pytest
+
+from tap.apis.select import check, select_apis
+from tap.cli import analyze_select
+from tap.goal.extract import TaskPlan
+from tap.graph.build import load_graphs
+from tap.graph.match import Candidate
+from tap.graph.paths import build_paths, to_choices
+
+ROOT = Path(__file__).resolve().parents[1]
+META = json.loads((ROOT / "data/out/api_metadata.json").read_text(encoding="utf-8"))
+OPS = json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))
+CAT = json.loads((ROOT / "data/out/api_catalog.json").read_text(encoding="utf-8"))
+BACK = "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do"
+GO = "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+LOOK = "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do"
+
+
+@pytest.fixture()
+def graphs():
+    return load_graphs([ROOT / "data/graphs"], keep_unmatched=True)[0]
+
+
+def ord_of(graphs):
+    return next(g for g in graphs if g.graph_id == "ORD_STAT_GBCD")
+
+
+def unpinned(graphs):
+    """화면에서 그린 그래프처럼 — API 를 사람이 고정하지 않음."""
+    g = ord_of(graphs).model_copy(deep=True)
+    for e in g.edges:
+        e.api_pinned = False
+    for n in g.nodes:
+        if n.lookup:
+            n.lookup.pinned = False
+    return g
+
+
+def task(seq=1, origin="기존", domain="OD", phrases=("주문",), constraints=(), action="a"):
+    return {"sequence": seq, "domain": domain, "origin": origin, "action": action, "conditions": "c",
+            "constraints": list(constraints), "depends_on": [], "count": 1, "source_phrases": list(phrases)}
+
+
+def choice(seq=1, graph="ORD_STAT_GBCD", frm=None, to=None):
+    return {"sequence": seq, "graph_id": graph, "from_state": frm, "to_state": to, "must_pass": [], "state_phrases": [], "reason": "r"}
+
+
+def paths(q, graphs, tasks, choices):
+    tp = TaskPlan.model_validate({"original_question": q, "tasks": tasks, "unresolved": []})
+    ch, _, _ = to_choices({"choices": choices, "unresolved": []}, tp, graphs)
+    return tp, build_paths(tp, ch, graphs)
+
+
+def no_llm(messages, schema):
+    raise AssertionError("LLM 을 부르면 안 됨")
+
+
+Q = "배송완료된 주문 3건을 배송완료 취소시켜줘"
+
+
+def test_pinned_graph_apis_are_fixed(graphs):
+    tp, pp = paths(Q, graphs, [task(phrases=[Q])], [choice(frm="배송완료", to="출고")])
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
+    a, b = r.api_selection_results
+    assert (a.step, a.kind, a.edge, a.to) == (0, "조회", "배송완료 데이터 찾기", "배송완료")
+    assert (a.selected.api_id, a.selected.selector, a.selection_status, a.selected_by) == (LOOK, {"prgrGb": "P3"}, "고정", "그래프")
+    assert (b.step, b.kind, b.from_, b.to) == (1, "상태변경", "배송완료", "출고")
+    assert (b.selected.api_id, b.selected.selector, b.selection_status) == (BACK, {"procGb": "PB3"}, "고정")
+    assert r.status == "완료" and r.dump()["api_selection_results"][1]["from"] == "배송완료"
+
+
+def test_unpinned_graph_rule_picks_same_apis(graphs):
+    g = unpinned(graphs)
+    tp, pp = paths(Q, [g], [task(phrases=[Q])], [choice(frm="배송완료", to="출고")])
+    r = select_apis(tp, pp, [g], META, OPS, CAT, no_llm)
+    a, b = r.api_selection_results
+    assert (a.selected.selector, a.selected_by) == ({"prgrGb": "P3"}, "규칙")
+    assert (b.selected.api_id, b.selected.selector, b.selection_status, b.selected_by) == (BACK, {"procGb": "PB3"}, "선택", "규칙")
+    assert b.api_candidates[0].check == "통과" and len(b.api_candidates) > 1                        # 후보 · 검사 결과도 남긴다
+
+
+def test_ambiguous_goes_to_llm(graphs):
+    """같은 동작을 하는 API 가 둘이면 규칙이 못 고른다 → LLM 이 후보 안에서."""
+    g = unpinned(graphs)
+    twin = copy.deepcopy(next(m for m in META if m["api_id"] == BACK))
+    twin["api_id"] = twin["api_id"].replace("multiOshpBackProcess", "multiOshpBackProcess2")
+    op = copy.deepcopy(next(o for o in OPS if o["api_id"] == BACK))
+    op["api_id"] = twin["api_id"]
+    tp, pp = paths(Q, [g], [task(phrases=[Q])], [choice(frm="배송완료", to="출고")])
+    seen = {}
+
+    def llm(messages, schema):
+        seen["sys"] = messages[0]["content"]
+        return schema.model_validate({"picks": [{"key": "1-1", "choice": "B", "reason": "명세 설명", "concerns": ["설치상품 확인"]}]})
+    r = select_apis(tp, pp, [g], META + [twin], OPS + [op], None, llm)
+    b = r.api_selection_results[1]
+    assert "key 1-1" in seen["sys"] and "A) 출고취소처리" in seen["sys"] and "B) 출고취소처리" in seen["sys"]
+    assert (b.selected_by, b.selection_status) == ("LLM", "가선택") and "설치상품 확인" in b.selection_reason
+    assert r.status == "검토 필요" and any(u.reason == "설치상품 확인" for u in r.unresolved)
+
+    def none(messages, schema):
+        return schema.model_validate({"picks": [{"key": "1-1", "choice": "없음", "reason": "둘 다 아님", "concerns": []}]})
+    r2 = select_apis(tp, pp, [g], META + [twin], OPS + [op], None, none)
+    assert r2.api_selection_results[1].selection_status == "보류" and r2.status == "보류"
+
+
+def test_metadata_check():
+    meta = {m["api_id"]: m for m in META}
+    req = {o["api_id"]: {f["name"] for f in o["request_fields"]} for o in OPS}
+    c = lambda api, sel: Candidate(api_id=api, api_name="x", selector=sel, score=1)
+    assert check(c(BACK, {"procGb": "PB3"}), "상태변경", meta, req, None) == ("통과", None)
+    assert check(c(BACK, {"procGb": "PB3"}), "조회", meta, req, None)[0] == "탈락"                    # 종류가 다름
+    assert "구분값 목록에 없음" in check(c(BACK, {"procGb": "PB9"}), "상태변경", meta, req, None)[1]    # 목록이 완성돼 있으면 탈락
+    assert check(c(BACK, {"nope": "1"}), "상태변경", meta, req, None)[1] == "구분값 필드 nope 가 요청에 없음"
+    assert "값을 모름" in check(c(BACK, {"procGb": "?"}), "상태변경", meta, req, None)[1]
+    m2 = {**meta, BACK: {**meta[BACK], "irreversible": "불가"}}
+    assert check(c(BACK, {"procGb": "PB3"}), "상태변경", m2, req, None)[0] == "주의"
+
+
+def test_catalog_limits_candidates(graphs):
+    g = unpinned(graphs)
+    cat = copy.deepcopy(CAT)
+    for a in cat["apis"]:
+        if a["api_id"] == BACK:
+            a["tool_enabled"] = False                                                                # 카탈로그에서 사용 안 함
+    tp, pp = paths(Q, [g], [task(phrases=[Q])], [choice(frm="배송완료", to="출고")])
+    b = select_apis(tp, pp, [g], META, OPS, cat, no_llm).api_selection_results[1]
+    assert all(c.api_id != BACK for c in b.api_candidates)
+
+
+def test_no_graph_task_is_always_tentative(graphs):
+    q = "협력사코드가 000000인 상품 중 하나의 브랜드코드를 1234로 바꿔줘"
+    cons = [{"name": "협력사코드", "value": "000000", "role": "대상조건", "source_phrase": "협력사코드가 000000인"},
+            {"name": "브랜드코드", "value": "1234", "role": "설정값", "source_phrase": "브랜드코드를 1234로"}]
+    tp, pp = paths(q, graphs, [task(domain="PD", phrases=[q], constraints=cons, action="브랜드코드변경")], [choice(graph=None)])
+
+    def llm(messages, schema):
+        keys = schema.model_fields["picks"].annotation.__args__[0].model_fields["key"].annotation.__args__
+        return schema.model_validate({"picks": [{"key": k, "choice": "A", "reason": "필드", "concerns": []} for k in keys]})
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, llm)
+    kinds = [(x.step, x.kind) for x in r.api_selection_results]
+    assert kinds == [(0, "조회"), (1, "수정")]
+    assert all(x.selection_status in ("가선택", "보류") for x in r.api_selection_results) and r.status != "완료"
+
+
+def test_no_path_and_alternative_hint(graphs):
+    q = "상품 하나 만들어줘"
+    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q])], [choice(graph="SLITM_APRVL_GBCD")])
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
+    assert r.status == "보류" and r.api_selection_results == [] and {u.path_sequence for u in r.unresolved} == {1}
+    g = ord_of(graphs).model_copy(deep=True)                                                         # 출고완료 화살표의 API 를 못 찾는 그래프
+    e = next(x for x in g.edges if x.name == "출고완료")
+    e.name, e.api_id, e.selector, e.api_pinned = "아무 이름", None, {}, False
+    q2 = "출고된 주문 하나 줘"
+    tp2, pp2 = paths(q2, [g], [task(phrases=[q2])], [choice(to="출고")])
+    r2 = select_apis(tp2, pp2, [g], META, OPS, CAT, no_llm)
+    held = [x for x in r2.api_selection_results if x.selection_status == "보류"]
+    assert [x.edge for x in held] == ["아무 이름"] and r2.status == "보류"
+    assert any("대안 경로(출고에서 조회" in u.reason for u in r2.unresolved)                         # 출고 주문을 바로 찾는 대안
+
+
+def test_analyze_select_end_to_end(tmp_path):
+    def llm(messages, schema):
+        if schema.__name__ == "TaskPlanOut":
+            return schema.model_validate({"original_question": Q, "tasks": [task(phrases=[Q])], "unresolved": []})
+        if schema.__name__ == "PathChoiceOut":
+            return schema.model_validate({"choices": [{**choice(frm="배송완료", to="출고"), "state_phrases": ["배송완료된 주문"]}],
+                                          "unresolved": []})
+        raise AssertionError("고정 API 만이라 API 고르기 LLM 은 안 부름")
+    r = analyze_select(Q, llm=llm, trace_dir=tmp_path)
+    assert r["apis"].status == "완료" and [x.selected.selector for x in r["apis"].api_selection_results] == [{"prgrGb": "P3"}, {"procGb": "PB3"}]

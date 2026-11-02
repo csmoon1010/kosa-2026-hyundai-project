@@ -11,18 +11,19 @@ from typing import Any
 
 import yaml
 
-from tap.graph.model import Edge, Lookup, StateGraph, StateNode
+from tap.graph.model import NEW, Edge, Lookup, Require, StateGraph, StateNode
 
 
 def load_knowledge(path: str | Path) -> StateGraph:
     return graph_from_dict(yaml.safe_load(Path(path).read_text(encoding="utf-8")))
 
 
-def load_graphs(paths: list[str | Path]) -> tuple[list[StateGraph], list[str]]:
+def load_graphs(paths: list[str | Path], keep_unmatched: bool = False) -> tuple[list[StateGraph], list[str]]:
     """시나리오 생성에 쓸 그래프 전부 (보통 [data/graphs]).
 
     폴더를 여럿 주면 같은 그래프 id 는 뒤에 오는 것이 이긴다 (테스트에서 임시 그래프를 덧씌울 때).
     API 를 못 찾은 화살표(api: null)와 조회는 경로에 쓸 수 없어 뺀다 — 그 사실은 notes 로 돌려준다.
+    keep_unmatched=True 면 화살표는 남긴다 — 경로 탐색 → API 선택 단계가 API 를 고르고, 못 고르면 '보류'로 알려 준다.
     """
     by: dict[str, StateGraph] = {}
     notes: list[str] = []
@@ -33,7 +34,7 @@ def load_graphs(paths: list[str | Path]) -> tuple[list[StateGraph], list[str]]:
             if "graph" not in raw or "code_group" not in raw:
                 continue
             ts = raw.get("transitions") or []
-            keep = [t for t in ts if t.get("api")]
+            keep = ts if keep_unmatched else [t for t in ts if t.get("api")]
             if len(keep) < len(ts):
                 notes.append(f"{raw['graph']['id']}: API 를 못 찾은 화살표 {len(ts) - len(keep)}개는 경로에서 뺌 ({f.name})")
             raw = dict(raw, transitions=keep, lookups=[lk for lk in raw.get("lookups") or [] if lk.get("api")])
@@ -50,7 +51,7 @@ def graph_from_dict(raw: dict[str, Any]) -> StateGraph:
     lookups: dict[str, Lookup] = {}
     for lk in raw.get("lookups") or []:
         item = Lookup(api_id=lk["api"], selector={k: str(v) for k, v in lk["selector"].items()},
-                      states=[str(s) for s in lk["states"]])
+                      states=[str(s) for s in lk["states"]], pinned=lk.get("api_status") in (None, "사람 확인"))
         for s in item.states:
             lookups.setdefault(s, item)
 
@@ -61,12 +62,17 @@ def graph_from_dict(raw: dict[str, Any]) -> StateGraph:
         edges.append(Edge(id=f"{g['id']}:{t['from']}>{t['to']}" + (f":{tag}" if tag else ""),
                           kind=t.get("kind", "api"), name=t["name"], from_code=str(t["from"]),
                           to_code=str(t["to"]), api_id=t.get("api"), selector=sel,
+                          api_pinned=bool(t.get("api")) and t.get("api_status") in (None, "사람 확인"),
                           source=t.get("source", "knowledge")))
 
     nodes = [StateNode(code=c, name=n, lookup=lookups.get(c)) for c, n in codes.items()]
     graph = StateGraph(graph_id=g["id"], name=g["name"], domain=g["domain"], entity=g["entity"],
                        state_field=g.get("state_field"), entry_states=[str(s) for s in g.get("entry_states", [])],
-                       verify_key_fields=g.get("verify_key_fields", []), nodes=nodes, edges=edges)
+                       verify_key_fields=g.get("verify_key_fields", []),
+                       ready_state=str(g["ready_state"]) if g.get("ready_state") is not None else None,
+                       requires=[Require(graph_id=r["graph"], state=str(r["state"]), when=r.get("when", "신규"))
+                                 for r in g.get("requires") or []],
+                       nodes=nodes, edges=edges)
     _mark_stages(graph)
     return graph
 
@@ -115,9 +121,11 @@ def validate_graph(graph: StateGraph, metadata: list[dict[str, Any]],
     for s in graph.entry_states:
         if s not in codes:
             add("error", "entry_states", f"진입 상태 {s} 가 코드 목록에 없음")
+    if graph.ready_state and graph.ready_state not in codes:
+        add("error", "ready_state", f"기본 완성 상태 {graph.ready_state} 가 코드 목록에 없음")
     for e in graph.edges:
         for c in (e.from_code, e.to_code):
-            if c not in codes:
+            if c not in codes and not (c == NEW and c == e.from_code):      # '시작' 은 새로 만들기 화살표의 출발에만
                 add("error", e.id, f"상태 {c} 가 코드 목록에 없음")
         if e.kind != "api":
             continue

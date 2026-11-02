@@ -52,7 +52,11 @@ cd test_auto_project
 uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
 PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # 자연어 → 목표 → 경로 → Scenario IR (data/out/ir/)
-PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주문한 뒤 배송완료까지"   # 자연어 → 업무 목록 (도메인 · 그래프 · 목표 상태 · 제약)
+PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주문한 뒤 배송완료까지"   # 자연어 → 업무 목록 (도메인 · 신규/기존 · 제약, 그래프는 안 봄)
+PYTHONPATH=src .venv/bin/python -m tap.cli path "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 업무 목록 → 업무마다 그래프 · 출발/목표 상태 · 경로
+PYTHONPATH=src .venv/bin/python -m tap.cli select "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 경로 → 단계마다 API + 구분값 (고정 · 선택 · 가선택 · 보류)  · 트레이스는 data/out/traces/ (예산 · 가격: data/config/llm.yaml)
+PYTHONPATH=src .venv/bin/python -m tap.cli eval                      # 태스크셋(data/eval/tasks.yaml) 채점 → data/out/eval/*.md · *.json (결과 · 궤적 · 비용 · 지연)
+PYTHONPATH=src .venv/bin/python -m tap.cli run "배송완료된 주문 3건을 배송완료 취소시켜줘" --approve [--steps 1-1] [--confirm 1-1]   # 등록 때 승인 → 실행 때 R2 확인 → 드라이런
 PYTHONPATH=src .venv/bin/python -m tap.cli extract-graph --runs 2     # (실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli match-graph               # 화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli serve                     # 오프라인 UI + 실제 계산 → http://127.0.0.1:8765/
@@ -115,6 +119,7 @@ summary 의 한국어 동사로 판별한다.
 | 영역 | 파일로 열 때 | `tap.cli serve` 로 열 때 |
 |---|---|---|
 | 시나리오 생성 결과 | 미리 계산해 둔 문장(data/out/ir)만 실제 결과, 나머지는 시연 | 아무 문장이나 목표 추출(LLM) → 경로 → Scenario IR |
+| 시나리오 등록 › 3단계 분석 · 승인 | (서버 필요) | ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 — 등록 때 승인(승인본 data/approved/) → 실행 때 R2 확인 → 드라이런 (POST /api/select · /api/approve · /api/run) |
 | 관리자 › 도메인 › 상태 그래프 만들기 | 실제 그래프 · 실제 Metadata 로 API 후보 찾기 | + 저장하면 data/graphs/<그룹ID>.yaml 에 (있던 파일이면 합침) |
 | 데이터 조회 — Catalog · MetaData · Tool Registry · State Vocabulary | 실제 산출물 | 같음 (매번 새로 읽음) |
 | 관리자 › 전사 › 1단계 산출물 · 검수 목록 | 실제 산출물 | 같음 |
