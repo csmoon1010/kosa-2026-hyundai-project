@@ -1,0 +1,56 @@
+{
+  "source_log": "data/out/scenario_ir_logs/IRRUN-20261101-205959-f8fb8ff46c394125995ed89403350d47.jsonl",
+  "measurement": "각 STEP 첫 입력 JSON 글자 수. 실제 모델 토큰·품질 평가는 아님.",
+  "steps": [
+    {
+      "step_id": "1-1",
+      "payload_before_chars": 4287,
+      "payload_after_chars": 2903,
+      "fallback": false,
+      "previous_before": 0,
+      "previous_after": 0,
+      "following_before": 3,
+      "following_after": 3,
+      "before_chars": 2686,
+      "after_chars": 1692
+    },
+    {
+      "step_id": "2-1",
+      "payload_before_chars": 8835,
+      "payload_after_chars": 6760,
+      "fallback": false,
+      "previous_before": 1,
+      "previous_after": 1,
+      "following_before": 2,
+      "following_after": 2,
+      "before_chars": 7254,
+      "after_chars": 5569
+    },
+    {
+      "step_id": "2-2",
+      "payload_before_chars": 14439,
+      "payload_after_chars": 6167,
+      "fallback": false,
+      "previous_before": 2,
+      "previous_after": 1,
+      "following_before": 1,
+      "following_after": 1,
+      "before_chars": 12889,
+      "after_chars": 5007
+    },
+    {
+      "step_id": "2-3",
+      "payload_before_chars": 20024,
+      "payload_after_chars": 5607,
+      "fallback": false,
+      "previous_before": 3,
+      "previous_after": 1,
+      "following_before": 0,
+      "following_after": 0,
+      "before_chars": 18474,
+      "after_chars": 4447
+    }
+  ],
+  "total_before_chars": 47585,
+  "total_after_chars": 21437
+}

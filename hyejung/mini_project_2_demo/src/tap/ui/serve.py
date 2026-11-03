@@ -9,8 +9,11 @@
   POST /api/rules            {place, doc, item, dom, target, body} → data/config/rules.ui.yaml + 다시 빌드 → 새 TAP_DATA
   POST /api/rules/delete     {id} → 화면 규칙 삭제 + 다시 빌드
   POST /api/baseline         {api_id, body} → data/baselines/<api>.json
+  POST /api/preprocessing/refresh  생성된 전처리 JSON 재조회 + tap-data.js 갱신 (노트북 실행 없음)
+  POST /api/preprocessing/baseline {selected_api_id, values} → data/baselines/preprocessing/*.json
   POST /api/build            명세 · 설정을 다시 읽어 빌드 (최신화 · 변경 확인)
   POST /api/scenarios        {name, utterance, domains, ir} → data/scenarios/<id>.json (확인 후 저장 = 승인본 고정)
+  POST /api/approved-selections {filename, approved_json} → prototype/approved/<filename>.json
   POST /api/scenarios/delete {id}
   POST /api/runs             {rows, steps, unresolved} → data/runs/<id>.json (드라이런 — 실제 API 호출 없음)
 """
@@ -25,7 +28,103 @@ from typing import Any
 
 import yaml
 
-from tap.ui.export import ui_data
+from tap.ui.export import ui_data, write_ui_data
+from tap.ui.preprocessing import save_preprocessing_baseline
+
+
+def scenario_ir_log_summaries(root: Path) -> list[dict]:
+    """Summarize every persisted scenario-IR JSONL run without exposing prompts."""
+    folder = root / 'data/out/scenario_ir_logs'
+    summaries = []
+    if not folder.is_dir():
+        return summaries
+    for file in folder.glob('IRRUN-*.jsonl'):
+        start = None
+        latest_usage = {}
+        budget = None
+        budget_usage = {}
+        budget_reason = None
+        request_turns = set()
+        request_count = attempt_count = 0
+        status = '미완료'
+        last_recorded_at = None
+        duration = 0.0
+        try:
+            with file.open(encoding='utf-8') as stream:
+                for line in stream:
+                    try:
+                        event = json.loads(line)
+                    except (ValueError, TypeError):
+                        continue
+                    kind = event.get('event')
+                    budget = event.get('budget') or budget
+                    budget_usage = event.get('budget_usage') or budget_usage
+                    budget_reason = event.get('budget_reason') or event.get('reason_code') or budget_reason
+                    if kind == 'generation_start':
+                        start = event
+                    if kind == 'llm_request':
+                        request_count += 1
+                        if event.get('turn') is not None:
+                            request_turns.add(event['turn'])
+                    if kind == 'llm_attempt_start':
+                        attempt_count += 1
+                    usage = event.get('usage')
+                    if isinstance(usage, dict):
+                        for key, value in usage.items():
+                            if isinstance(value, (int, float)):
+                                latest_usage[key] = max(latest_usage.get(key, value), value)
+                    recorded = event.get('recorded_at')
+                    if recorded:
+                        last_recorded_at = recorded
+                    if isinstance(event.get('run_elapsed_seconds'), (int, float)):
+                        duration = max(duration, event['run_elapsed_seconds'])
+                    if kind == 'generation_complete':
+                        status = '완료'
+                        result_usage = (event.get('result') or {}).get('usage')
+                        if isinstance(result_usage, dict):
+                            latest_usage.update({k:v for k,v in result_usage.items()
+                                                 if isinstance(v, (int,float))})
+                        result_duration = (event.get('result') or {}).get('usage', {}).get('elapsed_seconds')
+                        if isinstance(result_duration, (int,float)):
+                            duration = max(duration, result_duration)
+                    elif kind == 'generation_error':
+                        status = '실패'
+                    elif kind == 'recovery_stopped':
+                        status = '중단'
+            if start is None:
+                continue
+            if not duration and last_recorded_at and start.get('recorded_at'):
+                try:
+                    duration = max(0.0, (datetime.fromisoformat(last_recorded_at) -
+                                          datetime.fromisoformat(start['recorded_at'])).total_seconds())
+                except (TypeError, ValueError):
+                    pass
+            if budget is None and isinstance(start.get('config'),dict):
+                c=start['config']
+                budget=dict(version='legacy_fixed_v1', limits=dict(llm_calls=c.get('max_turns'),tokens=c.get('max_tokens'),seconds=c.get('max_seconds')))
+            attempts = max(attempt_count, request_count)
+            calls = max(int(latest_usage.get('llm_calls', 0)), attempts)
+            options = start.get('options')
+            if options is None and start.get('execution_mode') in ('basic', 'validated'):
+                options = {'stop_retry': start['execution_mode'] == 'validated',
+                           'kb_rag': False, 'dependency_projection': False}
+            summaries.append({
+                'run_id': start.get('run_id', file.stem), 'filename': file.name,
+                'started_at': start.get('recorded_at'), 'options': options,
+                'status': status, 'duration_seconds': round(duration, 3),
+                'budget': budget, 'budget_usage': budget_usage, 'budget_reason':budget_reason,
+                'step_count': (budget or {}).get('step_count'),
+                'embedding_calls': latest_usage.get('embedding_calls'),
+                'model_calls': budget_usage.get('llm_calls',calls), 'turns': len(request_turns),
+                'input_tokens': int(latest_usage.get('input_tokens', 0)),
+                'output_tokens': int(latest_usage.get('output_tokens', 0)),
+                'embedding_tokens': int(latest_usage.get('embedding_tokens', 0)),
+                'total_tokens': int(latest_usage.get('total_tokens', 0)),
+            })
+        except OSError:
+            continue
+    summaries.sort(key=lambda row: row.get('started_at') or '', reverse=True)
+    return summaries
 
 
 def rebuild(root: Path) -> dict:
@@ -96,6 +195,40 @@ def save_run(root: Path, body: dict) -> dict:
     return run
 
 
+def save_approved_selection(root: Path, body: dict) -> dict:
+    """의도와 API 선택 승인을 prototype/approved 에 통합 JSON 으로 저장한다."""
+    data = body.get("approved_json")
+    if not isinstance(data, dict):
+        raise ValueError("approved_json은 JSON 객체여야 합니다")
+    if not str(data.get("original_question") or "").strip():
+        raise ValueError("original_question이 필요합니다")
+    if data.get("approval_status") not in {"approved", "unapproved"}:
+        raise ValueError("approval_status는 approved 또는 unapproved여야 합니다")
+    if not isinstance(data.get("intent_tasks"), list) or not data["intent_tasks"]:
+        raise ValueError("intent_tasks가 필요합니다")
+    rows = data.get("api_selection_results")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("api_selection_results가 필요합니다")
+    statuses = [row.get("approval_status") if isinstance(row, dict) else None for row in rows]
+    if any(status not in {"approved", "unapproved"} for status in statuses):
+        raise ValueError("각 API 선택 결과의 approval_status는 approved 또는 unapproved여야 합니다")
+    if data["approval_status"] == "approved" and any(status != "approved" for status in statuses):
+        raise ValueError("미승인 API가 있어 전체 승인 상태를 approved로 저장할 수 없습니다")
+
+    requested = Path(str(body.get("filename") or "api-selection-approved.json")).name
+    filename = re.sub(r"[^A-Za-z0-9._-]", "-", requested).strip(".-") or "api-selection-approved.json"
+    if not filename.lower().endswith(".json"):
+        filename += ".json"
+    dest_dir = root / "prototype/approved"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest = dest_dir / filename
+    if dest.exists():
+        stamp, _ = _stamp()
+        dest = dest_dir / f"{dest.stem}-{stamp}{dest.suffix}"
+    dest.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {"file": str(dest.relative_to(root)), "filename": dest.name}
+
+
 def save_baseline(root: Path, api_id: str, body: dict) -> Path:
     """Baseline Request — 실제로 성공한 요청 값 (필드 → 값). 요청 필드에 없는 이름이면 거절."""
     from datetime import datetime
@@ -158,6 +291,14 @@ def make_handler(root: Path):
 
         def do_GET(self):
             path = self.path.split("?")[0]
+            if path == '/api/scenario-ir-reviews' or path.startswith('/api/scenario-ir-reviews/'):
+                from tap.ir.input_review import list_reviews, load
+                try:
+                    if path == '/api/scenario-ir-reviews':
+                        return self._json(200, {'reviews':list_reviews(root)})
+                    return self._json(200, load(root, path.removeprefix('/api/scenario-ir-reviews/')))
+                except ValueError as error:
+                    return self._json(400, {'error':str(error)})
             if path == "/tap-data.js":
                 raw = ("window.TAP_DATA = " + json.dumps(ui_data(root), ensure_ascii=False) + ";\n").encode("utf-8")
                 self.send_response(200)
@@ -167,15 +308,96 @@ def make_handler(root: Path):
                 self.end_headers()
                 self.wfile.write(raw)
                 return
+            if path == '/api/scenario-ir-log-summaries':
+                return self._json(200, {'runs': scenario_ir_log_summaries(root)})
+            if path.startswith('/api/scenario-ir-logs/'):
+                name = path.rsplit('/', 1)[-1]
+                folder = (root / 'data/out/scenario_ir_logs').resolve()
+                file = (folder / name).resolve()
+                if not re.fullmatch(r'IRRUN-[A-Za-z0-9-]+\.jsonl', name) or file.parent != folder or not file.is_file():
+                    return self._json(404, {'error': '로그 파일이 없습니다'})
+                raw = file.read_bytes()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/x-ndjson; charset=utf-8')
+                self.send_header('Content-Disposition', 'attachment; filename="' + name + '"')
+                self.send_header('Cache-Control', 'no-store')
+                self.send_header('Content-Length', str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
+                return
+            if path == "/api/approved-selections":
+                from tap.agent.config import DEFAULTS, DEFAULT_OPTIONS, DEFAULT_GENERATION_MODE, GENERATION_MODES
+                rows = []
+                for file in sorted((root / "prototype/approved").glob("*.json")):
+                    try:
+                        data = json.loads(file.read_text(encoding="utf-8-sig"))
+                        rows.append({"filename": file.name, "original_question": data.get("original_question"), "approval_status": data.get("approval_status")})
+                    except (ValueError, OSError):
+                        continue
+                return self._json(200, {"files": rows, "defaults": DEFAULTS,
+                                        "default_generation_options": dict(DEFAULT_OPTIONS),
+                                        "default_generation_mode": DEFAULT_GENERATION_MODE, "generation_modes": GENERATION_MODES})
+            if path == '/api/scenario-ir-budget':
+                from urllib.parse import parse_qs, urlsplit
+                from tap.ir.draft_build import approved_path, fixed_plan
+                from tap.agent.budget import calculate
+                try:
+                    filename = parse_qs(urlsplit(self.path).query).get('filename',[''])[0]
+                    approved = json.loads(approved_path(root,filename).read_text(encoding='utf-8-sig'))
+                    return self._json(200, {'budget':calculate(len(fixed_plan(approved)))})
+                except (ValueError, OSError, KeyError) as error:
+                    return self._json(400, {'error':str(error)})
             if path == "/api/health":
                 return self._json(200, {"ok": True})
             if path == "/":
                 self.path = "/offline-ui.html"
             return super().do_GET()
 
-        def do_POST(self):
-            body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
+        def _stream_draft(self, root, body):
+            from tap.ir.draft_build import generate
+            from tap.agent.progress import snapshot
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/x-ndjson; charset=utf-8')
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('X-Accel-Buffering', 'no')
+            self.end_headers()
+            def emit(event):
+                self.wfile.write((json.dumps(snapshot(event), ensure_ascii=False) + '\n').encode('utf-8'))
+                self.wfile.flush()
             try:
+                mode = {key: body[key] for key in ('generation_mode', 'generation_options') if key in body}
+                result = generate(root, body.get('approved_filename'), body.get('generation_config'), on_event=emit, **mode)
+                # Successful IR retains the original values; only log snapshots are redacted.
+                self.wfile.write((json.dumps({'event': 'generation_complete', 'result': result}, ensure_ascii=False) + '\n').encode('utf-8'))
+                self.wfile.flush()
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+            except Exception as error:
+                try: emit({'event': 'generation_error', 'error': str(error), 'log_file': getattr(error, 'log_file', None), 'log_url': getattr(error, 'log_url', None)})
+                except (BrokenPipeError, ConnectionResetError): pass
+            self.close_connection = True
+
+        def do_POST(self):
+            try:
+                body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
+                if not isinstance(body, dict):
+                    raise ValueError('요청은 JSON 객체여야 합니다')
+                if self.path.startswith('/api/scenario-ir-reviews/'):
+                    from tap.ir.input_review import submit
+                    match = re.fullmatch(r'/api/scenario-ir-reviews/([^/]+)/(decisions|confirm)', self.path)
+                    if not match:
+                        raise ValueError('올바른 검토 경로가 필요합니다')
+                    return self._json(200, submit(root, match[1], body, confirm=match[2]=='confirm'))
+                if self.path == "/api/scenario-ir-drafts":
+                    from tap.ir.draft_build import generate
+                    from tap.agent.config import generation_options
+                    generation_options(body.get('generation_options'), body.get('generation_mode'))
+                    if "budget_policy" in body or "budget" in body:
+                        raise ValueError("예산은 서버에서 자동 산정합니다")
+                    if 'application/x-ndjson' in self.headers.get('Accept', ''):
+                        return self._stream_draft(root, body)
+                    mode = {key: body[key] for key in ('generation_mode', 'generation_options') if key in body}
+                    return self._json(200, generate(root, body.get("approved_filename"), body.get("generation_config"), **mode))
                 if self.path == "/api/plan":
                     from tap.cli import plan_request
                     goal = json.dumps(body["goal"], ensure_ascii=False) if body.get("goal") else None
@@ -191,6 +413,13 @@ def make_handler(root: Path):
                 if self.path == "/api/baseline":
                     dest = save_baseline(root, body["api_id"], body["body"])
                     return self._json(200, {"file": str(dest.relative_to(root)), "data": ui_data(root)})
+                if self.path == "/api/preprocessing/refresh":
+                    # 노트북은 실행하지 않고 이미 생성된 JSON을 다시 읽어 정적 화면에도 반영한다.
+                    write_ui_data(root, root / "prototype/tap-data.js")
+                    return self._json(200, {"data": ui_data(root)})
+                if self.path == "/api/preprocessing/baseline":
+                    dest = save_preprocessing_baseline(root, body["selected_api_id"], body["values"])
+                    return self._json(200, {"file": str(dest.relative_to(root)), "data": ui_data(root)})
                 if self.path == "/api/scenarios":
                     sc = save_scenario(root, body)
                     return self._json(200, {"scenario": sc, "data": ui_data(root)})
@@ -200,6 +429,8 @@ def make_handler(root: Path):
                 if self.path == "/api/runs":
                     run = save_run(root, body)
                     return self._json(200, {"run": run, "data": ui_data(root)})
+                if self.path == "/api/approved-selections":
+                    return self._json(200, save_approved_selection(root, body))
                 if self.path == "/api/build":
                     before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))
                     r = rebuild(root)
@@ -208,7 +439,9 @@ def make_handler(root: Path):
                     return self._json(200, save_graph(root, body["graph_id"], body["yaml"]))
                 return self._json(404, {"error": "없는 경로"})
             except Exception as e:                              # 화면에 그대로 보여 준다
-                return self._json(400 if isinstance(e, ValueError) else 500, {"error": str(e) if isinstance(e, ValueError) else f"{type(e).__name__}: {e}"})
+                from tap.ir.input_review import ReviewConflict
+                code = 409 if isinstance(e, ReviewConflict) else 400 if isinstance(e, ValueError) else 500
+                return self._json(code, {"error": str(e) if isinstance(e, ValueError) else f"{type(e).__name__}: {e}", "log_file": getattr(e, "log_file", None), "log_url": getattr(e, "log_url", None)})
 
     return Handler
 

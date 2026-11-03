@@ -1,0 +1,438 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "fromDate",
+        "parameter_path": "$.body.data1.data2.data3.fromDate"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "시작일시",
+        "display_name": "fromDate",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dcb3beafbb86befb8cb5352c47d1381c6f59a25e4b46b27dcfd90da7bf40fa6e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "시작일시(타입:string, 예:20230501)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "fromDate",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/fromDate"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.fromDate fromDate 시작일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordNo",
+        "parameter_path": "$.body.data1.data2.data3.ordNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문번호",
+        "display_name": "ordNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "315fb4f749d8bab125771616f26e95495b01dcdfcdf2a8b3bd3443dd2ac6bdbe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문번호(타입:string, 예:20160118110258)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.ordNo ordNo 주문번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordPtcSeq",
+        "parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문상세순번",
+        "display_name": "ordPtcSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c6712713d24421382fed7fcdf693efd6b5089e99924ad63e46357f52c43ccc6d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문상세순번(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordPtcSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.ordPtcSeq ordPtcSeq 주문상세순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "procGb",
+        "parameter_path": "$.body.data1.data2.data3.procGb"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "진행구분코드",
+        "display_name": "procGb",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "772ca6c310f1aa539c5e9ceb9d69dd3bd3c09b40e8ef9fb768d689146bcbfeab",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "진행구분코드(타입:string, 예:P1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "procGb",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.procGb procGb 진행구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "toDate",
+        "parameter_path": "$.body.data1.data2.data3.toDate"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "종료일시",
+        "display_name": "toDate",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5f7fd12dd1a8baa6f7b68a38b4a4f253d3535b9dc2b39fbd93314942e76e307f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "종료일시(타입:string, 예:20230515)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "toDate",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/toDate"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.toDate toDate 종료일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5e414f1197f1306255bc8ee1aa45dfa96098f74576d322f27807b9952772fefe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:010539)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f0f6dec18e1af89be3480a6a26943ff5b3bce5d15fa98a9ce2abaf540d1c49a1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:009362)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c599a038e4737d0fc07c052222fba66a8cc0cf4f2cddb07bb089f0f3d86b2b18",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectTcktOshpListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/selectTcktOshpList.do 주문조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "api_ids": null,
+    "application_scope": {
+      "domain_id": "product",
+      "edge_id": null,
+      "type": "DOMAIN"
+    },
+    "canonical_document_id": null,
+    "concept_refs": [
+      {
+        "context": null,
+        "ref_id": "subject",
+        "role": "SUBJECT",
+        "term": "판매상품코드",
+        "terms": []
+      }
+    ],
+    "confidence": null,
+    "entry_method": "MANUAL",
+    "evidence": [
+      {
+        "author": "작성자 이름",
+        "created_at": "2026-10-25T13:27:23.477428+00:00",
+        "evidence_id": "6e44e2d0d0d4dfa653971c0e53fd77021dd3f0a55313e0cb0520e38b1e49032a",
+        "evidence_type": "USER_STATEMENT",
+        "reason": "업무 근거 또는 확인 사유",
+        "statement": {
+          "kind": "ALIAS",
+          "payload": {
+            "alias_type": "NATURAL_LANGUAGE",
+            "value": "상품번호"
+          }
+        }
+      }
+    ],
+    "kb_scope": "COMMON",
+    "kind": "ALIAS",
+    "kind_origin": "USER_SELECTED",
+    "knowledge_id": "6c219aaeebedc59da42ef6e8f853d1d4ecd16b5f07c567d02baa7ebe05b737ec",
+    "payload": {
+      "alias_type": "NATURAL_LANGUAGE",
+      "meaning": null,
+      "value": "상품번호"
+    },
+    "search_text": "판매상품코드  {\"alias_type\":\"NATURAL_LANGUAGE\",\"meaning\":null,\"value\":\"상품번호\"}",
+    "source": "USER_DEFINED",
+    "status": "VERIFIED",
+    "supersedes_id": null,
+    "targets": [],
+    "validation": {
+      "errors": [],
+      "required_refs": [
+        "subject"
+      ],
+      "status": "CANDIDATE",
+      "unresolved": [],
+      "unresolved_refs": []
+    },
+    "evidence_count": 1
+  }
+]

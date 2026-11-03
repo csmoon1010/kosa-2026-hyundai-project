@@ -1,0 +1,120 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectMdList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsCond",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.mdCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdCd",
+      "name": "mdCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "2520",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.mdNm",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdNm",
+      "name": "mdNm",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "MD명(타입:string, 예:보석(박지현))",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.rdoGB",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/rdoGB",
+      "name": "rdoGB",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "Y",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.mdaGbcd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdaGbcd",
+      "name": "mdaGbcd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "20",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.hdUserId",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/hdUserId",
+      "name": "hdUserId",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "2112892",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.deptOrgnCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/deptOrgnCd",
+      "name": "deptOrgnCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "241000",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsCond\"><rows><row><mdCd>2520</mdCd><mdNm>MD명(타입:string, 예:보석(박지현))</mdNm><rdoGB>Y</rdoGB><mdaGbcd>20</mdaGbcd><hdUserId>2112892</hdUserId><deptOrgnCd>241000</deptOrgnCd></row></rows></Dataset></Root>"
+}

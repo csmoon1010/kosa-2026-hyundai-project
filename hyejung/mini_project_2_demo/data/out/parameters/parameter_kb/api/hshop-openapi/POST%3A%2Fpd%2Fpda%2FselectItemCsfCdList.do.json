@@ -1,0 +1,223 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemCsfCd",
+        "parameter_path": "$.body.data1.data2.data3.itemCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품분류코드",
+        "display_name": "itemCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "03317b91812531e56353bc3011dfe214a6530c6895998d011f3fc3bea349663b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemCsfCdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품분류코드(타입:string, 예:3101)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pda/selectItemCsfCdList.do 상품 분류 조회 $.body.data1.data2.data3.itemCsfCd itemCsfCd 상품분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemCsfNm",
+        "parameter_path": "$.body.data1.data2.data3.itemCsfNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품분류명",
+        "display_name": "itemCsfNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2f411db540c9064c000b8fb4d3f8330e7fbdd3dbdd356b8c3675bd2b0c3f942c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemCsfCdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품분류명(타입:string, 예:보험)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemCsfNm",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemCsfNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pda/selectItemCsfCdList.do 상품 분류 조회 $.body.data1.data2.data3.itemCsfNm itemCsfNm 상품분류명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "819ea3741c762db2694dfd8487a95af9893f759241572912ccb450e28790f7d3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemCsfCdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pda/selectItemCsfCdList.do 상품 분류 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pda/selectItemCsfCdList.do 상품 분류 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pda/selectItemCsfCdList.do 상품 분류 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

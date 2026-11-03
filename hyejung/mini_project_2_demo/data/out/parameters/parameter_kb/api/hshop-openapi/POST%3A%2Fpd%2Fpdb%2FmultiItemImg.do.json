@@ -1,0 +1,782 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdb/multiItemImg.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userGbcd",
+        "parameter_path": "$.body.data1.data1.data1.userGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자구분코드",
+        "display_name": "userGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "73cfd1a4cbdc4b5bd9c790e34c684c90d110f59697741e4465a3603fdcf3ef03",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data1.data1.data1.userGbcd userGbcd 사용자구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8bd2bd9dd1ec5c06db9ed6e1f4e50fe61ef4ee855f80a938201495ab9acc611b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:hs007627)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "824ae63d063d36a3caa8fbd4787407af8867283ef902c5bdab853c69862beb29",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:10.120.131.80)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userNm",
+        "parameter_path": "$.body.data1.data1.data1.userNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자명",
+        "display_name": "userNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e73cf21f8b3726747946d71be4b078157383139d507bfad19c08731f12d7f704",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자명(타입:string, 예:스탁코리아(주))",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userNm",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data1.data1.data1.userNm userNm 사용자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fe969eac1d320bc930fb4c9672ad8ce634919c131750fef4cf2f93e36a551ebb",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSession",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data2.data2.data2.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bc5be5af353fe373977e2e6481b7bc34de0bb510fe4d23bff04a9445fe1b498b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2012156577)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data2.data2.data2.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "139288a8b0497eefd2271c3d49925fb1d0c777c6fb130b30173bd29fd07a2409",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItem",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "imgNm",
+        "parameter_path": "$.body.data3.data3.data3.imgNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "이미지명",
+        "display_name": "imgNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "30fa5f662cf16ae5a12f7e811dea09708d9b97c52450cb87095c3f1957c6c775",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "이미지명(타입:string, 예:image0.jpg)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "imgNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItemImgDtl\"]/rows/row/imgNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data3.data3.data3.imgNm imgNm 이미지명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rowType",
+        "parameter_path": "$.body.data3.data3.data3.rowType"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "rowType",
+        "display_name": "rowType",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e4e7b9f714af10ef1995af42442ccbf4c0d6183c1e1a1aceee0c3433e3602df0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "rowType(타입:string, 예:INSERT)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rowType",
+        "xml_path": "/Root/Dataset[@id=\"dsItemImgDtl\"]/rows/row/rowType"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data3.data3.data3.rowType rowType rowType"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data3.data3.data3.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b6377cdca8b0e5fae6a355b55cc57581413f3310ad6c9fadf8c7d45c100c9888",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2012156577)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemImgDtl\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data3.data3.data3.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmImgSeq",
+        "parameter_path": "$.body.data3.data3.data3.slitmImgSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품이미지순번",
+        "display_name": "slitmImgSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b8df82792dd0ceadf6bb2b2197eb0d2b7b46ac60b2630f27187099214256d936",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품이미지순번(타입:string, 예:0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "slitmImgSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsItemImgDtl\"]/rows/row/slitmImgSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data3.data3.data3.slitmImgSeq slitmImgSeq 판매상품이미지순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data3.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "67de51db22bcada2b0fa9157c7268a8a52c4b4c5c5c40eea2e4c2b85993f986f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItemImgDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItemImgDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data3.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertImgNm",
+        "parameter_path": "$.body.data4.data4.data4.safeCertImgNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증이미지명",
+        "display_name": "safeCertImgNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0879322cfb23e17b229b36ef6f41250e30f7a8fea4c02d0b7aae04c7c2505c57",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증이미지명(예:000.gif)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertImgNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertImgNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data4.data4.data4.safeCertImgNm safeCertImgNm 안전인증이미지명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertLawGbcd",
+        "parameter_path": "$.body.data4.data4.data4.safeCertLawGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증법구분코드",
+        "display_name": "safeCertLawGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0e1c4568de9ed31ac71988c812a5e23199a95a345d43218ac61d2851cc6ede11",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증법구분코드(예:30)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertLawGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertLawGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data4.data4.data4.safeCertLawGbcd safeCertLawGbcd 안전인증법구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data4.data4.data4.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "053e55944034069f6bbca66c5cd3018f3d657c15365cd905146265dc6b749d4f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(예:2012156577)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data4.data4.data4.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data4.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ab5d2fb2f7cf0164235380708ced38182ff5bf00d1b6980995356d60750c7a9c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemImgRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItemSafeCertMngDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.body.data4.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/multiItemImg.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/multiItemImg.do 상품 이미지 수정(DB) $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

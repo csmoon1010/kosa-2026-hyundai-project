@@ -1,7 +1,7 @@
 """오프라인 UI 에 실제 산출물을 입힌다 — data/out · data/graphs 를 window.TAP_DATA 한 덩어리로.
 
 화면은 이 값이 있으면 구현된 영역(데이터 조회 · 상태 그래프 · 시나리오 생성 결과 · 검수 목록)을 실제 산출물로 그리고,
-없으면 예전처럼 시연 데이터를 쓴다. 실행 · 이력 · Baseline · Parameter KB 는 아직 시연 데이터.
+없으면 예전처럼 시연 데이터를 쓴다. 파라미터 산출물 JSON은 data/out/parameters 에서 읽는다.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import yaml
 
 from tap.catalog.build import load_overrides
 from tap.catalog.rules import load_rules
+from tap.ui.preprocessing import legacy_baselines, load_preprocessing
 
 
 def _load(p: Path, default: Any = None) -> Any:
@@ -61,6 +62,7 @@ def _code_groups(path: Path) -> list[dict[str, Any]]:
 
 def ui_data(root: Path) -> dict[str, Any]:
     out = root / "data/out"
+    preprocessing = load_preprocessing(root)
     meta = _load(out / "api_metadata.json", [])
     ops = _load(out / "api_operations.json", [])
     reg = _load(out / "tool_registry.json", {"connections": [], "tools": []})
@@ -89,7 +91,9 @@ def ui_data(root: Path) -> dict[str, Any]:
         "codes": _code_groups(root / "data/codes/common_codes.csv"),
         "rules": load_rules(root / "data/config/rules.ui.yaml"),
         "overrides_file": load_overrides(root / "data/config/overrides.yaml"),
-        "baselines": {b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
+        "preprocessing": preprocessing,
+        "baselines": {**{b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
+                      **legacy_baselines(preprocessing)},
         "scenarios": [x for x in (_load(p) for p in sorted((root / "data/scenarios").glob("*.json"), reverse=True)) if x],
         "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
         "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)

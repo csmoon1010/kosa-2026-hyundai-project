@@ -1,0 +1,1513 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "aplyYn",
+        "parameter_path": "$.body.data1.data2.data3.aplyYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니명",
+        "display_name": "aplyYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8709bcd08735264dcb2203172dcefdfc767b798056e040d17d957eeb49818f65",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니명(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "aplyYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/aplyYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.aplyYn aplyYn 장바구니명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaDlvCostAddYn",
+        "parameter_path": "$.body.data1.data2.data3.areaDlvCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역배송비용추가여부",
+        "display_name": "areaDlvCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "422896f40b1b8379c61dc17e2aaab3e31fba62bd948567219f343f9e0424b714",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역배송비용추가여부(타입:string, 예: N, 기본: N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaDlvCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/areaDlvCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.areaDlvCostAddYn areaDlvCostAddYn 지역배송비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaExchCostAddYn",
+        "parameter_path": "$.body.data1.data2.data3.areaExchCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역교환비용추가여부",
+        "display_name": "areaExchCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "553a1ae8d6d55a266f20072e08b4157dcc093c02ab8471cef2c9de2a3f502108",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역교환비용추가여부(타입:string, 예: N, 기본: N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaExchCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/areaExchCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.areaExchCostAddYn areaExchCostAddYn 지역교환비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaRtpCostAddYn",
+        "parameter_path": "$.body.data1.data2.data3.areaRtpCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역반품비용추가여부",
+        "display_name": "areaRtpCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8bc9dea655a11d47a463c14cbaead4dc7320c68617dc21c17593d42ae25c3824",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역반품비용추가여부(타입:string, 예: N, 기본: N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaRtpCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/areaRtpCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.areaRtpCostAddYn areaRtpCostAddYn 지역반품비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "basktNm",
+        "parameter_path": "$.body.data1.data2.data3.basktNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니명",
+        "display_name": "basktNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2ba6c077ec3b84040679d943212263b5de1ff73e7f4c4b462cb25d17a3993a12",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니명(타입:string, 예:API 테스트2)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "basktNm",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/basktNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.basktNm basktNm 장바구니명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "basktPtcCntn",
+        "parameter_path": "$.body.data1.data2.data3.basktPtcCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니안내문구",
+        "display_name": "basktPtcCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0a75f44e9f13e5d9fdbb97cf322e2c85b97f9936a0ff5028f27185bfeda877cf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니안내문구(타입:string, 예:테스트)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "basktPtcCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/basktPtcCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.basktPtcCntn basktPtcCntn 장바구니안내문구"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bsicAmtBuyPossYn",
+        "parameter_path": "$.body.data1.data2.data3.bsicAmtBuyPossYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "구매제한구분",
+        "display_name": "bsicAmtBuyPossYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ed180d53e27c6e8eb8cbe92cf3250d6be04c9c202b0734771fdca992679f8520",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "구매제한구분(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bsicAmtBuyPossYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/bsicAmtBuyPossYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.bsicAmtBuyPossYn bsicAmtBuyPossYn 구매제한구분"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvCost",
+        "parameter_path": "$.body.data1.data2.data3.dlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송비",
+        "display_name": "dlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3a50a8ea195b1334153c90e1ec015b21f9909f4667cf03d0c29a63fd1786b919",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송비(타입:string, 예:5321)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/dlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.dlvCost dlvCost 배송비"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "exchCostNchgYn",
+        "parameter_path": "$.body.data1.data2.data3.exchCostNchgYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "반품회수비용무료여부",
+        "display_name": "exchCostNchgYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "659223fcc184f18110fdaea9ef3343e62532f5335a536f6b9f1bec1bc1dd3db8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "반품회수비용무료여부(타입:string, 예: N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "exchCostNchgYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/exchCostNchgYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.exchCostNchgYn exchCostNchgYn 반품회수비용무료여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "exchDlvCost",
+        "parameter_path": "$.body.data1.data2.data3.exchDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "교환비용",
+        "display_name": "exchDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "45e8ddf15e24cd7d22e30f01a6eddc99f81c2e3d9ce16e750b929d329301ab89",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "교환비용(타입:string, 예: 3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "exchDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/exchDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.exchDlvCost exchDlvCost 교환비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "exchWdmtGbcd",
+        "parameter_path": "$.body.data1.data2.data3.exchWdmtGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "교환회수방법",
+        "display_name": "exchWdmtGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c01beb9bdb42ae5ca523a8881494e71f95e22a3de8c26110ee3902d545b1ee0e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "교환회수방법(타입:string, 예: 2)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "exchWdmtGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/exchWdmtGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.exchWdmtGbcd exchWdmtGbcd 교환회수방법"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddDlvCost",
+        "parameter_path": "$.body.data1.data2.data3.irgnAddDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가배송비용",
+        "display_name": "irgnAddDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e08fbcdbec3cd2b481c3448bbb74c720a248335ca15a2d15f2afb9d78eb48f6c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가배송비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/irgnAddDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.irgnAddDlvCost irgnAddDlvCost 도서추가배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddExchCost",
+        "parameter_path": "$.body.data1.data2.data3.irgnAddExchCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가교환비용",
+        "display_name": "irgnAddExchCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "201565101180686d82b3eb5b585c73e1eaa4a247089ea098fdb83af962632d25",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가교환비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddExchCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/irgnAddExchCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.irgnAddExchCost irgnAddExchCost 도서추가교환비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddRtpCost",
+        "parameter_path": "$.body.data1.data2.data3.irgnAddRtpCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가반품비용",
+        "display_name": "irgnAddRtpCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2c9747314a6fe554dc30962645429318fe2fa0e8ae09e0febe9fa691faff362b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가반품비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddRtpCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/irgnAddRtpCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.irgnAddRtpCost irgnAddRtpCost 도서추가반품비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemPtcCntn",
+        "parameter_path": "$.body.data1.data2.data3.itemPtcCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품상세안내문구",
+        "display_name": "itemPtcCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "960b37acb3b6199c373d63f459785163c64e913dd237a22a05f22dbd41787bb4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품상세안내문구(타입:string, 예:테스트)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemPtcCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/itemPtcCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.itemPtcCntn itemPtcCntn 상품상세안내문구"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddDlvCost",
+        "parameter_path": "$.body.data1.data2.data3.jejuAddDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가배송비용",
+        "display_name": "jejuAddDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "1f084051b8479276a33100439c6d28ad2b8ef3b13896a5d9bb9c052bb194bac6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가배송비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/jejuAddDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.jejuAddDlvCost jejuAddDlvCost 제주도추가배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddExchCost",
+        "parameter_path": "$.body.data1.data2.data3.jejuAddExchCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가교환비용",
+        "display_name": "jejuAddExchCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "72fa8f711ba3e2772b35ac1629036405006d6b3c5d8d2ab2cf59c6010e3a6111",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가교환비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddExchCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/jejuAddExchCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.jejuAddExchCost jejuAddExchCost 제주도추가교환비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddRtpCost",
+        "parameter_path": "$.body.data1.data2.data3.jejuAddRtpCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가반품비용",
+        "display_name": "jejuAddRtpCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dfb6c5f5f445d9cad4e3eb0834e0f3cc7dc9a221e70d7e4d57a43f7735d33d50",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가반품비용(타입:string, 예: 0, 기본: 0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddRtpCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/jejuAddRtpCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.jejuAddRtpCost jejuAddRtpCost 제주도추가반품비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "minStlmAmt",
+        "parameter_path": "$.body.data1.data2.data3.minStlmAmt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "기준금액",
+        "display_name": "minStlmAmt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6b29687b55bf1aa26739ec333033aed347a430b890aef00cd807ff34c883e1ca",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "기준금액(타입:string, 예:52050)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "minStlmAmt",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/minStlmAmt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.minStlmAmt minStlmAmt 기준금액"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rowFlag",
+        "parameter_path": "$.body.data1.data2.data3.rowFlag"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "rowFlag",
+        "display_name": "rowFlag",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "79743648878e55776e4dd295a7c041b1feb774c8249244af1c21cd0046bc7101",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "rowFlag(타입:string, 예:I)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rowFlag",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/rowFlag"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.rowFlag rowFlag rowFlag"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rtpDlvCost",
+        "parameter_path": "$.body.data1.data2.data3.rtpDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "반품비용",
+        "display_name": "rtpDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e876a1f2c23fbaf046092901b314c9d4df13b0906fc84fce280bfd2d01c38dd3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "반품비용(타입:string, 예: 2500)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rtpDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/rtpDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.rtpDlvCost rtpDlvCost 반품비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rtpWdmtGbcd",
+        "parameter_path": "$.body.data1.data2.data3.rtpWdmtGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "반품회수방법",
+        "display_name": "rtpWdmtGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3de13ead84e15fc7e00efe59573a628b7b3363d7a8e7674696a5468ea45ddf20",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "반품회수방법(타입:string, 예: 1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rtpWdmtGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/rtpWdmtGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.rtpWdmtGbcd rtpWdmtGbcd 반품회수방법"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rtpWtdwCostNchgYn",
+        "parameter_path": "$.body.data1.data2.data3.rtpWtdwCostNchgYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "교환비용무료여부",
+        "display_name": "rtpWtdwCostNchgYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "16675da5b3c1acded6f5ca222e3dce6cb4243e704f20b012f56c248c6e3e5909",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "교환비용무료여부(타입:string, 예: N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rtpWtdwCostNchgYn",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/rtpWtdwCostNchgYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.rtpWtdwCostNchgYn rtpWtdwCostNchgYn 교환비용무료여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sdlvcVenSeq",
+        "parameter_path": "$.body.data1.data2.data3.sdlvcVenSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니코드",
+        "display_name": "sdlvcVenSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ec8d9dfe5000a7a78f7ea929e6d2e6b00dda2d3662f67cb5b8dcfa4607b430d8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니코드(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sdlvcVenSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/sdlvcVenSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.sdlvcVenSeq sdlvcVenSeq 장바구니코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "123bfc2004c849184e992476b069e37fa77bd94b6ecdc7bfe4bb2754895891a8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7addf91182160d9d6931e9d0d47f2c5f9213222c8b1efbd0ed860362cd7e60da",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a7dd0972e6bf3c493640445ab23b3c7d13c7d9b51fd1a7eaab9cdd0caa389571",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSdlvcVenDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcVenDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "oshpVenAdrSeq",
+        "parameter_path": "$.body.data2.data2.data3.oshpVenAdrSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "출고지 코드 목록",
+        "display_name": "oshpVenAdrSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "47a0517af50f2a73002f4684fcfc712f2225fe85c5c6ba597a8eb8eeb7c130e0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "출고지 코드 목록(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oshpVenAdrSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/rows/row/oshpVenAdrSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.data2.data3.oshpVenAdrSeq oshpVenAdrSeq 출고지 코드 목록"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rowFlag",
+        "parameter_path": "$.body.data2.data2.data3.rowFlag"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "rowFlag",
+        "display_name": "rowFlag",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ace017763d6731ad0402adf03b658eae1407a60b73551cedef930b5d74498e6e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "rowFlag(타입:string, 예:I)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rowFlag",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/rows/row/rowFlag"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.data2.data3.rowFlag rowFlag rowFlag"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sdlvcVenSeq",
+        "parameter_path": "$.body.data2.data2.data3.sdlvcVenSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니코드",
+        "display_name": "sdlvcVenSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "206f88b7aa4ca2c808c975b166799cc712be6f7fe27ba10f8d946705604c5279",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니코드(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sdlvcVenSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/rows/row/sdlvcVenSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.data2.data3.sdlvcVenSeq sdlvcVenSeq 장바구니코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data2.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "92206c7f842a673042289f9ca42568aeb79889c8a84563bf183d1a30fed63f8c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data2.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "618b81057ea8ff5dc1143699227aa4d063850aa71139de5e18ba98b0cc7201d3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a4cff2aa9658ffaf6eb6528618f80147a7791c362cbddcd410b6fda94dfe3a0c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiVenSdlvcMngInfRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSdlvcOshpVenDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSdlvcOshpVenDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/multiVenSdlvcMngInf.do 협력사 소액장바구니 등록/수정 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

@@ -1,0 +1,923 @@
+{
+  "initial_top_k": 5,
+  "recommended_by_recall": 3,
+  "selection_note": "후보 재현율만의 추천값이며 최종 채택은 매핑 품질과 누적 입력 토큰도 비교한다.",
+  "scores": [
+    {
+      "top_k": 1,
+      "correct": 9,
+      "total": 12
+    },
+    {
+      "top_k": 2,
+      "correct": 11,
+      "total": 12
+    },
+    {
+      "top_k": 3,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 4,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 5,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 6,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 7,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 8,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 9,
+      "correct": 12,
+      "total": 12
+    },
+    {
+      "top_k": 10,
+      "correct": 12,
+      "total": 12
+    }
+  ],
+  "cases": [
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "query": "협력사 번호",
+      "expected_paths": [
+        "$.body.data1.data2.data3.venCd"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "협력사 번호"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 6,
+        "embedding_calls": 1,
+        "embedding_seconds": 1.3982,
+        "fallback_reason": null,
+        "total_fields": 10,
+        "rankings": [
+          {
+            "query": "협력사 번호",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "distance": 0.648392915725708
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+                "distance": 0.6610448360443115
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.6934913396835327
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "distance": 0.7272552251815796
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.73158860206604
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.7344350814819336
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "distance": 0.7368358373641968
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "distance": 0.7496981620788574
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.toDate",
+                "distance": 0.753024697303772
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.fromDate",
+                "distance": 0.7870491743087769
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 3.3198
+      }
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "query": "하위 협력업체 코드",
+      "expected_paths": [
+        "$.body.data1.data2.data3.ven2Cd"
+      ],
+      "first_correct_rank": 2,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "하위 협력업체 코드"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 9,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2989,
+        "fallback_reason": null,
+        "total_fields": 10,
+        "rankings": [
+          {
+            "query": "하위 협력업체 코드",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "distance": 0.573552131652832
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+                "distance": 0.6154213547706604
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.645363986492157
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "distance": 0.6505595445632935
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.6662741899490356
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.6779501438140869
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "distance": 0.698895275592804
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "distance": 0.7087795734405518
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.toDate",
+                "distance": 0.7477971315383911
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.fromDate",
+                "distance": 0.766067385673523
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3264
+      }
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "query": "조회 기간 시작 날짜",
+      "expected_paths": [
+        "$.body.data1.data2.data3.fromDate"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "조회 기간 시작 날짜"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 9,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.1981,
+        "fallback_reason": null,
+        "total_fields": 10,
+        "rankings": [
+          {
+            "query": "조회 기간 시작 날짜",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data1.data2.data3.fromDate",
+                "distance": 0.6271925568580627
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.toDate",
+                "distance": 0.6978800892829895
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "distance": 0.7440242767333984
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "distance": 0.7710013389587402
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.7895147800445557
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.8065053820610046
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "distance": 0.8125091791152954
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.8200672268867493
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+                "distance": 0.8351613283157349
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "distance": 0.8455603122711182
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.224
+      }
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "query": "조회 기간 마지막 날짜",
+      "expected_paths": [
+        "$.body.data1.data2.data3.toDate"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "조회 기간 마지막 날짜"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 12,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2948,
+        "fallback_reason": null,
+        "total_fields": 10,
+        "rankings": [
+          {
+            "query": "조회 기간 마지막 날짜",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data1.data2.data3.toDate",
+                "distance": 0.5936912298202515
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.fromDate",
+                "distance": 0.6948202848434448
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "distance": 0.714724063873291
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.7478563785552979
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.7542303800582886
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "distance": 0.7600528597831726
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.7789233922958374
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "distance": 0.787502646446228
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+                "distance": 0.7961906790733337
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "distance": 0.8115642070770264
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.314
+      }
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "query": "조회할 주문 식별 번호",
+      "expected_paths": [
+        "$.body.data1.data2.data3.ordNo"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "조회할 주문 식별 번호"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 11,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.1935,
+        "fallback_reason": null,
+        "total_fields": 10,
+        "rankings": [
+          {
+            "query": "조회할 주문 식별 번호",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "distance": 0.4604242444038391
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "distance": 0.48580002784729004
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+                "distance": 0.5709673762321472
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.5850560665130615
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.5912625789642334
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "distance": 0.6107174158096313
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.toDate",
+                "distance": 0.6181734800338745
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.6197516918182373
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "distance": 0.6214185953140259
+              },
+              {
+                "parameter_path": "$.body.data1.data2.data3.fromDate",
+                "distance": 0.6842125654220581
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.2126
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+      "query": "팔 수 있는 수량의 상한",
+      "expected_paths": [
+        "$.body.data2.data2.data3.maxSellPossQty"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "팔 수 있는 수량의 상한"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 10,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2804,
+        "fallback_reason": null,
+        "total_fields": 15,
+        "rankings": [
+          {
+            "query": "팔 수 있는 수량의 상한",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data2.data2.data3.maxSellPossQty",
+                "distance": 0.5839040875434875
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellGbcd",
+                "distance": 0.717691957950592
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.slitmCd",
+                "distance": 0.7457042932510376
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellEndDt",
+                "distance": 0.7457841634750366
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.7519100904464722
+              },
+              {
+                "parameter_path": "$.body.data2.id",
+                "distance": 0.7596263885498047
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userId",
+                "distance": 0.7600140571594238
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userGbcd",
+                "distance": 0.7602130770683289
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.7675867080688477
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellStrtDt",
+                "distance": 0.7684614658355713
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3104
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+      "query": "판매를 시작하는 날짜",
+      "expected_paths": [
+        "$.body.data2.data2.data3.sellStrtDt"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "판매를 시작하는 날짜"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 11,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.3295,
+        "fallback_reason": null,
+        "total_fields": 15,
+        "rankings": [
+          {
+            "query": "판매를 시작하는 날짜",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellStrtDt",
+                "distance": 0.5614240169525146
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellEndDt",
+                "distance": 0.6331787109375
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellGbcd",
+                "distance": 0.7050914764404297
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.maxSellPossQty",
+                "distance": 0.7269766926765442
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.slitmCd",
+                "distance": 0.7323527932167053
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.8140465021133423
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sortOrdg",
+                "distance": 0.8210944533348083
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.uitmTotNm",
+                "distance": 0.8282225131988525
+              },
+              {
+                "parameter_path": "$.body.data2.id",
+                "distance": 0.8354598879814148
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.8363960385322571
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3647
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+      "query": "판매 종료 날짜",
+      "expected_paths": [
+        "$.body.data2.data2.data3.sellEndDt"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "판매 종료 날짜"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 10,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2989,
+        "fallback_reason": null,
+        "total_fields": 15,
+        "rankings": [
+          {
+            "query": "판매 종료 날짜",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellEndDt",
+                "distance": 0.4315892457962036
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellStrtDt",
+                "distance": 0.5859609842300415
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellGbcd",
+                "distance": 0.651944637298584
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.maxSellPossQty",
+                "distance": 0.6573512554168701
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.slitmCd",
+                "distance": 0.6698032021522522
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.7438987493515015
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.uitmTotNm",
+                "distance": 0.7531707286834717
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.sortOrdg",
+                "distance": 0.7704049348831177
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.7784268856048584
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.7793272733688354
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3251
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+      "query": "재고를 확인할 판매 상품 번호",
+      "expected_paths": [
+        "$.body.data2.data2.data3.slitmCd"
+      ],
+      "first_correct_rank": 2,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "재고를 확인할 판매 상품 번호"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 15,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2744,
+        "fallback_reason": null,
+        "total_fields": 13,
+        "rankings": [
+          {
+            "query": "재고를 확인할 판매 상품 번호",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data2.data2.data3.sellItemGubunCd",
+                "distance": 0.48147469758987427
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.slitmCd",
+                "distance": 0.5065721869468689
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.venCd",
+                "distance": 0.5851489901542664
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.5934761762619019
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.5944901704788208
+              },
+              {
+                "parameter_path": "$.body.data2.id",
+                "distance": 0.6015045642852783
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.6021324992179871
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userGbcd",
+                "distance": 0.6124768257141113
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.searchDateEnd",
+                "distance": 0.6192418932914734
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userId",
+                "distance": 0.6288257837295532
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3071
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+      "query": "조회 기간의 시작",
+      "expected_paths": [
+        "$.body.data2.data2.data3.searchDateStart"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "조회 기간의 시작"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 6,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.3115,
+        "fallback_reason": null,
+        "total_fields": 13,
+        "rankings": [
+          {
+            "query": "조회 기간의 시작",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data2.data2.data3.searchDateStart",
+                "distance": 0.6913070678710938
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.searchDateEnd",
+                "distance": 0.7559257745742798
+              },
+              {
+                "parameter_path": "$.headers.oauserId",
+                "distance": 0.8448823690414429
+              },
+              {
+                "parameter_path": "$.body.data1.id",
+                "distance": 0.8478975296020508
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userGbcd",
+                "distance": 0.8556352257728577
+              },
+              {
+                "parameter_path": "$.headers.oauseKey",
+                "distance": 0.8653333783149719
+              },
+              {
+                "parameter_path": "$.body.data2.id",
+                "distance": 0.8710097074508667
+              },
+              {
+                "parameter_path": "$.body.data1.data1.data1.userId",
+                "distance": 0.8710803985595703
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.slitmCd",
+                "distance": 0.8719331622123718
+              },
+              {
+                "parameter_path": "$.body.data2.data2.data3.venCd",
+                "distance": 0.8879058957099915
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3362
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdb/updateItemByVen.do",
+      "query": "웹사이트에 보여줄 판촉 이름",
+      "expected_paths": [
+        "$.body.data3.data1.data1.webExpsPrmoNm"
+      ],
+      "first_correct_rank": 3,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "웹사이트에 보여줄 판촉 이름"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 16,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2762,
+        "fallback_reason": null,
+        "total_fields": 121,
+        "rankings": [
+          {
+            "query": "웹사이트에 보여줄 판촉 이름",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data4.data1.data1.safeCrtiGbcd",
+                "distance": 0.6679489612579346
+              },
+              {
+                "parameter_path": "$.body.data2.data1.data1.safeCertTrgtYn",
+                "distance": 0.6771081686019897
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.webExpsPrmoNm",
+                "distance": 0.6790547370910645
+              },
+              {
+                "parameter_path": "$.body.data4.data1.data1.safeCertDt",
+                "distance": 0.6796787977218628
+              },
+              {
+                "parameter_path": "$.body.data4.data1.data1.safeCertNo",
+                "distance": 0.6820884943008423
+              },
+              {
+                "parameter_path": "$.body.data4.data1.data1.safeCertImgNm",
+                "distance": 0.6849645376205444
+              },
+              {
+                "parameter_path": "$.body.data8.data1.data1.htmlItstGbcd",
+                "distance": 0.6867936849594116
+              },
+              {
+                "parameter_path": "$.body.data4.data1.data1.safeCertLawGbcd",
+                "distance": 0.6881442070007324
+              },
+              {
+                "parameter_path": "$.body.data8.data1.data1.htmlItstCntn",
+                "distance": 0.6918789148330688
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.bbprcCopnDcYn",
+                "distance": 0.6930233240127563
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.3408
+      }
+    },
+    {
+      "api_id": "POST:/pd/pdb/updateItemByVen.do",
+      "query": "한 번에 구매할 최소 개수",
+      "expected_paths": [
+        "$.body.data3.data1.data1.minBuyQty"
+      ],
+      "first_correct_rank": 1,
+      "retrieval": {
+        "scope": "search",
+        "top_k": 10,
+        "queries": [
+          "한 번에 구매할 최소 개수"
+        ],
+        "model": "text-embedding-3-small",
+        "collection": "canonical_parameters_cf5a1c85ad4d",
+        "index_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2_demo/data/out/parameters/parameter_vectors",
+        "embedding_tokens": 11,
+        "embedding_calls": 1,
+        "embedding_seconds": 0.2115,
+        "fallback_reason": null,
+        "total_fields": 121,
+        "rankings": [
+          {
+            "query": "한 번에 구매할 최소 개수",
+            "candidates": [
+              {
+                "parameter_path": "$.body.data3.data1.data1.minBuyQty",
+                "distance": 0.4353952407836914
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.dlvcBsicQty",
+                "distance": 0.585994303226471
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.frgnDrctBuyYn",
+                "distance": 0.6281355619430542
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.bbprcSpdcYn",
+                "distance": 0.6316238641738892
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.bbprcCopnDcYn",
+                "distance": 0.6328552961349487
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.prcCompSpdcYn",
+                "distance": 0.6374582648277283
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.prcCompCopnDcYn",
+                "distance": 0.6455466151237488
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.itemUnitGbcd3",
+                "distance": 0.6515117883682251
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.bbprcSpymDcYn",
+                "distance": 0.6564361453056335
+              },
+              {
+                "parameter_path": "$.body.data3.data1.data1.highUnitGbcd2",
+                "distance": 0.6570019721984863
+              }
+            ]
+          }
+        ],
+        "selected_fields": 10,
+        "elapsed_seconds": 0.2631
+      }
+    }
+  ]
+}

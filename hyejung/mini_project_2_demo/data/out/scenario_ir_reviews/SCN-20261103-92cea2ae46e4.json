@@ -1,0 +1,4245 @@
+{
+  "ir": {
+    "scenario_id": "SCN-20261103-92cea2ae46e4",
+    "version": 1,
+    "created_at": "2026-11-03T19:13:19.815497+09:00",
+    "ir_version": "approved-selection-draft-v1",
+    "original_question": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요.",
+    "status": "needs_input",
+    "sources": {
+      "approved": {
+        "source_id": "approved",
+        "file": "prototype/approved/api-selection-approved-order-shipment.json",
+        "version": null
+      },
+      "source_files": {
+        "intent_analysis": "intent-analysis-order-shipment.json",
+        "api_selection": "api-selection-order-shipment.json"
+      },
+      "artifacts": [
+        {
+          "source_id": "common-knowledge",
+          "kind": "common_knowledge",
+          "selected_api_id": null,
+          "file": "data/out/parameters/parameter_kb/common/knowledge.json",
+          "version": null
+        },
+        {
+          "source_id": "source-2",
+          "kind": "canonical_schema",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+          "version": "v1"
+        },
+        {
+          "source_id": "source-3",
+          "kind": "canonical_schema",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+          "version": "v1"
+        },
+        {
+          "source_id": "source-4",
+          "kind": "parameter_knowledge",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FmultiOshpProcess.do.json",
+          "version": null
+        },
+        {
+          "source_id": "source-5",
+          "kind": "parameter_knowledge",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FselectOshpDtlList.do.json",
+          "version": null
+        },
+        {
+          "source_id": "source-6",
+          "kind": "baseline",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+          "version": null
+        },
+        {
+          "source_id": "source-7",
+          "kind": "baseline",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+          "version": null
+        },
+        {
+          "source_id": "source-9",
+          "kind": "response_outputs",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/response_outputs/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_6f48d3c4.json",
+          "version": null
+        }
+      ]
+    },
+    "tasks": [
+      {
+        "domain": "DS",
+        "action": "주문조회",
+        "conditions": "협력사 코드 001442에 해당하는 주문을 조회한다.",
+        "count": 1,
+        "sequence": 1,
+        "depends_on": [],
+        "graph_id": null,
+        "from_state": null,
+        "to_state": null,
+        "target": null,
+        "steps": [
+          {
+            "step_id": "1-1",
+            "step": 1,
+            "type": "call",
+            "edge": "주문 조회",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+              "selector": null
+            },
+            "inputs": [
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "사용자 조건의 협력사 코드 001442를 협력사코드 파라미터에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "협력사 코드 001442에 해당하는 주문을 조회한다."
+                  },
+                  {
+                    "source_id": "source-5",
+                    "source_pointer": "/parameters/9",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "ordNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/51",
+                    "quote": "주문번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "ordPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/52",
+                    "quote": "주문상세순번"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/19",
+                    "quote": "배송번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/21",
+                    "quote": "배송상세순번"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvstNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/27",
+                    "quote": "배송지시번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvstPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/28",
+                    "quote": "배송지시상세번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "venCd",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/venCd",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/76",
+                    "quote": "협력사코드"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              }
+            ],
+            "bindings": [],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-1"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [],
+            "output_consumers": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "domain": "DS",
+        "action": "배송완료 처리",
+        "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+        "count": 1,
+        "sequence": 2,
+        "depends_on": [
+          1
+        ],
+        "graph_id": null,
+        "from_state": null,
+        "to_state": null,
+        "target": null,
+        "steps": [
+          {
+            "step_id": "2-1",
+            "step": 1,
+            "type": "call",
+            "edge": "주문 확인 및 출고 진행",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P1"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P1",
+                "ref": null,
+                "reason": "현재 승인 단계의 edge가 주문 확인 및 출고 진행이며 selection_reason에 procGb=P1이 주문확인 별칭을 가진 출고진행으로 정의되어 있다고 명시되어 있어 진행구분코드를 P1로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/edge",
+                    "quote": "주문 확인 및 출고 진행"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P1은 주문확인 별칭을 가진 출고진행으로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "unchanged"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 동일한 협력사 코드 001442를 사용해 주문 대상을 특정했으므로 현재 처리 대상에도 협력사코드를 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 대상으로 처리하므로 이전 조회 STEP의 주문번호를 현재 요청 주문번호에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 출고 진행 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-3",
+              "U-GEN-4"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          },
+          {
+            "step_id": "2-2",
+            "step": 2,
+            "type": "call",
+            "edge": "출고 완료",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P2"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P2",
+                "ref": null,
+                "reason": "현재 승인 단계의 선택 사유에서 procGb=P2가 출고완료로 정의되어 있어 진행구분코드를 P2로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P2는 출고완료로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 사용한 협력사 코드 001442를 현재 처리 대상 협력사코드에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 출고완료 처리하므로 이전 조회 STEP의 주문번호를 현재 요청에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 출고완료 처리 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-5"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          },
+          {
+            "step_id": "2-3",
+            "step": 3,
+            "type": "call",
+            "edge": "배송 완료",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P3"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P3",
+                "ref": null,
+                "reason": "현재 승인 단계의 edge와 선택 사유에서 배송 완료 단계가 procGb=P3으로 정의되어 있으므로 진행구분코드를 P3으로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/edge",
+                    "quote": "배송 완료"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P3은 배송완료로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 사용한 협력사 코드 001442를 현재 배송완료 처리 대상 협력사코드에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 배송완료 상태까지 처리하므로 이전 조회 STEP의 주문번호를 현재 요청 주문번호에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 배송완료 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 배송완료 처리 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 배송완료 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-6",
+              "U-GEN-7",
+              "U-GEN-8"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          }
+        ]
+      }
+    ],
+    "final_outputs": [
+      {
+        "name": "ordNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "ordNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      },
+      {
+        "name": "dlvNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "dlvNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      },
+      {
+        "name": "dlvstNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "dlvstNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      }
+    ],
+    "unresolved": [
+      {
+        "issue_id": "U-INPUT-1",
+        "status": "open",
+        "task_sequence": 1,
+        "step_ids": [
+          "1-1"
+        ],
+        "parameter_paths": [],
+        "reason": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+        "required_input": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+        "resolution": null,
+        "evidence": []
+      },
+      {
+        "issue_id": "U-INPUT-2",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1",
+          "2-2",
+          "2-3"
+        ],
+        "parameter_paths": [],
+        "reason": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+        "required_input": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+        "resolution": null,
+        "evidence": []
+      },
+      {
+        "issue_id": "U-GEN-3",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.dlvNo",
+          "$.body.data1.data2.data3.dlvPtcSeq"
+        ],
+        "reason": "이전 조회 STEP에는 dlvNo, dlvPtcSeq 출력도 있으나 현재 API의 진행구분 P1(주문 확인 및 출고 진행)에서 배송번호/배송상세순번까지 반드시 함께 전달해야 하는지, 또는 ordNo/ordPtcSeq/dlvstNo/dlvstPtcSeq만으로 대상 식별이 충분한지 자료상 확인되지 않았다.",
+        "required_input": "대상 주문 식별에 필요한 추가 입력 여부(dlvNo, dlvPtcSeq 등)",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/selection_reason",
+            "quote": "조회 결과의 주문을 대상으로 처리할 수 있는지는 요청 필드가 확인되지 않아 검토가 필요하다."
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-4",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.chk",
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.dsrvDlvcoCd",
+          "$.body.data1.data2.data3.invcNo"
+        ],
+        "reason": "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다.",
+        "required_input": "운영 고정값 또는 실행 시점 입력(예: rgstId, rgstIp, chk, 택배사/송장 사용 여부)",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "chk"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          }
+        ],
+        "dependency_ids": []
+      },
+      {
+        "issue_id": "U-GEN-5",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-2"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.dlvNo",
+          "$.body.data1.data2.data3.dlvPtcSeq",
+          "$.body.data1.data2.data3.chk",
+          "$.body.data1.data2.data3.dsrvDlvcoCd",
+          "$.body.data1.data2.data3.invcNo",
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.ven2Cd"
+        ],
+        "reason": "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다.",
+        "required_input": "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다.",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/selection_reason",
+            "quote": "대상 주문 식별 필드와 선행 상태 조건은 제공 자료만으로 확인되지 않는다."
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "chk"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/10",
+            "quote": "2차협력사코드"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-6",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [],
+        "reason": "선행 조회 STEP에는 배송번호(dlvNo)와 배송상세순번(dlvPtcSeq) 출력이 정의되어 있으나, 현재 API의 어떤 요청 파라미터와 결합되어야 배송완료 처리에 필요한지 승인 자료와 ParameterKB만으로 확인되지 않는다. 현재 API에는 dlvNo, dlvPtcSeq 요청 필드가 존재하지 않아 직접 바인딩 후보를 만들 수 없다.",
+        "required_input": "배송완료 처리에 추가 식별값이 필요한지 여부와 그에 대응하는 현재 API 요청 필드 의미",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "",
+            "quote": "parameters"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-7",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.invcNo",
+          "$.body.data1.data2.data3.dsrvDlvcoCd"
+        ],
+        "reason": "현재 API schema에는 송장번호(invcNo)와 택배배송사코드(dsrvDlvcoCd)가 존재하지만, 사용자 조건과 선행 단계 자료만으로 배송완료 단계에서 이 값들을 새로 입력해야 하는지 확인할 수 없다. 확인된 업무값이 없어 고정값이나 바인딩으로 작성할 수 없다.",
+        "required_input": "배송완료 처리 시 필요한 송장번호 또는 택배배송사코드의 제공 여부",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/intent_task/conditions",
+            "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+          }
+        ],
+        "dependency_ids": []
+      },
+      {
+        "issue_id": "U-GEN-8",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.chk"
+        ],
+        "reason": "현재 API schema에는 등록ID(rgstId), 등록IP(rgstIp), 체크(chk) 등의 필드가 있으나, 승인 자료에는 배송완료 처리에 사용할 구체 값이나 매핑 근거가 없다. 예시값은 검증된 업무값이 아니므로 후보로 확정하지 않는다.",
+        "required_input": "업무 실행 컨텍스트에서 제공되는 등록ID/등록IP/체크 값",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "체크"
+          }
+        ],
+        "dependency_ids": []
+      }
+    ],
+    "generation": {
+      "config": {
+        "max_turns": 22,
+        "max_tokens": 230000,
+        "max_seconds": 270,
+        "max_output_tokens": 4096
+      },
+      "usage": {
+        "llm_calls": 9,
+        "input_tokens": 108445,
+        "output_tokens": 7548,
+        "total_tokens": 115993,
+        "elapsed_seconds": 74.02,
+        "cached_tokens": 40320
+      },
+      "trace": [
+        {
+          "step_id": "1-1",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "1-1",
+          "tool": "get_response_outputs"
+        },
+        {
+          "step_id": "2-1",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "2-2",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "2-3",
+          "tool": "get_parameter_knowledge"
+        }
+      ],
+      "log_file": "data/out/scenario_ir_logs/IRRUN-20261103-191202-b1396c2ca146492e997788bf3ed32e4a.jsonl",
+      "mode": "baseline_replacements",
+      "tool_policy": "kb_first_conditional",
+      "budget": {
+        "version": "step_budget_v1",
+        "step_count": 4,
+        "policy": {
+          "version": "step_budget_v1",
+          "per_step": {
+            "llm_calls": 5,
+            "tokens": 50000,
+            "seconds": 60
+          },
+          "reserve": {
+            "llm_calls": 2,
+            "tokens": 30000,
+            "seconds": 30
+          },
+          "absolute": {
+            "llm_calls": 40,
+            "tokens": 400000,
+            "seconds": 600
+          },
+          "max_output_tokens": 4096
+        },
+        "calculated": {
+          "llm_calls": 22,
+          "tokens": 230000,
+          "seconds": 270
+        },
+        "limits": {
+          "llm_calls": 22,
+          "tokens": 230000,
+          "seconds": 270
+        },
+        "capped": {
+          "llm_calls": false,
+          "tokens": false,
+          "seconds": false
+        },
+        "max_output_tokens": 4096
+      },
+      "budget_usage": {
+        "llm_calls": 9,
+        "steps": {
+          "1-1": 3,
+          "2-1": 2,
+          "2-2": 2,
+          "2-3": 2
+        },
+        "reserve_calls": 0,
+        "reserve_remaining": 2,
+        "total_tokens": 115993,
+        "elapsed_seconds": 74.029,
+        "token_reserve_used": 0,
+        "time_reserve_used": 0
+      },
+      "options": {
+        "stop_retry": false,
+        "kb_rag": false,
+        "dependency_projection": false,
+        "approval_gate": true,
+        "injection_guard": false
+      },
+      "execution_mode": "basic",
+      "policy": {
+        "mapping_validation": false,
+        "final_ir_validation": false,
+        "llm_transport_max_retries": 0,
+        "mapping_repair_limit_per_step": null
+      },
+      "validation": {
+        "mapping": false,
+        "required_fields": false,
+        "final_mapping": false
+      }
+    },
+    "review": {
+      "status": "awaiting_decision",
+      "revision": 1,
+      "open_count": 23,
+      "resolved_count": 0,
+      "deferred_count": 0
+    }
+  },
+  "base_ir": {
+    "scenario_id": "SCN-20261103-92cea2ae46e4",
+    "version": 1,
+    "created_at": "2026-11-03T19:13:19.815497+09:00",
+    "ir_version": "approved-selection-draft-v1",
+    "original_question": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요.",
+    "status": "needs_input",
+    "sources": {
+      "approved": {
+        "source_id": "approved",
+        "file": "prototype/approved/api-selection-approved-order-shipment.json",
+        "version": null
+      },
+      "source_files": {
+        "intent_analysis": "intent-analysis-order-shipment.json",
+        "api_selection": "api-selection-order-shipment.json"
+      },
+      "artifacts": [
+        {
+          "source_id": "common-knowledge",
+          "kind": "common_knowledge",
+          "selected_api_id": null,
+          "file": "data/out/parameters/parameter_kb/common/knowledge.json",
+          "version": null
+        },
+        {
+          "source_id": "source-2",
+          "kind": "canonical_schema",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+          "version": "v1"
+        },
+        {
+          "source_id": "source-3",
+          "kind": "canonical_schema",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+          "version": "v1"
+        },
+        {
+          "source_id": "source-4",
+          "kind": "parameter_knowledge",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FmultiOshpProcess.do.json",
+          "version": null
+        },
+        {
+          "source_id": "source-5",
+          "kind": "parameter_knowledge",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FselectOshpDtlList.do.json",
+          "version": null
+        },
+        {
+          "source_id": "source-6",
+          "kind": "baseline",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+          "version": null
+        },
+        {
+          "source_id": "source-7",
+          "kind": "baseline",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+          "version": null
+        },
+        {
+          "source_id": "source-9",
+          "kind": "response_outputs",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "file": "data/out/parameters/response_outputs/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_6f48d3c4.json",
+          "version": null
+        }
+      ]
+    },
+    "tasks": [
+      {
+        "domain": "DS",
+        "action": "주문조회",
+        "conditions": "협력사 코드 001442에 해당하는 주문을 조회한다.",
+        "count": 1,
+        "sequence": 1,
+        "depends_on": [],
+        "graph_id": null,
+        "from_state": null,
+        "to_state": null,
+        "target": null,
+        "steps": [
+          {
+            "step_id": "1-1",
+            "step": 1,
+            "type": "call",
+            "edge": "주문 조회",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+              "selector": null
+            },
+            "inputs": [
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "사용자 조건의 협력사 코드 001442를 협력사코드 파라미터에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "협력사 코드 001442에 해당하는 주문을 조회한다."
+                  },
+                  {
+                    "source_id": "source-5",
+                    "source_pointer": "/parameters/9",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "ordNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/51",
+                    "quote": "주문번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "ordPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/52",
+                    "quote": "주문상세순번"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/19",
+                    "quote": "배송번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/21",
+                    "quote": "배송상세순번"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvstNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/27",
+                    "quote": "배송지시번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "dlvstPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/28",
+                    "quote": "배송지시상세번호"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              },
+              {
+                "name": "venCd",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/venCd",
+                "path_type": "XPATH",
+                "type": "string",
+                "row_scope": null,
+                "evidence": [
+                  {
+                    "source_id": "source-9",
+                    "source_pointer": "/outputs/76",
+                    "quote": "협력사코드"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/output_consumers/0/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  }
+                ]
+              }
+            ],
+            "bindings": [],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-1"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [],
+            "output_consumers": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "domain": "DS",
+        "action": "배송완료 처리",
+        "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+        "count": 1,
+        "sequence": 2,
+        "depends_on": [
+          1
+        ],
+        "graph_id": null,
+        "from_state": null,
+        "to_state": null,
+        "target": null,
+        "steps": [
+          {
+            "step_id": "2-1",
+            "step": 1,
+            "type": "call",
+            "edge": "주문 확인 및 출고 진행",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P1"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P1",
+                "ref": null,
+                "reason": "현재 승인 단계의 edge가 주문 확인 및 출고 진행이며 selection_reason에 procGb=P1이 주문확인 별칭을 가진 출고진행으로 정의되어 있다고 명시되어 있어 진행구분코드를 P1로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/edge",
+                    "quote": "주문 확인 및 출고 진행"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P1은 주문확인 별칭을 가진 출고진행으로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "unchanged"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 동일한 협력사 코드 001442를 사용해 주문 대상을 특정했으므로 현재 처리 대상에도 협력사코드를 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 대상으로 처리하므로 이전 조회 STEP의 주문번호를 현재 요청 주문번호에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 출고 진행 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-3",
+              "U-GEN-4"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          },
+          {
+            "step_id": "2-2",
+            "step": 2,
+            "type": "call",
+            "edge": "출고 완료",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P2"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P2",
+                "ref": null,
+                "reason": "현재 승인 단계의 선택 사유에서 procGb=P2가 출고완료로 정의되어 있어 진행구분코드를 P2로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P2는 출고완료로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 사용한 협력사 코드 001442를 현재 처리 대상 협력사코드에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 출고완료 처리하므로 이전 조회 STEP의 주문번호를 현재 요청에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 출고완료 처리 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-5"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          },
+          {
+            "step_id": "2-3",
+            "step": 3,
+            "type": "call",
+            "edge": "배송 완료",
+            "from_state": null,
+            "to_state": null,
+            "api": {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "method": "POST",
+              "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+              "selector": {
+                "procGb": "P3"
+              }
+            },
+            "inputs": [
+              {
+                "field": "procGb",
+                "parameter_path": "$.body.data1.data2.data3.procGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "P3",
+                "ref": null,
+                "reason": "현재 승인 단계의 edge와 선택 사유에서 배송 완료 단계가 procGb=P3으로 정의되어 있으므로 진행구분코드를 P3으로 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/edge",
+                    "quote": "배송 완료"
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/selection_reason",
+                    "quote": "메타데이터에서 procGb=P3은 배송완료로 정의되어 있다."
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/7",
+                    "quote": "진행구분코드"
+                  }
+                ],
+                "baseline_value": "P1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "venCd",
+                "parameter_path": "$.body.data1.data2.data3.venCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+                "type": "string",
+                "source": "fixed",
+                "origin": "user_condition",
+                "value": "001442",
+                "ref": null,
+                "reason": "원질의와 선행 조회 STEP에서 사용한 협력사 코드 001442를 현재 배송완료 처리 대상 협력사코드에 매핑한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/original_question",
+                    "quote": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/inputs/0/value",
+                    "quote": "001442"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/11",
+                    "quote": "협력사코드"
+                  }
+                ],
+                "baseline_value": "003766",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "replace"
+              },
+              {
+                "field": "ordNo",
+                "parameter_path": "$.body.data1.data2.data3.ordNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-1",
+                "reason": "현재 단계는 1번 업무에서 조회한 주문을 배송완료 상태까지 처리하므로 이전 조회 STEP의 주문번호를 현재 요청 주문번호에 바인딩한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/0",
+                    "quote": "ordNo / 주문번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/5",
+                    "quote": "주문번호"
+                  }
+                ],
+                "baseline_value": "20160118110258",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "ordPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-2",
+                "reason": "이전 조회 결과의 주문상세순번을 현재 배송완료 처리 요청의 주문상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/1",
+                    "quote": "ordPtcSeq / 주문상세순번"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/6",
+                    "quote": "주문상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-3",
+                "reason": "이전 조회 결과의 배송지시번호를 현재 배송완료 처리 요청의 배송지시번호에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/4",
+                    "quote": "dlvstNo / 배송지시번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/1",
+                    "quote": "20160118617141"
+                  }
+                ],
+                "baseline_value": "20160118617141",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              },
+              {
+                "field": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+                "type": "string",
+                "source": "bind",
+                "origin": "previous_output",
+                "value": null,
+                "ref": "B-4",
+                "reason": "이전 조회 결과의 배송지시상세번호를 현재 배송완료 요청의 배송지시상세순번에 연결한다.",
+                "evidence": [
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/current_step/intent_task/conditions",
+                    "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+                  },
+                  {
+                    "source_id": "approved",
+                    "source_pointer": "/previous_steps/1-1/outputs/5",
+                    "quote": "dlvstPtcSeq / 배송지시상세번호"
+                  },
+                  {
+                    "source_id": "source-4",
+                    "source_pointer": "/parameters/2",
+                    "quote": "배송지시상세순번"
+                  }
+                ],
+                "baseline_value": "1",
+                "baseline_value_source": "EXAMPLE",
+                "baseline_present": true,
+                "comparison_reason": null,
+                "change_kind": "response_binding"
+              }
+            ],
+            "outputs": [],
+            "bindings": [
+              {
+                "binding_id": "B-1",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+              },
+              {
+                "binding_id": "B-2",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "ordPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+              },
+              {
+                "binding_id": "B-3",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstNo",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              {
+                "binding_id": "B-4",
+                "from": {
+                  "from_step_id": "1-1",
+                  "output_name": "dlvstPtcSeq",
+                  "response_key": "200",
+                  "content_type": "application/xml",
+                  "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstPtcSeq",
+                  "path_type": "XPATH",
+                  "row_scope": null
+                },
+                "to_parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              }
+            ],
+            "assertions": [],
+            "expect": null,
+            "unresolved": [
+              "U-INPUT-2",
+              "U-GEN-6",
+              "U-GEN-7",
+              "U-GEN-8"
+            ],
+            "baseline": {
+              "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+              "source": "EXAMPLE",
+              "validation_status": "EXAMPLE_ONLY"
+            },
+            "input_dependencies": [
+              {
+                "dependency_id": "D-1-to-2",
+                "source_task_sequence": 1,
+                "consumer_task_sequence": 2,
+                "source_step_id": "1-1",
+                "source_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "candidate_source_step_ids": [
+                  "1-1"
+                ],
+                "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+                "source_pointer": "/intent_tasks/1/conditions",
+                "status": "resolved"
+              }
+            ],
+            "output_consumers": []
+          }
+        ]
+      }
+    ],
+    "final_outputs": [
+      {
+        "name": "ordNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "ordNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      },
+      {
+        "name": "dlvNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "dlvNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      },
+      {
+        "name": "dlvstNo",
+        "ref": {
+          "from_step_id": "1-1",
+          "output_name": "dlvstNo",
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/dlvstNo",
+          "path_type": "XPATH",
+          "row_scope": null
+        }
+      }
+    ],
+    "unresolved": [
+      {
+        "issue_id": "U-INPUT-1",
+        "status": "open",
+        "task_sequence": 1,
+        "step_ids": [
+          "1-1"
+        ],
+        "parameter_paths": [],
+        "reason": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+        "required_input": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+        "resolution": null,
+        "evidence": []
+      },
+      {
+        "issue_id": "U-INPUT-2",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1",
+          "2-2",
+          "2-3"
+        ],
+        "parameter_paths": [],
+        "reason": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+        "required_input": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+        "resolution": null,
+        "evidence": []
+      },
+      {
+        "issue_id": "U-GEN-3",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.dlvNo",
+          "$.body.data1.data2.data3.dlvPtcSeq"
+        ],
+        "reason": "이전 조회 STEP에는 dlvNo, dlvPtcSeq 출력도 있으나 현재 API의 진행구분 P1(주문 확인 및 출고 진행)에서 배송번호/배송상세순번까지 반드시 함께 전달해야 하는지, 또는 ordNo/ordPtcSeq/dlvstNo/dlvstPtcSeq만으로 대상 식별이 충분한지 자료상 확인되지 않았다.",
+        "required_input": "대상 주문 식별에 필요한 추가 입력 여부(dlvNo, dlvPtcSeq 등)",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/selection_reason",
+            "quote": "조회 결과의 주문을 대상으로 처리할 수 있는지는 요청 필드가 확인되지 않아 검토가 필요하다."
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-4",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-1"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.chk",
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.dsrvDlvcoCd",
+          "$.body.data1.data2.data3.invcNo"
+        ],
+        "reason": "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다.",
+        "required_input": "운영 고정값 또는 실행 시점 입력(예: rgstId, rgstIp, chk, 택배사/송장 사용 여부)",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "chk"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          }
+        ],
+        "dependency_ids": []
+      },
+      {
+        "issue_id": "U-GEN-5",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-2"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.dlvNo",
+          "$.body.data1.data2.data3.dlvPtcSeq",
+          "$.body.data1.data2.data3.chk",
+          "$.body.data1.data2.data3.dsrvDlvcoCd",
+          "$.body.data1.data2.data3.invcNo",
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.ven2Cd"
+        ],
+        "reason": "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다.",
+        "required_input": "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다.",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/selection_reason",
+            "quote": "대상 주문 식별 필드와 선행 상태 조건은 제공 자료만으로 확인되지 않는다."
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "chk"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/10",
+            "quote": "2차협력사코드"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-6",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [],
+        "reason": "선행 조회 STEP에는 배송번호(dlvNo)와 배송상세순번(dlvPtcSeq) 출력이 정의되어 있으나, 현재 API의 어떤 요청 파라미터와 결합되어야 배송완료 처리에 필요한지 승인 자료와 ParameterKB만으로 확인되지 않는다. 현재 API에는 dlvNo, dlvPtcSeq 요청 필드가 존재하지 않아 직접 바인딩 후보를 만들 수 없다.",
+        "required_input": "배송완료 처리에 추가 식별값이 필요한지 여부와 그에 대응하는 현재 API 요청 필드 의미",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/2",
+            "quote": "dlvNo / 배송번호"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/previous_steps/1-1/outputs/3",
+            "quote": "dlvPtcSeq / 배송상세순번"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "",
+            "quote": "parameters"
+          }
+        ],
+        "dependency_ids": [
+          "D-1-to-2"
+        ]
+      },
+      {
+        "issue_id": "U-GEN-7",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.invcNo",
+          "$.body.data1.data2.data3.dsrvDlvcoCd"
+        ],
+        "reason": "현재 API schema에는 송장번호(invcNo)와 택배배송사코드(dsrvDlvcoCd)가 존재하지만, 사용자 조건과 선행 단계 자료만으로 배송완료 단계에서 이 값들을 새로 입력해야 하는지 확인할 수 없다. 확인된 업무값이 없어 고정값이나 바인딩으로 작성할 수 없다.",
+        "required_input": "배송완료 처리 시 필요한 송장번호 또는 택배배송사코드의 제공 여부",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/4",
+            "quote": "송장번호"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/3",
+            "quote": "택배배송사코드"
+          },
+          {
+            "source_id": "approved",
+            "source_pointer": "/current_step/intent_task/conditions",
+            "quote": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다."
+          }
+        ],
+        "dependency_ids": []
+      },
+      {
+        "issue_id": "U-GEN-8",
+        "status": "open",
+        "task_sequence": 2,
+        "step_ids": [
+          "2-3"
+        ],
+        "parameter_paths": [
+          "$.body.data1.data2.data3.rgstId",
+          "$.body.data1.data2.data3.rgstIp",
+          "$.body.data1.data2.data3.chk"
+        ],
+        "reason": "현재 API schema에는 등록ID(rgstId), 등록IP(rgstIp), 체크(chk) 등의 필드가 있으나, 승인 자료에는 배송완료 처리에 사용할 구체 값이나 매핑 근거가 없다. 예시값은 검증된 업무값이 아니므로 후보로 확정하지 않는다.",
+        "required_input": "업무 실행 컨텍스트에서 제공되는 등록ID/등록IP/체크 값",
+        "resolution": null,
+        "evidence": [
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/8",
+            "quote": "등록ID"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/9",
+            "quote": "등록IP"
+          },
+          {
+            "source_id": "source-4",
+            "source_pointer": "/parameters/0",
+            "quote": "체크"
+          }
+        ],
+        "dependency_ids": []
+      }
+    ],
+    "generation": {
+      "config": {
+        "max_turns": 22,
+        "max_tokens": 230000,
+        "max_seconds": 270,
+        "max_output_tokens": 4096
+      },
+      "usage": {
+        "llm_calls": 9,
+        "input_tokens": 108445,
+        "output_tokens": 7548,
+        "total_tokens": 115993,
+        "elapsed_seconds": 74.02,
+        "cached_tokens": 40320
+      },
+      "trace": [
+        {
+          "step_id": "1-1",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "1-1",
+          "tool": "get_response_outputs"
+        },
+        {
+          "step_id": "2-1",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "2-2",
+          "tool": "get_parameter_knowledge"
+        },
+        {
+          "step_id": "2-3",
+          "tool": "get_parameter_knowledge"
+        }
+      ],
+      "log_file": "data/out/scenario_ir_logs/IRRUN-20261103-191202-b1396c2ca146492e997788bf3ed32e4a.jsonl",
+      "mode": "baseline_replacements",
+      "tool_policy": "kb_first_conditional",
+      "budget": {
+        "version": "step_budget_v1",
+        "step_count": 4,
+        "policy": {
+          "version": "step_budget_v1",
+          "per_step": {
+            "llm_calls": 5,
+            "tokens": 50000,
+            "seconds": 60
+          },
+          "reserve": {
+            "llm_calls": 2,
+            "tokens": 30000,
+            "seconds": 30
+          },
+          "absolute": {
+            "llm_calls": 40,
+            "tokens": 400000,
+            "seconds": 600
+          },
+          "max_output_tokens": 4096
+        },
+        "calculated": {
+          "llm_calls": 22,
+          "tokens": 230000,
+          "seconds": 270
+        },
+        "limits": {
+          "llm_calls": 22,
+          "tokens": 230000,
+          "seconds": 270
+        },
+        "capped": {
+          "llm_calls": false,
+          "tokens": false,
+          "seconds": false
+        },
+        "max_output_tokens": 4096
+      },
+      "budget_usage": {
+        "llm_calls": 9,
+        "steps": {
+          "1-1": 3,
+          "2-1": 2,
+          "2-2": 2,
+          "2-3": 2
+        },
+        "reserve_calls": 0,
+        "reserve_remaining": 2,
+        "total_tokens": 115993,
+        "elapsed_seconds": 74.029,
+        "token_reserve_used": 0,
+        "time_reserve_used": 0
+      },
+      "options": {
+        "stop_retry": false,
+        "kb_rag": false,
+        "dependency_projection": false,
+        "approval_gate": true,
+        "injection_guard": false
+      },
+      "execution_mode": "basic",
+      "policy": {
+        "mapping_validation": false,
+        "final_ir_validation": false,
+        "llm_transport_max_retries": 0,
+        "mapping_repair_limit_per_step": null
+      },
+      "validation": {
+        "mapping": false,
+        "required_fields": false,
+        "final_mapping": false
+      }
+    }
+  },
+  "revision": 1,
+  "targets": [
+    {
+      "target_id": "issue-U-INPUT-1",
+      "step_id": null,
+      "api_id": null,
+      "parameter_path": null,
+      "label": "원본 검토 필요",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-INPUT-1"
+      ],
+      "reasons": [
+        "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "issue-U-INPUT-2",
+      "step_id": null,
+      "api_id": null,
+      "parameter_path": null,
+      "label": "원본 검토 필요",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-INPUT-2"
+      ],
+      "reasons": [
+        "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "c30c77bd7b225348854e16a7",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dlvNo",
+      "label": "$.body.data1.data2.data3.dlvNo",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-3"
+      ],
+      "reasons": [
+        "이전 조회 STEP에는 dlvNo, dlvPtcSeq 출력도 있으나 현재 API의 진행구분 P1(주문 확인 및 출고 진행)에서 배송번호/배송상세순번까지 반드시 함께 전달해야 하는지, 또는 ordNo/ordPtcSeq/dlvstNo/dlvstPtcSeq만으로 대상 식별이 충분한지 자료상 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "0df837e518bd24a60b9bcf59",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dlvPtcSeq",
+      "label": "$.body.data1.data2.data3.dlvPtcSeq",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-3"
+      ],
+      "reasons": [
+        "이전 조회 STEP에는 dlvNo, dlvPtcSeq 출력도 있으나 현재 API의 진행구분 P1(주문 확인 및 출고 진행)에서 배송번호/배송상세순번까지 반드시 함께 전달해야 하는지, 또는 ordNo/ordPtcSeq/dlvstNo/dlvstPtcSeq만으로 대상 식별이 충분한지 자료상 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "2eb127b6c74b10dbb4881273",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.chk",
+      "label": "chk",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-4"
+      ],
+      "reasons": [
+        "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "430e4bb49a65517cf816b1e9",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstId",
+      "label": "rgstId",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-4"
+      ],
+      "reasons": [
+        "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "d3dfa99792294c3ad0bab44b",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstIp",
+      "label": "rgstIp",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-4"
+      ],
+      "reasons": [
+        "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "3905986f017ed76a9f51b807",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dsrvDlvcoCd",
+      "label": "dsrvDlvcoCd",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-4"
+      ],
+      "reasons": [
+        "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "669a92b3305fc080b77d1d5d",
+      "step_id": "2-1",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.invcNo",
+      "label": "invcNo",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-4"
+      ],
+      "reasons": [
+        "현재 API 스키마에는 chk, rgstId, rgstIp, dsrvDlvcoCd, invcNo 등이 있으나 사용자 조건과 승인 자료만으로 이 단계에서 어떤 운영값을 써야 하는지 확인되지 않는다. 특히 배송완료 전체 흐름의 첫 단계인 P1에서 등록자 정보나 송장 관련 값이 필요한 업무 규칙은 제공 자료에 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "6ff39ae7a3d6720423d15aca",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dlvNo",
+      "label": "$.body.data1.data2.data3.dlvNo",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "85c974855ace8b0b623ca440",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dlvPtcSeq",
+      "label": "$.body.data1.data2.data3.dlvPtcSeq",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "b2237fe4ab072ce5990b4921",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.chk",
+      "label": "chk",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "db6a350c951becbb22415d57",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dsrvDlvcoCd",
+      "label": "dsrvDlvcoCd",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "94d9dba52a840202be5628be",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.invcNo",
+      "label": "invcNo",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "5c4b7eca1af5644631d22ff9",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstId",
+      "label": "rgstId",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "11b5637b04b95765ef21cf52",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstIp",
+      "label": "rgstIp",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "33eeea622b334a527faecd32",
+      "step_id": "2-2",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+      "label": "ven2Cd",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-5"
+      ],
+      "reasons": [
+        "선행 조회 결과에는 dlvNo와 dlvPtcSeq 출력도 정의되어 있으나, 현재 API 조건과 승인 자료만으로 출고완료(procGb=P2) 처리에 이 값들이 추가로 필요한지 확정할 수 없다. 또한 chk, dsrvDlvcoCd, invcNo, rgstId, rgstIp, ven2Cd 등의 현재 API 입력은 사용자 조건이나 의존 관계에서 값 근거가 확인되지 않았다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "issue-U-GEN-6",
+      "step_id": null,
+      "api_id": null,
+      "parameter_path": null,
+      "label": "원본 검토 필요",
+      "type": null,
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-6"
+      ],
+      "reasons": [
+        "선행 조회 STEP에는 배송번호(dlvNo)와 배송상세순번(dlvPtcSeq) 출력이 정의되어 있으나, 현재 API의 어떤 요청 파라미터와 결합되어야 배송완료 처리에 필요한지 승인 자료와 ParameterKB만으로 확인되지 않는다. 현재 API에는 dlvNo, dlvPtcSeq 요청 필드가 존재하지 않아 직접 바인딩 후보를 만들 수 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "c922d0210606fdd001dc234d",
+      "step_id": "2-3",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.invcNo",
+      "label": "invcNo",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-7"
+      ],
+      "reasons": [
+        "현재 API schema에는 송장번호(invcNo)와 택배배송사코드(dsrvDlvcoCd)가 존재하지만, 사용자 조건과 선행 단계 자료만으로 배송완료 단계에서 이 값들을 새로 입력해야 하는지 확인할 수 없다. 확인된 업무값이 없어 고정값이나 바인딩으로 작성할 수 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "a8903bdb2008fd927b8ac97a",
+      "step_id": "2-3",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.dsrvDlvcoCd",
+      "label": "dsrvDlvcoCd",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-7"
+      ],
+      "reasons": [
+        "현재 API schema에는 송장번호(invcNo)와 택배배송사코드(dsrvDlvcoCd)가 존재하지만, 사용자 조건과 선행 단계 자료만으로 배송완료 단계에서 이 값들을 새로 입력해야 하는지 확인할 수 없다. 확인된 업무값이 없어 고정값이나 바인딩으로 작성할 수 없다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "d9e3c7c0e31bb572939804a8",
+      "step_id": "2-3",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstId",
+      "label": "rgstId",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-8"
+      ],
+      "reasons": [
+        "현재 API schema에는 등록ID(rgstId), 등록IP(rgstIp), 체크(chk) 등의 필드가 있으나, 승인 자료에는 배송완료 처리에 사용할 구체 값이나 매핑 근거가 없다. 예시값은 검증된 업무값이 아니므로 후보로 확정하지 않는다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "b60475d0103bb29f0cd9a3c3",
+      "step_id": "2-3",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.rgstIp",
+      "label": "rgstIp",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-8"
+      ],
+      "reasons": [
+        "현재 API schema에는 등록ID(rgstId), 등록IP(rgstIp), 체크(chk) 등의 필드가 있으나, 승인 자료에는 배송완료 처리에 사용할 구체 값이나 매핑 근거가 없다. 예시값은 검증된 업무값이 아니므로 후보로 확정하지 않는다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    },
+    {
+      "target_id": "fd5972ef1de1b17d23521f7e",
+      "step_id": "2-3",
+      "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "parameter_path": "$.body.data1.data2.data3.chk",
+      "label": "chk",
+      "type": "string",
+      "enum": null,
+      "issue_ids": [
+        "U-GEN-8"
+      ],
+      "reasons": [
+        "현재 API schema에는 등록ID(rgstId), 등록IP(rgstIp), 체크(chk) 등의 필드가 있으나, 승인 자료에는 배송완료 처리에 사용할 구체 값이나 매핑 근거가 없다. 예시값은 검증된 업무값이 아니므로 후보로 확정하지 않는다."
+      ],
+      "editable": false,
+      "baseline_value": null,
+      "baseline_value_source": null
+    }
+  ],
+  "decisions": {},
+  "hashes": {
+    "prototype/approved/api-selection-approved-order-shipment.json": "7d087da1cb7d37b8f82288895967227661a979aa3723028f2897f812e9150f63",
+    "data/out/parameters/parameter_kb/common/knowledge.json": "6f3631616185527e76f3b34d05ad7dfe411d09a41c2ab278e6e07ae4efd15279",
+    "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json": "5713249b6057f14f18c92a99ddbe18b247be82fdabb6fb932daecf8a089b2049",
+    "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json": "605f4912251bf7f65143cb78fb0494ab05f4bef07a6538b2d97285f5d61c3fec",
+    "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FmultiOshpProcess.do.json": "90cb1ef0e0bd0d343c24ae0b8d5639a164bd2702fe4c613f84cb09682d1b8c5b",
+    "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FselectOshpDtlList.do.json": "c8d94474bf41005500a5badc29b1f7040a2efcca01e69d766fbe5db1f4c1b9ea",
+    "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json": "5b2c02645feb25625e1578fd5455741e0de1b4bd6ab968eef244dba7ca76fee3",
+    "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json": "ab4187eb7ae7a41d7fe316af7228c1ba5ab40b6a2cbe8f8f36d5c036654fbd3f",
+    "data/out/parameters/response_outputs/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_6f48d3c4.json": "302b62c44b4202d9f354ad01dc683743c9829c73a10cd9637f3772afc82ecffe",
+    "data/out/scenario_ir_drafts/SCN-20261103-92cea2ae46e4-v1.json": "24e165bd8ca63eb884cac8076f5a7e9e4d99c9dd9d78d33d9b45452dd848975f"
+  },
+  "audit": [
+    {
+      "event": "approval_gate_opened",
+      "event_id": "618edaa55d7c4f9ea43e137f873ae0a0",
+      "recorded_at": "2026-11-03T19:13:19.843638+09:00",
+      "scenario_id": "SCN-20261103-92cea2ae46e4",
+      "revision": 1
+    }
+  ],
+  "confirmed": false,
+  "file": "data/out/scenario_ir_drafts/SCN-20261103-92cea2ae46e4-v1.json",
+  "step_previews": {
+    "1-1": {
+      "available": true,
+      "original_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <fromDate>20230501</fromDate>\n        <toDate>20230515</toDate>\n        <mdaGb>20</mdaGb>\n        <prgrGb>P0</prgrGb>\n        <dlvFormGbcd>40</dlvFormGbcd>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <drctBuyYn>Y</drctBuyYn>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <venCd>001442</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <fromDate>20230501</fromDate>\n        <toDate>20230515</toDate>\n        <mdaGb>20</mdaGb>\n        <prgrGb>P0</prgrGb>\n        <dlvFormGbcd>40</dlvFormGbcd>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <drctBuyYn>Y</drctBuyYn>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_lines": [
+        {
+          "text": "<Root>",
+          "changed": false
+        },
+        {
+          "text": "  <Dataset id=\"dsInput\">",
+          "changed": false
+        },
+        {
+          "text": "    <rows>",
+          "changed": false
+        },
+        {
+          "text": "      <row>",
+          "changed": false
+        },
+        {
+          "text": "        <venCd>001442</venCd>",
+          "changed": true
+        },
+        {
+          "text": "        <ven2Cd>010539</ven2Cd>",
+          "changed": false
+        },
+        {
+          "text": "        <fromDate>20230501</fromDate>",
+          "changed": false
+        },
+        {
+          "text": "        <toDate>20230515</toDate>",
+          "changed": false
+        },
+        {
+          "text": "        <mdaGb>20</mdaGb>",
+          "changed": false
+        },
+        {
+          "text": "        <prgrGb>P0</prgrGb>",
+          "changed": false
+        },
+        {
+          "text": "        <dlvFormGbcd>40</dlvFormGbcd>",
+          "changed": false
+        },
+        {
+          "text": "        <ordNo>20160118110258</ordNo>",
+          "changed": false
+        },
+        {
+          "text": "        <ordPtcSeq>1</ordPtcSeq>",
+          "changed": false
+        },
+        {
+          "text": "        <drctBuyYn>Y</drctBuyYn>",
+          "changed": false
+        },
+        {
+          "text": "      </row>",
+          "changed": false
+        },
+        {
+          "text": "    </rows>",
+          "changed": false
+        },
+        {
+          "text": "  </Dataset>",
+          "changed": false
+        },
+        {
+          "text": "</Root>",
+          "changed": false
+        }
+      ],
+      "changes": [
+        {
+          "parameter_path": "$.body.data1.data2.data3.venCd",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+          "applied": true,
+          "before": "003766",
+          "after": "001442"
+        }
+      ],
+      "warnings": []
+    },
+    "2-1": {
+      "available": true,
+      "original_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>20160118617141</dlvstNo>\n        <dlvstPtcSeq>1</dlvstPtcSeq>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <procGb>P1</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>001442</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>\n        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>\n        <ordNo>{{1-1.ordNo}}</ordNo>\n        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>\n        <procGb>P1</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_lines": [
+        {
+          "text": "<Root>",
+          "changed": false
+        },
+        {
+          "text": "  <Dataset id=\"dsInput\">",
+          "changed": false
+        },
+        {
+          "text": "    <rows>",
+          "changed": false
+        },
+        {
+          "text": "      <row>",
+          "changed": false
+        },
+        {
+          "text": "        <chk>1</chk>",
+          "changed": false
+        },
+        {
+          "text": "        <venCd>001442</venCd>",
+          "changed": true
+        },
+        {
+          "text": "        <ven2Cd>010539</ven2Cd>",
+          "changed": false
+        },
+        {
+          "text": "        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>",
+          "changed": true
+        },
+        {
+          "text": "        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <ordNo>{{1-1.ordNo}}</ordNo>",
+          "changed": true
+        },
+        {
+          "text": "        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <procGb>P1</procGb>",
+          "changed": false
+        },
+        {
+          "text": "        <invcNo>202305230101</invcNo>",
+          "changed": false
+        },
+        {
+          "text": "        <dsrvDlvcoCd>81</dsrvDlvcoCd>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstId>test</rgstId>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstIp>127.0.0.1</rgstIp>",
+          "changed": false
+        },
+        {
+          "text": "      </row>",
+          "changed": false
+        },
+        {
+          "text": "    </rows>",
+          "changed": false
+        },
+        {
+          "text": "  </Dataset>",
+          "changed": false
+        },
+        {
+          "text": "</Root>",
+          "changed": false
+        }
+      ],
+      "changes": [
+        {
+          "parameter_path": "$.body.data1.data2.data3.procGb",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+          "applied": true,
+          "before": "P1",
+          "after": "P1"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.venCd",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+          "applied": true,
+          "before": "003766",
+          "after": "001442"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+          "applied": true,
+          "before": "20160118110258",
+          "after": "{{1-1.ordNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.ordPtcSeq}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+          "applied": true,
+          "before": "20160118617141",
+          "after": "{{1-1.dlvstNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.dlvstPtcSeq}}"
+        }
+      ],
+      "warnings": []
+    },
+    "2-2": {
+      "available": true,
+      "original_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>20160118617141</dlvstNo>\n        <dlvstPtcSeq>1</dlvstPtcSeq>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <procGb>P1</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>001442</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>\n        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>\n        <ordNo>{{1-1.ordNo}}</ordNo>\n        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>\n        <procGb>P2</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_lines": [
+        {
+          "text": "<Root>",
+          "changed": false
+        },
+        {
+          "text": "  <Dataset id=\"dsInput\">",
+          "changed": false
+        },
+        {
+          "text": "    <rows>",
+          "changed": false
+        },
+        {
+          "text": "      <row>",
+          "changed": false
+        },
+        {
+          "text": "        <chk>1</chk>",
+          "changed": false
+        },
+        {
+          "text": "        <venCd>001442</venCd>",
+          "changed": true
+        },
+        {
+          "text": "        <ven2Cd>010539</ven2Cd>",
+          "changed": false
+        },
+        {
+          "text": "        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>",
+          "changed": true
+        },
+        {
+          "text": "        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <ordNo>{{1-1.ordNo}}</ordNo>",
+          "changed": true
+        },
+        {
+          "text": "        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <procGb>P2</procGb>",
+          "changed": true
+        },
+        {
+          "text": "        <invcNo>202305230101</invcNo>",
+          "changed": false
+        },
+        {
+          "text": "        <dsrvDlvcoCd>81</dsrvDlvcoCd>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstId>test</rgstId>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstIp>127.0.0.1</rgstIp>",
+          "changed": false
+        },
+        {
+          "text": "      </row>",
+          "changed": false
+        },
+        {
+          "text": "    </rows>",
+          "changed": false
+        },
+        {
+          "text": "  </Dataset>",
+          "changed": false
+        },
+        {
+          "text": "</Root>",
+          "changed": false
+        }
+      ],
+      "changes": [
+        {
+          "parameter_path": "$.body.data1.data2.data3.procGb",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+          "applied": true,
+          "before": "P1",
+          "after": "P2"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.venCd",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+          "applied": true,
+          "before": "003766",
+          "after": "001442"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+          "applied": true,
+          "before": "20160118110258",
+          "after": "{{1-1.ordNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.ordPtcSeq}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+          "applied": true,
+          "before": "20160118617141",
+          "after": "{{1-1.dlvstNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.dlvstPtcSeq}}"
+        }
+      ],
+      "warnings": []
+    },
+    "2-3": {
+      "available": true,
+      "original_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>20160118617141</dlvstNo>\n        <dlvstPtcSeq>1</dlvstPtcSeq>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <procGb>P1</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_xml": "<Root>\n  <Dataset id=\"dsInput\">\n    <rows>\n      <row>\n        <chk>1</chk>\n        <venCd>001442</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>\n        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>\n        <ordNo>{{1-1.ordNo}}</ordNo>\n        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>\n        <procGb>P3</procGb>\n        <invcNo>202305230101</invcNo>\n        <dsrvDlvcoCd>81</dsrvDlvcoCd>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+      "applied_lines": [
+        {
+          "text": "<Root>",
+          "changed": false
+        },
+        {
+          "text": "  <Dataset id=\"dsInput\">",
+          "changed": false
+        },
+        {
+          "text": "    <rows>",
+          "changed": false
+        },
+        {
+          "text": "      <row>",
+          "changed": false
+        },
+        {
+          "text": "        <chk>1</chk>",
+          "changed": false
+        },
+        {
+          "text": "        <venCd>001442</venCd>",
+          "changed": true
+        },
+        {
+          "text": "        <ven2Cd>010539</ven2Cd>",
+          "changed": false
+        },
+        {
+          "text": "        <dlvstNo>{{1-1.dlvstNo}}</dlvstNo>",
+          "changed": true
+        },
+        {
+          "text": "        <dlvstPtcSeq>{{1-1.dlvstPtcSeq}}</dlvstPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <ordNo>{{1-1.ordNo}}</ordNo>",
+          "changed": true
+        },
+        {
+          "text": "        <ordPtcSeq>{{1-1.ordPtcSeq}}</ordPtcSeq>",
+          "changed": true
+        },
+        {
+          "text": "        <procGb>P3</procGb>",
+          "changed": true
+        },
+        {
+          "text": "        <invcNo>202305230101</invcNo>",
+          "changed": false
+        },
+        {
+          "text": "        <dsrvDlvcoCd>81</dsrvDlvcoCd>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstId>test</rgstId>",
+          "changed": false
+        },
+        {
+          "text": "        <rgstIp>127.0.0.1</rgstIp>",
+          "changed": false
+        },
+        {
+          "text": "      </row>",
+          "changed": false
+        },
+        {
+          "text": "    </rows>",
+          "changed": false
+        },
+        {
+          "text": "  </Dataset>",
+          "changed": false
+        },
+        {
+          "text": "</Root>",
+          "changed": false
+        }
+      ],
+      "changes": [
+        {
+          "parameter_path": "$.body.data1.data2.data3.procGb",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+          "applied": true,
+          "before": "P1",
+          "after": "P3"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.venCd",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+          "applied": true,
+          "before": "003766",
+          "after": "001442"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+          "applied": true,
+          "before": "20160118110258",
+          "after": "{{1-1.ordNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.ordPtcSeq}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstNo",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo",
+          "applied": true,
+          "before": "20160118617141",
+          "after": "{{1-1.dlvstNo}}"
+        },
+        {
+          "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq",
+          "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq",
+          "applied": true,
+          "before": "1",
+          "after": "{{1-1.dlvstPtcSeq}}"
+        }
+      ],
+      "warnings": []
+    }
+  }
+}

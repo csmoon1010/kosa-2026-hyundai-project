@@ -1,0 +1,567 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userGbcd",
+        "parameter_path": "$.body.data1.data1.data1.userGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자구분코드",
+        "display_name": "userGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fe128f2b21dcb382443b8378920760689cf11c5b5461710b89265fd55c244e6f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data1.data1.data1.userGbcd userGbcd 사용자구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c90bc346f076eb4695a57aba9b4a02c3bd9857e39473859ff841fc0575279054",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:60687632551)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "28371c3a48490d9e5dd0113d2b6f9ecac4bb984699a5765cb84dd579b5aefea2",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:225.225.225.225)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userNm",
+        "parameter_path": "$.body.data1.data1.data1.userNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자명",
+        "display_name": "userNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ad93ab126b1c24cfd62b3fcf29980311c761f0878814e75f9c2fa65f3d1cbd98",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자명(타입:string, 예:위즈컴퍼니)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userNm",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data1.data1.data1.userNm userNm 사용자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8f77211cb595132bcb1f2c255630124dbd4ef27746a34eda7b5bd5d969a769a8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSession",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "searchDateEnd",
+        "parameter_path": "$.body.data2.data2.data3.searchDateEnd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "검색일자_종료",
+        "display_name": "searchDateEnd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d0075b7df2d2ba835b356d592f0e922bc42a9151a28cf2a84fe145c6028f950d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "검색일자_종료(타입:string, 예:20250616)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "searchDateEnd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/searchDateEnd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.data2.data3.searchDateEnd searchDateEnd 검색일자_종료"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "searchDateStart",
+        "parameter_path": "$.body.data2.data2.data3.searchDateStart"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "검색일자_시작",
+        "display_name": "searchDateStart",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "11063a1a3cfc334023f9695e0e2ca00161c9e467c1bd502cae38afe732447fff",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "검색일자_시작(타입:string, 예:20250516)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "searchDateStart",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/searchDateStart"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.data2.data3.searchDateStart searchDateStart 검색일자_시작"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellItemGubunCd",
+        "parameter_path": "$.body.data2.data2.data3.sellItemGubunCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품구분코드",
+        "display_name": "sellItemGubunCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f712c04e4f714bf28c0a75afa8ba346d98f2488d79643c33a66333eebac8fbbe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품구분코드(타입:string, 예:2014857838,2012081609)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellItemGubunCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/sellItemGubunCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.data2.data3.sellItemGubunCd sellItemGubunCd 판매상품구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data2.data2.data3.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "26489c971b77bc94c5ad95dc49ad53dfce6d32170f7a07a0f15acc1ef18affde",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2044634081)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.data2.data3.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data2.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2336d54d28a8a2aa11419b4dd862a78c4644ae91988989d67b1bdd107ca97ae5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b7a2a805f48ab962e1c07c1831a9fa40c689eb1fc196e605db0c29a9e1850845",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectUnitStocksRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/selectUnitStocks.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/selectUnitStocks.do [상품 속성별 재고관리] 상품코드 점검 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

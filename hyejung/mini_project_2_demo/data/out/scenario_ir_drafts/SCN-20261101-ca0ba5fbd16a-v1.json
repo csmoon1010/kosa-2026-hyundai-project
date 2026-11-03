@@ -1,0 +1,716 @@
+{
+  "scenario_id": "SCN-20261101-ca0ba5fbd16a",
+  "version": 1,
+  "created_at": "2026-11-01T10:37:56.251031+09:00",
+  "ir_version": "approved-selection-draft-v1",
+  "original_question": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요.",
+  "status": "needs_input",
+  "sources": {
+    "approved": {
+      "source_id": "approved",
+      "file": "prototype/approved/api-selection-approved-order-shipment-20261101-004607-868.json",
+      "version": null
+    },
+    "source_files": {
+      "intent_analysis": "intent-analysis-order-shipment.json",
+      "api_selection": "api-selection-order-shipment.json"
+    },
+    "artifacts": [
+      {
+        "source_id": "common-knowledge",
+        "kind": "common_knowledge",
+        "selected_api_id": null,
+        "file": "data/out/parameters/parameter_kb/common/knowledge.json",
+        "version": null
+      },
+      {
+        "source_id": "source-2",
+        "kind": "canonical_schema",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+        "version": "v1"
+      },
+      {
+        "source_id": "source-3",
+        "kind": "canonical_schema",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "file": "data/out/parameters/canonical_schema/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+        "version": "v1"
+      },
+      {
+        "source_id": "source-4",
+        "kind": "parameter_knowledge",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FmultiOshpProcess.do.json",
+        "version": null
+      },
+      {
+        "source_id": "source-5",
+        "kind": "parameter_knowledge",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "file": "data/out/parameters/parameter_kb/api/hshop-openapi/POST%3A%2Fsc%2Fscb%2Fscbd%2FselectOshpDtlList.do.json",
+        "version": null
+      },
+      {
+        "source_id": "source-6",
+        "kind": "baseline",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+        "version": null
+      },
+      {
+        "source_id": "source-7",
+        "kind": "baseline",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+        "version": null
+      },
+      {
+        "source_id": "source-8",
+        "kind": "response_outputs",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "file": "data/out/parameters/response_outputs/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_74622ca5.json",
+        "version": null
+      },
+      {
+        "source_id": "source-9",
+        "kind": "response_outputs",
+        "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "file": "data/out/parameters/response_outputs/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_6f48d3c4.json",
+        "version": null
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "domain": "DS",
+      "action": "주문조회",
+      "conditions": "협력사 코드 001442에 해당하는 주문을 조회한다.",
+      "count": 1,
+      "sequence": 1,
+      "depends_on": [],
+      "graph_id": null,
+      "from_state": null,
+      "to_state": null,
+      "target": {
+        "source_step_id": "1-1",
+        "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row",
+        "count": 1
+      },
+      "steps": [
+        {
+          "step_id": "1-1",
+          "step": 1,
+          "type": "call",
+          "edge": "주문 조회",
+          "from_state": null,
+          "to_state": null,
+          "api": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+            "method": "POST",
+            "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+            "selector": null
+          },
+          "inputs": [
+            {
+              "field": "venCd",
+              "parameter_path": "$.body.data1.data2.data3.venCd",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "001442",
+              "ref": null,
+              "reason": "사용자 조건의 협력사 코드로 Baseline의 예시 협력사코드를 대체해야 한다.",
+              "evidence": {
+                "value": "협력사 코드 001442",
+                "source_pointer": "/intent_task/conditions"
+              },
+              "baseline_value": "003766",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "ordNo",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+              "path_type": "XPATH",
+              "type": "string",
+              "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row",
+              "evidence": {
+                "value": "주문번호",
+                "source_pointer": "/outputs/51"
+              }
+            },
+            {
+              "name": "ordPtcSeq",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+              "path_type": "XPATH",
+              "type": "string",
+              "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row",
+              "evidence": {
+                "value": "주문상세순번",
+                "source_pointer": "/outputs/52"
+              }
+            }
+          ],
+          "bindings": [],
+          "assertions": [],
+          "expect": null,
+          "unresolved": [
+            "U-INPUT-1"
+          ],
+          "baseline": {
+            "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_selectOshpDtlList.do_565cf478.json",
+            "source": "EXAMPLE",
+            "validation_status": "EXAMPLE_ONLY"
+          }
+        }
+      ]
+    },
+    {
+      "domain": "DS",
+      "action": "배송완료 처리",
+      "conditions": "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.",
+      "count": 1,
+      "sequence": 2,
+      "depends_on": [
+        1
+      ],
+      "graph_id": null,
+      "from_state": null,
+      "to_state": null,
+      "target": {
+        "source_step_id": "1-1",
+        "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row",
+        "count": 1
+      },
+      "steps": [
+        {
+          "step_id": "2-1",
+          "step": 1,
+          "type": "call",
+          "edge": "주문 확인 및 출고 진행",
+          "from_state": null,
+          "to_state": null,
+          "api": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+            "method": "POST",
+            "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+            "selector": {
+              "procGb": "P1"
+            }
+          },
+          "inputs": [
+            {
+              "field": "venCd",
+              "parameter_path": "$.body.data1.data2.data3.venCd",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "001442",
+              "ref": null,
+              "reason": "사용자 조건의 협력사 코드로 Baseline의 예시 협력사코드를 대체해야 한다.",
+              "evidence": {
+                "value": "001442 협력사의 주문",
+                "source_pointer": "/original_question"
+              },
+              "baseline_value": "003766",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            },
+            {
+              "field": "ordNo",
+              "parameter_path": "$.body.data1.data2.data3.ordNo",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-1-ordNo-from-1-1",
+              "reason": "1번 업무에서 조회한 주문을 대상으로 주문확인 처리해야 하므로 앞 STEP의 주문번호를 연결해야 한다.",
+              "evidence": {
+                "value": "1번 업무에서 조회한 주문",
+                "source_pointer": "/intent_task/conditions"
+              },
+              "baseline_value": "20160118110258",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "ordPtcSeq",
+              "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-1-ordPtcSeq-from-1-1",
+              "reason": "처리 대상 주문 상세를 특정하기 위해 앞 STEP 조회 결과의 주문상세순번을 연결해야 한다.",
+              "evidence": {
+                "value": "주문상세순번",
+                "source_pointer": "/previous_steps/1-1/outputs/1"
+              },
+              "baseline_value": "1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "procGb",
+              "parameter_path": "$.body.data1.data2.data3.procGb",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "P1",
+              "ref": null,
+              "reason": "현재 승인 단계는 주문 확인 및 출고 진행이며 selection_reason에 따라 procGb=P1이 주문확인으로 정의되어 있으므로 해당 단계 구분값으로 대체해야 한다.",
+              "evidence": {
+                "value": "procGb=P1은 주문확인",
+                "source_pointer": "/current_step/selection_reason"
+              },
+              "baseline_value": "P1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "unchanged"
+            }
+          ],
+          "outputs": [],
+          "bindings": [
+            {
+              "binding_id": "B-2-1-ordNo-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+            },
+            {
+              "binding_id": "B-2-1-ordPtcSeq-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+            }
+          ],
+          "assertions": [],
+          "expect": null,
+          "unresolved": [
+            "U-INPUT-2"
+          ],
+          "baseline": {
+            "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+            "source": "EXAMPLE",
+            "validation_status": "EXAMPLE_ONLY"
+          }
+        },
+        {
+          "step_id": "2-2",
+          "step": 2,
+          "type": "call",
+          "edge": "출고 완료",
+          "from_state": null,
+          "to_state": null,
+          "api": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+            "method": "POST",
+            "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+            "selector": {
+              "procGb": "P2"
+            }
+          },
+          "inputs": [
+            {
+              "field": "venCd",
+              "parameter_path": "$.body.data1.data2.data3.venCd",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "001442",
+              "ref": null,
+              "reason": "사용자 조건의 협력사 코드로 Baseline의 예시 협력사코드를 대체해야 한다.",
+              "evidence": {
+                "value": "001442 협력사의 주문",
+                "source_pointer": "/original_question"
+              },
+              "baseline_value": "003766",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            },
+            {
+              "field": "ordNo",
+              "parameter_path": "$.body.data1.data2.data3.ordNo",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-2-ordNo-from-1-1",
+              "reason": "1번 업무에서 조회한 주문을 대상으로 출고완료 처리해야 하므로 앞 STEP의 주문번호를 연결해야 한다.",
+              "evidence": {
+                "value": "1번 업무에서 조회한 주문",
+                "source_pointer": "/intent_task/conditions"
+              },
+              "baseline_value": "20160118110258",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "ordPtcSeq",
+              "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-2-ordPtcSeq-from-1-1",
+              "reason": "처리 대상 주문 상세를 특정하기 위해 앞 STEP 조회 결과의 주문상세순번을 연결해야 한다.",
+              "evidence": {
+                "value": "주문상세순번",
+                "source_pointer": "/previous_steps/1-1/outputs/1"
+              },
+              "baseline_value": "1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "procGb",
+              "parameter_path": "$.body.data1.data2.data3.procGb",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "P2",
+              "ref": null,
+              "reason": "현재 승인 단계는 출고 완료이며 selection_reason에 따라 procGb=P2는 출고완료로 정의되어 있으므로 해당 단계 구분값으로 대체해야 한다.",
+              "evidence": {
+                "value": "procGb=P2는 출고완료",
+                "source_pointer": "/current_step/selection_reason"
+              },
+              "baseline_value": "P1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            }
+          ],
+          "outputs": [],
+          "bindings": [
+            {
+              "binding_id": "B-2-2-ordNo-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+            },
+            {
+              "binding_id": "B-2-2-ordPtcSeq-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+            }
+          ],
+          "assertions": [],
+          "expect": null,
+          "unresolved": [
+            "U-INPUT-2"
+          ],
+          "baseline": {
+            "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+            "source": "EXAMPLE",
+            "validation_status": "EXAMPLE_ONLY"
+          }
+        },
+        {
+          "step_id": "2-3",
+          "step": 3,
+          "type": "call",
+          "edge": "배송 완료",
+          "from_state": null,
+          "to_state": null,
+          "api": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+            "method": "POST",
+            "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+            "selector": {
+              "procGb": "P3"
+            }
+          },
+          "inputs": [
+            {
+              "field": "venCd",
+              "parameter_path": "$.body.data1.data2.data3.venCd",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "001442",
+              "ref": null,
+              "reason": "사용자 조건의 협력사 코드로 Baseline의 예시 협력사코드를 대체해야 한다.",
+              "evidence": {
+                "value": "001442 협력사의 주문",
+                "source_pointer": "/original_question"
+              },
+              "baseline_value": "003766",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            },
+            {
+              "field": "ordNo",
+              "parameter_path": "$.body.data1.data2.data3.ordNo",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-3-ordNo-from-1-1",
+              "reason": "1번 업무에서 조회한 주문을 배송완료 처리해야 하므로 앞 STEP의 주문번호를 연결해야 한다.",
+              "evidence": {
+                "value": "1번 업무에서 조회한 주문",
+                "source_pointer": "/intent_task/conditions"
+              },
+              "baseline_value": "20160118110258",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "ordPtcSeq",
+              "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+              "type": "string",
+              "source": "bind",
+              "origin": "previous_output",
+              "value": null,
+              "ref": "B-2-3-ordPtcSeq-from-1-1",
+              "reason": "처리 대상 주문 상세를 특정하기 위해 앞 STEP 조회 결과의 주문상세순번을 연결해야 한다.",
+              "evidence": {
+                "value": "주문상세순번",
+                "source_pointer": "/previous_steps/1-1/outputs/1"
+              },
+              "baseline_value": "1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "response_binding"
+            },
+            {
+              "field": "procGb",
+              "parameter_path": "$.body.data1.data2.data3.procGb",
+              "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+              "type": "string",
+              "source": "fixed",
+              "origin": "user_condition",
+              "value": "P3",
+              "ref": null,
+              "reason": "현재 승인 단계는 배송 완료이며 selection_reason에 따라 procGb=P3은 배송완료로 정의되어 있으므로 해당 단계 구분값으로 대체해야 한다.",
+              "evidence": {
+                "value": "procGb=P3은 배송완료로 정의",
+                "source_pointer": "/current_step/selection_reason"
+              },
+              "baseline_value": "P1",
+              "baseline_value_source": "EXAMPLE",
+              "change_kind": "replace"
+            }
+          ],
+          "outputs": [],
+          "bindings": [
+            {
+              "binding_id": "B-2-3-ordNo-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordNo",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordNo"
+            },
+            {
+              "binding_id": "B-2-3-ordPtcSeq-from-1-1",
+              "from": {
+                "from_step_id": "1-1",
+                "output_name": "ordPtcSeq",
+                "response_key": "200",
+                "content_type": "application/xml",
+                "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordPtcSeq",
+                "path_type": "XPATH",
+                "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+              },
+              "to_parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+            }
+          ],
+          "assertions": [],
+          "expect": null,
+          "unresolved": [
+            "U-INPUT-2"
+          ],
+          "baseline": {
+            "file": "data/out/parameters/baseline/hshop-openapi/POST_sc_scb_scbd_multiOshpProcess.do_644f3ca7.json",
+            "source": "EXAMPLE",
+            "validation_status": "EXAMPLE_ONLY"
+          }
+        }
+      ]
+    }
+  ],
+  "final_outputs": [
+    {
+      "name": "ordNo",
+      "ref": {
+        "from_step_id": "1-1",
+        "output_name": "ordNo",
+        "response_key": "200",
+        "content_type": "application/xml",
+        "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/ordNo",
+        "path_type": "XPATH",
+        "row_scope": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row"
+      }
+    }
+  ],
+  "unresolved": [
+    {
+      "issue_id": "U-INPUT-1",
+      "status": "open",
+      "task_sequence": 1,
+      "step_ids": [
+        "1-1"
+      ],
+      "parameter_paths": [],
+      "reason": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+      "required_input": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다.",
+      "resolution": null,
+      "evidence": []
+    },
+    {
+      "issue_id": "U-INPUT-2",
+      "status": "open",
+      "task_sequence": 2,
+      "step_ids": [
+        "2-1",
+        "2-2",
+        "2-3"
+      ],
+      "parameter_paths": [],
+      "reason": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+      "required_input": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다.",
+      "resolution": null,
+      "evidence": []
+    }
+  ],
+  "generation": {
+    "config": {
+      "max_turns": 16,
+      "max_tokens": 100000,
+      "max_seconds": 180,
+      "max_output_tokens": 4096
+    },
+    "usage": {
+      "llm_calls": 8,
+      "input_tokens": 62449,
+      "output_tokens": 4064,
+      "total_tokens": 66513,
+      "elapsed_seconds": 40.296
+    },
+    "trace": [
+      {
+        "step_id": "1-1",
+        "tool": "get_request_schema"
+      },
+      {
+        "step_id": "1-1",
+        "tool": "get_parameter_knowledge"
+      },
+      {
+        "step_id": "1-1",
+        "tool": "get_baseline_request"
+      },
+      {
+        "step_id": "1-1",
+        "tool": "get_response_outputs"
+      },
+      {
+        "step_id": "2-1",
+        "tool": "get_request_schema"
+      },
+      {
+        "step_id": "2-1",
+        "tool": "get_parameter_knowledge"
+      },
+      {
+        "step_id": "2-1",
+        "tool": "get_baseline_request"
+      },
+      {
+        "step_id": "2-1",
+        "tool": "get_response_outputs"
+      },
+      {
+        "step_id": "2-2",
+        "tool": "get_request_schema"
+      },
+      {
+        "step_id": "2-2",
+        "tool": "get_parameter_knowledge"
+      },
+      {
+        "step_id": "2-2",
+        "tool": "get_baseline_request"
+      },
+      {
+        "step_id": "2-2",
+        "tool": "get_response_outputs"
+      },
+      {
+        "step_id": "2-3",
+        "tool": "get_request_schema"
+      },
+      {
+        "step_id": "2-3",
+        "tool": "get_parameter_knowledge"
+      },
+      {
+        "step_id": "2-3",
+        "tool": "get_baseline_request"
+      },
+      {
+        "step_id": "2-3",
+        "tool": "get_response_outputs"
+      }
+    ],
+    "log_file": "data/out/scenario_ir_logs/IRRUN-20261101-103715-67f7c9c722df4805a11516507c8af750.jsonl",
+    "mode": "baseline_replacements",
+    "validation": {
+      "mapping": false,
+      "required_fields": false,
+      "final_mapping": false
+    }
+  }
+}

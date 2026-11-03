@@ -1,0 +1,352 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectBrndList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "brndCd",
+        "parameter_path": "$.body.data1.data2.data3.brndCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "브랜드코드",
+        "display_name": "brndCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3098f70022847455f344db4c88cb688ece35dfe7ad94be5a112dccf8b0d71931",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "브랜드코드(타입:string, 예:001869)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "brndCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/brndCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.data2.data3.brndCd brndCd 브랜드코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "brndNm",
+        "parameter_path": "$.body.data1.data2.data3.brndNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "브랜드명",
+        "display_name": "brndNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9655a448faaa761a7fd17419b0d87a078c654c986a4bed1aa42e2738438eac7a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "브랜드명(타입:string, 예:이니스프리)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "brndNm",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/brndNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.data2.data3.brndNm brndNm 브랜드명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "fetchRow",
+        "parameter_path": "$.body.data1.data2.data3.fetchRow"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "페이지당row수",
+        "display_name": "fetchRow",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "67953a9694b514d0ad8ebaacddd0e32d980622d17e92f2e65f60073587818c33",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "페이지당row수(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "fetchRow",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/fetchRow"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.data2.data3.fetchRow fetchRow 페이지당row수"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "pageNum",
+        "parameter_path": "$.body.data1.data2.data3.pageNum"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "pageNum",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b0f8109b37e03187830b98117d3696854305b492e5c14aec4727837d21d60ca5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "페이지번호타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "pageNum",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/pageNum"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.data2.data3.pageNum pageNum "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "synonymYn",
+        "parameter_path": "$.body.data1.data2.data3.synonymYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "동의어검색여부",
+        "display_name": "synonymYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "060444ee974db35b08185967ef80781c582278ca041d13e91d0911a3a5118da5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "동의어검색여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "synonymYn",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/synonymYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.data2.data3.synonymYn synonymYn 동의어검색여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5f306b5912e43c797eaa83c34b0423ddc6454ebd1aecd43ab332858c26398311",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectBrndListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectBrndList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectBrndList.do 브랜드 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

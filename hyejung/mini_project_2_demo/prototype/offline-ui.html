@@ -200,6 +200,70 @@
   .domchip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);font-weight:600;}
   .domchip:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
   span.lb{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+  .ir-draft-area{width:100%;min-width:0;box-sizing:border-box;margin-top:16px;}
+  .ir-log-wrap{max-height:560px;overflow:auto;margin-top:12px;}
+  .ir-log-table{width:100%;min-width:760px;table-layout:fixed;}
+  .ir-run-history{margin-top:28px;padding-top:18px;border-top:1px solid var(--hair);}
+  .ir-run-filters{display:flex;flex-wrap:wrap;align-items:end;gap:10px;margin:12px 0;}
+  .ir-run-filters label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-2);}
+  .ir-run-filters input[type="date"]{min-height:36px;padding:5px 8px;border:1px solid var(--hair);border-radius:5px;background:var(--panel);color:var(--ink);font:inherit;}
+  .ir-run-option-filters{min-width:0;margin:0;padding:8px 10px;border:1px solid var(--hair);border-radius:6px;}
+  .ir-run-option-filters legend{font-size:12px;color:var(--ink-2);}
+  .ir-run-option-filters .ir-run-filter-enable,.ir-run-option-filters .ir-run-option{display:inline-flex;flex-direction:row;align-items:center;gap:5px;margin:3px 8px 3px 0;font-size:12px;}
+  .ir-run-table{min-width:1120px;}
+  .ir-log-table th{position:sticky;top:0;background:var(--paper,#fff);z-index:1;}
+  .ir-log-table td{vertical-align:top;overflow-wrap:anywhere;}
+  .ir-log-table th:nth-child(4){width:170px;}
+  .ir-log-table tbody tr{cursor:pointer;}
+  .ir-log-table tbody tr[data-selected="true"]{background:var(--accent-soft);}
+  .ir-log-select{font:inherit;color:inherit;background:transparent;border:0;padding:0;text-align:left;cursor:pointer;}
+  .ir-log-select:focus-visible,.ir-log-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .ir-log-detail{margin-top:16px;border:1px solid var(--hair);border-radius:8px;min-width:0;padding:16px;}
+  .ir-log-detail h3{margin:0 0 12px;overflow-wrap:anywhere;}
+  .ir-log-tabs{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--hair);margin-bottom:10px;}
+  .ir-log-tabs button{font:inherit;min-height:44px;padding:8px 2px;background:transparent;border:0;border-bottom:2px solid transparent;color:var(--ink-2);cursor:pointer;}
+  .ir-log-tabs button[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--accent);font-weight:600;}
+  .ir-log-detail pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:480px;overflow:auto;font-size:12px;padding:12px;background:var(--bg);border-radius:6px;}
+  .ir-log-detail .ir-json-key{color:var(--accent);}
+  .ir-log-detail .ir-json-string{color:var(--ink-2);}
+  .ir-log-detail .ir-json-literal{color:var(--accent);font-weight:600;}
+  #scenarioIRDraft .ir-step-section{margin:20px 0;padding:18px;border:1px solid var(--hair);border-radius:10px;min-width:0;}
+  #scenarioIRDraft [data-mode]{max-width:100%;padding:7px 10px;border:1px solid var(--hair);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;}
+  #scenarioIRDraft [data-mode-status]{white-space:pre-wrap;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px;align-items:start;margin-top:16px;}
+  #scenarioIRDraft .ir-step-list{display:grid;gap:18px;min-width:0;}
+  #scenarioIRDraft .ir-step-node{position:relative;display:flex;flex-direction:column;gap:7px;width:100%;min-height:100px;padding:12px;text-align:left;font:inherit;background:var(--panel);color:var(--ink);border:1px solid var(--hair);border-radius:8px;cursor:pointer;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-node:not(:last-child)::after{content:'↓';position:absolute;left:16px;bottom:-20px;color:var(--muted);}
+  #scenarioIRDraft .ir-step-node[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);}
+  #scenarioIRDraft .ir-step-node:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  #scenarioIRDraft .ir-step-kicker{display:block;font-size:12px;color:var(--muted);}
+  #scenarioIRDraft .ir-step-state{font-size:12px;color:var(--ink-2);}
+  #scenarioIRDraft .ir-step-detail{min-width:0;}
+  #scenarioIRDraft .ir-step-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  #scenarioIRDraft .ir-step-context{background:var(--panel-2);border-radius:7px;padding:12px;margin:12px 0 16px;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-context p{margin:5px 0 0;white-space:pre-wrap;}
+  #scenarioIRDraft .ir-step-context [data-step-task]{margin-bottom:8px;}
+  #scenarioIRDraft .ir-step-api{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 16px;margin-bottom:18px;}
+  #scenarioIRDraft .ir-step-api>div:first-child,#scenarioIRDraft .ir-step-api>div:last-child{grid-column:1/-1;}
+  #scenarioIRDraft .ir-step-api code{font-family:var(--mono);font-size:12px;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-detail table{width:100%;table-layout:fixed;margin-bottom:18px;}
+  #scenarioIRDraft .ir-step-detail td,#scenarioIRDraft .ir-step-detail th{overflow-wrap:anywhere;vertical-align:top;}
+  #scenarioIRDraft .ir-step-detail pre,#scenarioIRDraft .ir-json-view pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel-2);padding:14px;border-radius:7px;font-family:var(--mono);font-size:12px;}
+  #scenarioIRDraft .ir-xml-tag,#scenarioIRDraft .ir-json-key{color:var(--accent);}
+  #scenarioIRDraft .ir-xml-change{background:var(--good-soft);}
+  #scenarioIRDraft .ir-json-string{color:var(--ink-2);}
+  #scenarioIRDraft .ir-json-literal{color:var(--accent);font-weight:600;}
+  #scenarioIRDraft .ir-json-view{margin-top:18px;min-width:0;}
+  #scenarioIRDraft .ir-json-view summary{cursor:pointer;font-weight:600;}
+  #scenarioIRDraft .ir-json-view pre{max-height:640px;overflow:auto;}
+  @media(max-width:760px){
+    #scenarioIRDraft .ir-step-section{padding:12px;}
+    #scenarioIRDraft .ir-step-layout{grid-template-columns:1fr;}
+    #scenarioIRDraft .ir-step-node{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 12px;}
+    #scenarioIRDraft .ir-step-node strong{grid-column:1;}
+    #scenarioIRDraft .ir-step-state{grid-column:2;grid-row:1/3;align-self:center;}
+    #scenarioIRDraft .ir-step-detail{border-top:1px solid var(--hair);padding-top:14px;}
+  }
   .reggrid{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,7fr);gap:16px;align-items:start;}
   .regleft #scUtt{min-height:150px;}
   .regright{min-width:0;}
@@ -833,6 +897,8 @@
 </style>
 <script src="tap-data.js"></script>
 <script src="graph-editor.js"></script>
+<link rel="stylesheet" href="api-selection-import.css">
+<link rel="stylesheet" href="preprocessing-ui.css">
 </head>
 <body>
 <div class="app">
@@ -843,10 +909,12 @@
     </div>
     <div class="pagehd-r">
       <span id="dataBadge" hidden></span>
+      <button class="btn btn-ghost btn-sm" id="refreshPreprocessing" type="button">전처리 산출물 갱신</button>
       <button class="btn btn-primary" id="newBtn">＋ 새 시나리오 등록</button>
     </div>
   </header>
 
+  <p id="preprocessingStatus" role="status" aria-live="polite"></p>
   <div class="shell">
     <nav class="side" id="side" aria-label="메뉴"></nav>
     <div class="views">
@@ -871,6 +939,17 @@
       <div class="card-hd">
         <h2 id="editTitle">새 시나리오</h2>
       </div>
+      <div class="selection-import">
+        <label class="lb" for="intentAnalysisFile">의도 분석 결과 불러오기</label>
+        <input type="file" id="intentAnalysisFile" accept=".json,application/json">
+        <button class="btn btn-ghost btn-sm" id="loadIntentExample" type="button">주문·배송 의도 예시 불러오기</button>
+        <p class="note">자연어 요청을 업무 단위로 나눈 JSON 파일을 선택하세요.</p>
+        <label class="lb" for="apiSelectionFile">API 선택 결과 불러오기</label>
+        <input type="file" id="apiSelectionFile" accept=".json,application/json">
+        <button class="btn btn-ghost btn-sm" id="loadSelectionExample" type="button">주문·배송 API 선택 예시 불러오기</button>
+        <p class="note">API 선택 단계에서 받은 JSON 파일을 선택하세요. 원본 요청, API 후보·선택 이유와 검토할 항목을 확인할 수 있습니다.</p>
+        <p class="selection-import-status" id="apiSelectionImportStatus" role="status" aria-live="polite"></p>
+      </div>
       <div class="field">
         <label class="lb" for="scName">시나리오 이름</label>
         <input type="text" id="scName" placeholder="예) 결제완료 · 미출고 주문">
@@ -894,6 +973,7 @@
       <div id="extractOut"></div>
     </div>
     </div>
+    <section class="card ir-draft-area" id="scenarioIRDraft" aria-label="IR 초안 생성 및 결과"></section>
     <p class="proto" id="protoNote">화면 프로토타입입니다. 데이터는 시나리오로 심어둔 값이며 실제 API를 호출하지 않습니다.</p>
   </div>
 
@@ -3568,7 +3648,7 @@ const DOCS = [
   ['meta',     'API MetaData',     'API별 성격 · 되돌림 불가 · 구별 메모'],
   ['schema',   'Canonical Schema', 'Swagger 를 정규화한 요청 필드와 타입'],
   ['tool',     'Tool Registry',    '실행기가 호출하는 도구 목록'],
-  ['baseline', 'Baseline Request', '실제로 성공한 요청 전문'],
+  ['baseline', 'Baseline Request', '예시 기본값 · 사용자 등록 요청값'],
   ['pkb',      'Parameter KB',     '필드 의미 · 별칭 · 값 해석 · 기본값'],
   ['resp',     'Response Outputs', '응답에서 꺼내 다음 호출에 넘기는 값'],
   ['sv',       'State Vocabulary', '그래프 노드가 되는 상태 · 동의어 · 검증']
@@ -4955,7 +5035,7 @@ function openRuleHist(place){
 function openBlHist(){
   renderBaseline();
   openModal(`Baseline Request · ${DOM_NAME(S.dom)}`, '등록된 내역', `<div id="histBox">${el('blList').innerHTML}</div>`
-    + '<p class="note" style="margin-top:10px">전문 등록 = 실제로 성공한 요청 값(data/baselines). 미등록은 실행할 때 명세 예시값 · 기본값으로 조립합니다.</p>');
+    + '<p class="note" style="margin-top:10px">예시 초기값과 사용자 등록값을 구분합니다. 등록 상태는 실제 API 호출 성공 여부를 의미하지 않습니다.</p>');
   document.querySelector('#modal .modal-box').classList.add('wide-box');
 }
 
@@ -5109,5 +5189,8 @@ renderGraphTab();
 renderAdmin();
 setView('reg');
 </script>
+<script src="api-selection-import.js"></script>
+<script src="scenario-ir-draft.js"></script>
+<script src="preprocessing-ui.js"></script>
 </body>
 </html>
