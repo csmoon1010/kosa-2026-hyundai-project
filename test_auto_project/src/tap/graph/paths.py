@@ -7,7 +7,7 @@ API 는 고르지 않는다 — 다음 단계(API 선택)가 화살표마다 고
 
 origin(요청이 원한 것: 신규/기존)과 start_by(경로가 실제로 첫 데이터를 얻는 방법: 새로 만들기/조회)는 다를 수 있다.
 새로 만들기 화살표가 없는 그래프에서 '만들어줘'는 기존 데이터를 조회로 찾아 진행시켜 만든다 — 그 사실은 notes 에 남겨
-시나리오 확인 화면에서 사람이 보고 승인한다.
+시나리오 확인 화면에서 사람이 보고 승인한다. 단 쓰기가 1번 이상인 길만 — 이미 목표 상태인 데이터를 쓰기 없이 그대로 넘기지 않는다.
 """
 from __future__ import annotations
 
@@ -281,10 +281,11 @@ def _routes(g: StateGraph, origin: str, frm: str | None, to: str, must: list[str
         if r:
             add(NEW, "새로 만들기", r[0], r[1], f"새로 만들어 진행 (쓰기 {len(r[0])}회)")
         why = by_lookup(goal)
+        found[:] = [x for x in found if x["edges"]]   # '만들어줘' = 우리가 만들거나 바꾼 데이터 — 쓰기 없이 그대로 넘기는 길은 막는다
         if not r and found:
             notes.append(f"새로 만들 수 없어(그래프에 '{NEW}'에서 나가는 새로 만들기 화살표 없음) 기존 데이터를 조회로 찾아 진행시켜 만듭니다")
         if not found:
-            return [], notes, f"새로 만들기 화살표가 없고, 조회로 찾아 진행할 수도 없습니다 — {why}"
+            return [], notes, "새로 만들 수도, 앞 상태에서 진행시켜 만들 수도 없습니다" + (f" — {why}" if why else "")
     elif frm:
         node = g.node(frm)
         r = search(g, frm, goal) if node.lookup else None

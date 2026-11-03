@@ -5219,9 +5219,11 @@ if (TAP){
   const baseBadge = renderDataBadge;
   renderDataBadge = function(){
     baseBadge();
-    const b = el('agentBtn'), eb = el('extractBtn');
+    const b = el('agentBtn'), eb = el('extractBtn'), rs = el('realSamples');
     if (b) b.hidden = !SERVER;
-    if (eb && SERVER){ eb.textContent = '예전 방식으로 생성 (Scenario IR)'; eb.className = 'btn btn-ghost'; }
+    if (eb) eb.hidden = true;                 /* 예전 방식(목표 하나 → Scenario IR, 그래프에 적힌 API 를 씀)은 뺐다 — 그래프는 노드 흐름만 (2026-11-03) */
+    if (rs) rs.hidden = true;
+    if (!SERVER && el('protoNote')) el('protoNote').innerHTML = '3단계 분석 · 승인은 로컬 서버(<span class="mono">tap.cli serve</span>)로 열었을 때 동작합니다.';
   };
 }
 

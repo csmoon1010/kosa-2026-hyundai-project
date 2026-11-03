@@ -207,7 +207,7 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
     trace, wrapped = _traced(utterance, model, llm, trace)
     result: dict[str, Any] = {"trace": trace}
     try:
-        from tap.apis.gate import blocked_gate, detect_injections, gate_for, load_permissions
+        from tap.apis.gate import blocked_gate, detect_injections, gate_for, load_permissions, system_identifiers
         from tap.apis.select import ApiSelection, Unresolved
         from tap.goal.extract import TaskPlan
         from tap.graph.paths import PathPlan
@@ -217,7 +217,8 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
         else:
             ri = analyze_intent(utterance, llm=wrapped, trace=_NoWrap(trace))
             tp, notes = ri["plan"], ri["notes"]
-        hits = detect_injections(utterance, tp.injections, perms)
+        graphs = _graphs(graph_dirs, rules_cfg, out_dir)
+        hits = detect_injections(utterance, tp.injections, perms, system_identifiers(meta, graphs))
         if hits:                                # 요청 속 지시문 — ② ③ 을 하지 않고 요청 전체를 차단
             pp = PathPlan(original_question=utterance, paths=[], unresolved=list(tp.unresolved))
             sel = ApiSelection(original_question=utterance, status="차단", api_selection_results=[],
@@ -228,7 +229,6 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
         r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
                           tasks_json=tp.model_dump_json(), out_dir=out_dir)
         r["notes"] = notes + r["notes"]
-        graphs = _graphs(graph_dirs, rules_cfg, out_dir)
         with trace.span("③ API 선택"):
             sel = select_apis(r["tasks"], r["paths"], graphs, meta, ops, cat, wrapped)
         gate = gate_for(sel, r["paths"], graphs, meta, perms)
@@ -417,9 +417,9 @@ def main() -> None:
     b.add_argument("--services", default=str(ROOT / "data/config/services.yaml"))
     b.add_argument("--overrides", default=str(ROOT / "data/config/overrides.yaml"))
     b.add_argument("--rules", default=str(ROOT / "data/config/rules.ui.yaml"), help="화면에서 넣은 규칙")
-    pl = sub.add_parser("plan", help="자연어 → 목표 → 경로 → Scenario IR")
+    pl = sub.add_parser("plan", help="(예전 방식) 자연어 → 목표 → 경로 → Scenario IR — API 가 적힌 그래프(정답지)에서만")
     pl.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
-    pl.add_argument("--graphs", default=None, help="그래프 yaml 또는 폴더 (안 주면 data/graphs 전부)")
+    pl.add_argument("--graphs", default=str(GOLDEN), help="API 가 적힌 그래프 yaml (기본: 정답지 — data/graphs 는 노드 흐름만이라 안 됨)")
     pl.add_argument("--out", default=str(ROOT / "data/out"))
     pl.add_argument("--goal", default=None, help="LLM 없이 목표 JSON 을 직접 지정")
     pl.add_argument("--model", default=None)

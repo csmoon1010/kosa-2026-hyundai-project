@@ -4,7 +4,7 @@
   화살표 → 쓰기 API: 업무 이름(없으면 도착 상태 이름)을 구분값 이름 · 별칭 · API 이름과 맞춘다
   상태   → 조회 API: 응답에 상태 필드가 있는 조회 API 중, 요청에도 그 필드가 있으면 상태 코드로 바로 거르고
                     아니면 구분값 이름에서 상태 이름 · 코드를 찾는다
-점수는 0~1. 최종 선택은 시나리오 등록 때 Agent 가 후보 중에서 하고 승인본에 고정한다.
+점수는 0~1. ② 경로 탐색(찾을 수 있는 상태) · ③ API 선택(후보)과 관리자 › 전사 검수 목록이 같은 규칙을 쓴다.
 """
 from __future__ import annotations
 
@@ -184,10 +184,11 @@ def match_lookup(state_name: str, state_code: str, metadata: list[dict[str, Any]
 
 def attach_lookups(graphs: list[Any], metadata: list[dict[str, Any]], operations: list[dict[str, Any]],
                    domains: list[str] | None = None) -> list[str]:
-    """조회 방법이 하나도 적혀 있지 않은 그래프(화면에서 그린 것)는 '조회로 찾을 수 있는 상태'를 지금 매칭기로 정한다.
+    """'조회로 찾을 수 있는 상태'를 경로 탐색 때 매칭기로 정한다 — 그래프는 노드 흐름(상태 · 화살표 · 업무 이름)만 갖는다.
 
-    그래프 캔버스는 노드 흐름(상태 · 화살표 · 업무 이름)만 저장한다 — 어느 상태의 데이터를 조회로 찾는지는 경로 탐색 때 정한다.
-    사람이 조회 방법을 적어 둔 그래프(손으로 쓴 파일)는 그것만 쓴다. 붙인 조회는 pinned=False — ③ API 선택이 다시 고른다.
+    상태마다 조회 API 를 맞춰 '찾음'일 때만 찾을 수 있다고 본다 ('확인 필요'는 개발 담당자 검수 목록으로 — 잘못 붙이면
+    엉뚱한 조회로 데이터를 찾게 된다). 여기서 붙인 조회 API 는 ③ API 선택이 다시 고른다.
+    조회 방법이 적혀 있는 그래프(테스트 · 정답지)는 그대로 둔다.
     """
     from tap.graph.model import Lookup
     notes: list[str] = []
@@ -197,10 +198,10 @@ def attach_lookups(graphs: list[Any], metadata: list[dict[str, Any]], operations
         found = []
         for n in g.nodes:
             cs = match_lookup(n.name, n.code, metadata, operations, g.state_field, domains)
-            if cs and status_of(cs) != "없음" and not cs[0].selector_unknown:
-                n.lookup = Lookup(api_id=cs[0].api_id, selector=cs[0].selector, states=[n.code], pinned=False)
+            if cs and status_of(cs) == "찾음":
+                n.lookup = Lookup(api_id=cs[0].api_id, selector=cs[0].selector, states=[n.code])
                 found.append(n.name)
-        notes.append(f"{g.graph_id}: 조회 방법이 적혀 있지 않아 매칭기로 정함 — 찾을 수 있는 상태 {', '.join(found) or '없음'}")
+        notes.append(f"{g.graph_id}: 조회로 찾을 수 있는 상태를 매칭기로 정함 — {', '.join(found) or '없음'}")
     return notes
 
 

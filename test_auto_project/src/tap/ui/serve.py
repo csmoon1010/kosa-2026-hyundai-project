@@ -7,8 +7,7 @@
   POST /api/select           {utterance} → ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 (+ 트레이스)
   POST /api/approve          {selection_hash, scenario, steps, approver} → 등록 때 승인 (서버가 계산한 게이트로 확인) → 승인본 data/approved/
   POST /api/run              {selection_hash, confirm} → 실행 때 확인 (승인본 · 해시 · R2 단계 확인) → 드라이런
-  POST /api/plan             {utterance, goal?} → 목표 추출(LLM) → 경로 → Scenario IR (goal 을 주면 LLM 없이)
-  POST /api/graph/save       {graph_id, yaml} → data/graphs/<id>.yaml (기존 파일 위에 합침 — 사람이 확인한 API · 조회 · 진입 상태 유지, 이전 파일은 data/out/graph_history/)
+  POST /api/graph/save       {graph_id, yaml} → data/graphs/<id>.yaml (노드 흐름만, 기존 파일 위에 합침 — 진입 상태 · 상태 필드 · 확인 키 유지, 이전 파일은 data/out/graph_history/)
   POST /api/rules            {place, doc, item, dom, target, body} → data/config/rules.ui.yaml + 다시 빌드 → 새 TAP_DATA
   POST /api/rules/delete     {id} → 화면 규칙 삭제 + 다시 빌드
   POST /api/baseline         {api_id, body} → data/baselines/<api>.json
@@ -137,7 +136,7 @@ def save_graph(root: Path, graph_id: str, text: str) -> dict[str, Any]:
         backup.write_text(old_text, encoding="utf-8")
     head = [l for l in text.splitlines() if l.startswith("#")][:2]
     if kept:
-        head.append("# 사람이 확인한 값 유지 (기존 파일): " + " · ".join(kept))
+        head.append("# 기존 파일에서 유지한 그래프 칸: " + " · ".join(kept))
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(head) + "\n" + yaml.safe_dump(merged, allow_unicode=True, sort_keys=False), encoding="utf-8")
     return {"file": str(dest.relative_to(root)), "kept": kept,
@@ -238,12 +237,6 @@ def make_handler(root: Path, llm=None):
                     return self._approve(body)
                 if self.path == "/api/run":
                     return self._run(body)
-                if self.path == "/api/plan":
-                    from tap.cli import plan_request
-                    goal = json.dumps(body["goal"], ensure_ascii=False) if body.get("goal") else None
-                    r = plan_request(body["utterance"], [root / "data/graphs"], root / "data/out", goal,
-                                     rules_cfg=root / "data/config/rules.ui.yaml")
-                    return self._json(200, r["ir"].model_dump(mode="json"))
                 if self.path == "/api/rules":
                     r = save_rule(root, body)
                     return self._json(200, {"build": r, "data": ui_data(root)})

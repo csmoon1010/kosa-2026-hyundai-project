@@ -101,7 +101,8 @@ def _blocked_by(case: dict[str, Any], out: dict[str, Any], final: str | None) ->
     gb = (out.get("gate") or {}).get("blocked") or []
     inj = [b for b in gb if "요청 속 지시문" in b]
     if inj:
-        by = [w for w, k in (("LLM", "LLM 이 지시문으로 봄"), ("패턴", "지시문 패턴")) if any(k in b for b in inj)]
+        by = [w for w, k in (("LLM", "LLM 이 지시문으로 봄"), ("낱말", "지시문 패턴"), ("식별자", "시스템 식별자"), ("필드=값", "'필드=값' 모양"))
+              if any(k in b for b in inj)]
         return f"지시문 감지({' · '.join(by)}) → 요청 전체 차단 (② ③ 안 함)"
     ur = [u["reason"] if isinstance(u, dict) else u for u in (out.get("apis") or {}).get("unresolved") or []]
     key = _nrm(case.get("inject") or "")[:14]

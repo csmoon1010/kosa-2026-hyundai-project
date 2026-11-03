@@ -18,7 +18,6 @@ class Lookup(BaseModel):
     api_id: str
     selector: dict[str, str]                    # 예: {prgrGb: P0}
     states: list[str]                           # 이 조회로 나오는 상태 (여럿일 수 있음)
-    pinned: bool = True                         # 사람이 확인한 조회 방법 (화면 매칭기 1순위면 False — API 선택 단계가 다시 고른다)
 
 
 class StateNode(BaseModel):
@@ -37,7 +36,6 @@ class Edge(BaseModel):
     to_code: str
     api_id: str | None = None
     selector: dict[str, str] = Field(default_factory=dict)
-    api_pinned: bool = False                    # 사람이 확인해 고정한 API (손으로 쓴 그래프 · '사람 확인') — 아니면 API 선택 단계가 고른다
     reverse: bool = False                       # 단계가 거꾸로 가는 간선 (취소 · 반려 등)
     source: str = "knowledge"                   # 근거 — knowledge(사람 확인) · spec · llm …
 

@@ -51,7 +51,7 @@ def graph_from_dict(raw: dict[str, Any]) -> StateGraph:
     lookups: dict[str, Lookup] = {}
     for lk in raw.get("lookups") or []:
         item = Lookup(api_id=lk["api"], selector={k: str(v) for k, v in lk["selector"].items()},
-                      states=[str(s) for s in lk["states"]], pinned=lk.get("api_status") in (None, "사람 확인"))
+                      states=[str(s) for s in lk["states"]])
         for s in item.states:
             lookups.setdefault(s, item)
 
@@ -62,7 +62,6 @@ def graph_from_dict(raw: dict[str, Any]) -> StateGraph:
         edges.append(Edge(id=f"{g['id']}:{t['from']}>{t['to']}" + (f":{tag}" if tag else ""),
                           kind=t.get("kind", "api"), name=t["name"], from_code=str(t["from"]),
                           to_code=str(t["to"]), api_id=t.get("api"), selector=sel,
-                          api_pinned=bool(t.get("api")) and t.get("api_status") in (None, "사람 확인"),
                           source=t.get("source", "knowledge")))
 
     nodes = [StateNode(code=c, name=n, lookup=lookups.get(c)) for c, n in codes.items()]
@@ -170,12 +169,10 @@ def validate_graph(graph: StateGraph, metadata: list[dict[str, Any]],
 
 
 def merge_saved(old: dict[str, Any] | None, new: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
-    """화면 저장본(new)을 기존 그래프 파일(old) 위에 합친다 — 화면이 자동으로 채운 칸이 사람이 확인한 값을 덮지 않게.
+    """화면 저장본(new)을 기존 그래프 파일(old) 위에 합친다.
 
-    - 화살표 목록 · 이름 · 배치 · 코드 = 화면 (업무 담당자의 최신 판단)
-    - 화살표 API · 선택값 = 기존 파일에 같은 화살표(from→to)의 API 가 있으면 그 값 (화면은 매칭기 1순위라서)
-    - 조회 방법 = 기존 파일의 조회가 덮는 상태는 기존 값, 나머지 상태만 화면 값
-    - 진입 상태 · 상태 필드 · 확인 키 = 화면이 비워 보내면 기존 값
+    그래프는 노드 흐름만 갖는다 — 상태 · 화살표 · 이름 · 배치는 화면 값. 화면이 비워 보내는 그래프 칸
+    (진입 상태 · 상태 필드 · 확인 키)만 기존 값을 유지한다. API · 조회 방법은 그래프에 두지 않는다.
     """
     if not old:
         return new, []
@@ -186,22 +183,6 @@ def merge_saved(old: dict[str, Any] | None, new: dict[str, Any]) -> tuple[dict[s
             g[k] = old["graph"][k]
             kept.append(f"{k} = {g[k]}")
     out["graph"] = g
-    by_edge = {(str(t["from"]), str(t["to"])): t for t in old.get("transitions") or [] if t.get("api")}
-    ts = []
-    for t in new.get("transitions") or []:
-        o = by_edge.get((str(t["from"]), str(t["to"])))
-        if o:
-            if (o["api"], o.get("selector") or {}) != (t.get("api"), t.get("selector") or {}):
-                kept.append(f"{t['from']}→{t['to']} API = {o['api']} {o.get('selector') or {}} (화면 1순위 {t.get('api')})")
-            t = dict(t, api=o["api"], selector=o.get("selector") or {}, api_status="사람 확인")
-        ts.append(t)
-    out["transitions"] = ts
-    old_lk = old.get("lookups") or []
-    covered = {str(s) for lk in old_lk for s in lk.get("states") or []}
-    on_canvas = {str(c) for c in new.get("layout") or {}} | {str(x) for t in ts for x in (t["from"], t["to"])}
-    keep_old = [lk for lk in old_lk if {str(s) for s in lk.get("states") or []} & on_canvas]
-    add_new = [lk for lk in new.get("lookups") or [] if not {str(s) for s in lk.get("states") or []} & covered]
-    if keep_old:
-        kept.append(f"조회 방법 {len(keep_old)}개")
-    out["lookups"] = keep_old + add_new
+    out["transitions"] = [{k: v for k, v in t.items() if k in ("name", "from", "to", "kind")} for t in new.get("transitions") or []]
+    out.pop("lookups", None)
     return out, kept

@@ -78,11 +78,15 @@ def test_server_baseline(server):  # noqa: F811
 
 def test_server_scenario_and_run(server):  # noqa: F811
     base, root = server
-    ir = json.loads(call(base + "/api/plan", {"utterance": "출고된 주문 1건 만들어줘.", "goal": {"graph_id": "ORD_STAT_GBCD", "target": "45"}}))
+    from pathlib import Path as _P
+    from tap.cli import plan_request
+    gold = _P(__file__).resolve().parents[1] / "data/golden/ORD_STAT_GBCD.yaml"           # 예전 방식(Scenario IR)은 API 가 적힌 그래프에서만
+    mk = lambda u, t: plan_request(u, gold, root / "data/out", goal_json=json.dumps({"graph_id": "ORD_STAT_GBCD", "target": t}))["ir"].model_dump(mode="json")
+    ir = mk("출고된 주문 1건 만들어줘.", "45")
     r = json.loads(call(base + "/api/scenarios", {"name": "출고 주문", "utterance": ir["request"], "domains": ["order"], "ir": ir}))
     sc = r["scenario"]
     assert [x["id"] for x in r["data"]["scenarios"]] == [sc["id"]] and (root / "data/scenarios" / f"{sc['id']}.json").exists()
-    rej = json.loads(call(base + "/api/plan", {"utterance": "결제완료", "goal": {"graph_id": "ORD_STAT_GBCD", "target": "20"}}))
+    rej = mk("결제완료", "20")
     with pytest.raises(urllib.error.HTTPError) as e:
         call(base + "/api/scenarios", {"name": "x", "ir": rej})
     assert e.value.code == 400 and "거절" in json.loads(e.value.read())["error"]
