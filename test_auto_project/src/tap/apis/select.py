@@ -260,10 +260,9 @@ def pick_messages(tp: TaskPlan, blocks: list[str]) -> list[dict[str, str]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": "단계마다 API 를 골라 줘."}]
 
 
-def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: list[dict[str, Any]],
-                operations: list[dict[str, Any]], catalog: dict[str, Any] | None = None,
-                llm: LLMParse | None = None) -> ApiSelection:
-    """경로마다 단계별 API. 카탈로그에 없거나 사용 안 함인 API 는 후보에서 뺀다. 애매한 단계가 없으면 LLM 을 부르지 않는다."""
+def prepare_steps(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: list[dict[str, Any]],
+                  operations: list[dict[str, Any]], catalog: dict[str, Any] | None = None) -> dict[str, Any]:
+    """경로마다 고를 단계 · 후보 · 확정 검사 · 규칙 추천 — LLM 없이. 워크플로(select_apis)와 계획 에이전트가 같이 쓴다."""
     if catalog is not None:                     # ① 카탈로그 = 후보로 쓸 수 있는 API 목록
         allowed = {a["api_id"] for a in catalog.get("apis") or [] if a.get("tool_enabled", True)}
         metadata = [m for m in metadata if m["api_id"] in allowed]
@@ -271,9 +270,8 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
     ops = {o["api_id"]: o for o in operations}
     req = {o["api_id"]: {f["name"] for f in o["request_fields"]} for o in operations}
     by_id = {g.graph_id: g for g in graphs}
-    rows: list[dict[str, Any]] = []
+    steps: list[dict[str, Any]] = []
     unresolved: list[Unresolved] = []
-    ask: list[tuple[str, dict[str, Any], list, StateGraph | None]] = []
     for p in pp.paths:
         if p.status == "경로 없음":
             unresolved.append(Unresolved(path_sequence=p.sequence, step=None, reason="경로 없음 — 경로 탐색 결과의 unresolved 참고"))
@@ -291,44 +289,17 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
                    "edge": st["edge"], "from": st["from"], "to": st["to"], "api_candidates": cands}
             passed = [(c, k, w) for c, k, w in judged if k != "탈락" and c.score >= CHECK]   # 점수가 '없음' 기준 미만이면 보여 주기만
             passed.sort(key=lambda x: -x[0].score)
-            r = _rule_pick(st, passed)
-            if r is None:
-                key = f"{p.sequence}-{st['step']}"
-                ask.append((key, st, passed[:TOP], g))
-                rows.append({**row, "_key": key, "_passed": passed[:TOP], "_loose": st["loose"]})
-                continue
-            rows.append({**row, "selected": r["selected"], "selection_status": r["status"], "selected_by": r["by"],
-                         "selection_reason": r["reason"]})
-            if r["status"] == "보류":
-                unresolved.append(Unresolved(path_sequence=p.sequence, step=st["step"], reason=f"'{st['edge']}': {r['reason']}"))
+            steps.append({"key": f"{p.sequence}-{st['step']}", "path": p, "g": g, "st": st, "row": row,
+                          "judged": judged, "passed": passed[:TOP], "rule": _rule_pick(st, passed)})
+    return {"steps": steps, "unresolved": unresolved, "metadata": metadata, "meta": meta, "ops": ops, "req": req, "by_id": by_id}
 
-    if ask:                                     # 애매한 단계만 한 번에 LLM 에
-        if llm is None:
-            raise ValueError("후보가 비슷한 단계가 있어 LLM 이 필요합니다")
-        blocks = [_llm_block(k, st, ps, g, ops, meta) for k, st, ps, g in ask]
-        out = llm(pick_messages(tp, blocks), pick_schema([k for k, *_ in ask], max(len(ps) for _, _, ps, _ in ask)))
-        picks = {x["key"]: x for x in out.model_dump()["picks"]}
-        for row in rows:
-            if "_key" not in row:
-                continue
-            key, passed, loose = row.pop("_key"), row.pop("_passed"), row.pop("_loose")
-            x = picks.get(key)
-            i = ord(x["choice"]) - 65 if x and x["choice"] != "없음" else None
-            if i is None or i >= len(passed):
-                why = "LLM 이 맞는 후보가 없다고 함" + (f" — {x['reason']}" if x else " (답 없음)")
-                row.update(selected=None, selection_status="보류", selected_by="LLM" if x else None, selection_reason=why)
-                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=f"'{row['edge']}': {why}"))
-                continue
-            c, k, w = passed[i]
-            concerns = list(x["concerns"]) + ([w] if w else []) + (["그래프 없는 업무라 명세만으로 고름"] if loose else [])
-            row.update(selected=Selected(api_id=c.api_id, selector=c.selector), selected_by="LLM",
-                       selection_status="가선택" if concerns else "선택",
-                       selection_reason=x["reason"] + (f" (확인: {' · '.join(concerns)})" if concerns else ""))
-            for cc in concerns:
-                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=cc))
 
+def finish_selection(tp: TaskPlan, pp: PathPlan, rows: list[dict[str, Any]], unresolved: list[Unresolved],
+                     ctx: dict[str, Any], operations: list[dict[str, Any]]) -> ApiSelection:
+    """단계별 결과 → ApiSelection. 기본 경로에 보류가 있으면 모든 단계에 API 가 있는 대안 경로를 안내 (바꾸지는 않음)."""
+    meta, req, by_id, metadata = ctx["meta"], ctx["req"], ctx["by_id"], ctx["metadata"]
     results = [StepSelection.model_validate(r) for r in rows]
-    for p in pp.paths:                          # 기본 경로에 보류가 있으면 — 모든 단계에 API 가 있는 대안 경로를 안내 (바꾸지는 않음)
+    for p in pp.paths:
         if not any(r.path_sequence == p.sequence and r.selection_status == "보류" for r in results):
             continue
         for alt in p.alternatives:
@@ -348,6 +319,52 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
         "검토 필요" if any(r.selection_status == "가선택" for r in results) else "완료"
     return ApiSelection(original_question=pp.original_question, status=status, api_selection_results=results,
                         unresolved=[_from_text(u) for u in pp.unresolved] + unresolved)
+
+
+def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: list[dict[str, Any]],
+                operations: list[dict[str, Any]], catalog: dict[str, Any] | None = None,
+                llm: LLMParse | None = None) -> ApiSelection:
+    """경로마다 단계별 API. 카탈로그에 없거나 사용 안 함인 API 는 후보에서 뺀다. 애매한 단계가 없으면 LLM 을 부르지 않는다."""
+    ctx = prepare_steps(tp, pp, graphs, metadata, operations, catalog)
+    rows: list[dict[str, Any]] = []
+    unresolved = ctx["unresolved"]
+    ask = []
+    for x in ctx["steps"]:
+        st, row, r = x["st"], x["row"], x["rule"]
+        if r is None:
+            ask.append(x)
+            rows.append({**row, "_key": x["key"], "_passed": x["passed"], "_loose": st["loose"]})
+            continue
+        rows.append({**row, "selected": r["selected"], "selection_status": r["status"], "selected_by": r["by"],
+                     "selection_reason": r["reason"]})
+        if r["status"] == "보류":
+            unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=st["step"], reason=f"'{st['edge']}': {r['reason']}"))
+
+    if ask:                                     # 애매한 단계만 한 번에 LLM 에
+        if llm is None:
+            raise ValueError("후보가 비슷한 단계가 있어 LLM 이 필요합니다")
+        blocks = [_llm_block(x["key"], x["st"], x["passed"], x["g"], ctx["ops"], ctx["meta"]) for x in ask]
+        out = llm(pick_messages(tp, blocks), pick_schema([x["key"] for x in ask], max(len(x["passed"]) for x in ask)))
+        picks = {x["key"]: x for x in out.model_dump()["picks"]}
+        for row in rows:
+            if "_key" not in row:
+                continue
+            key, passed, loose = row.pop("_key"), row.pop("_passed"), row.pop("_loose")
+            x = picks.get(key)
+            i = ord(x["choice"]) - 65 if x and x["choice"] != "없음" else None
+            if i is None or i >= len(passed):
+                why = "LLM 이 맞는 후보가 없다고 함" + (f" — {x['reason']}" if x else " (답 없음)")
+                row.update(selected=None, selection_status="보류", selected_by="LLM" if x else None, selection_reason=why)
+                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=f"'{row['edge']}': {why}"))
+                continue
+            c, k, w = passed[i]
+            concerns = list(x["concerns"]) + ([w] if w else []) + (["그래프 없는 업무라 명세만으로 고름"] if loose else [])
+            row.update(selected=Selected(api_id=c.api_id, selector=c.selector), selected_by="LLM",
+                       selection_status="가선택" if concerns else "선택",
+                       selection_reason=x["reason"] + (f" (확인: {' · '.join(concerns)})" if concerns else ""))
+            for cc in concerns:
+                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=cc))
+    return finish_selection(tp, pp, rows, unresolved, ctx, operations)
 
 
 def _from_text(u: str) -> Unresolved:

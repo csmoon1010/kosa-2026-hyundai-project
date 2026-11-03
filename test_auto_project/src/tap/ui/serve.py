@@ -143,8 +143,11 @@ def save_graph(root: Path, graph_id: str, text: str) -> dict[str, Any]:
             "backup": str(backup.relative_to(root)) if backup else None}
 
 
-def make_handler(root: Path, llm=None):
-    """llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI."""
+def make_handler(root: Path, llm=None, agent_llm=None, mode: str = "agent"):
+    """llm · agent_llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI.
+
+    mode: ②③ 를 계획 에이전트(agent, 기본)로 할지 워크플로(workflow, 비교용)로 할지. 요청 body 의 mode 가 있으면 그것.
+    """
     proto = root / "prototype"
     pending: dict[str, dict[str, Any]] = {}    # selection_hash → 서버가 계산한 선택 결과 · 게이트 (승인은 이것으로만 확인한다)
 
@@ -183,16 +186,19 @@ def make_handler(root: Path, llm=None):
             if not utt:
                 raise ValueError("자연어 요청이 비어 있습니다")
             try:
+                use = body.get("mode") if body.get("mode") in ("agent", "workflow") else mode
                 r = analyze_select(utt, [root / "data/graphs"], root / "data/out", root / "data/config/rules.ui.yaml",
-                                   llm=llm, trace_dir=root / "data/out/traces")
+                                   llm=llm, trace_dir=root / "data/out/traces", mode=use, agent_llm=agent_llm)
             except Exception as e:                  # 검사 거절 · 예산 초과도 트레이스와 함께 화면에 보여 준다
                 tr = getattr(e, "trace", None)
-                return self._json(400, {"error": f"{type(e).__name__}: {e}", "trace": tr.to_dict() if tr else None})
+                return self._json(400, {"error": f"{type(e).__name__}: {e}", "trace": tr.to_dict() if tr else None,
+                                        "agent": getattr(e, "agent", None)})
             g = r["gate"]
             pending[g.selection_hash] = {"request": utt, "apis": r["apis"], "gate": g}
             return self._json(200, {"request": utt, "tasks": r["tasks"].model_dump(), "paths": r["paths"].dump(),
                                     "apis": r["apis"].dump(), "gate": g.model_dump(), "trace": r["trace"].to_dict(),
-                                    "notes": r["notes"], "trace_file": str(Path(r["trace_file"]).relative_to(root))})
+                                    "notes": r["notes"], "trace_file": str(Path(r["trace_file"]).relative_to(root)),
+                                    "mode": r.get("mode", "workflow"), "agent": r.get("agent")})
 
         def _pending(self, body: dict[str, Any]) -> dict[str, Any]:
             p = pending.get(str(body.get("selection_hash") or ""))

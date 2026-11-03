@@ -192,8 +192,12 @@ class _NoWrap:
 
 def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir: Path | None = None,
                    rules_cfg: Path | None = None, model: str | None = None, llm=None, tasks_json: str | None = None,
-                   trace=None, trace_dir: Path | None = None) -> dict:
+                   trace=None, trace_dir: Path | None = None, mode: str = "agent", agent_llm=None) -> dict:
     """자연어 → 업무 목록 → 경로 → 단계마다 API. 1단계 산출물(Catalog · Metadata · operations)을 쓴다.
+
+    mode: agent(기본) = ① 의도 분석 → 인젝션 감지 → ②③ 계획 에이전트(도구 루프)
+          workflow    = ① → 인젝션 감지 → ② 경로 탐색(LLM 1회) → ③ API 선택(애매할 때만 LLM 1회) — 비교용
+    llm: ① (와 워크플로 ②③) 의 LLM(messages, schema), agent_llm: 계획 에이전트의 LLM(messages, tools). 없으면 OpenAI.
 
     트레이스(호출별 단계 · 토큰 · 지연 · 비용, 단계별 시간)는 끝나면(예산 초과로 멈춰도) trace_dir 에 남긴다.
     """
@@ -226,20 +230,31 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
             trace.finish("차단 (인젝션)")
             result.update(tasks=tp, paths=pp, apis=sel, gate=blocked_gate(sel, hits), trace=trace, notes=notes, injections=hits)
             return result
-        r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
-                          tasks_json=tp.model_dump_json(), out_dir=out_dir)
-        r["notes"] = notes + r["notes"]
-        with trace.span("③ API 선택"):
-            sel = select_apis(r["tasks"], r["paths"], graphs, meta, ops, cat, wrapped)
+        if mode == "workflow":
+            r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
+                              tasks_json=tp.model_dump_json(), out_dir=out_dir)
+            r["notes"] = notes + r["notes"]
+            with trace.span("③ API 선택"):
+                sel = select_apis(r["tasks"], r["paths"], graphs, meta, ops, cat, wrapped)
+        else:
+            from tap.agent.loop import load_agent_limits, openai_tools, run_agent
+            if agent_llm is None and llm is not None:    # 가짜 LLM 을 줬는데 에이전트만 진짜 OpenAI 를 부르는 일이 없게
+                raise ValueError("llm 을 직접 줄 때는 agent_llm 도 줘야 합니다 (워크플로면 mode='workflow')")
+            tools_llm = trace.wrap_tools(agent_llm or openai_tools(model, sdk_retries=0))
+            with trace.span("②③ 계획 에이전트"):
+                a = run_agent(tp, graphs, meta, ops, cat, tools_llm, trace, load_agent_limits(LLM_CFG))
+            r = {"tasks": tp, "paths": a["paths"], "notes": notes + a["notes"], "agent": a["agent"]}
+            sel = a["apis"]
         gate = gate_for(sel, r["paths"], graphs, meta, perms)
         trace.finish(sel.status)
-        result.update(r, apis=sel, gate=gate, trace=trace, injections=[])
+        result.update(r, apis=sel, gate=gate, trace=trace, injections=[], mode=mode)
     except BudgetExceeded as e:
         trace.finish()
         e.trace = trace                         # 멈춘 요청도 트레이스로 채점 · 보고할 수 있게
         raise
     except Exception as e:
-        trace.finish(f"실패: {type(e).__name__}: {str(e)[:160]}")
+        stopped = type(e).__name__ == "AgentStopped"           # 계획 에이전트의 정지 조건 — 실패가 아니라 정해진 중단
+        trace.finish(str(e)[:200] if stopped else f"실패: {type(e).__name__}: {str(e)[:160]}")
         e.trace = trace
         raise
     finally:
@@ -437,16 +452,19 @@ def main() -> None:
     rn.add_argument("--confirm", default="", help="실행 때: 이번 실행에서 확인한 R2 단계 key (되돌릴 수 없는 호출)")
     rn.add_argument("--approver", default="권지은")
     rn.add_argument("--model", default=None)
+    rn.add_argument("--workflow", dest="mode", action="store_const", const="workflow", default="agent", help="②③ 를 계획 에이전트 대신 워크플로로 (비교용)")
     ev = sub.add_parser("eval", help="태스크셋 채점 — 결과(단계별 정답) · 궤적 · 비용 · 지연")
     ev.add_argument("--tasks", default=str(ROOT / "data/eval/tasks.yaml"))
     ev.add_argument("--ids", default=None, help="일부만 (예: N01,R02)")
     ev.add_argument("--model", default=None)
+    ev.add_argument("--workflow", dest="mode", action="store_const", const="workflow", default="agent", help="②③ 를 계획 에이전트 대신 워크플로로 (비교용)")
     ev.add_argument("--out", default=str(ROOT / "data/out/eval"))
     ev.add_argument("--rescore", default=None, help="저장된 채점 결과(json)를 지금 태스크셋 기준으로 다시 채점 (LLM 안 부름)")
     se = sub.add_parser("select", help="자연어 → 업무 목록 → 경로 → 단계마다 API (+ 구분값)")
     se.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
     se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
     se.add_argument("--model", default=None)
+    se.add_argument("--workflow", dest="mode", action="store_const", const="workflow", default="agent", help="②③ 를 계획 에이전트 대신 워크플로로 (비교용)")
     ex = sub.add_parser("extract-graph", help="(실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점")
     ex.add_argument("--codes", default=str(ROOT / "data/codes/common_codes.csv"))
     ex.add_argument("--group", default="ORD_STAT_GBCD")
@@ -502,7 +520,7 @@ def main() -> None:
         return
     if a.cmd == "run":
         from tap.apis.gate import GateError, approve, dry_run
-        r = analyze_select(a.utterance, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model)
+        r = analyze_select(a.utterance, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, mode=a.mode)
         g, sel = r["gate"], r["apis"]
         print(f"■ {a.utterance}\n  선택 결과 {sel.status} · 승인 게이트 {g.status}")
         for st in g.steps:
@@ -547,7 +565,7 @@ def main() -> None:
             results = E.rescore(saved, cases)
             cases = []
         for c in cases:
-            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model,
+            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, mode=a.mode,
                                                        trace_dir=Path(a.out) / "traces"))
             t = r["trajectory"]
             print(f"  {c['id']} {'O' if r['passed'] else 'X'} {r['final_status']} · LLM {t['llm_calls']} · {t['ms']}ms"
@@ -555,7 +573,8 @@ def main() -> None:
             results.append(r)
         summary = E.summarize(results)
         meta = {"at": datetime_now(), "model": a.model or os.environ.get("OPENAI_DEFAULT_MODEL") or (saved["meta"].get("model") if a.rescore else None),
-                "tasks_file": a.tasks, **({"rescored_from": a.rescore} if a.rescore else {})}
+                "tasks_file": a.tasks, "mode": (saved["meta"].get("mode", "workflow") if a.rescore else a.mode),
+                **({"rescored_from": a.rescore} if a.rescore else {})}
         j, m = E.save(results, summary, meta, a.out)
         print(m.read_text(encoding="utf-8").split("\n\n| id |")[0])
         print(f"→ {m}\n→ {j}")
@@ -564,14 +583,18 @@ def main() -> None:
         for u in a.utterance:
             from tap.trace import BudgetExceeded
             try:
-                r = analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks)
-            except BudgetExceeded as e:
+                r = analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks, mode=a.mode)
+            except (BudgetExceeded, ValueError) as e:
+                if type(e).__name__ not in ("BudgetExceeded", "AgentStopped"):
+                    raise
                 print(f"■ {u}\n  {e}")
                 continue
             print(json.dumps({"tasks": r["tasks"].model_dump(), "paths": r["paths"].dump(), "apis": r["apis"].dump()},
                              ensure_ascii=False, indent=2))
             for n in r["notes"]:
                 print(f"  (검사) {n}")
+            for t in (r.get("agent") or {}).get("tool_calls") or []:
+                print(f"  [턴 {t['turn']}] {t['tool']} {json.dumps(t['args'], ensure_ascii=False)[:120]} → {'ok' if t['ok'] else '거절/오류'}")
             print(r["trace"].summary() + f"\n  → {r['trace_file']}")
         return
     if a.cmd == "path":

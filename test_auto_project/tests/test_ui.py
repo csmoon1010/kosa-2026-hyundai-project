@@ -107,7 +107,7 @@ def agent_server(tmp_path):
     root = tmp_path / "root"
     shutil.copytree(ROOT / "data", root / "data")
     (root / "prototype").mkdir()
-    httpd = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(root, llm=fake_llm))
+    httpd = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(root, llm=fake_llm, mode="workflow"))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", root
     httpd.shutdown()

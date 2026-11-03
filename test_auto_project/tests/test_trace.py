@@ -94,7 +94,7 @@ def test_save_and_config(tmp_path):
     d = json.loads(t.save(tmp_path).read_text(encoding="utf-8"))
     assert d["status"] == "완료" and d["totals"]["llm_calls"] == 1 and d["calls"][0]["stage"] == "① 의도 분석"
     budget, pricing = load_llm_config(ROOT / "data/config/llm.yaml")
-    assert budget.max_llm_calls == 6 and budget.retries == 1 and "input" in pricing["gpt-5.4"]
+    assert budget.max_llm_calls == 10 and budget.retries == 1 and "input" in pricing["gpt-5.4"]
     assert load_llm_config(tmp_path / "없음.yaml")[0] == Budget()
 
 
@@ -107,8 +107,24 @@ def test_analyze_select_saves_trace_even_when_stopped(tmp_path):
     from tap.trace import Budget as B
     t = Trace(q, B(max_llm_calls=0), {})
     with pytest.raises(BudgetExceeded):
-        analyze_select(q, llm=llm, trace=t, trace_dir=tmp_path)
+        analyze_select(q, llm=llm, trace=t, trace_dir=tmp_path, mode="workflow")
     saved = json.loads(next(tmp_path.glob("*.json")).read_text(encoding="utf-8"))
     assert saved["status"].startswith("중단: 예산 초과 (① 의도 분석 전")
-    r = analyze_select(q, llm=llm, trace_dir=tmp_path)                                  # 업무 없음 → LLM 1번(의도 분석)
+    r = analyze_select(q, llm=llm, trace_dir=tmp_path, mode="workflow")                                  # 업무 없음 → LLM 1번(의도 분석)
     assert r["trace"].totals()["llm_calls"] == 1 and [s["name"] for s in r["trace"].spans] == ["① 의도 분석", "② 경로 탐색", "③ API 선택"]
+
+
+def test_failed_call_without_usage_costs_nothing():
+    """연결 오류처럼 응답을 못 받은 호출은 비용 0 — 요청 합계 비용이 '계산 불가'가 되지 않게."""
+    import openai
+
+    def llm(messages, tools):
+        if not llm.n:
+            llm.n += 1
+            raise openai.APIConnectionError(request=None)
+        llm.last_usage = {"model": "m", "input": 1000, "output": 100, "cached": 0}
+        return {"message": {"role": "assistant", "content": None}, "tool_calls": []}
+    llm.n, llm.last_usage = 0, None
+    t = Trace("q", Budget(), PRICE)
+    t.wrap_tools(llm)(MSG, [])
+    assert [c["attempt"] for c in t.calls] == [1, 2] and t.calls[0]["cost_usd"] == 0.0 and t.totals()["cost_usd"] == 0.003

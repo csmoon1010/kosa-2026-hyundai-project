@@ -4,7 +4,8 @@
   (이미 받은 결과는 버리지 않는다 — 다음 호출을 막는다).
 - 재시도: 형식 실패 · 거부 · 일시적 API 오류만 정해진 횟수까지. 받은 뒤 검사(근거 구절 · 상태 소속)에서 걸린 것은
   다시 물어도 같은 판단이 나올 수 있어 재시도하지 않고 이유와 함께 거절한다. 재시도도 호출 수 · 토큰에 포함된다.
-- 단계 시간(span): ① 의도 분석 · ② 경로 탐색 · ③ API 선택 각각의 전체 시간 (LLM 호출 + 코드).
+- 단계 시간(span): ① 의도 분석 · ②③ 계획 에이전트(또는 워크플로의 ② 경로 탐색 · ③ API 선택) 각각의 전체 시간 (LLM 호출 + 코드).
+- 도구 호출(tools): 계획 에이전트가 부른 도구마다 턴 · 이름 · 입력 · 결과 요약 · 지연 (궤적).
 설정은 data/config/llm.yaml (budget · pricing). 가격이 비어 있으면 비용은 계산하지 않고 토큰만 남긴다.
 """
 from __future__ import annotations
@@ -22,7 +23,7 @@ import yaml
 
 # 응답 스키마 이름 → 단계 (LLM 함수는 (messages, schema) 만 받으므로 스키마로 단계를 안다)
 STAGE = {"TaskPlanOut": "① 의도 분석", "PathChoiceOut": "② 상태 고르기", "PicksOut": "③ API 고르기",
-         "GoalOut": "목표 추출(예전)", "GraphChoice": "그래프 고르기(예전)", "GraphOut": "그래프 재료 추출"}
+         "GoalOut": "목표 추출(예전)", "agent": "②③ 계획 에이전트", "GraphChoice": "그래프 고르기(예전)", "GraphOut": "그래프 재료 추출"}
 
 
 class BudgetExceeded(ValueError):
@@ -68,6 +69,7 @@ class Trace:
         self.budget = budget or Budget()
         self.pricing = pricing or {}
         self.calls: list[dict[str, Any]] = []
+        self.tools: list[dict[str, Any]] = []      # 계획 에이전트의 도구 호출
         self.spans: list[dict[str, Any]] = []
         self.status = "진행 중"
         self.started = datetime.now().astimezone().isoformat(timespec="seconds")
@@ -81,7 +83,7 @@ class Trace:
         costs = [c["cost_usd"] for c in self.calls]
         return {"llm_calls": len(self.calls), "input_tokens": tok_in, "output_tokens": tok_out, "tokens": tok_in + tok_out,
                 "cost_usd": round(sum(costs), 6) if costs and None not in costs else None,
-                "llm_ms": sum(c["ms"] for c in self.calls),
+                "llm_ms": sum(c["ms"] for c in self.calls), "tool_calls": len(self.tools),
                 "ms": self.total_ms if self.total_ms is not None else int((time.perf_counter() - self._t0) * 1000)}
 
     def _check(self, stage: str) -> None:
@@ -128,12 +130,43 @@ class Trace:
                         raise
                 finally:
                     u = getattr(llm, "last_usage", None) or {}
-                    rec.update(ms=int((time.perf_counter() - t) * 1000), model=u.get("model"),
-                               input_tokens=u.get("input"), output_tokens=u.get("output"), cached_tokens=u.get("cached"),
-                               prompt_chars=sum(len(m["content"]) for m in messages))
-                    rec["cost_usd"] = self._cost(rec["model"], rec["input_tokens"], rec["output_tokens"], rec["cached_tokens"])
-                    self.calls.append(rec)
+                    self._record(rec, llm, t, messages)
         return call
+
+    def wrap_tools(self, llm):
+        """도구를 주는 LLM 함수(messages, tools) → {message, tool_calls} 를 감싼다. 기록 · 예산 · 재시도는 wrap 과 같다."""
+        stage = STAGE["agent"]
+
+        def call(messages, tools):
+            for attempt in range(1, self.budget.retries + 2):
+                self._check(stage)
+                try:
+                    llm.last_usage = None
+                except AttributeError:          # pragma: no cover
+                    pass
+                t = time.perf_counter()
+                rec: dict[str, Any] = {"stage": stage, "attempt": attempt, "status": "ok"}
+                try:
+                    out = llm(messages, tools)
+                    rec["tools"] = [c["name"] for c in out.get("tool_calls") or []]
+                    return out
+                except Exception as e:
+                    rec["status"] = f"실패: {type(e).__name__}: {str(e)[:160]}"
+                    if attempt > self.budget.retries or not _retryable(e):
+                        raise
+                finally:
+                    self._record(rec, llm, t, messages)
+        return call
+
+    def _record(self, rec: dict[str, Any], llm, t: float, messages: list[dict[str, Any]]) -> None:
+        u = getattr(llm, "last_usage", None) or {}
+        rec.update(ms=int((time.perf_counter() - t) * 1000), model=u.get("model"),
+                   input_tokens=u.get("input"), output_tokens=u.get("output"), cached_tokens=u.get("cached"),
+                   prompt_chars=sum(len(m.get("content") or "") for m in messages))
+        rec["cost_usd"] = self._cost(rec["model"], rec["input_tokens"], rec["output_tokens"], rec["cached_tokens"])
+        if rec["cost_usd"] is None and rec["status"] != "ok" and rec["input_tokens"] is None and self.pricing:
+            rec["cost_usd"] = 0.0                # 응답을 못 받은 호출(연결 오류 등) — 토큰이 없으니 비용도 없다
+        self.calls.append(rec)
 
     @contextmanager
     def span(self, name: str) -> Iterator[None]:
@@ -152,7 +185,7 @@ class Trace:
 
     def to_dict(self) -> dict[str, Any]:
         return {"request": self.request, "started": self.started, "status": self.status, "budget": asdict(self.budget),
-                "totals": self.totals(), "spans": self.spans, "calls": self.calls}
+                "totals": self.totals(), "spans": self.spans, "calls": self.calls, "tools": self.tools}
 
     def save(self, directory: str | Path) -> Path:
         d = Path(directory)
@@ -168,5 +201,6 @@ class Trace:
                  f"토큰 {t['input_tokens']}+{t['output_tokens']} · 비용 " + (f"${t['cost_usd']:.4f}" if t["cost_usd"] is not None else "가격 미설정")]
         lines += [f"  단계 {s['name']}: {s['ms']}ms (LLM {s['llm_calls']}회)" for s in self.spans]
         lines += [f"  호출 {c['stage']} #{c['attempt']} {c['status']} · {c['ms']}ms · 토큰 {c['input_tokens']}+{c['output_tokens']}"
-                  + (f" · ${c['cost_usd']:.4f}" if c["cost_usd"] is not None else "") for c in self.calls]
+                  + (f" · ${c['cost_usd']:.4f}" if c["cost_usd"] is not None else "")
+                  + (f" → 도구 {', '.join(c['tools'])}" if c.get("tools") else "") for c in self.calls]
         return "\n".join(lines)

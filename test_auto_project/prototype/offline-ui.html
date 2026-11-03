@@ -885,7 +885,9 @@
         <div id="realSamples"></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" id="agentBtn" style="width:100%" hidden>3단계 분석 · 승인 (의도 → 경로 → API)</button>
+        <button class="btn btn-primary" id="agentBtn" style="width:100%" hidden>분석 · 승인 (의도 → 계획 에이전트 → 승인)</button>
+        <label class="note" id="agModeWrap" style="margin:6px 0 0;display:flex;gap:6px;align-items:center" hidden>②③
+          <select id="agMode" style="font:inherit;font-size:12px"><option value="agent">계획 에이전트 (도구 루프)</option><option value="workflow">워크플로 (비교용)</option></select></label>
         <button class="btn btn-primary" id="extractBtn" style="width:100%">시나리오 생성</button>
       </div>
       <div id="confirmOut"></div>
@@ -5060,7 +5062,7 @@ el('side').addEventListener('keydown', e => {
   bs[(i + (e.key === 'ArrowDown' ? 1 : bs.length - 1)) % bs.length].focus();
 });
 
-/* ============ 3단계 에이전트 — ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 ============
+/* ============ 분석 — ① 의도 분석 → ②③ 계획 에이전트(또는 워크플로 ② 경로 탐색 · ③ API 선택) → 권한 등급 · 승인 게이트 ============
    POST /api/select 로 계산하고, 승인은 POST /api/approve — 승인 판단은 서버가 자기가 계산한 결과로 한다 (화면 값은 믿지 않음).
    예전 방식(시나리오 생성 → Scenario IR)은 그대로 둔다. 3단계 결과로 Scenario IR 을 만드는 일은 혜정과 형식을 맞춘 뒤. */
 const escA = s => esc(s).replace(/"/g, '&quot;');
@@ -5077,19 +5079,37 @@ function agStage(tr, name){
   return `<span class="note" style="margin:0">${msTxt(s.ms)} · LLM ${s.llm_calls}회${cs.length ? ` · 토큰 ${tin}+${tout}` : ''}</span>`;
 }
 const agList = (xs, title) => (xs || []).length ? `<div class="warn" style="display:block;padding:8px 12px;border-radius:8px;margin-top:10px;font-size:12.5px"><b>${esc(title)}</b><br>${xs.map(x => esc(typeof x === 'string' ? x : (x.path_sequence ? `${x.path_sequence}번 업무${x.step != null ? `-${x.step}` : ''}: ` : '') + x.reason)).join('<br>')}</div>` : '';
+function agTools(tools){
+  if (!(tools || []).length) return '';
+  const arg = x => esc(JSON.stringify(x.args).slice(0, 140));
+  return `<div class="tbl-wrap"><table class="irsteps"><thead><tr><th>턴</th><th>도구</th><th>입력</th><th>결과</th><th>등급</th></tr></thead><tbody>${tools.map(x => `<tr>
+      <td class="v">${x.turn}</td><td class="v mono" style="font-size:11.5px">${esc(x.tool)}</td><td class="mono" style="font-size:10.5px">${arg(x)}</td>
+      <td style="font-size:11.5px">${x.ok ? '<span class="st st-ok">ok</span>' : `<span class="st st-rb">${x.tool === 'submit_plan' ? '거절' : '오류'}</span>`}
+        <details style="margin-top:2px"><summary style="cursor:pointer;font-size:11px;color:var(--muted)">결과</summary><span class="mono" style="font-size:10.5px">${esc(x.result)}</span></details></td>
+      <td class="v">${esc(x.tier || '')}</td></tr>`).join('')}</tbody></table></div>`;
+}
 function agentCards(a){
   if (a.error){
-    return `<div class="card fade"><div class="card-hd"><h2>3단계 분석 — 멈춤</h2></div>
+    return `<div class="card fade"><div class="card-hd"><h2>분석 — 멈춤</h2></div>
       <div class="warn" style="display:block;padding:10px 12px;border-radius:8px"><b>${esc(a.error)}</b></div>
-      <p class="note">받은 뒤 검사(근거 구절 · 상태 소속 등)나 예산이 멈춘 것입니다. LLM 이 지어낸 결과를 그대로 쓰지 않고 이유와 함께 멈춥니다.</p>
-      ${a.trace ? `<p class="note">트레이스: ${esc(a.trace.status)} · LLM ${a.trace.totals.llm_calls}회 · ${msTxt(a.trace.totals.ms)}</p>` : ''}</div>`;
+      <p class="note">받은 뒤 검사(근거 구절 · 상태 소속 등) · 예산 · 계획 에이전트의 정지 조건(턴 · 도구 호출 · 되풀이 · 제출 거절 상한)이 멈춘 것입니다. LLM 이 지어낸 결과를 그대로 쓰지 않고 이유와 함께 멈춥니다.</p>
+      ${a.trace ? `<p class="note">트레이스: ${esc(a.trace.status)} · LLM ${a.trace.totals.llm_calls}회 · ${msTxt(a.trace.totals.ms)}</p>` : ''}
+      ${a.trace && (a.trace.tools || []).length ? `<p class="label" style="margin-top:8px">멈추기 전까지 계획 에이전트가 부른 도구</p>${agTools(a.trace.tools)}` : ''}</div>`;
   }
+  const isAgent = a.mode === 'agent';
   const t = a.trace.totals, tasks = a.tasks.tasks, paths = a.paths.paths, rows = a.apis.api_selection_results;
   const head = `<div class="card fade"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
-      <div><h2>3단계 에이전트 결과</h2></div><span>${pill(a.apis.status, AG_FINAL)} 승인 게이트 ${pill(a.gate.status, AG_FINAL)}</span></div>
+      <div><h2>분석 결과 <span class="note" style="margin:0">②③ ${isAgent ? '계획 에이전트' : '워크플로'}</span></h2></div><span>${pill(a.apis.status, AG_FINAL)} 승인 게이트 ${pill(a.gate.status, AG_FINAL)}</span></div>
     <p class="note" style="margin:0">전체 ${msTxt(t.ms)} · LLM ${t.llm_calls}회 (${msTxt(t.llm_ms)}) · 토큰 ${t.input_tokens}+${t.output_tokens} · 비용 ${usd(t.cost_usd)}
       · <span class="mono" style="font-size:11px">${esc(a.trace_file || '')}</span></p>
-    <p class="note" style="margin-top:6px">LLM 은 목록 안에서 고르기만 합니다 — 경로는 그래프 탐색(코드), API 는 카탈로그 · 메타데이터로, 승인은 사람이.</p></div>`;
+    <p class="note" style="margin-top:6px">${isAgent
+      ? `계획 에이전트가 읽기 전용 도구(R0)로 그래프 · API 를 찾아보고 계획을 제출했어요 — 도구 ${t.tool_calls || 0}회. 경로는 그래프 탐색(코드)이 계산하고, 제출한 계획은 코드가 검사하고, 승인은 사람이.`
+      : 'LLM 은 목록 안에서 고르기만 합니다 — 경로는 그래프 탐색(코드), API 는 카탈로그 · 메타데이터로, 승인은 사람이.'}</p></div>`;
+  const sA = isAgent ? `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <div><h2>②③ 계획 에이전트 — 도구 궤적</h2></div>${agStage(a.trace, '②③ 계획 에이전트')}</div>
+    ${agTools(a.trace.tools)}
+    ${(a.agent && a.agent.rejections || []).length ? agList(a.agent.rejections.map((r, i) => `제출 ${i + 1}번째 거절: ${r.join(' · ')}`), '코드 검사가 거절한 제출 (이유를 받고 고쳐 다시 냄)') : ''}
+    <p class="note">아래 ② 경로 · ③ API 는 에이전트가 제출해 코드 검사를 통과한 계획이에요.</p></div>` : '';
   const s1 = `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
       <div><h2>① 자연어 업무 의도 분석</h2></div>${agStage(a.trace, '① 의도 분석')}</div>
     ${tasks.length ? `<div class="tbl-wrap"><table class="irsteps"><thead><tr><th>#</th><th>도메인</th><th>신규/기존</th><th>업무 · 조건</th><th>제약</th><th>건수</th><th>앞 업무</th></tr></thead><tbody>${tasks.map(x => `<tr>
@@ -5102,7 +5122,7 @@ function agentCards(a){
     ${agList(a.tasks.unresolved, '업무로 만들지 않은 것 (애매한 부분)')}</div>`;
   const chain = steps => steps.length ? [steps[0].from].concat(steps.map(x => x.to)).map(esc).join(' → ') : '(이동 없음)';
   const s2 = `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
-      <div><h2>② Graph 경로 탐색</h2></div>${agStage(a.trace, '② 경로 탐색')}</div>
+      <div><h2>② Graph 경로 탐색</h2></div>${isAgent ? '' : agStage(a.trace, '② 경로 탐색')}</div>
     ${a.apis.status === '차단' && !paths.length ? `<p class="note">요청 속 지시문이 감지되어 ② 경로 탐색 · ③ API 선택을 하지 않았어요.</p>` : ''}
     ${paths.map(p => { const g = p.graph_id ? graphById(p.graph_id) : null;
       return `<div style="padding:8px 0;border-top:1px solid var(--hair)">
@@ -5117,7 +5137,7 @@ function agentCards(a){
         ${agList(p.notes, '알릴 것')}</div>`; }).join('') || `<p class="note">경로를 찾을 업무가 없습니다.</p>`}
     <p class="note">경로는 LLM 이 아니라 그래프 탐색(코드)이 계산합니다 — 그래프에 없는 화살표는 나올 수 없습니다.</p></div>`;
   const s3 = `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
-      <div><h2>③ API 선택</h2></div>${agStage(a.trace, '③ API 선택')}</div>
+      <div><h2>③ API 선택</h2></div>${isAgent ? '' : agStage(a.trace, '③ API 선택')}</div>
     ${rows.length ? `<div class="tbl-wrap"><table class="irsteps"><thead><tr><th>단계</th><th>종류</th><th>화살표 · 단계</th><th>고른 API · 구분값</th><th>선택</th><th>이유 · 후보</th></tr></thead><tbody>${rows.map(r => `<tr>
         <td class="v">${r.path_sequence}-${r.step}</td><td class="v">${esc(r.kind)}</td>
         <td style="font-size:12.5px">${esc(r.edge)}${r.from ? `<br><span class="note" style="margin:0">${esc(r.from)} → ${esc(r.to)}</span>` : ''}</td>
@@ -5128,8 +5148,8 @@ function agentCards(a){
           ${r.api_candidates.map(c => `<div style="font-size:11px">${esc(shortApi(c.api_id).split('/').pop())} ${esc(selStr(c.selector))} · ${c.score} · ${esc(c.check)}${c.check_reason ? ` (${esc(c.check_reason)})` : ''}</div>`).join('')}</details></td></tr>`).join('')}</tbody></table></div>`
       : `<p class="note">고를 단계가 없습니다.</p>`}
     ${agList(a.apis.unresolved, '확인할 것')}
-    <p class="note">고정 = 그래프에 사람이 확인한 API · 선택 = 규칙이나 LLM 이 골랐고 걸리는 점 없음 · 가선택 = 사람 확인 필요 · 보류 = 고를 API 없음</p></div>`;
-  return head + s1 + s2 + s3;
+    <p class="note">선택 = 규칙이나 LLM 이 골랐고 걸리는 점 없음 (에이전트가 규칙 추천을 따르면 '규칙') · 가선택 = 사람 확인 필요 · 보류 = 고를 API 없음</p></div>`;
+  return head + s1 + sA + s2 + s3;
 }
 function gateCard(a){
   if (a.error) return '';
@@ -5188,9 +5208,11 @@ async function doAgent(){
   const utt = el('scUtt').value.trim();
   if (!utt){ toast('regToast', '자연어 요청을 입력하세요.'); return; }
   const btn = el('agentBtn'); btn.disabled = true;
-  toast('regToast', '3단계 분석 중 — ① 의도 분석 → ② 경로 탐색 → ③ API 선택 (LLM 1~3회, 몇 초 걸립니다)');
+  const mode = el('agMode') ? el('agMode').value : 'agent';
+  toast('regToast', mode === 'agent' ? '분석 중 — ① 의도 분석 → ②③ 계획 에이전트(도구 루프, LLM 3~6회 · 10~30초)'
+                                     : '분석 중 — ① 의도 분석 → ② 경로 탐색 → ③ API 선택 (LLM 1~3회, 몇 초 걸립니다)');
   let j;
-  try { const r = await fetch('/api/select', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ utterance: utt }) }); j = await r.json(); }
+  try { const r = await fetch('/api/select', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ utterance: utt, mode }) }); j = await r.json(); }
   catch (e){ btn.disabled = false; toast('regToast', '서버에 연결하지 못했습니다: ' + e.message); return; }
   btn.disabled = false;
   const inv = Object.fromEntries(Object.entries(REAL_DOM).map(([k, v]) => [v, k]));
@@ -5207,7 +5229,7 @@ if (TAP){
     const d = S.regDraft;
     if (!(d && d.agent)) return baseReg();
     renderRegList();
-    el('editTitle').textContent = d.name || '새 시나리오 — 3단계 분석';
+    el('editTitle').textContent = d.name || '새 시나리오 — 분석';
     el('scName').value = d.name || ''; el('scUtt').value = d.utterance || '';
     renderDomChips(d);
     el('extractOut').innerHTML = agentCards(d.agent);
@@ -5221,9 +5243,10 @@ if (TAP){
     baseBadge();
     const b = el('agentBtn'), eb = el('extractBtn'), rs = el('realSamples');
     if (b) b.hidden = !SERVER;
+    if (el('agModeWrap')) el('agModeWrap').hidden = !SERVER;
     if (eb) eb.hidden = true;                 /* 예전 방식(목표 하나 → Scenario IR, 그래프에 적힌 API 를 씀)은 뺐다 — 그래프는 노드 흐름만 (2026-11-03) */
     if (rs) rs.hidden = true;
-    if (!SERVER && el('protoNote')) el('protoNote').innerHTML = '3단계 분석 · 승인은 로컬 서버(<span class="mono">tap.cli serve</span>)로 열었을 때 동작합니다.';
+    if (!SERVER && el('protoNote')) el('protoNote').innerHTML = '분석 · 승인은 로컬 서버(<span class="mono">tap.cli serve</span>)로 열었을 때 동작합니다.';
   };
 }
 

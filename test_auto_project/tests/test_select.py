@@ -160,7 +160,7 @@ def test_analyze_select_end_to_end(tmp_path):
             return schema.model_validate({"choices": [{**choice(frm="배송완료", to="출고"), "state_phrases": ["배송완료된 주문"]}],
                                           "unresolved": []})
         raise AssertionError("규칙으로 다 골라져 API 고르기 LLM 은 안 부름")
-    r = analyze_select(Q, llm=llm, trace_dir=tmp_path)
+    r = analyze_select(Q, llm=llm, trace_dir=tmp_path, mode="workflow")
     assert r["apis"].status == "완료" and [x.selected.selector for x in r["apis"].api_selection_results] == [{"prgrGb": "P3"}, {"procGb": "PB3"}]
 
 

@@ -39,7 +39,9 @@ test_auto_project/
 │   ├── catalog/build.py         # API ID · 도메인 분류, Catalog · MetaData
 │   ├── registry/tools.py        # Tool Registry
 │   ├── graph/                   # 상태 그래프 — 모델 · 검증 · 경로 계산 · 재료 추출(실험) · API 후보 찾기(match)
-│   ├── goal/ · ir/              # 목표 추출(LLM) · Scenario IR 초안
+│   ├── goal/ · ir/              # ① 업무 의도 분석(LLM) · Scenario IR 초안
+│   ├── agent/                   # ②③ 계획 에이전트 — 읽기 전용 도구(tools.py) · 루프 · 정지 조건(loop.py)
+│   ├── apis/                    # ③ API 선택(후보 · 확정 검사 · 규칙 추천) · 권한 등급 · 승인 게이트
 │   ├── ui/                      # 오프라인 UI 데이터 내보내기 · 로컬 서버
 │   └── cli.py                   # 실행기
 └── tests/
@@ -54,8 +56,9 @@ PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
 PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # (예전 방식) 목표 하나 → Scenario IR — API 가 적힌 정답지 그래프에서만
 PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주문한 뒤 배송완료까지"   # 자연어 → 업무 목록 (도메인 · 신규/기존 · 제약, 그래프는 안 봄)
 PYTHONPATH=src .venv/bin/python -m tap.cli path "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 업무 목록 → 업무마다 그래프 · 출발/목표 상태 · 경로
-PYTHONPATH=src .venv/bin/python -m tap.cli select "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 경로 → 단계마다 API + 구분값 (고정 · 선택 · 가선택 · 보류)  · 트레이스는 data/out/traces/ (예산 · 가격: data/config/llm.yaml)
-PYTHONPATH=src .venv/bin/python -m tap.cli eval                      # 태스크셋(data/eval/tasks.yaml) 채점 → data/out/eval/*.md · *.json (결과 · 궤적 · 비용 · 지연)
+PYTHONPATH=src .venv/bin/python -m tap.cli select "배송완료된 주문 3건을 배송완료 취소시켜줘"   # ① → 인젝션 감지 → ②③ 계획 에이전트(도구 루프) → 단계마다 API + 구분값 · 도구 궤적  · 트레이스는 data/out/traces/ (예산 · 정지 조건 · 가격: data/config/llm.yaml)
+PYTHONPATH=src .venv/bin/python -m tap.cli select --workflow "…"     # 비교용 워크플로: ② 경로 탐색(LLM 1회) → ③ API 선택(애매할 때만 LLM 1회)
+PYTHONPATH=src .venv/bin/python -m tap.cli eval [--workflow]         # 태스크셋(data/eval/tasks.yaml) 채점 → data/out/eval/*.md · *.json (결과 · 궤적(도구 호출 · 제출 거절) · 비용 · 지연)
 PYTHONPATH=src .venv/bin/python -m tap.cli run "배송완료된 주문 3건을 배송완료 취소시켜줘" --approve [--steps 1-1] [--confirm 1-1]   # 등록 때 승인 → 실행 때 R2 확인 → 드라이런
 PYTHONPATH=src .venv/bin/python -m tap.cli extract-graph --runs 2     # (실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli match-graph               # 화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점
@@ -119,7 +122,7 @@ summary 의 한국어 동사로 판별한다.
 | 영역 | 파일로 열 때 | `tap.cli serve` 로 열 때 |
 |---|---|---|
 | 시나리오 생성 결과 | 미리 계산해 둔 문장(data/out/ir)만 실제 결과, 나머지는 시연 | 아무 문장이나 목표 추출(LLM) → 경로 → Scenario IR |
-| 시나리오 등록 › 3단계 분석 · 승인 | (서버 필요) | ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 — 등록 때 승인(승인본 data/approved/) → 실행 때 R2 확인 → 드라이런 (POST /api/select · /api/approve · /api/run) |
+| 시나리오 등록 › 분석 · 승인 | (서버 필요) | ① 의도 분석 → ②③ 계획 에이전트(도구 궤적 표시, 워크플로로 바꿔 비교 가능) → 권한 등급 · 승인 게이트 — 등록 때 승인(승인본 data/approved/) → 실행 때 R2 확인 → 드라이런 (POST /api/select · /api/approve · /api/run) |
 | 관리자 › 도메인 › 상태 그래프 만들기 | 실제 그래프 · 실제 Metadata 로 API 후보 찾기 | + 저장하면 data/graphs/<그룹ID>.yaml 에 (있던 파일이면 합침) |
 | 데이터 조회 — Catalog · MetaData · Tool Registry · State Vocabulary | 실제 산출물 | 같음 (매번 새로 읽음) |
 | 관리자 › 전사 › 1단계 산출물 · 검수 목록 | 실제 산출물 | 같음 |
@@ -175,3 +178,19 @@ overrides 위에 합친다. 잘못된 규칙이면 빌드가 거절하고 파일
 ## 상태
 
 화면 프로토타입 단계입니다. Baseline Request · Response Outputs 의 입력 방식은 아직 검토 중입니다.
+
+## ②③ 계획 에이전트
+
+```
+요청 → ① 의도 분석 (LLM 1회, 도구 없음) → 인젝션 감지 (코드, 걸리면 전체 차단 — 에이전트를 돌리지 않음)
+     → ②③ 계획 에이전트 (LLM 루프 + 읽기 전용 도구) → submit_plan → 코드 검사 (거절이면 이유를 받고 고쳐 다시)
+     → 권한 등급 · 승인 게이트 (코드) → 등록 때 승인(승인본 고정) → 실행 때 R2 확인 → 드라이런
+```
+
+- 도구 9개 (모두 R0, 우리 메타데이터 · 그래프만 읽음): `list_graphs` · `get_graph` · `find_state` · `find_route`(경로는 코드가 계산) ·
+  `step_candidates`(매칭기 후보 · 확정 검사 · 규칙 추천) · `search_apis` · `get_api` · `check_api` · `submit_plan`
+- 제출 검사: 업무마다 하나 · 근거 구절이 원문에 있는지 · 상태가 그래프 것인지 · 신규는 쓰기 1번 이상 · 도구 결과에 나온 API 만 · 확정 검사 탈락 없음 · 단계마다 하나 · 값을 바꾸는 업무(수정)는 설정값마다 맞는 요청 필드가 있는 API 만
+- 규칙 추천을 따르면 `selected_by: 규칙`(워크플로와 같은 결과), 다르게 고르거나 매칭기 후보 밖이면 `LLM` · 가선택(사람 확인)
+- 정지 조건 (`data/config/llm.yaml` agent): 턴 8 · 도구 호출 24 · 같은 호출 되풀이 3 · 제출 거절 2 → `중단: 계획 에이전트 — 이유`, 요청 전체 예산(LLM 10회 · 토큰 12만 · 180초 · $0.5)
+- 출력은 워크플로와 같은 `PathPlan` · `ApiSelection` (+ 도구 궤적은 트레이스 `tools`)
+
