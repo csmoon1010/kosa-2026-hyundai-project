@@ -1,0 +1,117 @@
+{
+  "original_question": "가격이 50000원인 설치상품을 만들고 주문한 뒤 배송완료까지 처리해줘",
+  "status": "검토 필요",
+  "api_selection_results": [
+    {
+      "path_sequence": 1,
+      "step": 1,
+      "domain": "PD",
+      "edge": "상품 등록",
+      "api_candidates": [
+        "hshop-openapi:POST:/pd/pdb/multiItem.do",
+        "hshop-openapi:POST:/pd/pdb/updateItemByVen.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+      "selection_status": "선택",
+      "selection_reason": "신규 설치상품 등록을 지원하며, 상품 가격을 지정할 수 있는 API로 설명되어 있다."
+    },
+    {
+      "path_sequence": 1,
+      "step": 2,
+      "domain": "PD",
+      "edge": "승인 요청",
+      "api_candidates": [
+        ""
+      ],
+      "selected_api_id": "",
+      "selection_status": "선택",
+      "selection_reason": "등록된 상품을 팀장승인대기 상태로 전환하는 API이다."
+    },
+    {
+      "path_sequence": 1,
+      "step": 3,
+      "domain": "PD",
+      "edge": "팀장 승인",
+      "api_candidates": [
+        "",
+        ""
+      ],
+      "selected_api_id": "",
+      "selection_status": "선택",
+      "selection_reason": "팀장승인대기 상태의 상품 1건을 승인완료로 전환할 수 있다."
+    },
+    {
+      "path_sequence": 2,
+      "step": 1,
+      "domain": "OD",
+      "edge": "주문 생성",
+      "api_candidates": [
+        "DEMO_OD_CREATE_ORDER",
+        "DEMO_OD_CREATE_PAID_ORDER"
+      ],
+      "selected_api_id": "DEMO_OD_CREATE_PAID_ORDER",
+      "selection_status": "선택",
+      "selection_reason": "승인된 상품으로 주문을 생성하고 결제완료 상태까지 처리하므로 간선의 목표 상태와 일치한다."
+    },
+    {
+      "path_sequence": 3,
+      "step": 1,
+      "domain": "DS",
+      "edge": "출고 지시",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": null,
+      "selection_status": "보류",
+      "selection_reason": "출고 지시 관련 API 후보는 있으나, 이 간선이 API 호출로 수행되는지 시스템 자동 전이인지 확인되지 않았다."
+    },
+    {
+      "path_sequence": 3,
+      "step": 2,
+      "domain": "DS",
+      "edge": "출고 진행",
+      "api_candidates": [
+        "DEMO_DS_START_SHIPMENT"
+      ],
+      "selected_api_id": "DEMO_DS_START_SHIPMENT",
+      "selection_status": "가선택",
+      "selection_reason": "출고대기에서 출고진행으로 전환하는 API이다. 설치상품에도 적용 가능한지 확인이 필요하다."
+    },
+    {
+      "path_sequence": 3,
+      "step": 3,
+      "domain": "DS",
+      "edge": "출고 완료",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "selection_status": "가선택",
+      "selection_reason": "출고진행에서 출고 상태로 전환하는 API이다. 설치상품에도 적용 가능한지 확인이 필요하다."
+    },
+    {
+      "path_sequence": 3,
+      "step": 4,
+      "domain": "DS",
+      "edge": "배송 완료",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "selection_status": "가선택",
+      "selection_reason": "출고된 주문의 배송을 완료 처리하는 API이다. 설치상품에도 적용 가능한지 확인이 필요하다."
+    }
+  ],
+  "unresolved": [
+    {
+      "path_sequence": 3,
+      "step": 1,
+      "reason": "결제완료에서 출고대기로의 전이가 API 호출인지 시스템 자동 전이인지 확인이 필요하다."
+    },
+    {
+      "path_sequence": 3,
+      "step": null,
+      "reason": "설치상품에도 현재 배송 경로와 선택한 API를 적용할 수 있는지 확인이 필요하다."
+    }
+  ]
+}

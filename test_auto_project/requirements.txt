@@ -4,3 +4,5 @@ networkx>=3.2
 pytest>=8.0
 openai>=1.40
 python-dotenv>=1.0
+# 혜정 IR 생성 — Parameter KB 벡터 검색 (data/out/parameters/parameter_vectors)
+chromadb==1.5.9

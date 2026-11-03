@@ -1,0 +1,1513 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "adrKndGbcd",
+        "parameter_path": "$.body.data1.data2.data3.adrKndGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주소종류구분코드",
+        "display_name": "adrKndGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "62e75383c176b8afe65c7b30fe2571e5c26b4f98b81626c7d5e68a4961af0eeb",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주소종류구분코드(타입:string, 예: 1:지번주소 / 2:도로명주소)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "adrKndGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/adrKndGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.adrKndGbcd adrKndGbcd 주소종류구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "asgnrNm",
+        "parameter_path": "$.body.data1.data2.data3.asgnrNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주소지담당자",
+        "display_name": "asgnrNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4faab792caf9a3a80ce503febacb7a29904e143bc12fc1760e7fa7a81acdeb72",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주소지담당자(타입:string, 예:국정관)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "asgnrNm",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/asgnrNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.asgnrNm asgnrNm 주소지담당자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsntDlvcoCd",
+        "parameter_path": "$.body.data1.data2.data3.dsntDlvcoCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지정배송사코드",
+        "display_name": "dsntDlvcoCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b65de423b409c689eff11f511648f206cc915ed4681a64e0d1fc926d3a3ca3ed",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지정배송사코드(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsntDlvcoCd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsntDlvcoCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsntDlvcoCd dsntDlvcoCd 지정배송사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsofAsgnrNm",
+        "parameter_path": "$.body.data1.data2.data3.dsofAsgnrNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배영업소담당자명",
+        "display_name": "dsofAsgnrNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e4ebf7fbba3e3db922f80d1ad0a59caa53ec91b1e4523ba068a6d6fde42f6a3e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배영업소담당자명(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsofAsgnrNm",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsofAsgnrNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsofAsgnrNm dsofAsgnrNm 택배영업소담당자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsofNm",
+        "parameter_path": "$.body.data1.data2.data3.dsofNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배영업소명",
+        "display_name": "dsofNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2e9a0f8903f87ee3f38a8ee0f1d8d4f2c42cd44d001a1bc9fffc4ad047cd5269",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배영업소명(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsofNm",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsofNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsofNm dsofNm 택배영업소명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsofTela",
+        "parameter_path": "$.body.data1.data2.data3.dsofTela"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배영업소전화지역번호",
+        "display_name": "dsofTela",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "72d3ccbe78aafe746b5fd0c546922d2f16bc6f355310b85870ee19a37feebd81",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배영업소전화지역번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsofTela",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsofTela"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsofTela dsofTela 택배영업소전화지역번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsofTeli",
+        "parameter_path": "$.body.data1.data2.data3.dsofTeli"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배영업소전화개별번호",
+        "display_name": "dsofTeli",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "33eb6e05d9793726bb48e1d079e8f755af91efd8d0d5a053896c705e4461fc66",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배영업소전화개별번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsofTeli",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsofTeli"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsofTeli dsofTeli 택배영업소전화개별번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsofTels",
+        "parameter_path": "$.body.data1.data2.data3.dsofTels"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배영업소전화국번호",
+        "display_name": "dsofTels",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4fcb2087cfb94aa01561046ce5100013189c0715d259e4f0195b7d4cc4a433ee",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배영업소전화국번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsofTels",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsofTels"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.dsofTels dsofTels 택배영업소전화국번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ospaYn",
+        "parameter_path": "$.body.data1.data2.data3.ospaYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "출고지여부",
+        "display_name": "ospaYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cca967669c8b3b546b7c8e4cf7570711395de4b46fa5faa65c1e8c10f379757c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "출고지여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ospaYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ospaYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.ospaYn ospaYn 출고지여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "phdsAsgnrNm",
+        "parameter_path": "$.body.data1.data2.data3.phdsAsgnrNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "물류담당자명",
+        "display_name": "phdsAsgnrNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c0ed9b99fecfcb654520048d2ee80d9165b5d30fd8a622afb551532d6eea4c2b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "물류담당자명(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "phdsAsgnrNm",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/phdsAsgnrNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.phdsAsgnrNm phdsAsgnrNm 물류담당자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "phdsAsgnrTela",
+        "parameter_path": "$.body.data1.data2.data3.phdsAsgnrTela"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "물류담당자전화지역번호",
+        "display_name": "phdsAsgnrTela",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4dd621083d417d51d6bba56777efbf487e07c7171251900db5e8397021044e47",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "물류담당자전화지역번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "phdsAsgnrTela",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/phdsAsgnrTela"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.phdsAsgnrTela phdsAsgnrTela 물류담당자전화지역번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "phdsAsgnrTeli",
+        "parameter_path": "$.body.data1.data2.data3.phdsAsgnrTeli"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "물류담당자전화개별번호",
+        "display_name": "phdsAsgnrTeli",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ee410fc98007b62f8d1c4a45ef5c2ffb6872de3644c5cd5660c46cc27fa38ee9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "물류담당자전화개별번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "phdsAsgnrTeli",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/phdsAsgnrTeli"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.phdsAsgnrTeli phdsAsgnrTeli 물류담당자전화개별번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "phdsAsgnrTels",
+        "parameter_path": "$.body.data1.data2.data3.phdsAsgnrTels"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "물류담당자전화국번호",
+        "display_name": "phdsAsgnrTels",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9b5b29efa3befb71f0902981032df0c1bae37f31e05d2c73db4af3ea927d8533",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "물류담당자전화국번호(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "phdsAsgnrTels",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/phdsAsgnrTels"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.phdsAsgnrTels phdsAsgnrTels 물류담당자전화국번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "repYn",
+        "parameter_path": "$.body.data1.data2.data3.repYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "대표여부",
+        "display_name": "repYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0cc2d5e0d55327d97709498d1261d79ed8e68e9434d19d652e809e628d83b824",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "대표여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "repYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/repYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.repYn repYn 대표여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rmrk",
+        "parameter_path": "$.body.data1.data2.data3.rmrk"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "비고",
+        "display_name": "rmrk",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5b7bb131720d29432a0e7e7df5d51620688f1410cfed5220dcece9b26841198f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "비고(타입:string, 예:비고)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rmrk",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/rmrk"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.rmrk rmrk 비고"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "useYn",
+        "parameter_path": "$.body.data1.data2.data3.useYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용여부",
+        "display_name": "useYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ce1d87d67f579ec01141b9d5a9efa9c515453e92c06f471000ef1bbf3f5ee186",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "useYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/useYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.useYn useYn 사용여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ee7eb4c0510b843eac14f9c3c1e5e6c816d350814f75f68ef04cd244209a5356",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venAdrSeq",
+        "parameter_path": "$.body.data1.data2.data3.venAdrSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주소지순번",
+        "display_name": "venAdrSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8ec382f147bbe32fc30b44e51b7f56ccba15e991ee8db35a06ddca77bbb161f9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주소지순번(타입:integer, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "venAdrSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venAdrSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venAdrSeq venAdrSeq 주소지순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3386c027e919ea2f42e6e627e45017e786cb4d512802f255164c677dd8cfdaf5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venFaxTela",
+        "parameter_path": "$.body.data1.data2.data3.venFaxTela"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사팩스전화지역번호",
+        "display_name": "venFaxTela",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8e72eb1c241e81621cedd60870467f20fc37ae6d3a0ea6ea122aab7964184b8b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사팩스전화지역번호(타입:string, 예:064)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venFaxTela",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venFaxTela"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venFaxTela venFaxTela 협력사팩스전화지역번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venFaxTeli",
+        "parameter_path": "$.body.data1.data2.data3.venFaxTeli"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사팩스전화개별번호",
+        "display_name": "venFaxTeli",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6485fdbf44e99c6dc8350e86f9ae055acc088b60d45bcbdab17c54556922de4c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사팩스전화개별번호(타입:string, 예:5638)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venFaxTeli",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venFaxTeli"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venFaxTeli venFaxTeli 협력사팩스전화개별번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venFaxTels",
+        "parameter_path": "$.body.data1.data2.data3.venFaxTels"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사팩스전화국번호",
+        "display_name": "venFaxTels",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b17ea48117be7494fdb996fa60281da494f4319242d9980d0355e111724b3734",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사팩스전화국번호(타입:string, 예:755)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venFaxTels",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venFaxTels"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venFaxTels venFaxTels 협력사팩스전화국번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venGbcd",
+        "parameter_path": "$.body.data1.data2.data3.venGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사구분코드",
+        "display_name": "venGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "203097429e28acf910f8c75b20ab891795a594d2354b3129357f4436fb865239",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사구분코드(타입:string, 예: 1:1차협력사 / 2:2차협력사)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venGbcd venGbcd 협력사구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venHpBckNo",
+        "parameter_path": "$.body.data1.data2.data3.venHpBckNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사휴대폰뒷번호",
+        "display_name": "venHpBckNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a7a84a0ceec5dafea72c3b9f25d4f644ac73db3029dae20c7d54f7c33bdedd36",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사휴대폰뒷번호(타입:string, 예:5638)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venHpBckNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venHpBckNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venHpBckNo venHpBckNo 협력사휴대폰뒷번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venHpIdntNo",
+        "parameter_path": "$.body.data1.data2.data3.venHpIdntNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사휴대폰식별번호",
+        "display_name": "venHpIdntNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "461740e509e6a338b5d12a3c6e0c2e499e072cc670cf5529fc164b1a709be3e4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사휴대폰식별번호(타입:string, 예:010)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venHpIdntNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venHpIdntNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venHpIdntNo venHpIdntNo 협력사휴대폰식별번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venHpIntmNo",
+        "parameter_path": "$.body.data1.data2.data3.venHpIntmNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사휴대폰중간번호",
+        "display_name": "venHpIntmNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "50a6d8742762f60f22bcb5bbcd6e359482df8af4a5f3c323fd191ce45a3a0709",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사휴대폰중간번호(타입:string, 예:3639)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venHpIntmNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venHpIntmNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venHpIntmNo venHpIntmNo 협력사휴대폰중간번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venPostNo",
+        "parameter_path": "$.body.data1.data2.data3.venPostNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사우편번호",
+        "display_name": "venPostNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "02ad8465cb33c602614e08cc37c1ff291f1cea688cd3037e37dcaf8ed8bf1a6f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사우편번호(타입:string, 예:053208)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venPostNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venPostNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venPostNo venPostNo 협력사우편번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venPostNoSeq",
+        "parameter_path": "$.body.data1.data2.data3.venPostNoSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사우편번호순번",
+        "display_name": "venPostNoSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ac83f40245963d33957bce5a0065fe73c3c5b14d269d7974456ac924c76d2ad4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사우편번호순번(타입:string, 예:001)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venPostNoSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venPostNoSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venPostNoSeq venPostNoSeq 협력사우편번호순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venTela",
+        "parameter_path": "$.body.data1.data2.data3.venTela"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사전화번호",
+        "display_name": "venTela",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "40170984e5fa2b20fe9b309e50a45ae3919acbd124af746086fd65830fb83dcf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사전화번호(타입:string, 예:064)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venTela",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venTela"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venTela venTela 협력사전화번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venTeli",
+        "parameter_path": "$.body.data1.data2.data3.venTeli"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사전화개별번호",
+        "display_name": "venTeli",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "57f9d40adceef673253e7cdadfd10034ad4c0f572208b94136b747f4f106d93e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사전화개별번호(타입:string, 예:5638)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venTeli",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venTeli"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venTeli venTeli 협력사전화개별번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venTels",
+        "parameter_path": "$.body.data1.data2.data3.venTels"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사전화국번호",
+        "display_name": "venTels",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bd798f9aa9b36c4c473b0d8b0fdd111c94d40deca691d040aa5e835a656e855f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사전화국번호(타입:string, 예:753)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venTels",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venTels"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.venTels venTels 협력사전화국번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "wtplcYn",
+        "parameter_path": "$.body.data1.data2.data3.wtplcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "회수지여부",
+        "display_name": "wtplcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c765b9bfea4d88c1d9622f434ed2ae53a78b22fd1711df6a876ba3639c2cedd3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "회수지여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "wtplcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/wtplcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.data2.data3.wtplcYn wtplcYn 회수지여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d09801194833d10b89d7f9375927e5aee32305030a6cbe4917dd41bd6ec97b4c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateVenAdrMngRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/updateVenAdrMng.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/updateVenAdrMng.do 협력사 주소지 수정 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

@@ -137,3 +137,21 @@ def test_server_select_and_approval_gate(agent_server):
     with pytest.raises(urllib.error.HTTPError) as e2:                                    # 서버가 모르는 결과는 승인 불가
         call(base + "/api/approve", {"selection_hash": "sha256:가짜", "scenario": True})
     assert "서버가 모릅니다" in json.loads(e2.value.read().decode("utf-8"))["error"]
+
+
+def test_approval_hands_off_to_ir_draft(agent_server):
+    """승인해야만 혜정 IR 초안 생성의 입력(prototype/approved/tdg-*.json)이 생긴다 — 혜정 fixed_plan 으로 읽을 수 있는 형식."""
+    from tap.ir.draft_build import fixed_plan
+    base, root = agent_server
+    r = json.loads(call(base + "/api/select", {"utterance": Q}))
+    assert not (root / "prototype/approved").exists()                                   # 승인 전에는 없음
+    ok = json.loads(call(base + "/api/approve", {"selection_hash": r["gate"]["selection_hash"], "scenario": True}))
+    h = ok["ir_handoff"]
+    assert h["filename"].startswith("tdg-") and [(x["source_step"], x["step_id"]) for x in h["steps"]] == [("1-0", "1-1"), ("1-1", "1-2")]
+    data = json.loads((root / h["file"]).read_text(encoding="utf-8"))
+    assert data["approval_status"] == "approved" and data["intent_tasks"][0]["domain"] == "OD"
+    rows = data["api_selection_results"]
+    assert [x["selector"] for x in rows] == [{"prgrGb": "P3"}, {"procGb": "PB3"}] and all(x["approval_status"] == "approved" for x in rows)
+    assert [s["step_id"] for s in fixed_plan(data)] == ["1-1", "1-2"]
+    listed = json.loads(call(base + "/api/approved-selections"))["files"]               # 혜정 화면의 승인본 목록에 보인다
+    assert any(f["filename"] == h["filename"] and f["approval_status"] == "approved" for f in listed)

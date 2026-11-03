@@ -1,0 +1,108 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdc/updateVenSellItemList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"sessionVO\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "sessionVO",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data1.data1.userId",
+      "xmlPath": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userId",
+      "name": "userId",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "hs006808",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data1.data1.userIp",
+      "xmlPath": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userIp",
+      "name": "userIp",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "10.120.131.80",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data2.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsSlitmListTran\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsSlitmListTran",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data2.data2.data3.itemSellGbcd",
+      "xmlPath": "/Root/Dataset[@id=\"dsSlitmListTran\"]/rows/row/itemSellGbcd",
+      "name": "itemSellGbcd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "11",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data2.data2.data3.slitmCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsSlitmListTran\"]/rows/row/slitmCd",
+      "name": "slitmCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "3200009929",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"sessionVO\"><rows><row><userId>hs006808</userId><userIp>10.120.131.80</userIp></row></rows></Dataset><Dataset id=\"dsSlitmListTran\"><rows><row><itemSellGbcd>11</itemSellGbcd><slitmCd>3200009929</slitmCd></row></rows></Dataset></Root>"
+}

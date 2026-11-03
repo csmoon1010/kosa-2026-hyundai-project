@@ -1,0 +1,23 @@
+{
+  "copied_on": "2026-11-01",
+  "source": "hyejung/mini_project_2/output/parameter_vectors",
+  "source_code": "hyejung/mini_project_2/preprocessing.ipynb cells 27, 29, 33",
+  "model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "collections": [
+    {
+      "name": "canonical_parameters_cf5a1c85ad4d",
+      "dimensions": 1536
+    }
+  ],
+  "embedding_records": 1816,
+  "files_sha256": {
+    "chroma.sqlite3": "029b275af31c90975b007847c9a9426332aa633a4ed2e285dbf1b28150f3e464",
+    "9b570d65-9e8f-4ecf-a310-2df19208cd36/index_metadata.pickle": "c9c6d9f29e96c40e503921dd1ba72463f66b6178da00b910cf98431d4f02f426",
+    "9b570d65-9e8f-4ecf-a310-2df19208cd36/link_lists.bin": "738869c81fb6882165e2c0526ab4ba2eb87fc670e6ac13557219437ed710fee6",
+    "9b570d65-9e8f-4ecf-a310-2df19208cd36/data_level0.bin": "a663f905e064229a29c15aa57166244492670e273803259bd91da74685b7fa10",
+    "9b570d65-9e8f-4ecf-a310-2df19208cd36/length.bin": "5b5dd6129e1af986a2794c10816cf72dda6f54caecaf208014268d2fad33661e",
+    "9b570d65-9e8f-4ecf-a310-2df19208cd36/header.bin": "4ef45822f234df3597a8870c9f9b14a8bdd83ba259c0da1fa85552bce73f0872"
+  },
+  "runtime_connected": false
+}

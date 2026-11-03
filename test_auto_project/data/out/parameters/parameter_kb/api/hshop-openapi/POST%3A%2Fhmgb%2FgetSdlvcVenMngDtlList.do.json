@@ -1,0 +1,438 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "basktNm",
+        "parameter_path": "$.body.data1.data2.data3.basktNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니명",
+        "display_name": "basktNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f9f9450ee325fb307073edf9f52366f7b6084271053dbec01b2207700ae3f9d9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/getSdlvcVenMngDtlListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니명(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "basktNm",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/basktNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data1.data2.data3.basktNm basktNm 장바구니명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sdlvcVenSeq",
+        "parameter_path": "$.body.data1.data2.data3.sdlvcVenSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "장바구니코드",
+        "display_name": "sdlvcVenSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "81c8fba2ec1bf37a310d2a585ef1162018356a177d9820e70bb48e6bc078a595",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/getSdlvcVenMngDtlListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "장바구니코드(타입:string, 예:000046)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sdlvcVenSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/sdlvcVenSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data1.data2.data3.sdlvcVenSeq sdlvcVenSeq 장바구니코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ba17a2c39281b5cf4a0a07006eb7c38cf07b22e58de24a42daed46e2066d532a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/getSdlvcVenMngDtlListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5e50df8d186cc874e67231039259d32d1be0d085d6964124853ecf95e9badfbb",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/getSdlvcVenMngDtlListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2b2550c95d780a226d1bde6787282ad3edace5da9d48ad63797cd55631ed9a2e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/getSdlvcVenMngDtlListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "code",
+        "parameter_path": "$.body.data4.data2.data6.code"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "응답코드",
+        "display_name": "code",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8f2b2d4ce0473fd4921a364fbe09d8ffe48ea606e86093e1f7a0d72c348ef9ed",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/successCommonResponse",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "code(예:0000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "code",
+        "xml_path": "/Root/Dataset[@id=\"result\"]/rows/row/code"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data4.data2.data6.code code 응답코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "message",
+        "parameter_path": "$.body.data4.data2.data6.message"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "응답메시지",
+        "display_name": "message",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "41097441bb79492c5e22787d23822c51068577c84c44ee87fc7a73b736d99bcc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/successCommonResponse",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "message(예:Success)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "message",
+        "xml_path": "/Root/Dataset[@id=\"result\"]/rows/row/message"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data4.data2.data6.message message 응답메시지"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data4.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0d6bdb122ebc2a383238d1da7e2d1071feda8ea9d8e04946e85a92e7ee9a16ab",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/successCommonResponse",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "result",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"result\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.body.data4.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/hmgb/getSdlvcVenMngDtlList.do 협력사 소액장바구니 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

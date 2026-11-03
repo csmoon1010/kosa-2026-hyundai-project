@@ -1,0 +1,132 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/sc/scb/scbd/selectTcktWtdwList.do",
+  "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsInput",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.venCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+      "name": "venCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "009362",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ven2Cd",
+      "name": "ven2Cd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "010539",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.fromDate",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/fromDate",
+      "name": "fromDate",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "20230501",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.toDate",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/toDate",
+      "name": "toDate",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "20230515",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ordNo",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo",
+      "name": "ordNo",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "20160118110258",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ordPtcSeq",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq",
+      "name": "ordPtcSeq",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "1",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.procGb",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb",
+      "name": "procGb",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "P0",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsInput\"><rows><row><venCd>009362</venCd><ven2Cd>010539</ven2Cd><fromDate>20230501</fromDate><toDate>20230515</toDate><ordNo>20160118110258</ordNo><ordPtcSeq>1</ordPtcSeq><procGb>P0</procGb></row></rows></Dataset></Root>"
+}

@@ -1,0 +1,954 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userGbcd",
+        "parameter_path": "$.body.data1.data1.data1.userGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자구분코드",
+        "display_name": "userGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "1c5abd6e08e0a7567c4bb0ca36752b86e615bb08e44468d1587599a94cc93721",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userGbcd",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data1.data1.data1.userGbcd userGbcd 사용자구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "508230e67b5b3550d58bb726158880cc2e2d4769db5775844925665b99cebb35",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:60687632551)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a2b25e6448d4ad9f524e78139746b31595d07dad350ad76c32e7d423b699aed9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:225.225.225.225)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userNm",
+        "parameter_path": "$.body.data1.data1.data1.userNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자명",
+        "display_name": "userNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fb18e89ec54a33e6633b4c220fe786b3ece10c71c1a0431d84b2890b6f57c731",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자명(타입:string, 예:위즈컴퍼니)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userNm",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data1.data1.data1.userNm userNm 사용자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "208ed6cfa1595d83e4fca537ffc91bdefffd5192b4dcff1e3193996f87f5c596",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "sessionVO",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "addQty",
+        "parameter_path": "$.body.data2.data2.data3.addQty"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "추가수량",
+        "display_name": "addQty",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3db4d179485616fe1a1cd26a1f01da8115dbf5e8f7bc8a094b198f7e8119824b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "추가수량(타입:string, 예:0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "addQty",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/addQty"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.addQty addQty 추가수량"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bcdVal",
+        "parameter_path": "$.body.data2.data2.data3.bcdVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품바코드",
+        "display_name": "bcdVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6d4e5ade7233b61b6fd385bce0e9f8b931718977263ceb7fb7a02c4b7f5ac2c9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품바코드(타입:number, 예:8812345678912)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "number",
+        "xml_attribute": false,
+        "xml_name": "bcdVal",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/bcdVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.bcdVal bcdVal 상품바코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "imgNm",
+        "parameter_path": "$.body.data2.data2.data3.imgNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "이미지명",
+        "display_name": "imgNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "311ea74c3397d1e5f643d64c0914b10ea2ed89957a47ba177fba586f2aa9e98d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "이미지명(타입:string, 예:204463408100001.jpg)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "imgNm",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/imgNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.imgNm imgNm 이미지명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "maxSellPossQty",
+        "parameter_path": "$.body.data2.data2.data3.maxSellPossQty"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "최대판매가능수량",
+        "display_name": "maxSellPossQty",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a1b46f7912cfd531651719a6a16f8031cd0cbb492e6b40fa2129b669d97d2b1a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "최대판매가능수량(타입:string, 예:999)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "maxSellPossQty",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/maxSellPossQty"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.maxSellPossQty maxSellPossQty 최대판매가능수량"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellGbcd",
+        "parameter_path": "$.body.data2.data2.data3.sellGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매구분코드",
+        "display_name": "sellGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ff7379efef06d000d0fd20c31a2c04ca3d79ff7beb382a8a94ab3bbad05b06aa",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/sellGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.sellGbcd sellGbcd 판매구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data2.data2.data3.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8954c3f23a359b824712f15188b922b7faa49e65eb1fcb4b9d22fce507981e39",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2044634081)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "snum",
+        "parameter_path": "$.body.data2.data2.data3.snum"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "시리얼번호",
+        "display_name": "snum",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f223f0c83d404c7444996664b55bdbdacf5e6f263c2301893a20c3d29dccfae9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "시리얼번호(타입:string, 예:8812345678912)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "snum",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/snum"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.snum snum 시리얼번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "stckGdYn",
+        "parameter_path": "$.body.data2.data2.data3.stckGdYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "재고안내여부",
+        "display_name": "stckGdYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9f6f2b43a8fdf532cf86937e0f2025eba60a029e149c60e234629086c151a4ce",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "재고안내여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "stckGdYn",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/stckGdYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.stckGdYn stckGdYn 재고안내여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitm1HexClrVal",
+        "parameter_path": "$.body.data2.data2.data3.uitm1HexClrVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성1 16진수색상값",
+        "display_name": "uitm1HexClrVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "77d8d27ce17999cbf76392a17a0c206d089f90f35c18725b89d90fba26947690",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성1 16진수색상값(타입:string, 예:FFFFFF)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitm1HexClrVal",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitm1HexClrVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.uitm1HexClrVal uitm1HexClrVal 상품속성1 16진수색상값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitm2HexClrVal",
+        "parameter_path": "$.body.data2.data2.data3.uitm2HexClrVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성2 16진수색상값",
+        "display_name": "uitm2HexClrVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9572f13cd0211d471f31dd027de42f5b2d0ec89eadd831b038b7850ee929a61a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성2 16진수색상값(타입:string, 예:FFFFFF)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitm2HexClrVal",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitm2HexClrVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.uitm2HexClrVal uitm2HexClrVal 상품속성2 16진수색상값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitm3HexClrVal",
+        "parameter_path": "$.body.data2.data2.data3.uitm3HexClrVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성3 16진수색상값",
+        "display_name": "uitm3HexClrVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "60c8f46fa269f9cef1c43dbcf9154f3fb64ee2bc6f790b8a946c0e445a471b2c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성3 16진수색상값(타입:string, 예:FFFFFF)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitm3HexClrVal",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitm3HexClrVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.uitm3HexClrVal uitm3HexClrVal 상품속성3 16진수색상값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitm4HexClrVal",
+        "parameter_path": "$.body.data2.data2.data3.uitm4HexClrVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성4 16진수색상값",
+        "display_name": "uitm4HexClrVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "28ad7255ab08e04d3e3667a43f04a9fd66dd635dc853fd72fe8b18f0a601d7d1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성4 16진수색상값(타입:string, 예:FFFFFF)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitm4HexClrVal",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitm4HexClrVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.uitm4HexClrVal uitm4HexClrVal 상품속성4 16진수색상값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitmCd",
+        "parameter_path": "$.body.data2.data2.data3.uitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성코드",
+        "display_name": "uitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "848f5a7e1a549669c49029909305b719d25f435d19ab828988d97c426f22b16c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성코드(타입:string, 예:00001)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.uitmCd uitmCd 상품속성코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "urlPath",
+        "parameter_path": "$.body.data2.data2.data3.urlPath"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "이미지 URL",
+        "display_name": "urlPath",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cb91fb6164b56ff835d40ae97bafa2199111bd24aacd21fd8cc05a50e6ed4af4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "이미지 URL(타입:string, 예:https://image.hmall.com/static/9/5/43/54/2154435930_0.jpg)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "urlPath",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/urlPath"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.data2.data3.urlPath urlPath 이미지 URL"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "621a14480d1f961e4e2f1f5efc913fde0302ba73185c1011672526aacf67ddc1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateUnitStockByExcelRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsList",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/updateUnitStockByExcel.do [상품 속성별 재고관리] 속성별 재입고요청 저장 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

@@ -1,0 +1,524 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/om/oma/selectSectMstList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "highSectId",
+        "parameter_path": "$.body.data1.data2.data3.highSectId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상위매장ID",
+        "display_name": "highSectId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0df5761e757fc99028c2eb69485b6c614dd51162fb176ca5c583ecc605097d59",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상위매장ID(타입:string, 예:258400)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "highSectId",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/highSectId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.highSectId highSectId 상위매장ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectAttrGbcd",
+        "parameter_path": "$.body.data1.data2.data3.sectAttrGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장속성구분코드",
+        "display_name": "sectAttrGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4fbd693dd30c2428b9719c6abd412f6c67c6ea8352267dd9d42532000ec49538",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장속성구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectAttrGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/sectAttrGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.sectAttrGbcd sectAttrGbcd 매장속성구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectDispGbcd",
+        "parameter_path": "$.body.data1.data2.data3.sectDispGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장전시구분코드",
+        "display_name": "sectDispGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7bb266beb20d5712e7177f51c22e9f8ece06a9cfacacc2b87c7a430b7f1f08c1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장전시구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectDispGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/sectDispGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.sectDispGbcd sectDispGbcd 매장전시구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectId",
+        "parameter_path": "$.body.data1.data2.data3.sectId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장ID",
+        "display_name": "sectId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7f14de973e9d2afea3f45e87a2b76ebca260eb52e30b6830d31c8ebc3619328a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장ID(타입:string, 예:322475)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectId",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/sectId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.sectId sectId 매장ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectIds",
+        "parameter_path": "$.body.data1.data2.data3.sectIds"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장ID",
+        "display_name": "sectIds",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f7920568d490d7b066b04af732f1c50f549ddb576b9ba11241ae659aa1a805cf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장ID(복수)(타입:string, 예:322475, 322494)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectIds",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/sectIds"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.sectIds sectIds 매장ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectNm",
+        "parameter_path": "$.body.data1.data2.data3.sectNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장명",
+        "display_name": "sectNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "07ff3fd153a8e98ceb44738ca10fef88618f42e8b36efe67ba0cb2ccbf7ebf95",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장명(타입:string, 예:봄신상 파격 세일)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectNm",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/sectNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.sectNm sectNm 매장명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "tlndYn",
+        "parameter_path": "$.body.data1.data2.data3.tlndYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "최하위여부",
+        "display_name": "tlndYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "83037f8e7173bfda2adfc42fe6fae72b27e21922b47c2ce44ac063445690fa3e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "최하위여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "tlndYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/tlndYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.tlndYn tlndYn 최하위여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venDispYn",
+        "parameter_path": "$.body.data1.data2.data3.venDispYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사전시여부",
+        "display_name": "venDispYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "48035d18bc9094a3be3515df9e1eb8eb49609ecf93f2969a97ed7b87e6b13eb5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사전시여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venDispYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venDispYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.venDispYn venDispYn 협력사전시여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "vtltStatGbcd",
+        "parameter_path": "$.body.data1.data2.data3.vtltStatGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "활성상태구분코드",
+        "display_name": "vtltStatGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3895f886a8ca88ccfceb0b95e081afb163c1cf9b6192b4feca260f8ac9c3e354",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "활성상태구분코드(타입:string, 예:H)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "vtltStatGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/vtltStatGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.data2.data3.vtltStatGbcd vtltStatGbcd 활성상태구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "05b489c13716bf5d8efff2fe03a0cd4d3c886c06cbcbea279e7f6e7fc87a6e5c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectSectMstListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/om/oma/selectSectMstList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/om/oma/selectSectMstList.do 매장 정보 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

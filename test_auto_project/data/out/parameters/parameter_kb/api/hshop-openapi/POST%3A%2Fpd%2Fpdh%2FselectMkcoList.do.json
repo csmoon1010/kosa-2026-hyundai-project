@@ -1,0 +1,352 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectMkcoList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "edtMkcoCode",
+        "parameter_path": "$.body.data1.data2.data3.edtMkcoCode"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제조사코드",
+        "display_name": "edtMkcoCode",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4fddf30a79b8fea23b1a88383c4bbcf13f374e3f10555392bdfdb12f8a94eaa4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제조사코드(타입:string, 예:e019)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "edtMkcoCode",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/edtMkcoCode"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.data2.data3.edtMkcoCode edtMkcoCode 제조사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "edtMkcoName",
+        "parameter_path": "$.body.data1.data2.data3.edtMkcoName"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제조사명",
+        "display_name": "edtMkcoName",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3cbe5215e7ec5333bc81e60e399e381f84deea0d1385ec710cfe0032e1360f48",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제조사명(타입:string, 예:안동마 부용농산 영농조합법인)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "edtMkcoName",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/edtMkcoName"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.data2.data3.edtMkcoName edtMkcoName 제조사명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "fetchRow",
+        "parameter_path": "$.body.data1.data2.data3.fetchRow"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "페이지당row수",
+        "display_name": "fetchRow",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5709d877431737d6809d362bd73f391d548918da6a0c19d3623b670230734edc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "페이지당row수(타입:integer, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "fetchRow",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/fetchRow"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.data2.data3.fetchRow fetchRow 페이지당row수"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "pageNum",
+        "parameter_path": "$.body.data1.data2.data3.pageNum"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "페이지번호",
+        "display_name": "pageNum",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "36560c563fb5c136e660f9a82e0c5b79378723317561751010be42e9b6249730",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "페이지번호(타입:integer, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "pageNum",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/pageNum"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.data2.data3.pageNum pageNum 페이지번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "synonymYn",
+        "parameter_path": "$.body.data1.data2.data3.synonymYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "동의어검색여부",
+        "display_name": "synonymYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0b66218da9071c32f26d95570ab74a2ab3b419bb33f0fa3c0c28f81dcfed1fe3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "동의어검색여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "synonymYn",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/synonymYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.data2.data3.synonymYn synonymYn 동의어검색여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "82ae281164c202d224d254a465603d07772de8af44a33ddfb85b836194dd1140",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMkcoListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMkcoList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMkcoList.do 제조사 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}
