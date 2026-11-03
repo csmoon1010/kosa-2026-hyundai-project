@@ -162,3 +162,14 @@ def test_analyze_select_end_to_end(tmp_path):
         raise AssertionError("규칙으로 다 골라져 API 고르기 LLM 은 안 부름")
     r = analyze_select(Q, llm=llm, trace_dir=tmp_path)
     assert r["apis"].status == "완료" and [x.selected.selector for x in r["apis"].api_selection_results] == [{"prgrGb": "P3"}, {"procGb": "PB3"}]
+
+
+def test_llm_sees_matching_fields_first():
+    """필드가 많은 API 도 업무 용어와 맞는 필드를 LLM 에 먼저 보여 준다 — 앞에서 자르면 brndCd(119번째)가 빠진다."""
+    from tap.apis.select import FIELDS_SHOWN, _show_fields
+    ops = {o["operation_id"]: o for o in json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))}
+    fields = ops["multiItem"]["request_fields"]
+    shown = _show_fields(fields, ["협력사코드", "브랜드코드"])
+    assert shown.startswith("venCd(협력사코드) ← 협력사코드, brndCd(브랜드코드) ← 브랜드코드, ")
+    assert shown.count("(") == FIELDS_SHOWN and "… 외 " in shown
+    assert "← " not in _show_fields(fields, [])

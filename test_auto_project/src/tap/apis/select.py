@@ -189,6 +189,27 @@ def _rule_pick(st: dict[str, Any], passed: list[tuple[Candidate, str, str | None
             "by": "규칙", "reason": reason}
 
 
+FIELDS_SHOWN = 15
+
+
+def _show_fields(fields: list[dict[str, Any]], terms: list[str]) -> str:
+    """LLM 에 보여 줄 요청 필드 — 업무 용어(제약 이름)와 맞는 필드를 먼저, 남는 자리는 명세 순서대로.
+
+    필드가 수백 개인 API(상품 등록 244개)는 앞에서 자르면 정작 필요한 필드(brndCd 119번째)가 빠진다.
+    """
+    seen: dict[str, str] = {}                   # 이름 → 표시 (데이터셋이 달라도 같은 이름은 한 번)
+    for t in terms:
+        for f in fields:
+            if f["name"] not in seen and (f["name"] == t or sim(t, f.get("label")) >= 0.8 or sim(t, f["name"]) >= 0.8):
+                seen[f["name"]] = f"{f['name']}({f.get('label') or ''}) ← {t}"
+    for f in fields:
+        if len(seen) >= FIELDS_SHOWN:
+            break
+        seen.setdefault(f["name"], f"{f['name']}({f.get('label') or ''})")
+    rest = len({f["name"] for f in fields}) - len(seen)
+    return ", ".join(seen.values()) + (f" … 외 {rest}개" if rest > 0 else "")
+
+
 def _llm_block(key: str, st: dict[str, Any], passed: list[tuple[Candidate, str, str | None]], g: StateGraph | None,
                ops: dict[str, dict[str, Any]], meta: dict[str, dict[str, Any]]) -> str:
     head = f"- key {key} | {g.name + ' 그래프' if g else '그래프 없음'} | {st['kind']} | " \
@@ -198,7 +219,7 @@ def _llm_block(key: str, st: dict[str, Any], passed: list[tuple[Candidate, str, 
     for i, (c, _, _) in enumerate(passed):
         m = meta.get(c.api_id, {})
         sel = " · ".join(f"{k}={v}" + (f" {c.action}" if c.action else "") for k, v in c.selector.items()) or "없음"
-        fields = ", ".join(f"{f['name']}({f.get('label') or ''})" for f in (ops.get(c.api_id, {}).get("request_fields") or [])[:15])
+        fields = _show_fields(ops.get(c.api_id, {}).get("request_fields") or [], st.get("terms") or [])
         lines.append(f"  {chr(65 + i)}) {c.api_name} ({c.api_id.rsplit('/', 1)[-1]}) | {m.get('description') or ''} | 구분값 {sel} | 요청 필드: {fields}")
     return "\n".join(lines)
 
@@ -232,6 +253,7 @@ def pick_messages(tp: TaskPlan, blocks: list[str]) -> list[dict[str, str]]:
 1. 단계의 출발 → 도착 상태 변화를 실제로 일으키는 API 를 고른다. 이름이 비슷해도 반대 동작(취소 · 반려)은 고르지 않는다.
    조회 단계는 그 상태의 데이터를 찾아 주는 API 를 고른다.
 2. 업무의 설정값(constraints)을 요청에 담을 수 있는 API 를 우선한다. (예: 가격을 정해야 하면 가격 필드가 있는 API)
+   요청 필드의 '← 용어' 표시는 그 업무 용어와 맞는 필드다. 요청 필드는 일부만 보이고 나머지는 '외 N개'로 줄였다.
 3. 맞는 후보가 없으면 "없음"을 고른다. 억지로 고르지 않는다.
 4. 고르기는 했지만 사람이 확인해야 할 점이 있으면 concerns 에 적는다. (예: 설치상품에도 쓰이는지 명세에 없음)
 5. reason 에 명세의 어떤 내용 때문에 골랐는지 한 문장으로 쓴다."""
@@ -257,8 +279,11 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
             unresolved.append(Unresolved(path_sequence=p.sequence, step=None, reason="경로 없음 — 경로 탐색 결과의 unresolved 참고"))
             continue
         g = by_id.get(p.graph_id or "")
+        task = next((t for t in tp.tasks if t.sequence == p.sequence), None)
+        cons = task.constraints if task else []
         for st in _steps_of(p, tp, g, metadata, operations):
             sf = g.state_field if g else None
+            st["terms"] = [c.name for c in cons if (c.role == "대상조건") == (st["kind"] == "조회")]   # 조회는 찾을 조건, 쓰기는 바꿀 값
             judged = [(c, *check(c, st["kind"], meta, req, sf)) for c in st["cands"]]
             cands = [ApiCandidate(api_id=c.api_id, name=c.api_name, selector=c.selector, score=round(c.score, 3),
                                   check=k, check_reason=w) for c, k, w in judged]
