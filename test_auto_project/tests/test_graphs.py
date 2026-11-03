@@ -69,7 +69,7 @@ def test_load_graphs_with_saved_graph(tmp_path):
     ids = [g.graph_id for g in graphs]
     assert {"ORD_STAT_GBCD", "SLITM_APRVL_GBCD", "ITEM_ATHZ_GBCD", "ITEM_SELL_GBCD"} <= set(ids)
     sell = next(g for g in graphs if g.graph_id == "ITEM_SELL_GBCD")
-    assert len(sell.edges) == 2 and "API 를 못 찾은 화살표 1개" in notes[0]       # api: null 은 뺀다
+    assert len(sell.edges) == 2 and any("ITEM_SELL_GBCD: API 를 못 찾은 화살표 1개" in n for n in notes)   # 예전 방식용 읽기 — api: null 은 뺀다
 
 
 def test_later_folder_overrides_same_id(tmp_path):
@@ -105,24 +105,19 @@ def test_plan_request_on_draft_graph(tmp_path):
     assert ir.alternative.writes == 0                                                    # 영구중단 상품을 바로 찾기
 
 
-def test_merge_saved_keeps_human_checked_values():
-    """화면 저장본은 API 를 매칭기 1순위로, 진입 상태를 [] 로 보낸다 — 기존 파일에서 사람이 확인한 값은 남긴다."""
+def test_merge_saved_keeps_graph_fields_only():
+    """화면 저장 — 노드 흐름만 남기고, 화면이 비워 보낸 그래프 칸(진입 상태 · 상태 필드 · 확인 키)만 기존 값 유지."""
     import yaml
     old = yaml.safe_load((ROOT / "data/graphs/ORD_STAT_GBCD.yaml").read_text(encoding="utf-8"))
     new = {"version": 1, "graph": dict(old["graph"], entry_states=[], state_field=None, name="주문상태 (화면)"),
            "code_group": old["code_group"],
-           "transitions": [{"name": "배송완료 취소", "from": "50", "to": "45", "api": "x:POST:/wrong.do", "selector": {}, "api_status": "확인 필요"},
-                           {"name": "새 화살표", "from": "10", "to": "20", "api": "x:POST:/new.do", "selector": {"a": "1"}, "api_status": "찾음"}],
-           "lookups": [{"api": "x:POST:/look.do", "selector": {}, "states": ["50"]}, {"api": "x:POST:/look.do", "selector": {}, "states": ["10"]}],
-           "layout": {"10": [0, 0], "20": [1, 0], "45": [2, 0], "50": [3, 0]}}
+           "transitions": [{"name": "배송완료 취소", "from": "50", "to": "45", "api": "x:POST:/wrong.do", "selector": {}, "api_status": "확인 필요"}],
+           "lookups": [{"api": "x:POST:/look.do", "selector": {}, "states": ["50"]}],
+           "layout": {"45": [2, 0], "50": [3, 0]}}
     m, kept = merge_saved(old, new)
     assert m["graph"]["name"] == "주문상태 (화면)" and m["graph"]["entry_states"] == ["25"] and m["graph"]["state_field"] == "lastDlvstPrgrGbcd"
-    back, fresh = m["transitions"]
-    assert (back["name"], back["selector"], back["api_status"]) == ("배송완료 취소", {"procGb": "PB3"}, "사람 확인")   # 이름은 화면, API 는 기존
-    assert back["api"].endswith("multiOshpBackProcess.do") and fresh["api"] == "x:POST:/new.do"          # 기존에 없던 화살표는 화면 값
-    states = [lk["states"] for lk in m["lookups"]]
-    assert ["10"] in states and not any(lk["api"] == "x:POST:/look.do" and lk["states"] == ["50"] for lk in m["lookups"])
-    assert any("API" in k for k in kept) and any("entry_states" in k for k in kept)
+    assert m["transitions"] == [{"name": "배송완료 취소", "from": "50", "to": "45"}] and "lookups" not in m   # API · 조회는 그래프에 두지 않는다
+    assert any("entry_states" in k for k in kept)
     assert merge_saved(None, new) == (new, [])                                                          # 새 그래프는 그대로
 
 
@@ -140,12 +135,13 @@ def test_flow_only_graph_gets_lookups_at_planning_time(tmp_path):
     graphs, _ = load_graphs([ROOT / "data/graphs", d], keep_unmatched=True)
     meta = json.loads((ROOT / "data/out/api_metadata.json").read_text(encoding="utf-8"))
     ops = json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))
-    ordg = next(g for g in graphs if g.graph_id == "ORD_STAT_GBCD")
-    before = {n.code: n.lookup for n in ordg.nodes}
     notes = attach_lookups(graphs, meta, ops, ["pd", "od", "ds"])
     sell = next(g for g in graphs if g.graph_id == "ITEM_SELL_GBCD")
     found = {n.code: n.lookup for n in sell.nodes if n.lookup}
-    assert set(found) >= {"00", "19"} and all(not lk.pinned for lk in found.values())      # 미리 정하지 않은 조회 — ③ 이 다시 고른다
-    assert found["00"].selector == {"itemSellGbcdIn": "00"}
-    assert {n.code: n.lookup for n in ordg.nodes} == before                                 # 사람이 조회 방법을 적은 그래프는 그대로
-    assert any(x.startswith("ITEM_SELL_GBCD: 조회 방법이 적혀 있지 않아") for x in notes)
+    assert set(found) >= {"00", "19"} and found["00"].selector == {"itemSellGbcdIn": "00"}
+    ordg = next(g for g in graphs if g.graph_id == "ORD_STAT_GBCD")                         # 소스로 확인했던 조회 방법(정답지)과 같은 상태 · 같은 조회
+    gold = Y.safe_load((ROOT / "data/golden/ORD_STAT_GBCD.yaml").read_text(encoding="utf-8"))
+    want = {str(s): (lk["api"], {k: str(v) for k, v in lk["selector"].items()}) for lk in gold["lookups"] for s in lk["states"] if str(s) in {n.code for n in ordg.nodes}}
+    got = {n.code: (n.lookup.api_id, n.lookup.selector) for n in ordg.nodes if n.lookup}
+    assert got == want                                                                       # '찾음'만 붙여 '완료(80)'처럼 잘못 붙는 조회가 없다
+    assert any(x.startswith("ITEM_SELL_GBCD: 조회로 찾을 수 있는 상태를 매칭기로 정함") for x in notes)

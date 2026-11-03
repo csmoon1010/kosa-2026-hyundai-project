@@ -22,9 +22,18 @@ ITEM = {"graph": {"id": "TEST_ITEM", "name": "시험상품", "domain": "pd", "en
         "lookups": []}
 
 
+def _attached(graphs):
+    """그래프는 노드 흐름만 — 조회로 찾을 수 있는 상태는 경로 탐색 때 매칭기로 (cli._graphs 와 같게)."""
+    from tap.graph.match import attach_lookups
+    meta = json.loads((ROOT / "data/out/api_metadata.json").read_text(encoding="utf-8"))
+    ops = json.loads((ROOT / "data/out/api_operations.json").read_text(encoding="utf-8"))
+    attach_lookups(graphs, meta, ops, ["pd", "od", "ds"])
+    return graphs
+
+
 @pytest.fixture()
 def graphs():
-    return load_graphs([ROOT / "data/graphs"])[0]
+    return _attached(load_graphs([ROOT / "data/graphs"], keep_unmatched=True)[0])
 
 
 def G(graphs, gid):
@@ -100,6 +109,7 @@ def test_new_without_create_edge_falls_back_to_lookup(graphs):
     p = run(tp(q, task(origin="신규", phrases=[q])), graphs, choice(to="출고", phrases=["출고된 주문"]))[0].paths[0]
     assert (p.origin, p.start_by, p.from_state, p.status) == ("신규", "조회", "출고대기", "ok")   # origin 과 start_by 가 다르다
     assert any("새로 만들 수 없어" in n for n in p.notes)                                # 숨기지 않는다
+    assert all(a.steps for a in p.alternatives)                                          # 이미 출고인 주문을 그대로 넘기는 대안은 없다 (쓰기 0회)
 
 
 def test_new_with_create_edge_and_requires(graphs):
@@ -127,8 +137,9 @@ def test_no_target_and_no_path(graphs):
     q2 = "승인완료된 상품 하나 만들어줘"
     pp2 = run(tp(q2, task(origin="신규", domain="PD", phrases=[q2])), graphs,
               choice(graph="SLITM_APRVL_GBCD", to="승인완료", phrases=["승인완료된 상품"]))[0]
-    p = pp2.paths[0]
-    assert (p.status, p.to_state, p.from_state) == ("경로 없음", "승인완료", "시작") and "새로 만들기 화살표가 없고" in pp2.unresolved[0]
+    p = pp2.paths[0]                     # 승인완료 상품을 조회로 찾을 수는 있지만 쓰기 0회 — '만들어줘'에 그대로 넘기지 않는다
+    assert (p.status, p.to_state, p.from_state) == ("경로 없음", "승인완료", "시작")
+    assert "새로 만들 수도, 앞 상태에서 진행시켜 만들 수도 없습니다" in pp2.unresolved[0]
 
 
 def test_no_graph_task_and_domain_fix(graphs):

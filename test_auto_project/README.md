@@ -51,7 +51,7 @@ test_auto_project/
 cd test_auto_project
 uv venv .venv && uv pip install --python .venv/bin/python -r requirements.txt
 PYTHONPATH=src .venv/bin/python -m tap.cli build      # data/out/ 생성
-PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # 자연어 → 목표 → 경로 → Scenario IR (data/out/ir/)
+PYTHONPATH=src .venv/bin/python -m tap.cli plan "출고된 주문 1건 만들어줘."   # (예전 방식) 목표 하나 → Scenario IR — API 가 적힌 정답지 그래프에서만
 PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주문한 뒤 배송완료까지"   # 자연어 → 업무 목록 (도메인 · 신규/기존 · 제약, 그래프는 안 봄)
 PYTHONPATH=src .venv/bin/python -m tap.cli path "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 업무 목록 → 업무마다 그래프 · 출발/목표 상태 · 경로
 PYTHONPATH=src .venv/bin/python -m tap.cli select "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 경로 → 단계마다 API + 구분값 (고정 · 선택 · 가선택 · 보류)  · 트레이스는 data/out/traces/ (예산 · 가격: data/config/llm.yaml)
@@ -149,7 +149,7 @@ overrides 위에 합친다. 잘못된 규칙이면 빌드가 거절하고 파일
 상태 필드는 코드 그룹 ID 를 낙타 표기로 바꾼 응답 필드에서 추정한다 (SLITM_APRVL_GBCD → slitmAprvlGbcd).
 서버로 열고 저장하면 `data/graphs/<그룹ID>.yaml` 에 쓰고, 다음에 열 때 그 저장본(배치 · 화살표 · 외부 변화)으로 다시 연다.
 **그래프는 data/graphs 한 곳**: 손으로 쓴 파일도 화면에서 그린 것도 같은 폴더 · 같은 파일 이름(코드 그룹 ID)이다.
-있던 파일을 화면에서 저장하면 그 위에 합친다 — 화살표 · 이름 · 배치는 화면 값, 기존 파일에서 사람이 확인한 API · 조회 방법 · 진입 상태 · 상태 필드는 유지.
+있던 파일을 화면에서 저장하면 그 위에 합친다 — 그래프는 노드 흐름(상태 · 화살표 · 업무 이름 · 배치)만 갖고, 화면이 비워 보낸 진입 상태 · 상태 필드 · 확인 키만 기존 값을 유지한다. API 와 "조회로 찾을 수 있는 상태"는 그래프에 두지 않고 시나리오를 만들 때(② · ③) API Metadata 로 정한다.
 이전 파일은 `data/out/graph_history/` 에 남는다. `data/golden/ORD_STAT_GBCD.yaml` 은 채점 · 테스트용 고정 복사본(정답지)이라 시나리오 생성에 쓰지 않는다.
 
 - 화면: 시나리오 등록 · 시나리오 실행 · 실행 이력 · 관리자 메뉴(전사 / 도메인)

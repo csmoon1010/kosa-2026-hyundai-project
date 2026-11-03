@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import deque
 from datetime import datetime
 from pathlib import Path
@@ -69,7 +70,8 @@ class Approval(BaseModel):
 
 
 INJECTION_PATTERNS = ["이전 지시", "무시하고", "시스템 지시", "새 규칙", "###", "답하라", "승인 없이", "승인 절차 없이",
-                      "승인 단계는 건너", "graph_id", "api_id", "procGb="]
+                      "승인 단계는 건너"]
+FIELD_VALUE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*\s*[=:]\s*\S+")    # '필드=값' 모양 — 사람이 업무를 말할 때는 쓰지 않는다
 
 
 def load_permissions(path: str | Path | None) -> dict[str, Any]:
@@ -80,11 +82,56 @@ def load_permissions(path: str | Path | None) -> dict[str, Any]:
             "injection_patterns": raw.get("injection_patterns") or INJECTION_PATTERNS}
 
 
-def detect_injections(utterance: str, flagged: list[str], perms: dict[str, Any]) -> list[str]:
-    """요청 속 지시문 감지 — ① LLM 이 적은 지시문(원문에 있는 것만) + ② 코드 패턴. 하나라도 있으면 전체 차단."""
+def _field_names(model: type[BaseModel], seen: set | None = None) -> set[str]:
+    """출력 모델의 칸 이름 (안쪽 모델까지)."""
+    seen = set() if seen is None else seen
+    if model in seen:
+        return set()
+    seen.add(model)
+    names = set(model.model_fields)
+    for f in model.model_fields.values():
+        for t in [f.annotation, *getattr(f.annotation, "__args__", ())]:
+            for x in [t, *getattr(t, "__args__", ())]:
+                if isinstance(x, type) and issubclass(x, BaseModel):
+                    names |= _field_names(x, seen)
+    return names
+
+
+def system_identifiers(meta: list[dict[str, Any]], graphs: list[StateGraph]) -> dict[str, list[str]]:
+    """요청에 나올 일이 없는 우리 시스템 식별자 — API Metadata · 그래프 · 출력 스키마에서 자동으로 뽑는다.
+
+    API 가 늘거나 그래프 · 출력 칸이 바뀌면 감지 목록도 저절로 바뀐다 (손으로 적는 목록이 아님).
+    출력 칸은 밑줄이 있는 이름만 — sequence · domain · count 같은 일반 낱말은 정상 요청에도 나온다.
+    """
+    from tap.goal.extract import TaskPlan
+    from tap.graph.paths import PathPlan, choice_schema
+    from tap.apis.select import ApiSelection
+    out_fields: set[str] = set()
+    for m in (TaskPlan, PathPlan, choice_schema(graphs), ApiSelection, Gate):
+        out_fields |= _field_names(m)
+    return {
+        "API 구분값 필드": sorted({s["field"] for m in meta for s in m.get("selectors") or []}),
+        "API 이름": sorted({m["operation_id"] for m in meta if m.get("operation_id")}),
+        "그래프": sorted({x for g in graphs for x in (g.graph_id, g.state_field) if x}),
+        "출력 칸": sorted(n for n in out_fields if "_" in n.strip("_")),
+    }
+
+
+def detect_injections(utterance: str, flagged: list[str], perms: dict[str, Any],
+                      known: dict[str, list[str]] | None = None) -> list[str]:
+    """요청 속 지시문 감지 — 하나라도 있으면 전체 차단.
+
+    ① LLM 이 적은 지시문(원문에 있는 것만) ② 지시문 낱말(permissions.yaml)
+    ③ 우리 시스템 식별자(구분값 필드 · API 이름 · 그래프 · 출력 칸 — system_identifiers) ④ '필드=값' 모양
+    ③ ④ 는 특정 API 의 파라미터(procGb 등)를 손으로 적지 않고, 업무를 말하는 사람은 쓰지 않는 말로 잡는다.
+    """
     hits = [f"LLM 이 지시문으로 봄: '{x}'" for x in flagged]
     low = utterance.lower()
     hits += [f"지시문 패턴 '{w}'" for w in perms["injection_patterns"] if w.lower() in low]
+    for kind, words in (known or {}).items():
+        hits += [f"시스템 식별자 · {kind} '{w}'" for w in words
+                 if re.search(rf"(?<![A-Za-z0-9_]){re.escape(w)}(?![A-Za-z0-9_])", utterance, re.IGNORECASE)]
+    hits += [f"'필드=값' 모양 '{m}'" for m in FIELD_VALUE.findall(utterance)]
     return hits
 
 

@@ -3,9 +3,10 @@
 ① 후보 찾기 — API 카탈로그: 사용 중 · 종류(쓰기/조회) · 도메인으로 대상 API 를 추리고,
    화살표 이름 · 출발/도착 상태를 API 이름 · 별칭 · 구분값 이름과 맞춘다 (매칭기 tap.graph.match — 화면 미리보기와 같은 점수)
 ② 확정 검사 — API 메타데이터: 종류 · 사용 여부 · 구분값 필드가 요청에 있는지 · 값이 구분값 목록에 있는지 · 되돌림 불가
-③ 고르기 — 그래프에 사람이 고정한 API / 통과 1개 / 1순위가 확실 → 규칙, 비슷한 후보 여럿 → LLM (후보 안에서만)
+③ 고르기 — 통과 1개 / 1순위가 확실 → 규칙, 비슷한 후보 여럿 → LLM (후보 안에서만)
+그래프는 노드 흐름만 갖는다 — 그래프 파일에 API 가 적혀 있어도 쓰지 않고 늘 여기서 고른다. 사람이 바로잡는 곳은 API Metadata(규칙 입력).
 
-selection_status: 고정(그래프에 사람이 확인) · 선택 · 가선택(사람 확인 필요) · 보류(고를 API 없음)
+selection_status: 선택 · 가선택(사람 확인 필요) · 보류(고를 API 없음)
 고른 API 는 시나리오 승인본(Scenario IR)에 고정한다 — 실행 때 다시 고르지 않는다.
 """
 from __future__ import annotations
@@ -25,7 +26,7 @@ SCOPE = ["pd", "od", "ds"]                      # 1차 범위 — 후보를 찾�
 MARGIN = 0.15                                   # 1순위가 2순위보다 이만큼 높으면 규칙이 고른다
 TOP = 5
 KIND_API = {"조회": "read", "상태변경": "write", "수정": "write"}
-STATUS = ("고정", "선택", "가선택", "보류")
+STATUS = ("선택", "가선택", "보류")
 
 
 class ApiCandidate(BaseModel):
@@ -53,7 +54,7 @@ class StepSelection(BaseModel):
     api_candidates: list[ApiCandidate]
     selected: Selected | None
     selection_status: Literal[STATUS]  # type: ignore[valid-type]
-    selected_by: Literal["그래프", "규칙", "LLM"] | None
+    selected_by: Literal["규칙", "LLM"] | None
     selection_reason: str
 
     model_config = {"populate_by_name": True}
@@ -138,7 +139,7 @@ def _no_graph_candidates(kind: str, action: str, names: list[str], metadata: lis
 
 def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[dict[str, Any]],
               operations: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """경로 하나 → 고를 단계들 (kind · edge · from · to · 고정 API · 후보)."""
+    """경로 하나 → 고를 단계들 (kind · edge · from · to · 후보)."""
     ops = {o["api_id"]: o for o in operations}
     out: list[dict[str, Any]] = []
     if g is None:                               # 그래프 없는 업무: 대상 찾기(대상조건이 있으면) + 수정
@@ -147,8 +148,8 @@ def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[di
         put = [c.name for c in task.constraints if c.role == "설정값"]
         if find:
             out.append({"step": 0, "kind": "조회", "edge": f"{task.action} 대상 찾기 ({', '.join(find)})", "from": None, "to": None,
-                        "pinned": None, "cands": _no_graph_candidates("조회", task.action, find, metadata, ops), "loose": True})
-        out.append({"step": 1, "kind": "수정", "edge": task.action, "from": None, "to": None, "pinned": None,
+                        "cands": _no_graph_candidates("조회", task.action, find, metadata, ops), "loose": True})
+        out.append({"step": 1, "kind": "수정", "edge": task.action, "from": None, "to": None,
                     "cands": _no_graph_candidates("수정", task.action, put, metadata, ops), "loose": True})
         return out
     code = lambda name: NEW if name == NEW else g.code_of(name)
@@ -156,13 +157,11 @@ def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[di
         c = code(p.from_state)
         node = g.node(c)
         out.append({"step": 0, "kind": "조회", "edge": f"{node.name} 데이터 찾기", "from": None, "to": node.name,
-                    "pinned": (node.lookup.api_id, node.lookup.selector) if node.lookup and node.lookup.pinned else None,
                     "cands": match_lookup(node.name, c, metadata, operations, g.state_field, SCOPE, top=TOP), "loose": False})
     for s in p.steps:
         a, b = code(s.from_), code(s.to)
         e = next((x for x in g.edges if (x.from_code, x.to_code, x.name) == (a, b, s.edge)), None)
         out.append({"step": s.step, "kind": "상태변경", "edge": s.edge, "from": s.from_, "to": s.to,
-                    "pinned": (e.api_id, e.selector) if e and e.api_pinned else None,
                     "cands": match_edge(s.edge, s.from_, s.to, metadata, SCOPE, top=TOP, operations=operations,
                                         state_field=g.state_field, to_code=b), "loose": False})
     return out
@@ -265,18 +264,6 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
                                   check=k, check_reason=w) for c, k, w in judged]
             row = {"path_sequence": p.sequence, "step": st["step"], "kind": st["kind"], "domain": p.domain,
                    "edge": st["edge"], "from": st["from"], "to": st["to"], "api_candidates": cands}
-            if st["pinned"] and st["pinned"][0]:
-                api, sel = st["pinned"]
-                pin = Candidate(api_id=api, api_name=meta.get(api, {}).get("api_name", api), selector=sel, score=1.0)
-                k, w = check(pin, st["kind"], meta, req, sf)
-                if k != "탈락":
-                    if all((c.api_id, c.selector) != (api, sel) for c in cands):
-                        cands.insert(0, ApiCandidate(api_id=api, name=pin.api_name, selector=sel, score=1.0, check=k, check_reason=w))
-                    rows.append({**row, "selected": Selected(api_id=api, selector=sel), "selection_status": "고정",
-                                 "selected_by": "그래프", "selection_reason": "그래프에 사람이 확인해 고정한 API" + (f" (주의: {w})" if w else "")})
-                    continue
-                unresolved.append(Unresolved(path_sequence=p.sequence, step=st["step"],
-                                             reason=f"그래프에 고정한 API {api} 가 확정 검사에서 탈락({w}) — 후보에서 다시 고름"))
             passed = [(c, k, w) for c, k, w in judged if k != "탈락" and c.score >= CHECK]   # 점수가 '없음' 기준 미만이면 보여 주기만
             passed.sort(key=lambda x: -x[0].score)
             r = _rule_pick(st, passed)
@@ -324,8 +311,6 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
             ok = True
             for st in _steps_of(ap, tp, by_id.get(p.graph_id or ""), metadata, operations):
                 g = by_id.get(p.graph_id or "")
-                if st["pinned"] and st["pinned"][0]:
-                    continue
                 judged = [(c, *check(c, st["kind"], meta, req, g.state_field if g else None)) for c in st["cands"]]
                 r = _rule_pick(st, sorted([x for x in judged if x[1] != "탈락" and x[0].score >= CHECK], key=lambda x: -x[0].score))
                 ok = ok and r is not None and r["status"] != "보류"
