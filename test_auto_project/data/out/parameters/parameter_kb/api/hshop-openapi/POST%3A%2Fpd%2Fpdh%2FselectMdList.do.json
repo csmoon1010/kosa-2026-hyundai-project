@@ -1,0 +1,395 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectMdList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "deptOrgnCd",
+        "parameter_path": "$.body.data1.data2.data3.deptOrgnCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "부서조직코드",
+        "display_name": "deptOrgnCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2e1dfe2ca4c6fef41bb7a73a5b11b5907804374fb78a585bd109bc7d4c341628",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "부서조직코드(타입:string, 예:241000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "deptOrgnCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/deptOrgnCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.deptOrgnCd deptOrgnCd 부서조직코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "hdUserId",
+        "parameter_path": "$.body.data1.data2.data3.hdUserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "hdUserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7dc68e933034caa3606f338747e3cb4320bbaebb37726d6b4ce71403e122bf6d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:2112892)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "hdUserId",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/hdUserId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.hdUserId hdUserId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mdCd",
+        "parameter_path": "$.body.data1.data2.data3.mdCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "MD코드",
+        "display_name": "mdCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "da263122461d79546d800d7c2f5eb20a69480057c2fb39f4a32a983095368f43",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "MD코드(타입:string, 예:2520)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mdCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.mdCd mdCd MD코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mdNm",
+        "parameter_path": "$.body.data1.data2.data3.mdNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "MD명",
+        "display_name": "mdNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0f75701f46cb2856b32051d7cd4643de0cc3990700b8cb63ad67e4a72d8b0c25",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "MD명(타입:string, 예:보석(박지현))",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mdNm",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.mdNm mdNm MD명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mdaGbcd",
+        "parameter_path": "$.body.data1.data2.data3.mdaGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품매체구분코드",
+        "display_name": "mdaGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5ba81c69a930072c0c731ea2f9cb0e9268c9663d6560d049159c67016502b08d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품매체구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mdaGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdaGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.mdaGbcd mdaGbcd 상품매체구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rdoGB",
+        "parameter_path": "$.body.data1.data2.data3.rdoGB"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "업무지원MD여부",
+        "display_name": "rdoGB",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e71e6eaa9ed778067a4f34b8836a0d46f1fabc3311a1b2610195ad4626a071b6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "업무지원MD여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rdoGB",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/rdoGB"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.data2.data3.rdoGB rdoGB 업무지원MD여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5f68df9d7e3faeb9bf862480b9aadc3b52325a612a3b5b95a3bafe429485a708",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectMdListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/selectMdList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/selectMdList.do MD 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

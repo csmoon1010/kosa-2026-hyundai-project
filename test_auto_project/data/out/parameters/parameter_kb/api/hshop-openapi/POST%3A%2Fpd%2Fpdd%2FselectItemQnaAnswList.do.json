@@ -1,0 +1,223 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "almlCd",
+        "parameter_path": "$.body.data1.data2.data3.almlCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제휴몰코드",
+        "display_name": "almlCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "446e99e4f87829f23d38c2353a4094bab2b91522894adcf75a4ccf51b2ffdaf4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemQnaAnswListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제휴몰코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "almlCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/almlCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/selectItemQnaAnswList.do 상품qna 답변 목록 조회 $.body.data1.data2.data3.almlCd almlCd 제휴몰코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemQnaQstnNo",
+        "parameter_path": "$.body.data1.data2.data3.itemQnaQstnNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품QNA질문번호",
+        "display_name": "itemQnaQstnNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b7ff1744ea793f28e2ba83b9e6a32794ad4dfc4baa92c4b053bb7b246a6d52c7",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemQnaAnswListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품QNA질문번호(타입:string, 예:148427557)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemQnaQstnNo",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemQnaQstnNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/selectItemQnaAnswList.do 상품qna 답변 목록 조회 $.body.data1.data2.data3.itemQnaQstnNo itemQnaQstnNo 상품QNA질문번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8b10fefa24531c1c2137d6482e0a8dbeb9401095c2c351ff7e34ea1806be574d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemQnaAnswListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/selectItemQnaAnswList.do 상품qna 답변 목록 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/selectItemQnaAnswList.do 상품qna 답변 목록 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/selectItemQnaAnswList.do 상품qna 답변 목록 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

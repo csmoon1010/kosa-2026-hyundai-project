@@ -1,0 +1,108 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectBrndList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsCond",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.pageNum",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/pageNum",
+      "name": "pageNum",
+      "location": "body",
+      "type": "integer",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "페이지번호타입:string, 예:1)",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.fetchRow",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/fetchRow",
+      "name": "fetchRow",
+      "location": "body",
+      "type": "integer",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "20",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.brndCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/brndCd",
+      "name": "brndCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "001869",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.brndNm",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/brndNm",
+      "name": "brndNm",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "이니스프리",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.synonymYn",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/synonymYn",
+      "name": "synonymYn",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "Y",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsCond\"><rows><row><pageNum>페이지번호타입:string, 예:1)</pageNum><fetchRow>20</fetchRow><brndCd>001869</brndCd><brndNm>이니스프리</brndNm><synonymYn>Y</synonymYn></row></rows></Dataset></Root>"
+}

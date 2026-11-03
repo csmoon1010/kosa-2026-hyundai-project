@@ -200,6 +200,70 @@
   .domchip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);font-weight:600;}
   .domchip:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
   span.lb{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+  .ir-draft-area{width:100%;min-width:0;box-sizing:border-box;margin-top:16px;}
+  .ir-log-wrap{max-height:560px;overflow:auto;margin-top:12px;}
+  .ir-log-table{width:100%;min-width:760px;table-layout:fixed;}
+  .ir-run-history{margin-top:28px;padding-top:18px;border-top:1px solid var(--hair);}
+  .ir-run-filters{display:flex;flex-wrap:wrap;align-items:end;gap:10px;margin:12px 0;}
+  .ir-run-filters label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-2);}
+  .ir-run-filters input[type="date"]{min-height:36px;padding:5px 8px;border:1px solid var(--hair);border-radius:5px;background:var(--panel);color:var(--ink);font:inherit;}
+  .ir-run-option-filters{min-width:0;margin:0;padding:8px 10px;border:1px solid var(--hair);border-radius:6px;}
+  .ir-run-option-filters legend{font-size:12px;color:var(--ink-2);}
+  .ir-run-option-filters .ir-run-filter-enable,.ir-run-option-filters .ir-run-option{display:inline-flex;flex-direction:row;align-items:center;gap:5px;margin:3px 8px 3px 0;font-size:12px;}
+  .ir-run-table{min-width:1120px;}
+  .ir-log-table th{position:sticky;top:0;background:var(--paper,#fff);z-index:1;}
+  .ir-log-table td{vertical-align:top;overflow-wrap:anywhere;}
+  .ir-log-table th:nth-child(4){width:170px;}
+  .ir-log-table tbody tr{cursor:pointer;}
+  .ir-log-table tbody tr[data-selected="true"]{background:var(--accent-soft);}
+  .ir-log-select{font:inherit;color:inherit;background:transparent;border:0;padding:0;text-align:left;cursor:pointer;}
+  .ir-log-select:focus-visible,.ir-log-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .ir-log-detail{margin-top:16px;border:1px solid var(--hair);border-radius:8px;min-width:0;padding:16px;}
+  .ir-log-detail h3{margin:0 0 12px;overflow-wrap:anywhere;}
+  .ir-log-tabs{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--hair);margin-bottom:10px;}
+  .ir-log-tabs button{font:inherit;min-height:44px;padding:8px 2px;background:transparent;border:0;border-bottom:2px solid transparent;color:var(--ink-2);cursor:pointer;}
+  .ir-log-tabs button[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--accent);font-weight:600;}
+  .ir-log-detail pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:480px;overflow:auto;font-size:12px;padding:12px;background:var(--bg);border-radius:6px;}
+  .ir-log-detail .ir-json-key{color:var(--accent);}
+  .ir-log-detail .ir-json-string{color:var(--ink-2);}
+  .ir-log-detail .ir-json-literal{color:var(--accent);font-weight:600;}
+  #scenarioIRDraft .ir-step-section{margin:20px 0;padding:18px;border:1px solid var(--hair);border-radius:10px;min-width:0;}
+  #scenarioIRDraft [data-mode]{max-width:100%;padding:7px 10px;border:1px solid var(--hair);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;}
+  #scenarioIRDraft [data-mode-status]{white-space:pre-wrap;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px;align-items:start;margin-top:16px;}
+  #scenarioIRDraft .ir-step-list{display:grid;gap:18px;min-width:0;}
+  #scenarioIRDraft .ir-step-node{position:relative;display:flex;flex-direction:column;gap:7px;width:100%;min-height:100px;padding:12px;text-align:left;font:inherit;background:var(--panel);color:var(--ink);border:1px solid var(--hair);border-radius:8px;cursor:pointer;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-node:not(:last-child)::after{content:'↓';position:absolute;left:16px;bottom:-20px;color:var(--muted);}
+  #scenarioIRDraft .ir-step-node[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);}
+  #scenarioIRDraft .ir-step-node:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  #scenarioIRDraft .ir-step-kicker{display:block;font-size:12px;color:var(--muted);}
+  #scenarioIRDraft .ir-step-state{font-size:12px;color:var(--ink-2);}
+  #scenarioIRDraft .ir-step-detail{min-width:0;}
+  #scenarioIRDraft .ir-step-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  #scenarioIRDraft .ir-step-context{background:var(--panel-2);border-radius:7px;padding:12px;margin:12px 0 16px;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-context p{margin:5px 0 0;white-space:pre-wrap;}
+  #scenarioIRDraft .ir-step-context [data-step-task]{margin-bottom:8px;}
+  #scenarioIRDraft .ir-step-api{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 16px;margin-bottom:18px;}
+  #scenarioIRDraft .ir-step-api>div:first-child,#scenarioIRDraft .ir-step-api>div:last-child{grid-column:1/-1;}
+  #scenarioIRDraft .ir-step-api code{font-family:var(--mono);font-size:12px;overflow-wrap:anywhere;}
+  #scenarioIRDraft .ir-step-detail table{width:100%;table-layout:fixed;margin-bottom:18px;}
+  #scenarioIRDraft .ir-step-detail td,#scenarioIRDraft .ir-step-detail th{overflow-wrap:anywhere;vertical-align:top;}
+  #scenarioIRDraft .ir-step-detail pre,#scenarioIRDraft .ir-json-view pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel-2);padding:14px;border-radius:7px;font-family:var(--mono);font-size:12px;}
+  #scenarioIRDraft .ir-xml-tag,#scenarioIRDraft .ir-json-key{color:var(--accent);}
+  #scenarioIRDraft .ir-xml-change{background:var(--good-soft);}
+  #scenarioIRDraft .ir-json-string{color:var(--ink-2);}
+  #scenarioIRDraft .ir-json-literal{color:var(--accent);font-weight:600;}
+  #scenarioIRDraft .ir-json-view{margin-top:18px;min-width:0;}
+  #scenarioIRDraft .ir-json-view summary{cursor:pointer;font-weight:600;}
+  #scenarioIRDraft .ir-json-view pre{max-height:640px;overflow:auto;}
+  @media(max-width:760px){
+    #scenarioIRDraft .ir-step-section{padding:12px;}
+    #scenarioIRDraft .ir-step-layout{grid-template-columns:1fr;}
+    #scenarioIRDraft .ir-step-node{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 12px;}
+    #scenarioIRDraft .ir-step-node strong{grid-column:1;}
+    #scenarioIRDraft .ir-step-state{grid-column:2;grid-row:1/3;align-self:center;}
+    #scenarioIRDraft .ir-step-detail{border-top:1px solid var(--hair);padding-top:14px;}
+  }
   .reggrid{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,7fr);gap:16px;align-items:start;}
   .regleft #scUtt{min-height:150px;}
   .regright{min-width:0;}
@@ -833,6 +897,7 @@
 </style>
 <script src="tap-data.js"></script>
 <script src="graph-editor.js"></script>
+<link rel="stylesheet" href="preprocessing-ui.css">
 </head>
 <body>
 <div class="app">
@@ -843,10 +908,12 @@
     </div>
     <div class="pagehd-r">
       <span id="dataBadge" hidden></span>
+      <button class="btn btn-ghost btn-sm" id="refreshPreprocessing" type="button">전처리 산출물 갱신</button>
       <button class="btn btn-primary" id="newBtn">＋ 새 시나리오 등록</button>
     </div>
   </header>
 
+  <p id="preprocessingStatus" role="status" aria-live="polite"></p>
   <div class="shell">
     <nav class="side" id="side" aria-label="메뉴"></nav>
     <div class="views">
@@ -885,7 +952,7 @@
         <div id="realSamples"></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" id="agentBtn" style="width:100%" hidden>3단계 분석 · 승인 (의도 → 경로 → API)</button>
+        <button class="btn btn-primary" id="agentBtn" style="width:100%" hidden>분석 (의도 → 경로 → API)</button>
         <button class="btn btn-primary" id="extractBtn" style="width:100%">시나리오 생성</button>
       </div>
       <div id="confirmOut"></div>
@@ -895,6 +962,7 @@
       <div id="extractOut"></div>
     </div>
     </div>
+    <section class="card ir-draft-area" id="scenarioIRDraft" aria-label="IR 초안 생성 및 결과"></section>
     <p class="proto" id="protoNote">화면 프로토타입입니다. 데이터는 시나리오로 심어둔 값이며 실제 API를 호출하지 않습니다.</p>
   </div>
 
@@ -3569,7 +3637,7 @@ const DOCS = [
   ['meta',     'API MetaData',     'API별 성격 · 되돌림 불가 · 구별 메모'],
   ['schema',   'Canonical Schema', 'Swagger 를 정규화한 요청 필드와 타입'],
   ['tool',     'Tool Registry',    '실행기가 호출하는 도구 목록'],
-  ['baseline', 'Baseline Request', '실제로 성공한 요청 전문'],
+  ['baseline', 'Baseline Request', '예시 기본값 · 사용자 등록 요청값'],
   ['pkb',      'Parameter KB',     '필드 의미 · 별칭 · 값 해석 · 기본값'],
   ['resp',     'Response Outputs', '응답에서 꺼내 다음 호출에 넘기는 값'],
   ['sv',       'State Vocabulary', '그래프 노드가 되는 상태 · 동의어 · 검증']
@@ -4956,7 +5024,7 @@ function openRuleHist(place){
 function openBlHist(){
   renderBaseline();
   openModal(`Baseline Request · ${DOM_NAME(S.dom)}`, '등록된 내역', `<div id="histBox">${el('blList').innerHTML}</div>`
-    + '<p class="note" style="margin-top:10px">전문 등록 = 실제로 성공한 요청 값(data/baselines). 미등록은 실행할 때 명세 예시값 · 기본값으로 조립합니다.</p>');
+    + '<p class="note" style="margin-top:10px">예시 초기값과 사용자 등록값을 구분합니다. 등록 상태는 실제 API 호출 성공 여부를 의미하지 않습니다.</p>');
   document.querySelector('#modal .modal-box').classList.add('wide-box');
 }
 
@@ -5077,6 +5145,20 @@ function agStage(tr, name){
   return `<span class="note" style="margin:0">${msTxt(s.ms)} · LLM ${s.llm_calls}회${cs.length ? ` · 토큰 ${tin}+${tout}` : ''}</span>`;
 }
 const agList = (xs, title) => (xs || []).length ? `<div class="warn" style="display:block;padding:8px 12px;border-radius:8px;margin-top:10px;font-size:12.5px"><b>${esc(title)}</b><br>${xs.map(x => esc(typeof x === 'string' ? x : (x.path_sequence ? `${x.path_sequence}번 업무${x.step != null ? `-${x.step}` : ''}: ` : '') + x.reason)).join('<br>')}</div>` : '';
+/* 단계 출력 JSON 전체 — 서버가 돌려준 그대로 (① TaskPlan · ② PathPlan · ③ ApiSelection) */
+function agJson(label, obj){
+  const txt = JSON.stringify(obj, null, 2);
+  return `<details class="agjson" style="margin-top:10px"><summary class="btn btn-ghost btn-sm" style="display:inline-flex;list-style:none;cursor:pointer">${esc(label)} 출력 JSON 전체 보기</summary>
+    <div style="margin-top:8px"><button type="button" class="btn btn-ghost btn-sm" data-agjson-copy>복사</button>
+    <pre class="mono" style="white-space:pre-wrap;overflow-wrap:anywhere;max-height:480px;overflow:auto;font-size:11.5px;padding:12px;background:var(--panel-2);border-radius:7px;margin-top:6px">${esc(txt)}</pre></div></details>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-agjson-copy]');
+  if (!b) return;
+  const pre = b.parentElement.querySelector('pre');
+  const done = () => { b.textContent = '복사됨'; setTimeout(() => { b.textContent = '복사'; }, 1500); };
+  try { navigator.clipboard.writeText(pre.textContent).then(done, () => { b.textContent = '복사 실패'; }); } catch (_) { b.textContent = '복사 실패'; }
+});
 function agentCards(a){
   if (a.error){
     return `<div class="card fade"><div class="card-hd"><h2>3단계 분석 — 멈춤</h2></div>
@@ -5099,7 +5181,8 @@ function agentCards(a){
         <td class="v">${x.count}</td><td class="v">${x.depends_on.length ? x.depends_on.join(', ') : MUTED}</td></tr>`).join('')}</tbody></table></div>`
       : `<p class="note">테스트 데이터를 만들거나 바꾸는 요청이 아니라 업무가 없습니다.</p>`}
     ${agList(a.tasks.injections, '요청 속 지시문 — 감지되어 요청 전체를 차단했어요 (② ③ 을 하지 않음)')}
-    ${agList(a.tasks.unresolved, '업무로 만들지 않은 것 (애매한 부분)')}</div>`;
+    ${agList(a.tasks.unresolved, '업무로 만들지 않은 것 (애매한 부분)')}
+    ${agJson('① 의도 분석', a.tasks)}</div>`;
   const chain = steps => steps.length ? [steps[0].from].concat(steps.map(x => x.to)).map(esc).join(' → ') : '(이동 없음)';
   const s2 = `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
       <div><h2>② Graph 경로 탐색</h2></div>${agStage(a.trace, '② 경로 탐색')}</div>
@@ -5115,7 +5198,8 @@ function agentCards(a){
           ${p.steps.length ? `<p style="font-size:12.5px;margin:6px 0 0">경로: ${chain(p.steps)} <span class="note" style="margin:0">· 화살표 ${p.steps.map(x => esc(x.edge)).join(', ')}</span></p>` : ''}
           ${p.alternatives.map(x => `<p class="note" style="margin:4px 0 0">대안: ${esc(x.from_state)}(${esc(x.start_by)}) — ${x.steps.length ? chain(x.steps) : '그대로 씀'} · ${esc(x.why)}</p>`).join('')}` : ''}
         ${agList(p.notes, '알릴 것')}</div>`; }).join('') || `<p class="note">경로를 찾을 업무가 없습니다.</p>`}
-    <p class="note">경로는 LLM 이 아니라 그래프 탐색(코드)이 계산합니다 — 그래프에 없는 화살표는 나올 수 없습니다.</p></div>`;
+    <p class="note">경로는 LLM 이 아니라 그래프 탐색(코드)이 계산합니다 — 그래프에 없는 화살표는 나올 수 없습니다.</p>
+    ${agJson('② 경로 탐색', a.paths)}</div>`;
   const s3 = `<div class="card fade" style="margin-top:12px"><div class="card-hd" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
       <div><h2>③ API 선택</h2></div>${agStage(a.trace, '③ API 선택')}</div>
     ${rows.length ? `<div class="tbl-wrap"><table class="irsteps"><thead><tr><th>단계</th><th>종류</th><th>화살표 · 단계</th><th>고른 API · 구분값</th><th>선택</th><th>이유 · 후보</th></tr></thead><tbody>${rows.map(r => `<tr>
@@ -5128,7 +5212,8 @@ function agentCards(a){
           ${r.api_candidates.map(c => `<div style="font-size:11px">${esc(shortApi(c.api_id).split('/').pop())} ${esc(selStr(c.selector))} · ${c.score} · ${esc(c.check)}${c.check_reason ? ` (${esc(c.check_reason)})` : ''}</div>`).join('')}</details></td></tr>`).join('')}</tbody></table></div>`
       : `<p class="note">고를 단계가 없습니다.</p>`}
     ${agList(a.apis.unresolved, '확인할 것')}
-    <p class="note">고정 = 그래프에 사람이 확인한 API · 선택 = 규칙이나 LLM 이 골랐고 걸리는 점 없음 · 가선택 = 사람 확인 필요 · 보류 = 고를 API 없음</p></div>`;
+    <p class="note">고정 = 그래프에 사람이 확인한 API · 선택 = 규칙이나 LLM 이 골랐고 걸리는 점 없음 · 가선택 = 사람 확인 필요 · 보류 = 고를 API 없음</p>
+    ${agJson('③ API 선택', a.apis)}</div>`;
   return head + s1 + s2 + s3;
 }
 function gateCard(a){
@@ -5169,8 +5254,17 @@ async function agApprove(a){
   try {
     const { ok, j } = await agPost('/api/approve', body);
     if (!ok){ box.innerHTML = `<div class="warn" style="display:block;padding:9px 12px;border-radius:8px;margin-top:10px"><b>✗ 승인 불가</b><br>${esc(j.error)}</div>`; return; }
-    a.approved = j.approval; a.approvedFile = j.file; renderReg();
-    el('agRes').innerHTML = `<p class="note">승인본을 고정했어요. 이제 실행 때 확인을 하고 드라이런을 실행하세요.</p>`;
+    a.approved = j.approval; a.approvedFile = j.file; a.irHandoff = j.ir_handoff; renderReg();
+    const h = j.ir_handoff || {};
+    el('agRes').innerHTML = `<p class="note">승인본을 고정했어요. 이제 실행 때 확인을 하고 드라이런을 실행하세요.</p>`
+      + (h.filename ? `<p class="note">승인된 계획으로 <b>IR 초안 생성</b>을 시작했어요 (혜정 — Baseline · Parameter KB 참조 → 입력값 매핑 → Output Binding → Scenario IR) ·
+           <span class="mono" style="font-size:11px">${esc(h.file)}</span> · 단계 번호 ${h.steps.map(x => `${esc(x.source_step)}→${esc(x.step_id)}`).join(', ')}</p>`
+        : `<div class="warn" style="display:block;padding:9px 12px;border-radius:8px;margin-top:10px">${esc(h.error || 'IR 초안 생성으로 넘기지 못했습니다')}</div>`);
+    /* 승인한 뒤에만 혜정 IR 초안 생성을 부른다 — 승인 전에는 승인본 파일이 없어서 실행되지 않는다 */
+    if (h.filename && window.ScenarioIRDraft){
+      window.ScenarioIRDraft.generate(h.filename);
+      const sec = el('scenarioIRDraft'); if (sec) sec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    }
   } catch (e){ box.innerHTML = `<p class="note">서버에 연결하지 못했습니다: ${esc(e.message)}</p>`; }
 }
 async function agRun(a){
@@ -5223,7 +5317,7 @@ if (TAP){
     if (b) b.hidden = !SERVER;
     if (eb) eb.hidden = true;                 /* 예전 방식(목표 하나 → Scenario IR, 그래프에 적힌 API 를 씀)은 뺐다 — 그래프는 노드 흐름만 (2026-11-03) */
     if (rs) rs.hidden = true;
-    if (!SERVER && el('protoNote')) el('protoNote').innerHTML = '3단계 분석 · 승인은 로컬 서버(<span class="mono">tap.cli serve</span>)로 열었을 때 동작합니다.';
+    if (!SERVER && el('protoNote')) el('protoNote').innerHTML = '분석 · 승인은 로컬 서버(<span class="mono">tap.cli serve</span>)로 열었을 때 동작합니다.';
   };
 }
 
@@ -5278,5 +5372,8 @@ renderGraphTab();
 renderAdmin();
 setView('reg');
 </script>
+<!-- 혜정 api-selection-import.js(의도 분석 · API 선택 JSON 파일 불러오기)는 싣지 않는다 — 시나리오 등록은 늘 자연어 입력부터 (2026-11-03 지은 결정) -->
+<script src="scenario-ir-draft.js"></script>
+<script src="preprocessing-ui.js"></script>
 </body>
 </html>

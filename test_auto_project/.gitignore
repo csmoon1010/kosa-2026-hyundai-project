@@ -2,3 +2,8 @@ TODO.md
 data/out/traces/
 data/out/eval/traces/
 data/approved/
+prototype/approved/tdg-*.json
+# 혜정 IR 초안 생성 — 실행할 때마다 생기는 결과물
+data/out/scenario_ir_drafts/
+data/out/scenario_ir_logs/
+data/out/scenario_ir_reviews/

@@ -1,0 +1,5211 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdb/updateItemByVen.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userGbcd",
+        "parameter_path": "$.body.data1.data2.data3.userGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자구분코드",
+        "display_name": "userGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fe299b8fc64a6de0ffcc363abdc31c75888353f9c58cc84781aefa6d68f7194d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data1.data2.data3.userGbcd userGbcd 사용자구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data2.data3.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0638c9a8354a841bffaa538dee52c9a3ac94bdbbf7b9ef253336fda5efeb3f30",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:hs006808)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data1.data2.data3.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data2.data3.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "93eda508b044af05b82911af0baf784bc8431e6212db77b1798b85343a5241f1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:255.255.255.255)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data1.data2.data3.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userNm",
+        "parameter_path": "$.body.data1.data2.data3.userNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자명",
+        "display_name": "userNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "441e63d0cd4a86c4875955781db9caad3b8bf5de7c33834fb00037aebb751dd5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자명(타입:string, 예:홍길동)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userNm",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/rows/row/userNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data1.data2.data3.userNm userNm 사용자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "393238c741e9e1767f3497acf4b0e8af3c91fbc9eaaafcdd40343d4e84aafb6c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSession",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSession\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "coreMngYn",
+        "parameter_path": "$.body.data2.data1.data1.coreMngYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "핵심관리여부",
+        "display_name": "coreMngYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0dcbb9fc4ab4f96b05310bc5e63dafae53e73c660d60cd81c7f2cf52a0cff180",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "핵심관리여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "coreMngYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/coreMngYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.coreMngYn coreMngYn 핵심관리여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemDCsfCd",
+        "parameter_path": "$.body.data2.data1.data1.itemDCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품세분류코드",
+        "display_name": "itemDCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "99220f4a24083545f040b9ded4de9c3950009cf506cd3068af30393409b76af6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품세분류코드(타입:string, 예:00000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemDCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/itemDCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.itemDCsfCd itemDCsfCd 상품세분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemLCsfCd",
+        "parameter_path": "$.body.data2.data1.data1.itemLCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품대분류코드",
+        "display_name": "itemLCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c5a9365158870a1e2123f89e262695ad733e53b3831e87cb2f51e2cad327fd5d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품대분류코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemLCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/itemLCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.itemLCsfCd itemLCsfCd 상품대분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemMCsfCd",
+        "parameter_path": "$.body.data2.data1.data1.itemMCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품중분류코드",
+        "display_name": "itemMCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "17895c5ca0ceb3cce7031290755887b8c56c536f5e25ce1e8679bca80f94ddb4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품중분류코드(타입:string, 예:0000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemMCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/itemMCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.itemMCsfCd itemMCsfCd 상품중분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemSCsfCd",
+        "parameter_path": "$.body.data2.data1.data1.itemSCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품소분류코드",
+        "display_name": "itemSCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fa8e9d0fe0724f4d9dced67bdcbc4f2c06e21c2cda4fa0eb412405c62844dcd4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품소분류코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemSCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/itemSCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.itemSCsfCd itemSCsfCd 상품소분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstDlbrYn",
+        "parameter_path": "$.body.data2.data1.data1.itstDlbrYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서심의여부",
+        "display_name": "itstDlbrYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b29dcbfb34f54c796ab972fc301d7b07ac17996704457abc470c17401475995d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서심의여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstDlbrYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/itstDlbrYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.itstDlbrYn itstDlbrYn 상품기술서심의여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "qaTrgtYn",
+        "parameter_path": "$.body.data2.data1.data1.qaTrgtYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "QA대상여부",
+        "display_name": "qaTrgtYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "1da44ea8db16284f6a759fc069c84bd6d3b39f81e3582553a2f276fd5a53fd06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "QA대상여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "qaTrgtYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/qaTrgtYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.qaTrgtYn qaTrgtYn QA대상여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertTrgtYn",
+        "parameter_path": "$.body.data2.data1.data1.safeCertTrgtYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증대상여부",
+        "display_name": "safeCertTrgtYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e2750b185503ec7aa69009ab1671e61863132e786f87af4db806752b89b587e4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증대상여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertTrgtYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/rows/row/safeCertTrgtYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.data1.data1.safeCertTrgtYn safeCertTrgtYn 안전인증대상여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5fcccd59c30480761daa5eceeb816afa722467ea698d770727303948c9f2f733",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItemCsfCd",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItemCsfCd\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "addCmpsItemNm",
+        "parameter_path": "$.body.data3.data1.data1.addCmpsItemNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "추가구성상품명",
+        "display_name": "addCmpsItemNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "76c60842625bb6147adb615ef49bd44729807d9eefea601f23f4e4dc983698da",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "추가구성상품명(타입:string, 예:테스트)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "addCmpsItemNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/addCmpsItemNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.addCmpsItemNm addCmpsItemNm 추가구성상품명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "addCostCntn",
+        "parameter_path": "$.body.data3.data1.data1.addCostCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "추가요금내용",
+        "display_name": "addCostCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4644f7ab4fb40b0053f0ae16671d0ef91cc3e7dee1d866e21063b149de6c173b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "추가요금내용(타입:string, 예:현장결제: 조식추가 50,000원, 수영장 입장료 30,000원 / 해외직구: 관세 별도 등)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "addCostCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/addCostCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.addCostCntn addCostCntn 추가요금내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "addCostYn",
+        "parameter_path": "$.body.data3.data1.data1.addCostYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "추가요금여부",
+        "display_name": "addCostYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "35b090ccf5e25c84ec6425baa68618b5d349c815b05ae4e5b46f784d7b9647ac",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "추가요금여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "addCostYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/addCostYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.addCostYn addCostYn 추가요금여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaDlvCostAddYn",
+        "parameter_path": "$.body.data3.data1.data1.areaDlvCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역배송비용추가여부",
+        "display_name": "areaDlvCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0925bce2b4458f3864224bae22bad8f84ad6bac965b9d3a9956bc4e15604919b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역배송비용추가여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaDlvCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/areaDlvCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.areaDlvCostAddYn areaDlvCostAddYn 지역배송비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaExchCostAddYn",
+        "parameter_path": "$.body.data3.data1.data1.areaExchCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역교환비용추가여부",
+        "display_name": "areaExchCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "47485ddbb2f9958ee561c737527c3e3de694b900b3bdfe9bac966a10565327b7",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역교환비용추가여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaExchCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/areaExchCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.areaExchCostAddYn areaExchCostAddYn 지역교환비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "areaRtpCostAddYn",
+        "parameter_path": "$.body.data3.data1.data1.areaRtpCostAddYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "지역반품비용추가여부",
+        "display_name": "areaRtpCostAddYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "877c409d974f912c9599ceec7febdb685dbc7911674576c9738f9bdd84b9c551",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "지역반품비용추가여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "areaRtpCostAddYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/areaRtpCostAddYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.areaRtpCostAddYn areaRtpCostAddYn 지역반품비용추가여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "arpayDlvGdCntn",
+        "parameter_path": "$.body.data3.data1.data1.arpayDlvGdCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "착불배송안내내용",
+        "display_name": "arpayDlvGdCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "1c4885b67a0f1a77208a5949ae2a4fc7f2d7fec883cce6ca07fd9dcb1878a042",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "착불배송안내내용(타입:string, 예:3만원 미만 구매시 2500원 부담하셔야 합니다.)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "arpayDlvGdCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/arpayDlvGdCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.arpayDlvGdCntn arpayDlvGdCntn 착불배송안내내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "arvlRateUmarkYn",
+        "parameter_path": "$.body.data3.data1.data1.arvlRateUmarkYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도착확률미표기여부",
+        "display_name": "arvlRateUmarkYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f672a7b3630aa7949f64d88501381dbc306367fd95b00451940706f664588515",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도착확률미표기여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "arvlRateUmarkYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/arvlRateUmarkYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.arvlRateUmarkYn arvlRateUmarkYn 도착확률미표기여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "baseSectId",
+        "parameter_path": "$.body.data3.data1.data1.baseSectId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "기본매장ID",
+        "display_name": "baseSectId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bb8a802cd2f5db9289e3cf209fe31f366ddac5166ed7033c3cf85c6b953a3c12",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "기본매장ID(타입:string, 예:1711115)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "baseSectId",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/baseSectId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.baseSectId baseSectId 기본매장ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bbprcCopnDcYn",
+        "parameter_path": "$.body.data3.data1.data1.bbprcCopnDcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "혜택모음가쿠폰할인여부",
+        "display_name": "bbprcCopnDcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "72b1443e1f233d5109871f65fb01848b47a21ced7b010d289d04db0d56fdf947",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "혜택모음가쿠폰할인여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bbprcCopnDcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/bbprcCopnDcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.bbprcCopnDcYn bbprcCopnDcYn 혜택모음가쿠폰할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bbprcSpdcYn",
+        "parameter_path": "$.body.data3.data1.data1.bbprcSpdcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "혜택모음가깜짝할인여부",
+        "display_name": "bbprcSpdcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b639439c8e6a83fe2eac636470de2e017fe5f60de23f0d85900a018855e8685c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "혜택모음가깜짝할인여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bbprcSpdcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/bbprcSpdcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.bbprcSpdcYn bbprcSpdcYn 혜택모음가깜짝할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bbprcSpymDcYn",
+        "parameter_path": "$.body.data3.data1.data1.bbprcSpymDcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "혜택모음가일시불할인여부",
+        "display_name": "bbprcSpymDcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d1880ffe5d10b744bcc6d0fd473fbbfb5e1805afd2eee9a0b47a256041cd969e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "혜택모음가일시불할인여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bbprcSpymDcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/bbprcSpymDcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.bbprcSpymDcYn bbprcSpymDcYn 혜택모음가일시불할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bbprcSvmtPrdcYn",
+        "parameter_path": "$.body.data3.data1.data1.bbprcSvmtPrdcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "혜택모음가적립금선할인여부",
+        "display_name": "bbprcSvmtPrdcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8d29901206504437bf8a362be75eede41be699c078cfc29157b8891357977d2d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "혜택모음가적립금선할인여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bbprcSvmtPrdcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/bbprcSvmtPrdcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.bbprcSvmtPrdcYn bbprcSvmtPrdcYn 혜택모음가적립금선할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bndlDlvcGbcd",
+        "parameter_path": "$.body.data3.data1.data1.bndlDlvcGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "묶음배송비구분코드",
+        "display_name": "bndlDlvcGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4693fcc36abb9b033ad6f1205df11f28dd191a68ea32785270c63bb6eb3908f7",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "묶음배송비구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bndlDlvcGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/bndlDlvcGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.bndlDlvcGbcd bndlDlvcGbcd 묶음배송비구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "brodEqmtMngTrgtYn",
+        "parameter_path": "$.body.data3.data1.data1.brodEqmtMngTrgtYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "방송장비관리대상여부",
+        "display_name": "brodEqmtMngTrgtYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dc6f9e47152b45bc1016c344f7f9a7005e2a5bcc61eeac6622f5eda49368f40b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "방송장비관리대상여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "brodEqmtMngTrgtYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/brodEqmtMngTrgtYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.brodEqmtMngTrgtYn brodEqmtMngTrgtYn 방송장비관리대상여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "chemSafeTrgtYn",
+        "parameter_path": "$.body.data3.data1.data1.chemSafeTrgtYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "화학제품안전대상여부",
+        "display_name": "chemSafeTrgtYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "af977c5382489081dc5c41a1f934889afa8515f5fc5c6376501d8887ad87176f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "화학제품안전대상여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "chemSafeTrgtYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/chemSafeTrgtYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.chemSafeTrgtYn chemSafeTrgtYn 화학제품안전대상여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "childItemYn",
+        "parameter_path": "$.body.data3.data1.data1.childItemYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "자녀상품여부",
+        "display_name": "childItemYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "05bf8aede7757c0dea956120cad87d3b3c488a2b962e3879fc40df9c8464283d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "자녀상품여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "childItemYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/childItemYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.childItemYn childItemYn 자녀상품여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvCost",
+        "parameter_path": "$.body.data3.data1.data1.dlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송비용",
+        "display_name": "dlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "16f5fd2865554a94c3500563a589d1c246efd3446c168742f01294aeb6746bcd",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/dlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.dlvCost dlvCost 배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvcBsicQty",
+        "parameter_path": "$.body.data3.data1.data1.dlvcBsicQty"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송비기준수량",
+        "display_name": "dlvcBsicQty",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "df0d60e331827f377b832df612b6dec2fc8b0d08bdf16ba45544ee5b512539c0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송비기준수량(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvcBsicQty",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/dlvcBsicQty"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.dlvcBsicQty dlvcBsicQty 배송비기준수량"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvcPayGbcd",
+        "parameter_path": "$.body.data3.data1.data1.dlvcPayGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송비지불구분코드",
+        "display_name": "dlvcPayGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8b2dbf58c1e80096479a9bc304e82773a6245ba395b33a67466fa1aa61fd0a8f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송비지불구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvcPayGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/dlvcPayGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.dlvcPayGbcd dlvcPayGbcd 배송비지불구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "drctInsrPrmoTxtCntn",
+        "parameter_path": "$.body.data3.data1.data1.drctInsrPrmoTxtCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "직접입력프로모션문구내용",
+        "display_name": "drctInsrPrmoTxtCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cea7993c23ee4c5280cc64c86ba76ff21e384b09e3db02263df79af512d0ab39",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "직접입력프로모션문구내용(타입:string, 예:입력확인)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "drctInsrPrmoTxtCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/drctInsrPrmoTxtCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.drctInsrPrmoTxtCntn drctInsrPrmoTxtCntn 직접입력프로모션문구내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsrvDlvcoCd",
+        "parameter_path": "$.body.data3.data1.data1.dsrvDlvcoCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "택배배송사코드",
+        "display_name": "dsrvDlvcoCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7df48dfc7c8f4fa93921bf8fcbae78f8f89d479480c24185b569892572ca55cf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "택배배송사코드(타입:string, 예:81)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsrvDlvcoCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/dsrvDlvcoCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.dsrvDlvcoCd dsrvDlvcoCd 택배배송사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "exchDlvCost",
+        "parameter_path": "$.body.data3.data1.data1.exchDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "교환배송비용",
+        "display_name": "exchDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f1b97edd1f5497d595ce4204fddfad7cc7d2666d150e4bf3f466fddb04bcb830",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "교환배송비용(타입:string, 예:5000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "exchDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/exchDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.exchDlvCost exchDlvCost 교환배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "frgnDrctBuyYn",
+        "parameter_path": "$.body.data3.data1.data1.frgnDrctBuyYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "해외직접구매여부",
+        "display_name": "frgnDrctBuyYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2d3b13d25f5100eb93641524987a1b5419e8c4cf387c4bbfc013a5c7d3870577",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "해외직접구매여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "frgnDrctBuyYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/frgnDrctBuyYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.frgnDrctBuyYn frgnDrctBuyYn 해외직접구매여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "harmItemYn",
+        "parameter_path": "$.body.data3.data1.data1.harmItemYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "위해상품여부",
+        "display_name": "harmItemYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9c81e4d08114340ffb6a3a30961daaa6fec8b5c30c641fdfca4b17f8576da9c0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "위해상품여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "harmItemYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/harmItemYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.harmItemYn harmItemYn 위해상품여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "highUnitGbcd",
+        "parameter_path": "$.body.data3.data1.data1.highUnitGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상위단위구분코드",
+        "display_name": "highUnitGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9d5505bbbed2aa2e911e15379bac845e203b1c8e8cb6cc8bd5d06dfe1c4e9ebf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상위단위구분코드(타입:string, 예:02)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "highUnitGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/highUnitGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.highUnitGbcd highUnitGbcd 상위단위구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "highUnitGbcd2",
+        "parameter_path": "$.body.data3.data1.data1.highUnitGbcd2"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상위단위구분코드2",
+        "display_name": "highUnitGbcd2",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "46be4b57f724a182d2428437eba62fb09efe605dc3ccfd50b8b19f7bf1aae409",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상위단위구분코드2(타입:string, 예:02)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "highUnitGbcd2",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/highUnitGbcd2"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.highUnitGbcd2 highUnitGbcd2 상위단위구분코드2"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "highUnitGbcd3",
+        "parameter_path": "$.body.data3.data1.data1.highUnitGbcd3"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상위단위구분코드3",
+        "display_name": "highUnitGbcd3",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a107cccc526998bd0432b9ec9fc25b33d1297062c65f337713ccc21405189261",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상위단위구분코드3(타입:string, 예:02)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "highUnitGbcd3",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/highUnitGbcd3"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.highUnitGbcd3 highUnitGbcd3 상위단위구분코드3"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddDlvCost",
+        "parameter_path": "$.body.data3.data1.data1.irgnAddDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가배송비용",
+        "display_name": "irgnAddDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d4d6c5d6df26d8f6ead1d9d8b2f410f67dd91406a5251f94203781490417573b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가배송비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/irgnAddDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.irgnAddDlvCost irgnAddDlvCost 도서추가배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddExchCost",
+        "parameter_path": "$.body.data3.data1.data1.irgnAddExchCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가교환비용",
+        "display_name": "irgnAddExchCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "889b36e86a15556ce8312e27ffcbff2a3d27ab55fc419987c4030c59ea183770",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가교환비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddExchCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/irgnAddExchCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.irgnAddExchCost irgnAddExchCost 도서추가교환비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "irgnAddRtpCost",
+        "parameter_path": "$.body.data3.data1.data1.irgnAddRtpCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "도서추가반품비용",
+        "display_name": "irgnAddRtpCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "554ea825b2190f2417c0d404434a2ad8bc6ddfcb871136c407835c225451d290",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "도서추가반품비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "irgnAddRtpCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/irgnAddRtpCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.irgnAddRtpCost irgnAddRtpCost 도서추가반품비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemDCsfCd",
+        "parameter_path": "$.body.data3.data1.data1.itemDCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품세분류코드",
+        "display_name": "itemDCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fddf789b2aa9b88e328680b6f6a1531ecdca46a03a60ca5d0bed303a711dacef",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품세분류코드(타입:string, 예:00000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemDCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemDCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemDCsfCd itemDCsfCd 상품세분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemLCsfCd",
+        "parameter_path": "$.body.data3.data1.data1.itemLCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품대분류코드",
+        "display_name": "itemLCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ae45a850542c0834b5d52d32f823ee26050ecd72b0702d64be05912c9f678d69",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품대분류코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemLCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemLCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemLCsfCd itemLCsfCd 상품대분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemMCsfCd",
+        "parameter_path": "$.body.data3.data1.data1.itemMCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품중분류코드",
+        "display_name": "itemMCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ba5c0eb928766a2ce98c09fb8561bd25678aa7024d7eda6f4331aee21474423d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품중분류코드(타입:string, 예:0000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemMCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemMCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemMCsfCd itemMCsfCd 상품중분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemSCsfCd",
+        "parameter_path": "$.body.data3.data1.data1.itemSCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품소분류코드",
+        "display_name": "itemSCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3ec65d45867495884376f9e80134fe630b86ff1505b9e358415afc289997d88b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품소분류코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemSCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemSCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemSCsfCd itemSCsfCd 상품소분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitGbcd",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위구분코드",
+        "display_name": "itemUnitGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "064b76beef24ae4f7596ffa467a43adff4c9f2fdb31ab138f9ff7011d2f4d488",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitGbcd itemUnitGbcd 상품단위구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitGbcd2",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitGbcd2"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위구분코드2",
+        "display_name": "itemUnitGbcd2",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2123d289129a7e6317b72ccb656c6d1b9990198deb8f9ece6b349e366be615b2",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위구분코드2(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitGbcd2",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitGbcd2"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitGbcd2 itemUnitGbcd2 상품단위구분코드2"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitGbcd3",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitGbcd3"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위구분코드3",
+        "display_name": "itemUnitGbcd3",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d186002849cd6772fed630f97c3bb63fdbf45564c8873bfe60838a9f3fd9bfc6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위구분코드3(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitGbcd3",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitGbcd3"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitGbcd3 itemUnitGbcd3 상품단위구분코드3"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitVal",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위값",
+        "display_name": "itemUnitVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "24eabba170dfff934b9edf626d87cc59f94fc80b3d44c7b5acdd37b13a102a6d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위값(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitVal",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitVal itemUnitVal 상품단위값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitVal2",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitVal2"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위값2",
+        "display_name": "itemUnitVal2",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "41ef63fc30bb233ab181e70a2e045f3976fbe9f4cf588af5a08f2c665ed8b171",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위값2(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitVal2",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitVal2"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitVal2 itemUnitVal2 상품단위값2"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemUnitVal3",
+        "parameter_path": "$.body.data3.data1.data1.itemUnitVal3"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품단위값3",
+        "display_name": "itemUnitVal3",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "76942688bcf9faa627c6053b4ba71fa3d179ead667d538920d24caf411195b77",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품단위값3(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemUnitVal3",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemUnitVal3"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemUnitVal3 itemUnitVal3 상품단위값3"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemYetaGbcd",
+        "parameter_path": "$.body.data3.data1.data1.itemYetaGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품연말정산구분코드",
+        "display_name": "itemYetaGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cbc2c54852d96f0da43a1f82fbf1cc4184e18f31dd7d16ae10b8e7477f925645",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품연말정산구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemYetaGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itemYetaGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itemYetaGbcd itemYetaGbcd 상품연말정산구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstHtmlYn",
+        "parameter_path": "$.body.data3.data1.data1.itstHtmlYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서HTML여부",
+        "display_name": "itstHtmlYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ff6e6cf579ab5a6660114d7498290dc6f7242dae077e6b5c62797c355f392630",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서HTML여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstHtmlYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itstHtmlYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itstHtmlYn itstHtmlYn 상품기술서HTML여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstPhotoExpsYn",
+        "parameter_path": "$.body.data3.data1.data1.itstPhotoExpsYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서사진노출여부",
+        "display_name": "itstPhotoExpsYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "31cc67f1fd57abd5e4b010fab39d583907c3e9a84d8857ea1917967fc47797f3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서사진노출여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstPhotoExpsYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/itstPhotoExpsYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.itstPhotoExpsYn itstPhotoExpsYn 상품기술서사진노출여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddDlvCost",
+        "parameter_path": "$.body.data3.data1.data1.jejuAddDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가배송비용",
+        "display_name": "jejuAddDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "be203d297a6630e9043cb9323280940a7b19cbb01ec4f2ccebb92459eaaafd83",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가배송비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/jejuAddDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.jejuAddDlvCost jejuAddDlvCost 제주도추가배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddExchCost",
+        "parameter_path": "$.body.data3.data1.data1.jejuAddExchCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가교환비용",
+        "display_name": "jejuAddExchCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "937bd8e1049f54882ca5645c7ba27bdb34aae7bfa92c5809b020da6e3e6d9d8b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가교환비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddExchCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/jejuAddExchCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.jejuAddExchCost jejuAddExchCost 제주도추가교환비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "jejuAddRtpCost",
+        "parameter_path": "$.body.data3.data1.data1.jejuAddRtpCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제주도추가반품비용",
+        "display_name": "jejuAddRtpCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4c5886e9b1a2323dd10fa2d4498d6a3923182677d390e4e089859bdf4e7504de",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제주도추가반품비용(타입:string, 예:3000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "jejuAddRtpCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/jejuAddRtpCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.jejuAddRtpCost jejuAddRtpCost 제주도추가반품비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "minBuyQty",
+        "parameter_path": "$.body.data3.data1.data1.minBuyQty"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "최소구매수량",
+        "display_name": "minBuyQty",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5d159586e0d4d7b529a37ba994afaedcf63257b48644006487385997e7146b4a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "최소구매수량(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "minBuyQty",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/minBuyQty"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.minBuyQty minBuyQty 최소구매수량"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "nchgDlvBsicAmt",
+        "parameter_path": "$.body.data3.data1.data1.nchgDlvBsicAmt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "무료배송기준금액",
+        "display_name": "nchgDlvBsicAmt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "828e7402d51838169603feedb7380aa06380d49f1444d2e6e2eef0eb4d7ef5fe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "무료배송기준금액(타입:string, 예:30000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "nchgDlvBsicAmt",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/nchgDlvBsicAmt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.nchgDlvBsicAmt nchgDlvBsicAmt 무료배송기준금액"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "onnuriGcStlmYn",
+        "parameter_path": "$.body.data3.data1.data1.onnuriGcStlmYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "온누리상품권 결제여부",
+        "display_name": "onnuriGcStlmYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4ed961ace2133ca5e9ce0d9164c921c98e55a0daec4ae2244cb87fcfd96bf7a6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "온누리상품권 결제여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "onnuriGcStlmYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/onnuriGcStlmYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.onnuriGcStlmYn onnuriGcStlmYn 온누리상품권 결제여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "oshpVenAdrSeq",
+        "parameter_path": "$.body.data3.data1.data1.oshpVenAdrSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "출고협력사주소순번",
+        "display_name": "oshpVenAdrSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b7e59bc7f1f04c0afc901f5fb1ca82c05126574139561dcbf544eede39386264",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "출고협력사주소순번(타입:string, 예:2)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oshpVenAdrSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/oshpVenAdrSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.oshpVenAdrSeq oshpVenAdrSeq 출고협력사주소순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "packMagnGbcd",
+        "parameter_path": "$.body.data3.data1.data1.packMagnGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "포장주체구분코드",
+        "display_name": "packMagnGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "54e5db056d28451081fe47568fd014d1ab9a6c9ca539ab6f1636c948ae787e7f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "포장주체구분코드(타입:string, 예:10)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "packMagnGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/packMagnGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.packMagnGbcd packMagnGbcd 포장주체구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "parlImprYn",
+        "parameter_path": "$.body.data3.data1.data1.parlImprYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "병행수입여부",
+        "display_name": "parlImprYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6574a1e3787d6b685a148f22fb20fe12a2f59d6f5f459db7f17729aea9039c57",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "병행수입여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "parlImprYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/parlImprYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.parlImprYn parlImprYn 병행수입여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcCompCopnDcYn",
+        "parameter_path": "$.body.data3.data1.data1.prcCompCopnDcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격비교쿠폰할인여부",
+        "display_name": "prcCompCopnDcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "54428118733f37d136cfbe95c3ae877f9d2f5aac3293f970861770f0856fe5d0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격비교쿠폰할인여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcCompCopnDcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prcCompCopnDcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prcCompCopnDcYn prcCompCopnDcYn 가격비교쿠폰할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcCompSpdcYn",
+        "parameter_path": "$.body.data3.data1.data1.prcCompSpdcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격비교깜짝할인여부",
+        "display_name": "prcCompSpdcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0925f713282045a3bd34b8cca5a9d3c727774e2c8c14ae1fa8676d1f9e4702cf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격비교깜짝할인여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcCompSpdcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prcCompSpdcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prcCompSpdcYn prcCompSpdcYn 가격비교깜짝할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcCompSpymDcYn",
+        "parameter_path": "$.body.data3.data1.data1.prcCompSpymDcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격비교일시불할인여부",
+        "display_name": "prcCompSpymDcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c104bf92008878a170e96be3a28c2cf813ecb3fcdf9324a625e327b0890ccade",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격비교일시불할인여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcCompSpymDcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prcCompSpymDcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prcCompSpymDcYn prcCompSpymDcYn 가격비교일시불할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcCompSvmtPrdcYn",
+        "parameter_path": "$.body.data3.data1.data1.prcCompSvmtPrdcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격비교적립금선할인여부",
+        "display_name": "prcCompSvmtPrdcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a4ebd66bd044f7b4224280d147d9fa3ea433da0a6ad1e4144a6ed161f4d08831",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격비교적립금선할인여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcCompSvmtPrdcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prcCompSvmtPrdcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prcCompSvmtPrdcYn prcCompSvmtPrdcYn 가격비교적립금선할인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prmoExpsEndDtm",
+        "parameter_path": "$.body.data3.data1.data1.prmoExpsEndDtm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "프로모션노출종료일시",
+        "display_name": "prmoExpsEndDtm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "44b3e710ad20eddab215bc81cc10092657c4bbaccf18b9c545286cce96079df9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "프로모션노출종료일시(타입:string, 예:20230210)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prmoExpsEndDtm",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prmoExpsEndDtm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prmoExpsEndDtm prmoExpsEndDtm 프로모션노출종료일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prmoExpsEndTime",
+        "parameter_path": "$.body.data3.data1.data1.prmoExpsEndTime"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "프로모션노출종료시간",
+        "display_name": "prmoExpsEndTime",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cfe39b08ef2ddb63dfff4b579778821e2e507a0ab322d148d6330380a6cca365",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "프로모션노출종료시간(타입:string, 예:hs006808)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prmoExpsEndTime",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prmoExpsEndTime"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prmoExpsEndTime prmoExpsEndTime 프로모션노출종료시간"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prmoExpsStrtDtm",
+        "parameter_path": "$.body.data3.data1.data1.prmoExpsStrtDtm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "프로모션노출시작일시",
+        "display_name": "prmoExpsStrtDtm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7fca40756153ac0073d5ca6f67fc1c67b7b96ce2b0a63e7dab9c6498f7b489a3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "프로모션노출시작일시(타입:string, 예:20230201)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prmoExpsStrtDtm",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prmoExpsStrtDtm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prmoExpsStrtDtm prmoExpsStrtDtm 프로모션노출시작일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prmoExpsStrtTime",
+        "parameter_path": "$.body.data3.data1.data1.prmoExpsStrtTime"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "프로모션노출시작시간",
+        "display_name": "prmoExpsStrtTime",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "47a9aeb602fbae1c3d54b72661e709ad94595705b61b40c78f7b03156c8305fd",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "프로모션노출시작시간(타입:string, 예:)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prmoExpsStrtTime",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/prmoExpsStrtTime"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.prmoExpsStrtTime prmoExpsStrtTime 프로모션노출시작시간"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "reitMemo",
+        "parameter_path": "$.body.data3.data1.data1.reitMemo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "리퍼브상품메모",
+        "display_name": "reitMemo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2909550dd2a41b86b5ecdb940f67418c27c1c69363ecc521dd18608f59231859",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "리퍼브상품메모(타입:string, 예:양호)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "reitMemo",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/reitMemo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.reitMemo reitMemo 리퍼브상품메모"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "reitYn",
+        "parameter_path": "$.body.data3.data1.data1.reitYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "리퍼브상품여부",
+        "display_name": "reitYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d4105c1218f0e76fec1bfd8bdc1bc21c52b8936395fddbf94466270b3190550f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "리퍼브상품여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "reitYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/reitYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.reitYn reitYn 리퍼브상품여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rtpDlvCost",
+        "parameter_path": "$.body.data3.data1.data1.rtpDlvCost"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "반품배송비용",
+        "display_name": "rtpDlvCost",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "61d276f6620b89177c45aa3e1fe305708d20a7b7190992e485056e897dd82be8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "반품배송비용(타입:string, 예:5000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rtpDlvCost",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/rtpDlvCost"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.rtpDlvCost rtpDlvCost 반품배송비용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rtpExchVenAdrSeq",
+        "parameter_path": "$.body.data3.data1.data1.rtpExchVenAdrSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "반품교환협력사주소순번",
+        "display_name": "rtpExchVenAdrSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6ce2043bf4037455e9d3c2a3c4e9c3331da0360da59fe35d71538c6a6eb9b864",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "반품교환협력사주소순번(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rtpExchVenAdrSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/rtpExchVenAdrSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.rtpExchVenAdrSeq rtpExchVenAdrSeq 반품교환협력사주소순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeMngTrgtYn",
+        "parameter_path": "$.body.data3.data1.data1.safeMngTrgtYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전관리대상여부",
+        "display_name": "safeMngTrgtYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "16fb238ed1f4dccb2105607f3744c8d5ee80a2430d101d858d7aa2a0748968dc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전관리대상여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeMngTrgtYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/safeMngTrgtYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.safeMngTrgtYn safeMngTrgtYn 안전관리대상여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data3.data1.data1.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9207b74d67995080b66e7043ca32ad8f752e9edc53509380cfc59cdfebf67e12",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2012251415)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmNm",
+        "parameter_path": "$.body.data3.data1.data1.slitmNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품명",
+        "display_name": "slitmNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3bfbeadf867e07a998ab11833a0ed7e5e2bce5d6a29783d9464fcf83b87dc751",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품명(타입:string, 예:골든듀 미니러브 목걸이)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/slitmNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.slitmNm slitmNm 판매상품명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "stpicPossYn",
+        "parameter_path": "$.body.data3.data1.data1.stpicPossYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "스토어픽가능여부",
+        "display_name": "stpicPossYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3ae54461db96d03d73e0cb256486fe5561d88e3e3354c70b2edcac0a0dde66a2",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "스토어픽가능여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "stpicPossYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/stpicPossYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.stpicPossYn stpicPossYn 스토어픽가능여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "thdyPiupPossYn",
+        "parameter_path": "$.body.data3.data1.data1.thdyPiupPossYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "당일픽업가능여부",
+        "display_name": "thdyPiupPossYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7b26a7b2c6319eb7924cbee7fdec1a75dbb18a6cdf2a80154dca817ed3aaaaf3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "당일픽업가능여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "thdyPiupPossYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/thdyPiupPossYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.thdyPiupPossYn thdyPiupPossYn 당일픽업가능여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitmChocPossYn",
+        "parameter_path": "$.body.data3.data1.data1.uitmChocPossYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성선택가능여부",
+        "display_name": "uitmChocPossYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c720bdbdea12cb0483a5c72574a28a45ab97f6793b18981b24cc6b03017165c9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성선택가능여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitmChocPossYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/uitmChocPossYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.uitmChocPossYn uitmChocPossYn 상품속성선택가능여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitmCombYn",
+        "parameter_path": "$.body.data3.data1.data1.uitmCombYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성조합여부",
+        "display_name": "uitmCombYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dc66daa2f89398691745f76f142befcbeb15358e856dce89e56e4698e93751f6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성조합여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitmCombYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/uitmCombYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.uitmCombYn uitmCombYn 상품속성조합여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "useTermExpsCntn",
+        "parameter_path": "$.body.data3.data1.data1.useTermExpsCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용기간노출내용",
+        "display_name": "useTermExpsCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "948b08eefd1d5932a6f04454fcb2b72bc2ce8d69bed6af18c591c7d411c2f583",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용기간노출내용(타입:string, 예:소비기한 생산연월 정보 직접 입력)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "useTermExpsCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/useTermExpsCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.useTermExpsCntn useTermExpsCntn 사용기간노출내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data3.data1.data1.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "722b0d80c7eec305a12ccca2182b7855a5cbd4470b8f6db844719804a5c9ca44",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data3.data1.data1.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d410d2922d3e7c10de94fdda28222ceba5067fc1edc6a62dccd6ff756554a5c6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:000053)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venItemCd",
+        "parameter_path": "$.body.data3.data1.data1.venItemCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사상품코드",
+        "display_name": "venItemCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9bd8bb5e2e3571e0b478997d4c4f6542914099e200fa8d4c468938d23c684285",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사상품코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venItemCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/venItemCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.venItemCd venItemCd 협력사상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "webExpsPrmoNm",
+        "parameter_path": "$.body.data3.data1.data1.webExpsPrmoNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "웹노출프로모션명",
+        "display_name": "webExpsPrmoNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "025bc47ac296c4679fe3ea449cdc699ebf550092483f90866e782ae24522febd",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "웹노출프로모션명(타입:string, 예:테스트)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "webExpsPrmoNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/rows/row/webExpsPrmoNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.data1.data1.webExpsPrmoNm webExpsPrmoNm 웹노출프로모션명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data3.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "25209ef39bbbcafbb1d5e95b9d9964ac9cfda5ce46f7299830a244d91fc70018",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItem",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItem\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data3.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "certInfIdnfYn",
+        "parameter_path": "$.body.data4.data1.data1.certInfIdnfYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "인증정보확인여부",
+        "display_name": "certInfIdnfYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51585051ed2bb0cad2710698a0848c685eb338da87a851aef760dc28e74a8e72",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "인증정보확인여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "certInfIdnfYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/certInfIdnfYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.certInfIdnfYn certInfIdnfYn 인증정보확인여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertClasGbcd",
+        "parameter_path": "$.body.data4.data1.data1.safeCertClasGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증항목구분코드",
+        "display_name": "safeCertClasGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "9c32b88e8ec8a18e83548ce79e6b9f72aad268f093132834a5448ab88569e4cf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증항목구분코드(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertClasGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertClasGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertClasGbcd safeCertClasGbcd 안전인증항목구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertDt",
+        "parameter_path": "$.body.data4.data1.data1.safeCertDt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증일자",
+        "display_name": "safeCertDt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "90e0543539d7b07e779bcbdff80d6c4173a00d7d03adc2400bfb7de557b56021",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증일자(타입:string, 예:20200611)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertDt",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertDt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertDt safeCertDt 안전인증일자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertImgNm",
+        "parameter_path": "$.body.data4.data1.data1.safeCertImgNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증이미지명",
+        "display_name": "safeCertImgNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e17e057c06970db7d063473f43e53c1f49c47fe668e7833f089d78b92cbdf365",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증이미지명(타입:string, 예:safe2100002353_20.png)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertImgNm",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertImgNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertImgNm safeCertImgNm 안전인증이미지명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertLawGbcd",
+        "parameter_path": "$.body.data4.data1.data1.safeCertLawGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증법구분코드",
+        "display_name": "safeCertLawGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "41eb0558d4a1ae15bdb0980b385b0c39e93d86926b8b74855543cdcbe769bf62",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증법구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertLawGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertLawGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertLawGbcd safeCertLawGbcd 안전인증법구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertNo",
+        "parameter_path": "$.body.data4.data1.data1.safeCertNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증번호",
+        "display_name": "safeCertNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "85b0d1a0f5d27067799511aae0e59256c8e1e68b047f69ddde62ab36ae6e5f3c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증번호(타입:string, 예:1111111)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertNo",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertNo safeCertNo 안전인증번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCertTypeGbcd",
+        "parameter_path": "$.body.data4.data1.data1.safeCertTypeGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증유형구분코드",
+        "display_name": "safeCertTypeGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3def1c196132aed5adc6b40fb2459aba541bbdb28b69f671d0c44dfb648b4ac4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증유형구분코드(타입:string, 예:03)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCertTypeGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCertTypeGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCertTypeGbcd safeCertTypeGbcd 안전인증유형구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "safeCrtiGbcd",
+        "parameter_path": "$.body.data4.data1.data1.safeCrtiGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "안전인증기관구분코드",
+        "display_name": "safeCrtiGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cf627701b2ed3621c6ba8633e317466dd1c28426f90ec12c3a49335a419b5440",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "안전인증기관구분코드(타입:string, 예:10)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "safeCrtiGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/rows/row/safeCrtiGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.data1.data1.safeCrtiGbcd safeCrtiGbcd 안전인증기관구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data4.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e04356951a2e54ac4001eec5ead54a5818ee83694c015647f526b98ce8e7aabb",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItemSafeCertMngDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItemSafeCertMngDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data4.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "bcdBrndGbcd",
+        "parameter_path": "$.body.data5.data1.data1.bcdBrndGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "바코드브랜드구분코드",
+        "display_name": "bcdBrndGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8e102de4fea1ade92a703cecf515658cd97401a3c741174fa492679059ce98ba",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "바코드브랜드구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "bcdBrndGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsSlitmBcdDtl\"]/rows/row/bcdBrndGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data5.data1.data1.bcdBrndGbcd bcdBrndGbcd 바코드브랜드구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "shrtBcdVal",
+        "parameter_path": "$.body.data5.data1.data1.shrtBcdVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "단축바코드값",
+        "display_name": "shrtBcdVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "da7d43a05a16259d42689b41a44d71adab3ffa549c9ef764c7d519dd28121f81",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "단축바코드값(타입:string, 예:shrtBcdVal)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "shrtBcdVal",
+        "xml_path": "/Root/Dataset[@id=\"dsSlitmBcdDtl\"]/rows/row/shrtBcdVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data5.data1.data1.shrtBcdVal shrtBcdVal 단축바코드값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "totBcdVal",
+        "parameter_path": "$.body.data5.data1.data1.totBcdVal"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "전체바코드값",
+        "display_name": "totBcdVal",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "999f1f8766a8fc2a5c6ab01db9523f145ce9e5f98aea24f046f5299de16f158d",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "전체바코드값(타입:string, 예:shrtBcdVal)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "totBcdVal",
+        "xml_path": "/Root/Dataset[@id=\"dsSlitmBcdDtl\"]/rows/row/totBcdVal"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data5.data1.data1.totBcdVal totBcdVal 전체바코드값"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data5.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cb911a76d1aba413d54f09e40d91011f2d2402ecdb662b0bb5dfbc54e31377f6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsSlitmBcdDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsSlitmBcdDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data5.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "asctItemGbcd",
+        "parameter_path": "$.body.data6.data1.data1.asctItemGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "관련상품구분코드",
+        "display_name": "asctItemGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "16f6e8183caaa40985d00182ad5290405f51880ffa42dd5f3384b22d6dcbebc6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "관련상품구분코드(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "asctItemGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsAsctSlitmDtl\"]/rows/row/asctItemGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data6.data1.data1.asctItemGbcd asctItemGbcd 관련상품구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "asctSlitmCd",
+        "parameter_path": "$.body.data6.data1.data1.asctSlitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "관련판매상품코드",
+        "display_name": "asctSlitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "da5f6997a35260c22acfda946064a750348f1c8cd4d1552a64cb8590697f686b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "관련판매상품코드(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "asctSlitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsAsctSlitmDtl\"]/rows/row/asctSlitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data6.data1.data1.asctSlitmCd asctSlitmCd 관련판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data6.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bbbff0a9f52ee08e25fda5a1770a8f965db573df4ef571e54b587c7a7d2dd692",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsAsctSlitmDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsAsctSlitmDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data6.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstCd",
+        "parameter_path": "$.body.data7.data1.data1.itstCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서코드",
+        "display_name": "itstCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "c1887cf8405af48c46c21729902dea6d0a0a7c27325c5958871e784bfdbe2e9f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서코드(타입:string, 예:001)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItstDtl\"]/rows/row/itstCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data7.data1.data1.itstCd itstCd 상품기술서코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstCntn",
+        "parameter_path": "$.body.data7.data1.data1.itstCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서내용",
+        "display_name": "itstCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5f3dfbfdf06e2849fc65724c9c499562571cb0ecfa361c80115649953f6aa8ee",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서내용(타입:string, 예:베트남)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsItstDtl\"]/rows/row/itstCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data7.data1.data1.itstCntn itstCntn 상품기술서내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstGbcd",
+        "parameter_path": "$.body.data7.data1.data1.itstGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서구분코드",
+        "display_name": "itstGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dd16e09c831fb7fe683b1db986a05a9e035d9103088240507898a5dc0fc1f1ef",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서구분코드(타입:string, 예:10)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItstDtl\"]/rows/row/itstGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data7.data1.data1.itstGbcd itstGbcd 상품기술서구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itstTitl",
+        "parameter_path": "$.body.data7.data1.data1.itstTitl"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품기술서제목",
+        "display_name": "itstTitl",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "575175230f1d8645f3a70b1f03dfb84e29a6e943ade565d64e1cf56e52da7e75",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품기술서제목(타입:string, 예:제조국)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itstTitl",
+        "xml_path": "/Root/Dataset[@id=\"dsItstDtl\"]/rows/row/itstTitl"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data7.data1.data1.itstTitl itstTitl 상품기술서제목"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data7.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "44510d20dc35e7bbcfb30251fc0441a3469e0daeeed4b1521d6594095ff9f79f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItstDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItstDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data7.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "htmlItstCntn",
+        "parameter_path": "$.body.data8.data1.data1.htmlItstCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "HTML상품기술서내영",
+        "display_name": "htmlItstCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7378d085808a05da80d3bcf34abeed5ca81b13ea867ca005a7d9af2d6b22cf57",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "HTML상품기술서내영(타입:string, 예:<br><span style=/font-size: 14pt/><span style=/font-size: 14pt/><strong>선택1) 115713 브러쉬드&amp;nbsp;슬림핏 치노 팬츠<br /></strong>)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "htmlItstCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsHtmlItstMst\"]/rows/row/htmlItstCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data8.data1.data1.htmlItstCntn htmlItstCntn HTML상품기술서내영"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "htmlItstGbcd",
+        "parameter_path": "$.body.data8.data1.data1.htmlItstGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "HTML상품기술서구분코드",
+        "display_name": "htmlItstGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "161dcd77a4f5893baf1cbb16821ea57f559fc39b1cb9c860eea5228bf4573eb5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "HTML상품기술서구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "htmlItstGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsHtmlItstMst\"]/rows/row/htmlItstGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data8.data1.data1.htmlItstGbcd htmlItstGbcd HTML상품기술서구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data8.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e764566f9f43aa0be7b0b846dad7eb04b2f45e381df10aea93e86df0db065c4b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsHtmlItstMst",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsHtmlItstMst\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data8.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectAttrGbcd",
+        "parameter_path": "$.body.data9.data1.data1.sectAttrGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장속성구분코드",
+        "display_name": "sectAttrGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "accead4ed73937aa0877533215995ba0bb36e58f37880502b624722a745bf747",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장속성구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectAttrGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsDispItemDtl\"]/rows/row/sectAttrGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data9.data1.data1.sectAttrGbcd sectAttrGbcd 매장속성구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sectId",
+        "parameter_path": "$.body.data9.data1.data1.sectId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매장ID",
+        "display_name": "sectId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "74c6a2ebd4ba13d2c08bcc593a853c5ccbec2cc3a737007236587381422f972c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매장ID(타입:string, 예:322475)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sectId",
+        "xml_path": "/Root/Dataset[@id=\"dsDispItemDtl\"]/rows/row/sectId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data9.data1.data1.sectId sectId 매장ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data9.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "90773fedeb34ea3aa4e8912fec8d9f55a6f19eadc72182d2073299229e6e13aa",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemByVenRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsDispItemDtl",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsDispItemDtl\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.body.data9.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdb/updateItemByVen.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdb/updateItemByVen.do 상품 수정 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

@@ -1,0 +1,72 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectDptsPchList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsCond",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.venCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/venCd",
+      "name": "venCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "004503",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/ven2Cd",
+      "name": "ven2Cd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "740935",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsCond\"><rows><row><venCd>004503</venCd><ven2Cd>740935</ven2Cd></row></rows></Dataset></Root>"
+}

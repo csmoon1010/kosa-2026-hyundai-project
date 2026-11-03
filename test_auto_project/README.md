@@ -119,7 +119,7 @@ summary 의 한국어 동사로 판별한다.
 | 영역 | 파일로 열 때 | `tap.cli serve` 로 열 때 |
 |---|---|---|
 | 시나리오 생성 결과 | 미리 계산해 둔 문장(data/out/ir)만 실제 결과, 나머지는 시연 | 아무 문장이나 목표 추출(LLM) → 경로 → Scenario IR |
-| 시나리오 등록 › 3단계 분석 · 승인 | (서버 필요) | ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 — 등록 때 승인(승인본 data/approved/) → 실행 때 R2 확인 → 드라이런 (POST /api/select · /api/approve · /api/run) |
+| 시나리오 등록 › 분석 → 등록 때 승인 | (서버 필요) | ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 — 등록 때 승인(승인본 data/approved/ + 혜정 IR 초안 생성 시작) → 실행 때 R2 확인 → 드라이런 (POST /api/select · /api/approve · /api/run) |
 | 관리자 › 도메인 › 상태 그래프 만들기 | 실제 그래프 · 실제 Metadata 로 API 후보 찾기 | + 저장하면 data/graphs/<그룹ID>.yaml 에 (있던 파일이면 합침) |
 | 데이터 조회 — Catalog · MetaData · Tool Registry · State Vocabulary | 실제 산출물 | 같음 (매번 새로 읽음) |
 | 관리자 › 전사 › 1단계 산출물 · 검수 목록 | 실제 산출물 | 같음 |

@@ -1,0 +1,739 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "5d2d3a5e0c1045a60593fe41a9b653e669cb0123842fea6b62dfd61bd14376f9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:0800857)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b9401baabd82b3162e1882f5d6730807a29a84ef6f248872b749ad3f39c39489",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:255.255.255.255)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e28331ced06d7b7ee0926998fa40e91654f953252993e50445f1ba15181e5d9b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "sessionVO",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "gnrlCopnNo",
+        "parameter_path": "$.body.data2.data1.data1.gnrlCopnNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "바로사용쿠폰번호",
+        "display_name": "gnrlCopnNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2838cc536bb2bab76f6594e7c142163ded21860e8b77b0101f5d8442a19a3408",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "바로사용쿠폰번호(타입:string, 예:00003551)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "gnrlCopnNo",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/gnrlCopnNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.gnrlCopnNo gnrlCopnNo 바로사용쿠폰번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mrgnRate",
+        "parameter_path": "$.body.data2.data1.data1.mrgnRate"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "마진율",
+        "display_name": "mrgnRate",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ee4e4adb75edd2646f09165d2e654ca55e12268e6e1e3acdca80471e84995a10",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "마진율(타입:string, 예:15)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mrgnRate",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/mrgnRate"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.mrgnRate mrgnRate 마진율"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcAplyStrtDtm",
+        "parameter_path": "$.body.data2.data1.data1.prcAplyStrtDtm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격적용일자",
+        "display_name": "prcAplyStrtDtm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d09956073c4a01fe9800245fc6a38389e90f51ab9dcd2e1fe8c8e6a1f8504ab9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격적용일자(타입:string, 예:20230701)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcAplyStrtDtm",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prcAplyStrtDtm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prcAplyStrtDtm prcAplyStrtDtm 가격적용일자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcAplyStrtTime",
+        "parameter_path": "$.body.data2.data1.data1.prcAplyStrtTime"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격적용시분",
+        "display_name": "prcAplyStrtTime",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6b3f23bee9b6e1e0b7b6b952acd360536c2101ddea626636b17a3de67245e352",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격적용시분(타입:string, 예:1630)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcAplyStrtTime",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prcAplyStrtTime"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prcAplyStrtTime prcAplyStrtTime 가격적용시분"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcAthzGbcd",
+        "parameter_path": "$.body.data2.data1.data1.prcAthzGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "가격결재구분코드",
+        "display_name": "prcAthzGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "43155650f7ef4b2495f6167eb9639cdedb3268ff074923d677a55cec9f034d03",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "가격결재구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcAthzGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prcAthzGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prcAthzGbcd prcAthzGbcd 가격결재구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcDcEndDtm",
+        "parameter_path": "$.body.data2.data1.data1.prcDcEndDtm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "세일종료일자",
+        "display_name": "prcDcEndDtm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "98c366cd5710b17f364c5cdea06fe597ea47a67b3668b9128055f004e0a940d7",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "세일종료일자(타입:string, 예:20230830)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcDcEndDtm",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prcDcEndDtm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prcDcEndDtm prcDcEndDtm 세일종료일자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prcDcEndTime",
+        "parameter_path": "$.body.data2.data1.data1.prcDcEndTime"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "세일종료시간",
+        "display_name": "prcDcEndTime",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "01a84f482eb7db358ef67408e9567952f84766705ae60465aece84bda14c3c83",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "세일종료시간(타입:string, 예:1630)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prcDcEndTime",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prcDcEndTime"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prcDcEndTime prcDcEndTime 세일종료시간"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "prmoCopyYn",
+        "parameter_path": "$.body.data2.data1.data1.prmoCopyYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "프로모션복사여부",
+        "display_name": "prmoCopyYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "1c6606e317ab999a2bd5e316eabbf1e498aa53070f5213775618b0edab8104d8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "프로모션복사여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "prmoCopyYn",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/prmoCopyYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.prmoCopyYn prmoCopyYn 프로모션복사여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellPrc",
+        "parameter_path": "$.body.data2.data1.data1.sellPrc"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "매입가격",
+        "display_name": "sellPrc",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e366fd62b441563ecac9347f48337200c73b9a976a669860eaa9b68750ac44ad",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "매입가격(타입:string, 예:1500000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellPrc",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/sellPrc"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.sellPrc sellPrc 매입가격"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data2.data1.data1.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b662cf731bf6814dee828f48d6c7dfc8526e6f47fd7100756cb2d96e24ae42e8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2251586623)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venItemCd",
+        "parameter_path": "$.body.data2.data1.data1.venItemCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사상품코드",
+        "display_name": "venItemCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0561989245496832788a1e6c5b9de8dd6fb01ec79542fdd79047a534571c6196",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사상품코드(타입:string, 예:001442)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venItemCd",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/rows/row/venItemCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.data1.data1.venItemCd venItemCd 협력사상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6b7bcca15dd5eccb83eb2fb7026cf942d4c14f863f9a0e1c7796752cd0c584ed",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/updateItemPrcHistRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsItemPrcHistTran",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsItemPrcHistTran\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdh/updateItemPrcHist.do 상품 가격 수정 요청 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

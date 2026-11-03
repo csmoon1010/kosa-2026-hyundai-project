@@ -1,0 +1,266 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordNo",
+        "parameter_path": "$.body.data1.data2.data3.ordNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문번호",
+        "display_name": "ordNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a5591310de2873943150324b04cbeeca9dc22cbd6fb98f8cc38d983766a77eac",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiTcktWtdwProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문번호(타입:string, 예:20160118110258)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.body.data1.data2.data3.ordNo ordNo 주문번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordPtcSeq",
+        "parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문상세순번",
+        "display_name": "ordPtcSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fc7e36f672bdee977898f442b684f44b22708050595cc3bd38932ddcafe41a74",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiTcktWtdwProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문상세순번(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordPtcSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.body.data1.data2.data3.ordPtcSeq ordPtcSeq 주문상세순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "procGb",
+        "parameter_path": "$.body.data1.data2.data3.procGb"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "진행구분코드",
+        "display_name": "procGb",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "aa106f93b3736a55c8bcf5257c90db47d4f803da77885ff0ff3b949fbbddd71c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiTcktWtdwProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "진행구분코드(타입:string, 예:P0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "procGb",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.body.data1.data2.data3.procGb procGb 진행구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a52f2018453b44b50bbd205dab6e2fc79b1dbab5ae260ee1226ff3d672429502",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiTcktWtdwProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do 회수처리 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

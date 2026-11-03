@@ -1,0 +1,739 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3799f620119b5d9d1ed9f4491a716d6f75d864ac45f8d97cc690787900e75ab8",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:007627)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b64db5b23bba5712b3d7d2adbfda8afbb2c5b5ee84f08b50fa3d43b7ff89a3aa",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:0.0.0.0)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ef1f686dd386897f9cd97607e4e2bb493bed0288e5624e8265cb6e8dbacb2b08",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "sessionVO",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "almlCd",
+        "parameter_path": "$.body.data2.data1.data1.almlCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제휴몰코드",
+        "display_name": "almlCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d638cdeff8dfc275f4eddcf56e60d96088a230919bb5dc4e2ac9204440c4642c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제휴몰코드(타입:string, 예:40)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "almlCd",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/almlCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.almlCd almlCd 제휴몰코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "answAlrtmGbcd",
+        "parameter_path": "$.body.data2.data1.data1.answAlrtmGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "answAlrtmGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d13b959a630d277fd28807c300b1f259f11ecd9b368b771613095df9d26892cc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "(타입:string, 예:2)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "answAlrtmGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/answAlrtmGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.answAlrtmGbcd answAlrtmGbcd "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "answCntn",
+        "parameter_path": "$.body.data2.data1.data1.answCntn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "답변내용",
+        "display_name": "answCntn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "85085103bd89b59f28b8bb31bc104c1c6ebd048a6a4ed97e827c48f1ac337550",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "답변내용(타입:string, 예:[내용] 제조일은 XXXX입니다.)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "answCntn",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/answCntn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.answCntn answCntn 답변내용"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "answTitl",
+        "parameter_path": "$.body.data2.data1.data1.answTitl"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "답변제목",
+        "display_name": "answTitl",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b63a46827aa96226e29cc6ee987fbae2b5d16d7ed3cdce9adafaa6a2181893de",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "답변제목(타입:string, 예:[제목] 제조일은 XXXX입니다.)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "answTitl",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/answTitl"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.answTitl answTitl 답변제목"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "custNm",
+        "parameter_path": "$.body.data2.data1.data1.custNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "고객명",
+        "display_name": "custNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "3248642209d41c5096bdb71331720ecf8eede69ee8619bb24ee9297b9fb85612",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "고객명(타입:string, 예:홍길동)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "custNm",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/custNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.custNm custNm 고객명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemQnaAnswSeq",
+        "parameter_path": "$.body.data2.data1.data1.itemQnaAnswSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품QNA답변순번",
+        "display_name": "itemQnaAnswSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "da08ea3f998de035990a01067d4b76eb398902fe693a2ae9c204baed3c77e324",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품QNA답변순번(타입:string, 예:0G68I)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemQnaAnswSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/itemQnaAnswSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.itemQnaAnswSeq itemQnaAnswSeq 상품QNA답변순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemQnaQstnNo",
+        "parameter_path": "$.body.data2.data1.data1.itemQnaQstnNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품QNA질문번호",
+        "display_name": "itemQnaQstnNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "cd4a941dfcc0d2070c90559f3976e368ccc7bd3339f16e879ce0834152d16b6e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품QNA질문번호(타입:string, 예:1012187)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemQnaQstnNo",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/itemQnaQstnNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.itemQnaQstnNo itemQnaQstnNo 상품QNA질문번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rowFlag",
+        "parameter_path": "$.body.data2.data1.data1.rowFlag"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "rowFlag",
+        "display_name": "rowFlag",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "42e59ebd08283f16ca75f7ddd161413f4a789d0d637a34db675d9084f56cdfe1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "rowFlag(타입:string, 예:I)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rowFlag",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/rowFlag"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.rowFlag rowFlag rowFlag"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sitmCd",
+        "parameter_path": "$.body.data2.data1.data1.sitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "sitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "aafa7ed74f512cbf0e5ecd62b6f8fbad0362e5f2bd9b079edab51f31565c67ca",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2143364004)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/sitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.sitmCd sitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "tel",
+        "parameter_path": "$.body.data2.data1.data1.tel"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "전화번호",
+        "display_name": "tel",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b458f65c35c7ac972362a146ca0c5ed5c1d636d527f94800cab2b38e0ad306e3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "전화번호(타입:string, 예:010-1234-1234)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "tel",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/tel"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.tel tel 전화번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venAnswYn",
+        "parameter_path": "$.body.data2.data1.data1.venAnswYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사답변여부",
+        "display_name": "venAnswYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "98a1c5c07a62dbf192d6299fbbc75630db43b31ff3b7be31bbf5b9f32afb0da9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사답변여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venAnswYn",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/rows/row/venAnswYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.data1.data1.venAnswYn venAnswYn 협력사답변여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "65954273a66cd710fcd9ded3f96f96cb5e5c2294dfd166006a56b3d4b38deb39",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiItemQnaAnswRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsAnsw",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsAnsw\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdd/multiItemQnaAnsw.do 상품문의 답변 등록,수정 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

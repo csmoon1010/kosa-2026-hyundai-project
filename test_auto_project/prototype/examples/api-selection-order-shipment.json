@@ -1,0 +1,67 @@
+{
+  "original_question": "001442 협력사의 주문을 조회하여 배송완료까지 처리해주세요.",
+  "status": "검토 필요",
+  "api_selection_results": [
+    {
+      "path_sequence": 1,
+      "step": 1,
+      "domain": "DS",
+      "edge": "주문 조회",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "selection_status": "가선택",
+      "selection_reason": "협력사 물류처리의 출고조회 API이다. 협력사 코드 001442로 주문을 필터링할 수 있는지는 카탈로그와 메타데이터만으로 확인되지 않는다."
+    },
+    {
+      "path_sequence": 2,
+      "step": 1,
+      "domain": "DS",
+      "edge": "주문 확인 및 출고 진행",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "selection_status": "가선택",
+      "selection_reason": "메타데이터에서 procGb=P1은 주문확인 별칭을 가진 출고진행으로 정의되어 있다. 조회 결과의 주문을 대상으로 처리할 수 있는지는 요청 필드가 확인되지 않아 검토가 필요하다."
+    },
+    {
+      "path_sequence": 2,
+      "step": 2,
+      "domain": "DS",
+      "edge": "출고 완료",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "selection_status": "가선택",
+      "selection_reason": "메타데이터에서 procGb=P2는 출고완료로 정의되어 있다. 대상 주문 식별 필드와 선행 상태 조건은 제공 자료만으로 확인되지 않는다."
+    },
+    {
+      "path_sequence": 2,
+      "step": 3,
+      "domain": "DS",
+      "edge": "배송 완료",
+      "api_candidates": [
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+      ],
+      "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+      "selection_status": "가선택",
+      "selection_reason": "메타데이터에서 procGb=P3은 배송완료로 정의되어 있다. 대상 주문 식별 필드와 선행 상태 조건은 제공 자료만으로 확인되지 않는다."
+    }
+  ],
+  "unresolved": [
+    {
+      "path_sequence": 1,
+      "step": 1,
+      "reason": "협력사 코드 001442를 출고조회 API의 어떤 입력 필드로 지정하는지, 조회 결과가 해당 협력사의 주문만 포함하는지 확인이 필요하다."
+    },
+    {
+      "path_sequence": 2,
+      "step": null,
+      "reason": "조회 결과에서 처리 대상 주문을 지정하는 필드와 P1, P2, P3 단계별 선행 상태 및 처리 가능 조건이 카탈로그와 메타데이터에 없어 확인이 필요하다."
+    }
+  ]
+}
