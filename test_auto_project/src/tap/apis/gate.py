@@ -135,6 +135,26 @@ def detect_injections(utterance: str, flagged: list[str], perms: dict[str, Any],
     return hits
 
 
+def detect_in_values(value: Any, perms: dict[str, Any]) -> list[str]:
+    """사람이 직접 넣는 값(혜정 화면의 Baseline 등록값 · IR 검토 입력값)의 지시문 — 지시문 낱말만 본다.
+
+    값에는 코드 · 식별자 · 'a=b' 같은 문자열이 정상으로 들어갈 수 있어 시스템 식별자 · '필드=값' 모양은 보지 않는다.
+    """
+    texts: list[str] = []
+
+    def walk(v: Any) -> None:
+        if isinstance(v, str):
+            texts.append(v)
+        elif isinstance(v, dict):
+            for x in v.values():
+                walk(x)
+        elif isinstance(v, list):
+            for x in v:
+                walk(x)
+    walk(value)
+    return [f"지시문 패턴 '{w}' ({t[:40]})" for t in texts for w in perms["injection_patterns"] if w.lower() in t.lower()]
+
+
 def blocked_gate(sel: ApiSelection, reasons: list[str]) -> Gate:
     """요청 전체를 차단하는 게이트 (인젝션 감지) — 승인으로도 열 수 없다."""
     return Gate(status="차단", steps=[], blocked=[f"요청 속 지시문 감지 — 전체 차단 ({r})" for r in reasons],

@@ -25,7 +25,15 @@ STAGE = {"TaskPlanOut": "① 의도 분석", "PathChoiceOut": "② 상태 고르
          "GoalOut": "목표 추출(예전)", "GraphChoice": "그래프 고르기(예전)", "GraphOut": "그래프 재료 추출"}
 
 
-class BudgetExceeded(ValueError):
+class Stopped(ValueError):
+    """정지조건으로 멈춤 — code 는 혜정 IR 생성과 같은 체계 (RUN_LLM_LIMIT · RUN_TOKEN_LIMIT · LLM_REFUSAL …)."""
+
+    def __init__(self, code: str, message: str):
+        super().__init__(f"{message} [{code}]")
+        self.code = code
+
+
+class BudgetExceeded(Stopped):
     pass
 
 
@@ -35,31 +43,46 @@ class Budget:
     max_tokens: int = 60000
     max_seconds: float = 180.0
     max_cost_usd: float | None = None
-    retries: int = 1
+    retries: int = 1                    # 중지조건 · 재시도 OFF 면 0 (analyze_select stop_retry)
+    max_output_tokens: int = 4096       # 호출당 출력 토큰 — 혜정 IR 생성과 같은 값
 
 
 def load_llm_config(path: str | Path | None) -> tuple[Budget, dict[str, dict[str, float]]]:
+    """예산 · 가격. 생성 설정 검사 — 상한은 양수, 재시도는 0 이상 정수 (틀리면 ValueError)."""
     p = Path(path) if path else None
     raw = (yaml.safe_load(p.read_text(encoding="utf-8")) or {}) if p and p.exists() else {}
     b = raw.get("budget") or {}
     budget = Budget(**{k: v for k, v in b.items() if k in Budget.__dataclass_fields__ and v is not None})
     if "max_cost_usd" in b:
         budget.max_cost_usd = b["max_cost_usd"]
+    for k in ("max_llm_calls", "max_tokens", "max_seconds", "max_output_tokens"):
+        v = getattr(budget, k)
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v <= 0:
+            raise ValueError(f"llm.yaml budget.{k} 는 양수여야 합니다: {v!r}")
+    if isinstance(budget.retries, bool) or not isinstance(budget.retries, int) or budget.retries < 0:
+        raise ValueError(f"llm.yaml budget.retries 는 0 이상 정수여야 합니다: {budget.retries!r}")
+    if budget.max_cost_usd is not None and (isinstance(budget.max_cost_usd, bool) or not isinstance(budget.max_cost_usd, (int, float)) or budget.max_cost_usd <= 0):
+        raise ValueError(f"llm.yaml budget.max_cost_usd 는 양수여야 합니다: {budget.max_cost_usd!r}")
     return budget, raw.get("pricing") or {}
 
 
-def _retryable(e: Exception) -> bool:
-    """형식 실패 · 거부 · 일시적 API 오류만 다시 묻는다."""
+def retry_wait(e: Exception, attempt: int) -> float | None:
+    """다시 물을지 · 얼마나 기다릴지 (초). None 이면 재시도하지 않는다.
+
+    통신 오류는 혜정 IR 생성과 같은 규칙(tap.agent.llm_retry.retry_delay): 타임아웃 · 연결 실패 · 408 · 429 · 500 · 502 · 503 · 504,
+    할당량 · 결제 한도 오류는 재시도하지 않음, 지수 대기 + retry-after. 형식 실패(스키마)는 바로 다시 묻는다.
+    LLM 거절 · 출력 토큰 한도 · 예산 같은 정지조건(Stopped)은 다시 묻지 않는다.
+    """
     from pydantic import ValidationError
 
     from tap.goal.extract import GoalError
+    if isinstance(e, Stopped):
+        return None
     if isinstance(e, (GoalError, ValidationError)):
-        return True
-    try:
-        import openai
-        return isinstance(e, (openai.APITimeoutError, openai.APIConnectionError, openai.RateLimitError, openai.InternalServerError))
-    except ImportError:                         # pragma: no cover
-        return False
+        return 0.0
+    from tap.agent.config import CONFIG
+    from tap.agent.llm_retry import retry_delay
+    return retry_delay(e, CONFIG, attempt)
 
 
 class Trace:
@@ -73,6 +96,7 @@ class Trace:
         self.started = datetime.now().astimezone().isoformat(timespec="seconds")
         self._t0 = time.perf_counter()
         self.total_ms: int | None = None
+        self.options: dict[str, Any] = {}
 
     # ── 예산 ──
     def totals(self) -> dict[str, Any]:
@@ -86,18 +110,18 @@ class Trace:
 
     def _check(self, stage: str) -> None:
         t, b = self.totals(), self.budget
-        why = None
+        why = code = None
         if t["llm_calls"] >= b.max_llm_calls:
-            why = f"LLM 호출 {t['llm_calls']}회 — 상한 {b.max_llm_calls}회"
+            why, code = f"LLM 호출 {t['llm_calls']}회 — 상한 {b.max_llm_calls}회", "RUN_LLM_LIMIT"
         elif t["tokens"] >= b.max_tokens:
-            why = f"토큰 {t['tokens']} — 상한 {b.max_tokens}"
+            why, code = f"토큰 {t['tokens']} — 상한 {b.max_tokens}", "RUN_TOKEN_LIMIT"
         elif t["ms"] / 1000 >= b.max_seconds:
-            why = f"{t['ms'] / 1000:.1f}초 — 상한 {b.max_seconds}초"
+            why, code = f"{t['ms'] / 1000:.1f}초 — 상한 {b.max_seconds}초", "RUN_TIME_LIMIT"
         elif b.max_cost_usd is not None and t["cost_usd"] is not None and t["cost_usd"] >= b.max_cost_usd:
-            why = f"비용 ${t['cost_usd']:.4f} — 상한 ${b.max_cost_usd}"
+            why, code = f"비용 ${t['cost_usd']:.4f} — 상한 ${b.max_cost_usd}", "RUN_COST_LIMIT"
         if why:
-            self.status = f"중단: 예산 초과 ({stage} 전, {why})"
-            raise BudgetExceeded(self.status)
+            self.status = f"중단: 예산 초과 ({stage} 전, {why}) [{code}]"
+            raise BudgetExceeded(code, f"중단: 예산 초과 ({stage} 전, {why})")
 
     def _cost(self, model: str | None, tin: int | None, tout: int | None, cached: int | None) -> float | None:
         p = self.pricing.get(model or "") if model else None
@@ -124,8 +148,18 @@ class Trace:
                     return llm(messages, schema)
                 except Exception as e:
                     rec["status"] = f"실패: {type(e).__name__}: {str(e)[:160]}"
-                    if attempt > self.budget.retries or not _retryable(e):
+                    wait = retry_wait(e, attempt - 1)
+                    if attempt > self.budget.retries or wait is None:
+                        if isinstance(e, Stopped):
+                            self.status = f"중단: {e}"
                         raise
+                    left = self.budget.max_seconds - (time.perf_counter() - self._t0)
+                    if wait >= left:            # 기다리는 동안 시간 예산이 끝난다 — 기다리지 않고 멈춘다
+                        self.status = f"중단: 재시도 대기 {wait:.1f}초가 남은 시간 {max(left, 0):.1f}초보다 김 [RETRY_WAIT_BUDGET]"
+                        raise Stopped("RETRY_WAIT_BUDGET", f"재시도 대기 {wait:.1f}초가 남은 시간보다 김") from e
+                    rec["retry_wait_s"] = round(wait, 2)
+                    if wait:
+                        time.sleep(wait)
                 finally:
                     u = getattr(llm, "last_usage", None) or {}
                     rec.update(ms=int((time.perf_counter() - t) * 1000), model=u.get("model"),
@@ -151,7 +185,7 @@ class Trace:
         self.total_ms = int((time.perf_counter() - self._t0) * 1000)
 
     def to_dict(self) -> dict[str, Any]:
-        return {"request": self.request, "started": self.started, "status": self.status, "budget": asdict(self.budget),
+        return {"request": self.request, "started": self.started, "status": self.status, "options": self.options, "budget": asdict(self.budget),
                 "totals": self.totals(), "spans": self.spans, "calls": self.calls}
 
     def save(self, directory: str | Path) -> Path:

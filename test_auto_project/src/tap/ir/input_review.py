@@ -174,7 +174,7 @@ def initialize(root, ir, draft_file, previews, tools, on_event=None):
 def load(root, scenario_id):
     path = _path(root, scenario_id)
     if not path.is_file():
-        raise ValueError('승인게이트가 적용된 검토 초안이 없습니다')
+        raise ValueError('IR 입력 검토가 적용된 검토 초안이 없습니다')
     return _response(json.loads(path.read_text(encoding='utf-8')))
 
 
@@ -301,14 +301,14 @@ def submit(root, scenario_id, body, confirm=False):
     path = _path(root, scenario_id)
     with _locked(path):
         if not path.is_file():
-            raise ValueError('승인게이트가 적용된 검토 초안이 없습니다')
+            raise ValueError('IR 입력 검토가 적용된 검토 초안이 없습니다')
         state = json.loads(path.read_text(encoding='utf-8'))
         fingerprint = _digest([confirm, body])
         if state.get('last_request') == fingerprint:
             return _response(state)
         try:
             if not state['base_ir']['generation']['options'].get('approval_gate'):
-                raise ValueError('이 실행에는 승인게이트가 적용되지 않았습니다')
+                raise ValueError('이 실행에는 IR 입력 검토가 적용되지 않았습니다')
             if body['expected_revision'] != state['revision']:
                 raise ReviewConflict('다른 변경이 저장되었습니다. 검토 내용을 다시 불러오세요')
             if state['confirmed']:

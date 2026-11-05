@@ -8,6 +8,8 @@ Output Binding → Scenario IR 초안을 만든다. 우리 승인(/api/approve)�
   구분값      혜정 형식엔 칸이 없다 → selector 를 추가 칸으로 넣는다 (혜정 런타임은 현재 단계 행을 통째로 LLM 에 준다)
   미해결      ①② 의 미해결(업무 · 경로 단위)만 넘긴다. 단계의 가선택 확인 사항은 승인 때 사람이 확인했으므로 뺀다
   도메인      혜정은 단계 도메인 = 업무 도메인을 요구 → 업무 도메인을 경로(그래프)의 도메인으로 맞춘다
+  앞 단계 결과 업무가 출발 데이터 조회(우리 0번 단계)로 시작하면, 그 뒤 단계 행에 source_step_id(조회 단계)를 적는다
+              → 혜정 dependencies 가 조회 단계에 output_consumers, 뒤 단계에 input_dependencies 를 붙여 Binding 을 만든다
 """
 from __future__ import annotations
 
@@ -30,6 +32,7 @@ def hyejung_approved(tp: TaskPlan, pp: PathPlan, sel: ApiSelection, gate: Gate, 
     rows = []
     for seq in sorted({r.path_sequence for r in sel.api_selection_results}):
         mine = sorted((r for r in sel.api_selection_results if r.path_sequence == seq), key=lambda r: r.step)
+        lookup = f"{seq}-1" if len(mine) > 1 and mine[0].step == 0 and mine[0].kind == "조회" else None   # 출발 데이터 조회
         for i, r in enumerate(mine, 1):
             if r.selected is None:
                 raise ValueError(f"단계 {seq}-{r.step} 에 고른 API 가 없어 IR 을 만들 수 없습니다")
@@ -38,12 +41,33 @@ def hyejung_approved(tp: TaskPlan, pp: PathPlan, sel: ApiSelection, gate: Gate, 
                          "api_candidates": cands, "selected_api_id": r.selected.api_id, "selector": r.selected.selector,
                          "selection_status": r.selection_status, "selected_by": r.selected_by,
                          "selection_reason": r.selection_reason, "approval_status": "approved",
-                         "source_step": f"{seq}-{r.step}", "kind": r.kind, "from": r.from_, "to": r.to})
+                         "source_step": f"{seq}-{r.step}", "kind": r.kind, "from": r.from_, "to": r.to,
+                         **({"source_step_id": lookup} if lookup and i > 1 else {})})
     unresolved = [{"path_sequence": u.path_sequence, "step": None, "reason": u.reason} for u in sel.unresolved if u.step is None]
     return {"original_question": tp.original_question, "approval_status": "approved", "intent_tasks": tasks,
             "api_selection_results": rows, "unresolved": unresolved, "source_files": source_files or {},
             "tdg_approval": {"selection_hash": approval.selection_hash, "approver": approval.approver, "at": approval.at,
                              "gate_status": gate.status, "scenario": approval.scenario, "steps": approval.steps}}
+
+
+def missing_materials(root: Path, data: dict[str, Any], plan: list[dict[str, Any]]) -> list[str]:
+    """IR 생성에 필요한 자료가 있는지 승인 때 미리 본다 (2026-11-05 — 생성 도중 fatal 로 멈추기 전에).
+
+    모든 단계: 요청 스키마(Canonical) · Parameter KB. 출력을 넘겨줘야 하는 단계(output_consumers): Response Outputs.
+    """
+    from tap.agent.parameter_tools import ParameterTools
+    tools = ParameterTools(root, data, defer_optional_errors=True)
+    out = []
+    for s in plan:
+        api, sid = s["selected_api_id"], s["step_id"]
+        name = api.rsplit("/", 1)[-1]
+        if not tools.records.get(("get_request_schema", api)):
+            out.append(f"{sid} {name}: 요청 스키마(Canonical) 없음")
+        if not tools.records.get(("get_parameter_knowledge", api)):
+            out.append(f"{sid} {name}: Parameter KB 없음")
+        if s.get("output_consumers") and not tools.records.get(("get_response_outputs", api)):
+            out.append(f"{sid} {name}: 뒤 단계에 넘길 Response Outputs 없음")
+    return out
 
 
 def save_hyejung_approved(root: Path, data: dict[str, Any]) -> str:

@@ -65,8 +65,8 @@ def test_split_dataset_note():
 # ------------------------------------------------------------------ 파싱 · api_id
 
 def test_api_id_is_service_method_path(ops):
-    assert len(ops) == 42 and len({o.api_id for o in ops}) == 42                # /om 은 명세에서 삭제 (2026-10-28)
-    assert not any(o.path.startswith("/om/") for o in ops)
+    assert len(ops) == 43 and len({o.api_id for o in ops}) == 43                # /om 을 명세에 다시 넣음 (2026-11-05)
+    assert [o.operation_id for o in ops if o.path.startswith("/om/")] == ["selectSectMstList"]
     o = op_of(ops, "multiItem")
     assert o.api_id == "hshop-openapi:POST:/pd/pdb/multiItem.do"
     assert (o.service, o.spec_source) == (SVC, SPEC.name)
@@ -174,10 +174,11 @@ def test_domain_conn_override():
 
 def test_three_documents_linked_by_api_id(tmp_path):
     r, load = run(tmp_path)
-    assert r["operations"] == 42 and r["kinds"] == {"read": 24, "write": 18}
+    assert r["operations"] == 43 and r["kinds"] == {"read": 25, "write": 18}
+    assert r["domains"]["om"] == 1                                 # 매장 — 1차 범위 밖 (R3)
     reg, meta, cat = load("tool_registry"), load("api_metadata"), load("api_catalog")
     ids = [t["api_id"] for t in reg["tools"]]
-    assert len(set(ids)) == 42                                     # Tool Registry PK = api_id
+    assert len(set(ids)) == 43                                     # Tool Registry PK = api_id
     assert ids == [m["api_id"] for m in meta] == [a["api_id"] for a in cat["apis"]]
     assert "tool_id" not in reg["tools"][0] and "tool_id" not in meta[0] and "tool_name" not in meta[0]
 

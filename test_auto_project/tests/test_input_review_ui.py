@@ -29,7 +29,7 @@ class Element {
 const host=new Element();global.document={createElement:()=>new Element(),createTextNode:text=>({textContent:text}),getElementById:id=>id==='scenarioIRDraft'?host:null};
 global.window={};global.location={protocol:'http:'};
 const id='SCN-20261103-abcdef123456';
-const options={stop_retry:true,approval_gate:true,injection_guard:true,kb_rag:false,dependency_projection:false};
+const options={stop_retry:true,approval_gate:true,kb_rag:false,dependency_projection:false};
 let review={ir:{scenario_id:id,version:1,status:'needs_input',tasks:[{sequence:1,action:'조회',conditions:'조건',steps:[{step_id:'1-1',edge:'조회',api:{api_id:'demo'},inputs:[],outputs:[],bindings:[],unresolved:['u']}]}],generation:{options}},review:{revision:1,status:'awaiting_decision',open_count:1,resolved_count:0,deferred_count:0},targets:[{target_id:'t1',step_id:'1-1',api_id:'demo',parameter_path:'$.code',label:'고객코드',type:'string',enum:null,reasons:['값 필요'],editable:true}],decisions:{},file:'draft.json',step_previews:{}};
 const posts=[];global.fetch=async(url,request)=>{
  if(url==='/api/approved-selections')return {ok:true,json:async()=>({defaults:{},files:[]})};
@@ -51,18 +51,7 @@ const posts=[];global.fetch=async(url,request)=>{
 (async()=>{
  await new Promise(resolve=>setImmediate(resolve));
  const get=key=>host.querySelector('[data-'+key+']');
- assert.equal(get('option-injection_guard').disabled,true);
- get('option-stop_retry').checked=true;get('option-stop_retry').events.change();
- assert.equal(get('option-injection_guard').disabled,true);
- get('option-approval_gate').checked=true;get('option-approval_gate').events.change();
- assert.equal(get('option-injection_guard').disabled,false);
- get('option-injection_guard').checked=true;
- get('option-approval_gate').checked=false;get('option-approval_gate').events.change();
- assert.equal(get('option-injection_guard').checked,false);assert.equal(get('option-injection_guard').disabled,true);
- get('option-approval_gate').checked=true;get('option-approval_gate').events.change();
- assert.equal(get('option-injection_guard').checked,false);
- get('option-injection_guard').checked=true;get('option-stop_retry').checked=false;get('option-stop_retry').events.change();
- assert.equal(get('option-injection_guard').checked,false);assert.equal(get('option-injection_guard').disabled,true);
+ assert.ok(!String(host.innerHTML).includes('injection'));   // 인젝션 대응 옵션 없음 (2026-11-05)
  get('reviews').value=id;await get('review-load').events.click();
  let content=get('review-content');
  let box=content.children[1],choice=box.children[2].children[0],input=box.children[3];

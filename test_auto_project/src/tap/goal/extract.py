@@ -66,12 +66,15 @@ def build_messages(utterance: str, graph: StateGraph) -> list[dict[str, str]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": utterance}]
 
 
-def openai_parse(model: str | None = None, sdk_retries: int = 2) -> LLMParse:
+def openai_parse(model: str | None = None, sdk_retries: int = 2, max_output_tokens: int | None = None) -> LLMParse:
     """OpenAI Structured Output. 키 · 모델은 .env (OPENAI_API_KEY · OPENAI_DEFAULT_MODEL).
 
     호출마다 parse.last_usage 에 토큰 사용량을 남긴다 (tap.trace 가 읽는다).
     sdk_retries: SDK 안에서 조용히 다시 묻는 횟수 — 트레이스로 감쌀 때는 0 으로 두어 재시도가 기록 · 예산에 잡히게 한다.
+    max_output_tokens: 호출당 출력 토큰 상한 — 넘으면 OUTPUT_TOKEN_LIMIT 으로 멈춘다 (다시 묻지 않음).
+    LLM 이 거절하면 LLM_REFUSAL 로 멈춘다 (다시 묻지 않음). 형식만 틀린 것은 GoalError — 트레이스가 한 번 다시 묻는다.
     """
+    import openai
     from dotenv import load_dotenv
     from openai import OpenAI
 
@@ -82,14 +85,24 @@ def openai_parse(model: str | None = None, sdk_retries: int = 2) -> LLMParse:
         raise GoalError("OPENAI_DEFAULT_MODEL 이 .env 에 없습니다")
 
     def parse(messages: list[dict[str, str]], schema: type[BaseModel]) -> BaseModel:
-        r = client.chat.completions.parse(model=use, messages=messages, response_format=schema)
+        from tap.trace import Stopped
+        extra = {"max_completion_tokens": max_output_tokens} if max_output_tokens else {}
+        try:
+            r = client.chat.completions.parse(model=use, messages=messages, response_format=schema, **extra)
+        except openai.LengthFinishReasonError as e:
+            u = getattr(getattr(e, "completion", None), "usage", None)
+            parse.last_usage = {"model": use, "input": getattr(u, "prompt_tokens", None), "output": getattr(u, "completion_tokens", None),
+                                "cached": getattr(getattr(u, "prompt_tokens_details", None), "cached_tokens", 0) if u else None}
+            raise Stopped("OUTPUT_TOKEN_LIMIT", f"출력 토큰 한도({max_output_tokens}) 도달") from e
         u = r.usage
         parse.last_usage = {"model": use, "api_model": r.model, "input": u.prompt_tokens if u else None,
                             "output": u.completion_tokens if u else None,
                             "cached": getattr(getattr(u, "prompt_tokens_details", None), "cached_tokens", 0) if u else None}
         out = r.choices[0].message.parsed
+        if out is None and r.choices[0].message.refusal:
+            raise Stopped("LLM_REFUSAL", f"LLM 이 거절함: {r.choices[0].message.refusal}")
         if out is None:
-            raise GoalError(f"모델이 응답을 거부하거나 형식을 지키지 못함: {r.choices[0].message.refusal}")
+            raise GoalError("모델이 형식을 지키지 못함")
         return out
     parse.last_usage = None
     return parse

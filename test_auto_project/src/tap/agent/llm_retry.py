@@ -4,7 +4,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
-from openai import APITimeoutError
+from openai import APIConnectionError, APITimeoutError
 
 
 def retry_delay(error, config, attempt):
@@ -14,7 +14,8 @@ def retry_delay(error, config, attempt):
     codes = {str(body.get(k, '')).lower() for k in ('code', 'type')}
     if codes.intersection(config['non_retryable_codes']): return None
     status = getattr(error, 'status_code', None)
-    if not isinstance(error, (APITimeoutError, TimeoutError)) and status not in [429, *config['retry_statuses']]:
+    # 연결 실패(APIConnectionError)도 재시도 — 지은 ①②③ 과 같은 규칙 (2026-11-05 병합)
+    if not isinstance(error, (APITimeoutError, APIConnectionError, TimeoutError)) and status not in [429, *config['retry_statuses']]:
         return None
     delay = config['retry_base_seconds'] * 2 ** attempt
     headers = getattr(getattr(error, 'response', None), 'headers', {})
