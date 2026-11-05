@@ -38,6 +38,9 @@ domains:
   mk:
     name: 마케팅
     prefixes: [/mk]
+  om:
+    name: 매장
+    prefixes: [/om]          # /om: 매장 정보 조회 selectSectMstList (2026-11-05 명세에 다시 넣음, 1차 범위 밖)
   od:
     name: 주문
     prefixes: [/od]

@@ -206,7 +206,7 @@ global.fetch=async(url,options)=>{
    const expected={stop_retry:Boolean(mask&4),kb_rag:Boolean(mask&2),dependency_projection:Boolean(mask&1)};
    for(const [key,value] of Object.entries(expected))get('option-'+key).checked=value;
    await window.ScenarioIRDraft.generate('approved.json');
-   assert.deepEqual(requestedOptions.at(-1),{...expected,approval_gate:false,injection_guard:false});
+   assert.deepEqual(requestedOptions.at(-1),expected);   // IR 입력 검토 옵션은 화면에 없음 (2026-11-05)
    for(const [key,value] of Object.entries(expected)){
      assert.equal(get('option-'+key).checked,value);assert.equal(get('option-'+key).disabled,false);
    }

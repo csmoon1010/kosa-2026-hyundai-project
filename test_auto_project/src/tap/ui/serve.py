@@ -290,6 +290,12 @@ def make_handler(root: Path, llm=None):
         def __init__(self, *a, **kw):
             super().__init__(*a, directory=str(proto), **kw)
 
+        def end_headers(self):
+            # 화면 파일(html · js · css)을 브라우저가 옛것으로 쓰지 않게 — 매번 서버에 바뀌었는지 묻는다 (2026-11-05)
+            if not any(h.lower().startswith(b"cache-control") for h in getattr(self, "_headers_buffer", [])):
+                self.send_header("Cache-Control", "no-cache")
+            super().end_headers()
+
         def _json(self, code: int, body) -> None:
             raw = json.dumps(body, ensure_ascii=False, default=str).encode("utf-8")
             self.send_response(code)
@@ -369,7 +375,7 @@ def make_handler(root: Path, llm=None):
                 raise ValueError("자연어 요청이 비어 있습니다")
             try:
                 r = analyze_select(utt, [root / "data/graphs"], root / "data/out", root / "data/config/rules.ui.yaml",
-                                   llm=llm, trace_dir=root / "data/out/traces")
+                                   llm=llm, trace_dir=root / "data/out/traces", stop_retry=body.get("stop_retry", True) is not False)
             except Exception as e:                  # 검사 거절 · 예산 초과도 트레이스와 함께 화면에 보여 준다
                 tr = getattr(e, "trace", None)
                 return self._json(400, {"error": f"{type(e).__name__}: {e}", "trace": tr.to_dict() if tr else None})
@@ -407,11 +413,14 @@ def make_handler(root: Path, llm=None):
         def _handoff(self, p: dict[str, Any], ap, f: Path) -> dict[str, Any]:
             """승인된 것만 혜정 IR 초안 생성으로 — 혜정 형식 승인본을 만들고, 혜정의 fixed_plan 으로 미리 확인한다."""
             from tap.ir.draft_build import fixed_plan
-            from tap.ir.handoff import hyejung_approved, save_hyejung_approved
+            from tap.ir.handoff import hyejung_approved, missing_materials, save_hyejung_approved
             try:
                 data = hyejung_approved(p["tasks"], p["paths"], p["apis"], p["gate"], ap,
                                         {"tdg_approval": str(f.relative_to(root)), "trace": p.get("trace_file")})
-                fixed_plan(json.loads(json.dumps(data)))
+                plan = fixed_plan(json.loads(json.dumps(data)))
+                missing = missing_materials(root, data, plan)
+                if missing:                     # IR 생성 도중 자료 없음(fatal)으로 멈추기 전에 승인 때 알린다
+                    return {"filename": None, "error": "IR 생성에 필요한 자료가 없어 넘기지 않음: " + "; ".join(missing), "missing": missing}
                 name = save_hyejung_approved(root, data)
             except (ValueError, KeyError) as e:
                 return {"filename": None, "error": f"IR 초안 생성으로 넘기지 못함: {e}"}
@@ -428,6 +437,13 @@ def make_handler(root: Path, llm=None):
                 return self._json(400, {"error": str(e), "refused": True})
             return self._json(200, {"calls": calls, "confirmed": list(body.get("confirm") or []),
                                     "approval": p["approval"].model_dump() if p.get("approval") else None})
+
+        def _guard_human_values(self, values) -> None:
+            """사람이 넣는 값에 지시문이 있으면 저장하지 않는다 (요청 원문과 같은 지시문 낱말 · 2026-11-05 병합)."""
+            from tap.apis.gate import detect_in_values, load_permissions
+            hits = detect_in_values(values, load_permissions(root / "data/config/permissions.yaml"))
+            if hits:
+                raise ValueError("입력값 속 지시문 감지 — 저장하지 않음 [INJECTION_BLOCKED]: " + "; ".join(hits))
 
         def _stream_draft(self, root, body):
             from tap.ir.draft_build import generate
@@ -458,6 +474,8 @@ def make_handler(root: Path, llm=None):
                 body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
                 if not isinstance(body, dict):
                     raise ValueError('요청은 JSON 객체여야 합니다')
+                if self.path.startswith('/api/scenario-ir-reviews/') or self.path == "/api/preprocessing/baseline":
+                    self._guard_human_values(body.get("decisions") if self.path.startswith('/api/scenario-ir-reviews/') else body.get("values"))
                 if self.path.startswith('/api/scenario-ir-reviews/'):
                     from tap.ir.input_review import submit
                     match = re.fullmatch(r'/api/scenario-ir-reviews/([^/]+)/(decisions|confirm)', self.path)

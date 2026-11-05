@@ -41,7 +41,7 @@ def test_stopped_request():
     assert r["passed"] and r["final_status"] == "거절(검사)"
     case2 = {"id": "Y", "category": "정상", "utterance": "u", "expect": {"tasks": [{"domain": "OD"}], "status": ["완료"]}}
     r2 = E.score(case2, None, "BudgetExceeded: 중단")
-    assert not r2["passed"] and r2["final_status"] == "오류" and r2["first_fail"] == "① 의도"
+    assert not r2["passed"] and r2["final_status"] == "중단" and r2["first_fail"] == "① 의도"
 
 
 def test_injection_violations():

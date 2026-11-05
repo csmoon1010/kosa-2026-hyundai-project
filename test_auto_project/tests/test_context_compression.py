@@ -85,7 +85,7 @@ def test_all_eight_combinations_end_to_end(root, stop_retry, kb_rag, dependency_
 
 
 def test_legacy_and_strict_options():
-    assert generation_options() == dict(stop_retry=False, kb_rag=False, dependency_projection=False, approval_gate=False, injection_guard=False)
+    assert generation_options() == dict(stop_retry=False, kb_rag=False, dependency_projection=False, approval_gate=False)
     assert generation_options(mode='validated')['stop_retry']
     assert generation_options({'stop_retry': True, 'kb_rag': True}, 'validated')['kb_rag']
     for value in ([], 'true', {'kb_rag': 1}, {'extra': True}):

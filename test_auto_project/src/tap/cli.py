@@ -143,7 +143,7 @@ def _traced(utterance: str, model: str | None, llm, trace):
     if trace is None:
         budget, pricing = load_llm_config(LLM_CFG)
         trace = Trace(utterance, budget, pricing)
-    return trace, trace.wrap(llm or openai_parse(model, sdk_retries=0))
+    return trace, trace.wrap(llm or openai_parse(model, sdk_retries=0, max_output_tokens=trace.budget.max_output_tokens))
 
 
 def analyze_intent(utterance: str, domains_cfg: Path | None = None, model: str | None = None, llm=None, trace=None) -> dict:
@@ -192,19 +192,24 @@ class _NoWrap:
 
 def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir: Path | None = None,
                    rules_cfg: Path | None = None, model: str | None = None, llm=None, tasks_json: str | None = None,
-                   trace=None, trace_dir: Path | None = None) -> dict:
+                   trace=None, trace_dir: Path | None = None, stop_retry: bool = True) -> dict:
     """자연어 → 업무 목록 → 경로 → 단계마다 API. 1단계 산출물(Catalog · Metadata · operations)을 쓴다.
 
     트레이스(호출별 단계 · 토큰 · 지연 · 비용, 단계별 시간)는 끝나면(예산 초과로 멈춰도) trace_dir 에 남긴다.
+    stop_retry: '중지조건 · 재시도' 토글 — 끄면 재시도 0회 (혜정 IR 생성의 같은 옵션과 함께 켜고 끈다, 발표 비교용).
     """
     from tap.apis.select import select_apis
-    from tap.trace import BudgetExceeded
+    from tap.goal.extract import GoalError
+    from tap.trace import Stopped
 
     out_dir = out_dir or ROOT / "data/out"
     ops, meta, cat = _load(out_dir / "api_operations.json"), _load(out_dir / "api_metadata.json"), _load(out_dir / "api_catalog.json")
     if ops is None or meta is None or cat is None:
         raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
     trace, wrapped = _traced(utterance, model, llm, trace)
+    if not stop_retry:
+        trace.budget.retries = 0
+    trace.options = {"stop_retry": stop_retry}
     result: dict[str, Any] = {"trace": trace}
     try:
         from tap.apis.gate import blocked_gate, detect_injections, gate_for, load_permissions, system_identifiers
@@ -223,7 +228,7 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
             pp = PathPlan(original_question=utterance, paths=[], unresolved=list(tp.unresolved))
             sel = ApiSelection(original_question=utterance, status="차단", api_selection_results=[],
                                unresolved=[Unresolved(path_sequence=None, step=None, reason=f"요청 속 지시문 감지 — 전체 차단 ({h})") for h in hits])
-            trace.finish("차단 (인젝션)")
+            trace.finish("차단 (인젝션) [INJECTION_BLOCKED]")
             result.update(tasks=tp, paths=pp, apis=sel, gate=blocked_gate(sel, hits), trace=trace, notes=notes, injections=hits)
             return result
         r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
@@ -234,12 +239,16 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
         gate = gate_for(sel, r["paths"], graphs, meta, perms)
         trace.finish(sel.status)
         result.update(r, apis=sel, gate=gate, trace=trace, injections=[])
-    except BudgetExceeded as e:
-        trace.finish()
+    except Stopped as e:                        # 예산 · LLM 거절 · 출력 토큰 한도 · 재시도 대기 — 정지조건
+        trace.finish(trace.status if trace.status.startswith("중단") else f"중단: {e}")
         e.trace = trace                         # 멈춘 요청도 트레이스로 채점 · 보고할 수 있게
         raise
+    except GoalError as e:                      # 받은 뒤 검사(근거 구절 · 상태 소속 등)가 거절 — 다시 묻지 않음
+        trace.finish(f"중단: 검사 거절 — {str(e)[:160]} [CHECK_REJECTED]")
+        e.trace = trace
+        raise
     except Exception as e:
-        trace.finish(f"실패: {type(e).__name__}: {str(e)[:160]}")
+        trace.finish(f"실패: {type(e).__name__}: {str(e)[:160]} [LLM_STOPPED]")
         e.trace = trace
         raise
     finally:
@@ -437,16 +446,19 @@ def main() -> None:
     rn.add_argument("--confirm", default="", help="실행 때: 이번 실행에서 확인한 R2 단계 key (되돌릴 수 없는 호출)")
     rn.add_argument("--approver", default="권지은")
     rn.add_argument("--model", default=None)
+    rn.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
     ev = sub.add_parser("eval", help="태스크셋 채점 — 결과(단계별 정답) · 궤적 · 비용 · 지연")
     ev.add_argument("--tasks", default=str(ROOT / "data/eval/tasks.yaml"))
     ev.add_argument("--ids", default=None, help="일부만 (예: N01,R02)")
     ev.add_argument("--model", default=None)
+    ev.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
     ev.add_argument("--out", default=str(ROOT / "data/out/eval"))
     ev.add_argument("--rescore", default=None, help="저장된 채점 결과(json)를 지금 태스크셋 기준으로 다시 채점 (LLM 안 부름)")
     se = sub.add_parser("select", help="자연어 → 업무 목록 → 경로 → 단계마다 API (+ 구분값)")
     se.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
     se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
     se.add_argument("--model", default=None)
+    se.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
     ex = sub.add_parser("extract-graph", help="(실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점")
     ex.add_argument("--codes", default=str(ROOT / "data/codes/common_codes.csv"))
     ex.add_argument("--group", default="ORD_STAT_GBCD")
@@ -502,7 +514,7 @@ def main() -> None:
         return
     if a.cmd == "run":
         from tap.apis.gate import GateError, approve, dry_run
-        r = analyze_select(a.utterance, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model)
+        r = analyze_select(a.utterance, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, stop_retry=a.stop_retry)
         g, sel = r["gate"], r["apis"]
         print(f"■ {a.utterance}\n  선택 결과 {sel.status} · 승인 게이트 {g.status}")
         for st in g.steps:
@@ -547,7 +559,7 @@ def main() -> None:
             results = E.rescore(saved, cases)
             cases = []
         for c in cases:
-            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model,
+            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, stop_retry=a.stop_retry,
                                                        trace_dir=Path(a.out) / "traces"))
             t = r["trajectory"]
             print(f"  {c['id']} {'O' if r['passed'] else 'X'} {r['final_status']} · LLM {t['llm_calls']} · {t['ms']}ms"
@@ -555,17 +567,17 @@ def main() -> None:
             results.append(r)
         summary = E.summarize(results)
         meta = {"at": datetime_now(), "model": a.model or os.environ.get("OPENAI_DEFAULT_MODEL") or (saved["meta"].get("model") if a.rescore else None),
-                "tasks_file": a.tasks, **({"rescored_from": a.rescore} if a.rescore else {})}
+                "tasks_file": a.tasks, "stop_retry": a.stop_retry, **({"rescored_from": a.rescore} if a.rescore else {})}
         j, m = E.save(results, summary, meta, a.out)
         print(m.read_text(encoding="utf-8").split("\n\n| id |")[0])
         print(f"→ {m}\n→ {j}")
         return
     if a.cmd == "select":
         for u in a.utterance:
-            from tap.trace import BudgetExceeded
+            from tap.trace import Stopped
             try:
-                r = analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks)
-            except BudgetExceeded as e:
+                r = analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, tasks_json=a.tasks, stop_retry=a.stop_retry)
+            except Stopped as e:
                 print(f"■ {u}\n  {e}")
                 continue
             print(json.dumps({"tasks": r["tasks"].model_dump(), "paths": r["paths"].dump(), "apis": r["apis"].dump()},

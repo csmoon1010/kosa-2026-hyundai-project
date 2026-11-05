@@ -27,7 +27,7 @@ test_auto_project/
 │   ├── graph-editor.js          # 상태 그래프 편집기 본체 — 두 화면이 같이 씀
 │   └── tap-data.js              # 실제 산출물 묶음 (tap.cli ui-data 로 생성)
 ├── data/
-│   ├── specs/hmall-openapi.json # 입력 — HSHOP OPEN API (협력사용, OpenAPI 3.0.1, 42개 — /om 은 제외)
+│   ├── specs/hmall-openapi.json # 입력 — HSHOP OPEN API (협력사용, OpenAPI 3.0.1, 43개 — /om 매장 정보 조회 포함, 2026-11-05 다시 넣음)
 │   ├── config/
 │   │   ├── domains.yaml         # 도메인 분류 규칙 (도메인 → prefix 여러 개, prefix 는 도메인 하나)
 │   │   ├── services.yaml        # 도메인별 연결 설정 (base URL 환경변수 · timeout · 인증 · 허용 환경)

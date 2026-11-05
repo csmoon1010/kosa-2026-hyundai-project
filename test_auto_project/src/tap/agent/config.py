@@ -6,7 +6,12 @@ from .prompts import SYSTEM, VALIDATION_INSTRUCTIONS
 
 DEFAULTS = dict(max_turns=16, max_tokens=150000, max_seconds=180, max_output_tokens=4096)
 DEFAULT_OPTIONS = dict(stop_retry=False, kb_rag=False, dependency_projection=False,
-                       approval_gate=False, injection_guard=False)
+                       approval_gate=False)   # IR 입력 검토 — 화면에서 뺐다(2026-11-05), API 로만 켤 수 있음
+# 인젝션 대응(injection_guard) 옵션은 뺐다 (2026-11-05 지은 결정) — 인젝션 감지 · 차단은 지은 ①②③ 하나뿐
+# (요청 원문은 ① 직후, 사람이 넣는 값은 서버에서). 자료 속 지시문은 validate_mapping · 사람 확정이 막는다.
+# approval_gate = 'IR 입력 검토' — 미해결 입력을 사람이 지금 입력 · 실행 시 입력으로 정해 확정. 실행 단계가 생기면
+#   승인 게이트와 하나로 합칠 예정이라(TODO, 중간발표 뒤) 지금은 화면에서 빼고 기본값을 끔으로 두었다.
+# 권한 등급 · 계획 승인을 하는 '승인 게이트'는 지은 ①②③ 쪽 하나뿐이다 (tap.apis.gate).
 DEFAULT_GENERATION_MODE = 'basic'
 GENERATION_MODES = [dict(value='basic', label='기본 모드'), dict(value='validated', label='정지·재시도 적용 모드')]
 MODE_POLICIES = {
@@ -106,8 +111,6 @@ def generation_options(values=None, mode=None):
         if values is not None and 'stop_retry' in values and result['stop_retry'] != legacy:
             raise ValueError('generation_mode와 generation_options.stop_retry가 충돌합니다')
         result['stop_retry'] = legacy
-    if result['injection_guard'] and not (result['stop_retry'] and result['approval_gate']):
-        raise ValueError('인젝션 대응은 중지조건·재시도와 승인게이트를 모두 선택해야 합니다')
     return result
 
 
@@ -124,7 +127,4 @@ def harness_configuration(values=None, generation_mode=None, options=None):
         result['instructions'] += '\n\n' + PROJECTION_INSTRUCTIONS
     if result['policy']['mapping_validation']:
         result['instructions'] += '\n\n' + VALIDATION_INSTRUCTIONS
-    if result['options']['injection_guard']:
-        from .prompts import INJECTION_INSTRUCTIONS
-        result['instructions'] += '\n\n' + INJECTION_INSTRUCTIONS
     return result

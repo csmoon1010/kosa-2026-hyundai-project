@@ -1,12 +1,12 @@
 {
-  "catalog_version": 2,
-  "catalog_hash": "sha256:588dcd48097d0842fe119cf3071335ffda3d94afa3780d6fe5b15d4099641c12",
-  "generated_at": "2026-10-28T14:07:12+09:00",
+  "catalog_version": 3,
+  "catalog_hash": "sha256:e189a01bc34bebc12f97e634974c91fb5c0c6a6d86265452c230aba3dae7e297",
+  "generated_at": "2026-11-05T21:37:09+09:00",
   "spec_sources": [
     {
       "service": "hshop-openapi",
       "document_id": "hmall-openapi.json",
-      "spec_hash": "sha256:5927d02b0c468664851617dd22d74f79781581585d66995a681e2f69c08e14bf"
+      "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
     }
   ],
   "apis": [
@@ -297,6 +297,16 @@
       "description": null,
       "domain": "pd",
       "kind": "write",
+      "aliases": [],
+      "tool_enabled": true
+    },
+    {
+      "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+      "operation_id": "selectSectMstList",
+      "api_name": "매장 정보 조회",
+      "description": null,
+      "domain": "om",
+      "kind": "read",
       "aliases": [],
       "tool_enabled": true
     },

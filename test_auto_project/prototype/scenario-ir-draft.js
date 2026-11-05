@@ -6,9 +6,9 @@
   const labels = {max_turns:'최대 모델 호출 횟수',max_tokens:'최대 누적 토큰',max_seconds:'최대 생성 시간(초)',max_output_tokens:'호출당 최대 출력 토큰'};
   let defaults = {}, busy = false, loadedBudget=null, budgetRequest=0;
   let activeMode='basic';
-  const emptyOptions=()=>({stop_retry:false,kb_rag:false,dependency_projection:false,approval_gate:false,injection_guard:false});
+  const emptyOptions=()=>({stop_retry:false,kb_rag:false,dependency_projection:false});
   let defaultOptions=emptyOptions(),activeOptions=emptyOptions();
-  const optionLabels={stop_retry:'중지조건·재시도',kb_rag:'압축 1 · 조건별 ParameterKB 검색',dependency_projection:'압축 2 · 의존성 기반 STEP 문맥 선별',approval_gate:'승인게이트',injection_guard:'인젝션 대응'};
+  const optionLabels={stop_retry:'중지조건·재시도',kb_rag:'압축 1 · 조건별 ParameterKB 검색',dependency_projection:'압축 2 · 의존성 기반 STEP 문맥 선별'};   /* IR 입력 검토(approval_gate)는 화면에서 뺐다 (2026-11-05) — 실행 단계가 없어 아직 의미가 없음. 백엔드는 남겨 둠 */
   const stepEntries=new Map();
   let selectedStepId=null,xmlView='after';
   host.innerHTML = `
@@ -16,7 +16,6 @@
     <fieldset data-options><legend>생성 옵션 · 함께 선택 가능</legend>
       ${Object.entries(optionLabels).map(([key,label])=>`<label style="display:inline-block;margin:8px"><input type="checkbox" data-option-${key}> ${label}</label>`).join('')}
     </fieldset>
-    <p class="note" data-injection-help>인젝션 대응은 중지조건·재시도와 승인게이트를 모두 선택하면 사용할 수 있습니다.</p>
     <p class="note" data-mode-status>기본 모드 · 현재 매핑 후보 분석 흐름을 사용합니다.</p>
     <button type="button" class="btn" data-reset>옵션 기본값 복원</button>
     <p><label>저장된 승인본 <select data-files></select></label></p><button type="button" class="btn btn-primary" data-generate>IR 다시 생성</button>
@@ -45,10 +44,10 @@
         <button type="button" role="tab" id="irDraftResponseTab" data-detail-response aria-controls="irDraftDetailPanel" aria-selected="true">응답 결과</button>
       </div><div id="irDraftDetailPanel" data-detail-panel role="tabpanel" aria-labelledby="irDraftResponseTab"><p class="note" data-detail-meta></p><pre><code data-detail-json></code></pre></div>
     </section><div data-result></div>
-    <section aria-label="입력 결정 검토"><h3>승인게이트 · 입력 결정</h3>
+    <section aria-label="입력 결정 검토" hidden><h3>IR 입력 검토 · 입력 결정</h3>
       <p><label>저장된 검토 초안 <select data-reviews></select></label>
       <button type="button" class="btn" data-review-load>검토 불러오기</button></p>
-      <p role="status" data-review-status>승인게이트를 선택해 생성한 초안을 검토합니다.</p>
+      <p role="status" data-review-status>IR 입력 검토를 선택해 생성한 초안의 미해결 입력을 지금 입력 · 실행 시 입력으로 정하고 확정합니다.</p>
       <div data-review-content></div>
     </section>
     <section class="ir-run-history" aria-label="누적 IR 실행 로그">
@@ -67,12 +66,7 @@
     </section>`;
   const get = key => host.querySelector('[data-'+key+']');
   function readOptions(){return Object.fromEntries(Object.keys(optionLabels).map(key=>[key,Boolean(get('option-'+key).checked)]));}
-  function syncOptionDependencies(){
-    const allowed=get('option-stop_retry').checked&&get('option-approval_gate').checked;
-    if(!allowed)get('option-injection_guard').checked=false;
-    get('option-injection_guard').disabled=busy||!allowed;
-    get('injection-help').textContent=allowed?'인젝션 대응: 자료 속 지시를 구분하는 프롬프트를 보완합니다.':'중지조건·재시도와 승인게이트를 모두 선택하면 인젝션 대응을 사용할 수 있습니다.';
-  }
+  function syncOptionDependencies(){}   /* 인젝션 대응 옵션을 빼서(2026-11-05) 옵션 사이 의존이 없다 */
   function writeOptions(options){for(const key of Object.keys(optionLabels))get('option-'+key).checked=Boolean(options[key]);syncOptionDependencies();}
   function lockOptions(value){for(const key of Object.keys(optionLabels))get('option-'+key).disabled=value;syncOptionDependencies();}
   function describeOptions(options){return Object.entries(optionLabels).filter(([key])=>options[key]).map(([,label])=>label).join(' + ')||'기본 모드';}
@@ -589,7 +583,7 @@
       status('승인 JSON 저장 완료 · IR 초안 생성 중…');
       const r=await fetch('/api/scenario-ir-drafts',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/x-ndjson'},body:JSON.stringify({approved_filename:chosen,generation_options:activeOptions})});
       const data=await receive(r);
-      showLogFile(data);preview(data);if(data.review){showReview(data);await loadReviews(data.ir.scenario_id);}else{currentReview=null;get('review-content').replaceChildren();get('review-status').textContent='이 실행은 승인게이트를 적용하지 않았습니다.';}status('IR 초안 저장 완료 · 실행용 시나리오에는 등록하지 않았습니다.');
+      showLogFile(data);preview(data);if(data.review){showReview(data);await loadReviews(data.ir.scenario_id);}else{currentReview=null;get('review-content').replaceChildren();get('review-status').textContent='이 실행은 IR 입력 검토를 적용하지 않았습니다.';}status('IR 초안 저장 완료 · 실행용 시나리오에는 등록하지 않았습니다.');
     } catch(e) {
       updateSteps({event:'generation_error'});
       for(const row of logRows.values()){

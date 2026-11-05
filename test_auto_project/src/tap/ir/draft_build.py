@@ -167,7 +167,7 @@ def _generate(root, filename, config=None, runtime_factory=Runtime, on_event=Non
     runtime = runtime_factory(tools, config)
     if hasattr(runtime, 'set_options'):
         runtime.set_options(options)
-    elif options['kb_rag'] or options['dependency_projection'] or options['injection_guard']:
+    elif options['kb_rag'] or options['dependency_projection']:
         raise ValueError('선택한 runtime_factory가 추가 생성 옵션을 지원하지 않습니다')
     elif mode != 'basic': runtime.set_mode(mode)
     runtime.on_event = on_event

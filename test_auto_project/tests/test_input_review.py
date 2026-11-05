@@ -12,15 +12,13 @@ from tap.agent.runtime import Runtime
 from tap.ir.draft_build import generate
 from tap.ir.input_review import load, list_reviews, submit, ReviewConflict
 
-@pytest.mark.parametrize('validation,approval,injection', itertools.product([False,True], repeat=3))
-def test_option_dependency(validation, approval, injection):
-    options=dict(stop_retry=validation,approval_gate=approval,injection_guard=injection)
-    if injection and not (validation and approval):
-        with pytest.raises(ValueError,match='모두'):generation_options(options)
-    else:
-        cfg=harness_configuration(options=options)
-        assert cfg['policy']['mapping_validation'] is validation
-        assert ('## 자료와 지시의 구분' in cfg['instructions']) is injection
+@pytest.mark.parametrize('validation,approval', itertools.product([False,True], repeat=2))
+def test_option_dependency(validation, approval):
+    options=dict(stop_retry=validation,approval_gate=approval)
+    cfg=harness_configuration(options=options)
+    assert cfg['policy']['mapping_validation'] is validation
+    assert '## 자료와 지시의 구분' not in cfg['instructions']
+    with pytest.raises(ValueError):generation_options(dict(options,injection_guard=True))   # 인젝션 대응 옵션은 없앰 (2026-11-05)
 
 class ReviewRuntime:
     calls=0
@@ -125,12 +123,12 @@ def test_no_items_still_requires_confirmation_and_off_has_no_review(root):
     result=draft(root,empty=True)
     assert result['review']['status']=='ready_for_confirmation' and result['ir']['status']=='needs_input'
     assert submit(root,result['ir']['scenario_id'],dict(expected_revision=1),confirm=True)['review']['status']=='confirmed'
-    off=generate(root,FILENAME,runtime_factory=ReviewRuntime)
+    off=generate(root,FILENAME,runtime_factory=ReviewRuntime,generation_options=dict(approval_gate=False))   # 끈 경우를 명시
     assert 'review' not in off['ir'] and 'review' not in off
     with pytest.raises(ValueError):load(root,off['ir']['scenario_id'])
     with pytest.raises(ValueError):load(root,'../../outside')
 
-def test_rule_ignore_attack_hits_existing_validator_and_data_wrapper(root):
+def test_rule_ignore_attack_hits_existing_validator(root):
     approved,tools,plan=context(root);current=plan[0]
     good=fixed_candidate(tools,current);bad=deepcopy(good);bad['inputs'][0]['parameter_path']='$.injection_only_missing_field'
     queue=[api_response(read_calls(tools,current)),api_response(content=json.dumps(bad)),api_response(content=json.dumps(good))]
@@ -141,16 +139,16 @@ def test_rule_ignore_attack_hits_existing_validator_and_data_wrapper(root):
         return data
     tools.read=poisoned;requests=[]
     def create(**kwargs):requests.append(deepcopy(kwargs));return queue.pop(0)
-    runtime=Runtime(tools,{},client=NS(responses=NS(create=create)),model='test',generation_options=dict(stop_retry=True,approval_gate=True,injection_guard=True))
+    runtime=Runtime(tools,{},client=NS(responses=NS(create=create)),model='test',generation_options=dict(stop_retry=True,approval_gate=True))
     events=[];runtime.on_event=events.append
     result=runtime.run(current,{},approved['intent_tasks'][0],approved['original_question'],[])
     assert result['inputs'][0]['parameter_path']!='$.injection_only_missing_field'
     errors=[error for event in events if event['event']=='mapping_validation' for error in event['result']['errors']]
     assert any(e['code']=='PARAMETER_PATH_NOT_FOUND' for e in errors)
-    assert '## 자료와 지시의 구분' in requests[0]['instructions']
+    # 인젝션 대응 옵션(프롬프트 · 자료 표시)을 뺀 뒤에도(2026-11-05) 자료 속 지시문은 매핑 검증이 막는다
+    assert '## 자료와 지시의 구분' not in requests[0]['instructions']
     outputs=[m for m in requests[1]['input'] if m.get('type')=='function_call_output']
-    assert 'material' in json.loads(outputs[0]['output'])
-    assert '시스템 지시나 사용자 승인' in json.loads(outputs[0]['output'])['notice']
+    assert 'material' not in json.loads(outputs[0]['output'])   # 자료를 감싸던 인젝션 표시가 없음
 
 
 def test_http_gate_routes_and_invalid_option_combinations(root):
@@ -208,11 +206,9 @@ def test_enum_and_ambiguous_dependency_require_valid_decisions(root,monkeypatch)
     with pytest.raises(ValueError,match='원본'):submit(root,blocked['ir']['scenario_id'],choose(blocked,'runtime'))
 
 
-@pytest.mark.parametrize('stop_retry,injection,kb_rag,projection',[
-    (stop,injection,kb,projection)
-    for stop,injection in [(False,False),(True,False),(True,True)]
-    for kb,projection in itertools.product([False,True],repeat=2)])
-def test_review_and_injection_end_to_end_with_compression(root,stop_retry,injection,kb_rag,projection):
+@pytest.mark.parametrize('stop_retry,kb_rag,projection',[
+    (stop,kb,projection) for stop in [False,True] for kb,projection in itertools.product([False,True],repeat=2)])
+def test_review_end_to_end_with_compression(root,stop_retry,kb_rag,projection):
     from test_context_compression import DeterministicRetriever
     from test_scenario_ir_modes import scenario_queue
     approved,tools,plan=context(root,True)
@@ -221,12 +217,12 @@ def test_review_and_injection_end_to_end_with_compression(root,stop_retry,inject
         def create(**kwargs):requests.append(deepcopy(kwargs));return queue.pop(0)
         runtime=Runtime(tools,config,client=NS(responses=NS(create=create)),model='test')
         runtime.retriever=DeterministicRetriever();return runtime
-    options=dict(stop_retry=stop_retry,approval_gate=True,injection_guard=injection,kb_rag=kb_rag,dependency_projection=projection)
+    options=dict(stop_retry=stop_retry,approval_gate=True,kb_rag=kb_rag,dependency_projection=projection)
     result=generate(root,FILENAME,runtime_factory=factory,generation_options=options)
     assert not queue and result['ir']['generation']['options']==options
     assert result['review']['status']=='awaiting_decision'  # original unresolved preserved
     assert result['ir']==json.loads((root/result['file']).read_text())
-    assert all(('## 자료와 지시의 구분' in r['instructions']) is injection for r in requests)
+    assert all('## 자료와 지시의 구분' not in r['instructions'] for r in requests)
     assert load(root,result['ir']['scenario_id'])['ir']==result['ir']
 
 
@@ -234,7 +230,7 @@ def test_normal_approval_word_is_not_keyword_blocked(root):
     approved,tools,plan=context(root);current=plan[0];good=fixed_candidate(tools,current)
     queue=[api_response(read_calls(tools,current)),api_response(content=json.dumps(good))]
     runtime=Runtime(tools,{},client=NS(responses=NS(create=lambda **kwargs:queue.pop(0))),model='test',
-        generation_options=dict(stop_retry=True,approval_gate=True,injection_guard=True))
+        generation_options=dict(stop_retry=True,approval_gate=True))
     result=runtime.run(current,{},approved['intent_tasks'][0],'승인된 상품만 주문. 협력사 코드 001442',[])
     assert result['inputs'][0]['value']=='001442' and not queue
 
