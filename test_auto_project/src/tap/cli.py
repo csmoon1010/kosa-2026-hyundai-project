@@ -454,6 +454,16 @@ def main() -> None:
     ev.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
     ev.add_argument("--out", default=str(ROOT / "data/out/eval"))
     ev.add_argument("--rescore", default=None, help="저장된 채점 결과(json)를 지금 태스크셋 기준으로 다시 채점 (LLM 안 부름)")
+    es = sub.add_parser("eval-stages", help="단계별 평가 — ① 의도 ② 경로 ③ API ④ 파라미터(IR) 를 정답셋으로 따로 채점 · 반복 실행 일치율")
+    es.add_argument("--gold", default=str(ROOT / "data/eval/stage_gold.json"))
+    es.add_argument("--ids", default=None, help="일부만 (예: S01,S03)")
+    es.add_argument("--runs", type=int, default=1, help="같은 요청을 몇 번 돌릴지 (일치율)")
+    es.add_argument("--no-ir", dest="ir", action="store_false", help="④ IR 생성을 하지 않음 (①②③ 만, 싸고 빠름)")
+    es.add_argument("--model", default=None)
+    es.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (①②③ + IR 함께)")
+    es.add_argument("--rules", default=str(ROOT / "data/config/rules.ui.yaml"))
+    es.add_argument("--out", default=str(ROOT / "data/out/eval/stages"))
+    es.add_argument("--rescore", default=None, help="저장된 결과(json)를 지금 정답셋으로 다시 채점 (LLM 안 부름)")
     se = sub.add_parser("select", help="자연어 → 업무 목록 → 경로 → 단계마다 API (+ 구분값)")
     se.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
     se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
@@ -570,6 +580,34 @@ def main() -> None:
                 "tasks_file": a.tasks, "stop_retry": a.stop_retry, **({"rescored_from": a.rescore} if a.rescore else {})}
         j, m = E.save(results, summary, meta, a.out)
         print(m.read_text(encoding="utf-8").split("\n\n| id |")[0])
+        print(f"→ {m}\n→ {j}")
+        return
+    if a.cmd == "eval-stages":
+        import os
+        from tap import eval_stages as S
+        cases = S.load_gold(a.gold)
+        if a.ids:
+            cases = [c for c in cases if c["id"] in a.ids.split(",")]
+        if a.rescore:
+            saved = json.loads(Path(a.rescore).read_text(encoding="utf-8"))
+            runs, meta = S.rescore(saved, cases), {**saved["meta"], "rescored_from": a.rescore}
+        else:
+            ir = S.make_ir(ROOT, a.stop_retry) if a.ir else None
+            analyze = lambda u: analyze_select(u, rules_cfg=Path(a.rules), model=a.model, stop_retry=a.stop_retry,
+                                               trace_dir=Path(a.out).parent / "traces")
+            runs = []
+            for c in cases:
+                for n in range(1, a.runs + 1):
+                    out = S.run_once(c, analyze, ir)
+                    sc = S.score(c, out)
+                    runs.append({"id": c["id"], "run": n, "out": out, "score": sc})
+                    print(f"  {c['id']}#{n} " + " ".join(f"{S.STAGE_KO[s]} {sc['stages'][s]['verdict']}" for s in S.STAGES), flush=True)
+            meta = {"model": a.model or os.environ.get("OPENAI_DEFAULT_MODEL"), "runs": a.runs, "ir": a.ir, "stop_retry": a.stop_retry,
+                    "rules": a.rules}
+        meta.update(at=datetime_now(), gold=a.gold)
+        summary = S.summarize(cases, runs)
+        j, m = S.save(summary, runs, meta, a.out)
+        print(m.read_text(encoding="utf-8").split("\n## 2.")[0])
         print(f"→ {m}\n→ {j}")
         return
     if a.cmd == "select":

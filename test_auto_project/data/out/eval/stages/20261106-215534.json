@@ -1,0 +1,1069 @@
+{
+  "meta": {
+    "model": "gpt-5.4",
+    "runs": 1,
+    "ir": true,
+    "stop_retry": true,
+    "rules": "/home/ubuntu/work/kosa-2026-hyundai-project/test_auto_project/data/config/rules.ui.yaml",
+    "at": "2026-11-06T21:55:34+09:00",
+    "gold": "/home/ubuntu/work/kosa-2026-hyundai-project/test_auto_project/data/eval/stage_gold.json"
+  },
+  "summary": {
+    "케이스": 2,
+    "실행": 2,
+    "단계별": {
+      "① 의도": {
+        "맞음": 2,
+        "틀림": 0,
+        "판단 보류": 0,
+        "앞 단계 제외": 0,
+        "해당 없음": 0,
+        "단독 맞음": "2/2"
+      },
+      "② 경로": {
+        "맞음": 2,
+        "틀림": 0,
+        "판단 보류": 0,
+        "앞 단계 제외": 0,
+        "해당 없음": 0,
+        "단독 맞음": "2/2"
+      },
+      "③ API": {
+        "맞음": 1,
+        "틀림": 1,
+        "판단 보류": 0,
+        "앞 단계 제외": 0,
+        "해당 없음": 0,
+        "단독 맞음": "1/2"
+      },
+      "④ 파라미터": {
+        "맞음": 0,
+        "틀림": 1,
+        "판단 보류": 0,
+        "앞 단계 제외": 1,
+        "해당 없음": 0,
+        "단독 맞음": "0/2"
+      },
+      "최종": {
+        "맞음": 0,
+        "틀림": 2,
+        "판단 보류": 0,
+        "앞 단계 제외": 0,
+        "해당 없음": 0,
+        "단독 맞음": "0/2"
+      }
+    },
+    "필드별": {
+      "① 의도 action": {
+        "맞음": 2
+      },
+      "① 의도 conditions": {
+        "맞음": 2
+      },
+      "① 의도 constraints.name": {
+        "맞음": 2
+      },
+      "① 의도 constraints.role": {
+        "맞음": 3
+      },
+      "① 의도 constraints.source_phrase": {
+        "맞음": 3
+      },
+      "① 의도 constraints.value": {
+        "맞음": 3
+      },
+      "① 의도 count": {
+        "맞음": 2
+      },
+      "① 의도 depends_on": {
+        "맞음": 2
+      },
+      "① 의도 domain": {
+        "맞음": 2
+      },
+      "① 의도 injections": {
+        "맞음": 2
+      },
+      "① 의도 origin": {
+        "맞음": 2
+      },
+      "① 의도 original_question": {
+        "맞음": 2
+      },
+      "① 의도 sequence": {
+        "맞음": 2
+      },
+      "① 의도 source_phrases": {
+        "맞음": 2
+      },
+      "① 의도 unresolved": {
+        "맞음": 2
+      },
+      "① 의도 업무 수": {
+        "맞음": 2
+      },
+      "② 경로 domain": {
+        "맞음": 2
+      },
+      "② 경로 graph_id": {
+        "맞음": 2
+      },
+      "② 경로 sequence": {
+        "맞음": 2
+      },
+      "② 경로 status": {
+        "맞음": 2
+      },
+      "② 경로 경로 수": {
+        "맞음": 2
+      },
+      "③ API api": {
+        "맞음": 1,
+        "틀림": 1
+      },
+      "③ API selector": {
+        "맞음": 2
+      },
+      "③ API tier": {
+        "맞음": 1,
+        "틀림": 1
+      },
+      "③ API 단계": {
+        "틀림": 2
+      },
+      "③ API 단계 수": {
+        "맞음": 1,
+        "틀림": 1
+      },
+      "④ 파라미터 IR 생성": {
+        "틀림": 2
+      },
+      "최종 gate": {
+        "맞음": 2
+      },
+      "최종 status": {
+        "틀림": 2
+      }
+    },
+    "오류 종류": {
+      "③ API 단계": {
+        "건수": 2,
+        "케이스": [
+          "S06"
+        ],
+        "예": "S06 1-2: 그 단계가 없음 · 출력 null"
+      },
+      "④ 파라미터 IR 생성": {
+        "건수": 1,
+        "케이스": [
+          "S04"
+        ],
+        "예": "S04 ir: IR 없음 — ValueError: 생성 예산 도달: INSUFFICIENT_REQUEST_TOKENS · 출력 null"
+      },
+      "③ API 단계 수": {
+        "건수": 1,
+        "케이스": [
+          "S06"
+        ],
+        "예": "S06 apis: 출력 1 · 정답 3"
+      },
+      "③ API api": {
+        "건수": 1,
+        "케이스": [
+          "S06"
+        ],
+        "예": "S06 1-1.api: 출력 \"multiItem\" · 정답 \"selectBrndList\""
+      },
+      "③ API tier": {
+        "건수": 1,
+        "케이스": [
+          "S06"
+        ],
+        "예": "S06 1-1.tier: 출력 \"R2\" · 정답 \"R0\""
+      }
+    },
+    "처음 틀린 단계": {
+      "④ 파라미터": 1,
+      "③ API": 1
+    },
+    "일치율": {},
+    "비용 · 지연": {
+      "①②③ 요청당 비용 평균_usd": 0.0076,
+      "①②③ 요청당 지연 평균_ms": 7277,
+      "④ IR 건수": 0,
+      "④ IR 비용 평균_usd": null,
+      "④ IR 지연 평균_s": null,
+      "합계_usd": 0.0152
+    },
+    "단계별 LLM": {
+      "① 의도 분석": {
+        "호출": 2,
+        "비용_usd": 0.007518,
+        "ms": 6801
+      },
+      "② 상태 고르기": {
+        "호출": 2,
+        "비용_usd": 0.007688,
+        "ms": 5848
+      }
+    },
+    "판단 보류": []
+  },
+  "runs": [
+    {
+      "id": "S04",
+      "run": 1,
+      "out": {
+        "tasks": {
+          "original_question": "주문제작 상품을 2개 생성해줘",
+          "tasks": [
+            {
+              "sequence": 1,
+              "domain": "PD",
+              "origin": "신규",
+              "action": "상품생성",
+              "conditions": "주문제작 상품 2개를 신규 생성한다.",
+              "constraints": [
+                {
+                  "name": "상품 종류",
+                  "value": "주문제작 상품",
+                  "role": "설정값",
+                  "source_phrase": "주문제작 상품"
+                }
+              ],
+              "depends_on": [],
+              "count": 2,
+              "source_phrases": [
+                "주문제작 상품을 2개 생성해줘"
+              ]
+            }
+          ],
+          "unresolved": [],
+          "injections": []
+        },
+        "paths": {
+          "original_question": "주문제작 상품을 2개 생성해줘",
+          "paths": [
+            {
+              "sequence": 1,
+              "domain": "PD",
+              "graph_id": null,
+              "origin": "신규",
+              "depends_on": [],
+              "from_state": null,
+              "start_by": null,
+              "to_state": null,
+              "to_state_reason": null,
+              "must_pass": [],
+              "steps": [],
+              "alternatives": [],
+              "status": "그래프 없음",
+              "notes": [
+                "상태 그래프를 쓰지 않는 업무 — API 선택 단계가 API 를 바로 고름"
+              ]
+            }
+          ],
+          "unresolved": []
+        },
+        "apis": {
+          "original_question": "주문제작 상품을 2개 생성해줘",
+          "status": "검토 필요",
+          "api_selection_results": [
+            {
+              "path_sequence": 1,
+              "step": 1,
+              "kind": "생성",
+              "domain": "PD",
+              "edge": "상품생성",
+              "from": null,
+              "to": null,
+              "api_candidates": [
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+                  "name": "상품 등록",
+                  "selector": {},
+                  "score": 0.8,
+                  "check": "통과",
+                  "check_reason": null
+                },
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+                  "name": "상품문의 답변 등록,수정",
+                  "selector": {},
+                  "score": 0.34,
+                  "check": "통과",
+                  "check_reason": null
+                },
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+                  "name": "[상품 속성별 재고관리] 속성 등록",
+                  "selector": {},
+                  "score": 0.32,
+                  "check": "통과",
+                  "check_reason": null
+                }
+              ],
+              "selected": {
+                "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+                "selector": {}
+              },
+              "selection_status": "가선택",
+              "selected_by": "규칙",
+              "selection_reason": "새로 등록하는 API; 이름 '상품 등록' — 그래프 없는 업무라 명세만으로 고름, 사람 확인"
+            }
+          ],
+          "unresolved": []
+        },
+        "gate": {
+          "status": "승인 필요",
+          "steps": [
+            {
+              "key": "1-1",
+              "path_sequence": 1,
+              "step": 1,
+              "kind": "생성",
+              "edge": "상품생성",
+              "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+              "selector": {},
+              "tier": "R2",
+              "requirement": "단계 승인",
+              "confirm_on_run": true,
+              "reasons": [
+                "쓰기",
+                "그래프 없는 생성 — 되돌리는 방법을 모름",
+                "되돌릴 수 없음 — 실행할 때마다 확인",
+                "사람이 확인하지 않은 선택 (가선택 · 규칙) — API 가 맞는지 확인"
+              ]
+            }
+          ],
+          "blocked": [],
+          "need_scenario": true,
+          "need_steps": [
+            "1-1"
+          ],
+          "confirm_steps": [
+            "1-1"
+          ],
+          "selection_hash": "sha256:49fef6c1be26dc4e5f9559eac3d30b0a2a88790e261deeb7c8552308332dfba6"
+        },
+        "ir": {
+          "error": "ValueError: 생성 예산 도달: INSUFFICIENT_REQUEST_TOKENS",
+          "seconds": 4.0
+        },
+        "error": null,
+        "trace_file": "/home/ubuntu/work/kosa-2026-hyundai-project/test_auto_project/data/out/eval/traces/20261106-215523-63c735.json",
+        "final_status": "검토 필요",
+        "cost": {
+          "by_stage": {
+            "① 의도 분석": {
+              "llm_calls": 1,
+              "cost_usd": 0.003262,
+              "ms": 3616
+            },
+            "② 상태 고르기": {
+              "llm_calls": 1,
+              "cost_usd": 0.003792,
+              "ms": 3567
+            }
+          },
+          "ms": 8979,
+          "cost_usd": 0.007054,
+          "llm_calls": 2
+        }
+      },
+      "score": {
+        "id": "S04",
+        "category": "정상",
+        "utterance": "주문제작 상품을 2개 생성해줘",
+        "stages": {
+          "intent": {
+            "verdict": "맞음",
+            "alone": "맞음",
+            "fields": [
+              {
+                "stage": "intent",
+                "key": "original_question",
+                "where": "original_question",
+                "verdict": "맞음",
+                "got": "주문제작 상품을 2개 생성해줘"
+              },
+              {
+                "stage": "intent",
+                "key": "업무 수",
+                "where": "tasks",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "intent",
+                "key": "sequence",
+                "where": "tasks[1].sequence",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "intent",
+                "key": "domain",
+                "where": "tasks[1].domain",
+                "verdict": "맞음",
+                "got": "PD"
+              },
+              {
+                "stage": "intent",
+                "key": "origin",
+                "where": "tasks[1].origin",
+                "verdict": "맞음",
+                "got": "신규"
+              },
+              {
+                "stage": "intent",
+                "key": "action",
+                "where": "tasks[1].action",
+                "verdict": "맞음",
+                "got": "상품생성"
+              },
+              {
+                "stage": "intent",
+                "key": "conditions",
+                "where": "tasks[1].conditions",
+                "verdict": "맞음",
+                "got": "주문제작 상품 2개를 신규 생성한다."
+              },
+              {
+                "stage": "intent",
+                "key": "count",
+                "where": "tasks[1].count",
+                "verdict": "맞음",
+                "got": 2
+              },
+              {
+                "stage": "intent",
+                "key": "depends_on",
+                "where": "tasks[1].depends_on",
+                "verdict": "맞음",
+                "got": []
+              },
+              {
+                "stage": "intent",
+                "key": "source_phrases",
+                "where": "tasks[1].source_phrases",
+                "verdict": "맞음",
+                "got": [
+                  "주문제작 상품을 2개 생성해줘"
+                ]
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.value",
+                "where": "tasks[1].constraints[상품 종류].value",
+                "verdict": "맞음",
+                "got": "주문제작 상품"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.role",
+                "where": "tasks[1].constraints[상품 종류].role",
+                "verdict": "맞음",
+                "got": "설정값"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.source_phrase",
+                "where": "tasks[1].constraints[상품 종류].source_phrase",
+                "verdict": "맞음",
+                "got": "주문제작 상품"
+              },
+              {
+                "stage": "intent",
+                "key": "unresolved",
+                "where": "unresolved",
+                "verdict": "맞음",
+                "got": []
+              },
+              {
+                "stage": "intent",
+                "key": "injections",
+                "where": "injections",
+                "verdict": "맞음",
+                "got": []
+              }
+            ]
+          },
+          "paths": {
+            "verdict": "맞음",
+            "alone": "맞음",
+            "fields": [
+              {
+                "stage": "paths",
+                "key": "경로 수",
+                "where": "paths",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "paths",
+                "key": "sequence",
+                "where": "paths[1].sequence",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "paths",
+                "key": "domain",
+                "where": "paths[1].domain",
+                "verdict": "맞음",
+                "got": "PD"
+              },
+              {
+                "stage": "paths",
+                "key": "graph_id",
+                "where": "paths[1].graph_id",
+                "verdict": "맞음",
+                "got": null
+              },
+              {
+                "stage": "paths",
+                "key": "status",
+                "where": "paths[1].status",
+                "verdict": "맞음",
+                "got": "그래프 없음"
+              }
+            ]
+          },
+          "apis": {
+            "verdict": "맞음",
+            "alone": "맞음",
+            "fields": [
+              {
+                "stage": "apis",
+                "key": "단계 수",
+                "where": "apis",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "apis",
+                "key": "api",
+                "where": "1-1.api",
+                "verdict": "맞음",
+                "got": "multiItem"
+              },
+              {
+                "stage": "apis",
+                "key": "selector",
+                "where": "1-1.selector",
+                "verdict": "맞음",
+                "got": {}
+              },
+              {
+                "stage": "apis",
+                "key": "tier",
+                "where": "1-1.tier",
+                "verdict": "맞음",
+                "got": "R2"
+              }
+            ]
+          },
+          "params": {
+            "verdict": "틀림",
+            "alone": "틀림",
+            "fields": [
+              {
+                "stage": "params",
+                "key": "IR 생성",
+                "where": "ir",
+                "verdict": "틀림",
+                "why": "IR 없음 — ValueError: 생성 예산 도달: INSUFFICIENT_REQUEST_TOKENS",
+                "got": null
+              }
+            ]
+          },
+          "final": {
+            "verdict": "틀림",
+            "alone": "틀림",
+            "fields": [
+              {
+                "stage": "final",
+                "key": "status",
+                "where": "final.status",
+                "verdict": "틀림",
+                "got": "검토 필요",
+                "want": {
+                  "any_of": [
+                    "완료"
+                  ]
+                }
+              },
+              {
+                "stage": "final",
+                "key": "gate",
+                "where": "final.gate",
+                "verdict": "맞음",
+                "got": "승인 필요"
+              }
+            ]
+          }
+        },
+        "first_fail": "④ 파라미터"
+      }
+    },
+    {
+      "id": "S06",
+      "run": 1,
+      "out": {
+        "tasks": {
+          "original_question": "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘",
+          "tasks": [
+            {
+              "sequence": 1,
+              "domain": "PD",
+              "origin": "신규",
+              "action": "상품생성",
+              "conditions": "브랜드와 제조사가 “아디다스”인 상품 1개를 신규 생성한다.",
+              "constraints": [
+                {
+                  "name": "브랜드",
+                  "value": "아디다스",
+                  "role": "설정값",
+                  "source_phrase": "브랜드와 제조사가 “아디다스”인"
+                },
+                {
+                  "name": "제조사",
+                  "value": "아디다스",
+                  "role": "설정값",
+                  "source_phrase": "브랜드와 제조사가 “아디다스”인"
+                }
+              ],
+              "depends_on": [],
+              "count": 1,
+              "source_phrases": [
+                "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘"
+              ]
+            }
+          ],
+          "unresolved": [],
+          "injections": []
+        },
+        "paths": {
+          "original_question": "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘",
+          "paths": [
+            {
+              "sequence": 1,
+              "domain": "PD",
+              "graph_id": null,
+              "origin": "신규",
+              "depends_on": [],
+              "from_state": null,
+              "start_by": null,
+              "to_state": null,
+              "to_state_reason": null,
+              "must_pass": [],
+              "steps": [],
+              "alternatives": [],
+              "status": "그래프 없음",
+              "notes": [
+                "상태 그래프를 쓰지 않는 업무 — API 선택 단계가 API 를 바로 고름"
+              ]
+            }
+          ],
+          "unresolved": []
+        },
+        "apis": {
+          "original_question": "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘",
+          "status": "검토 필요",
+          "api_selection_results": [
+            {
+              "path_sequence": 1,
+              "step": 1,
+              "kind": "생성",
+              "domain": "PD",
+              "edge": "상품생성",
+              "from": null,
+              "to": null,
+              "api_candidates": [
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+                  "name": "상품 등록",
+                  "selector": {},
+                  "score": 0.8,
+                  "check": "통과",
+                  "check_reason": null
+                },
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+                  "name": "상품문의 답변 등록,수정",
+                  "selector": {},
+                  "score": 0.34,
+                  "check": "통과",
+                  "check_reason": null
+                },
+                {
+                  "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+                  "name": "[상품 속성별 재고관리] 속성 등록",
+                  "selector": {},
+                  "score": 0.32,
+                  "check": "통과",
+                  "check_reason": null
+                }
+              ],
+              "selected": {
+                "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+                "selector": {}
+              },
+              "selection_status": "가선택",
+              "selected_by": "규칙",
+              "selection_reason": "새로 등록하는 API; 이름 '상품 등록' — 그래프 없는 업무라 명세만으로 고름, 사람 확인"
+            }
+          ],
+          "unresolved": []
+        },
+        "gate": {
+          "status": "승인 필요",
+          "steps": [
+            {
+              "key": "1-1",
+              "path_sequence": 1,
+              "step": 1,
+              "kind": "생성",
+              "edge": "상품생성",
+              "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+              "selector": {},
+              "tier": "R2",
+              "requirement": "단계 승인",
+              "confirm_on_run": true,
+              "reasons": [
+                "쓰기",
+                "그래프 없는 생성 — 되돌리는 방법을 모름",
+                "되돌릴 수 없음 — 실행할 때마다 확인",
+                "사람이 확인하지 않은 선택 (가선택 · 규칙) — API 가 맞는지 확인"
+              ]
+            }
+          ],
+          "blocked": [],
+          "need_scenario": true,
+          "need_steps": [
+            "1-1"
+          ],
+          "confirm_steps": [
+            "1-1"
+          ],
+          "selection_hash": "sha256:c3ebc35f508b6bbe21e82bc051a4af66a032628cb64510dd7ba5781f45a706f5"
+        },
+        "ir": {
+          "error": "ValueError: 생성 예산 도달: INSUFFICIENT_REQUEST_TOKENS",
+          "seconds": 3.0
+        },
+        "error": null,
+        "trace_file": "/home/ubuntu/work/kosa-2026-hyundai-project/test_auto_project/data/out/eval/traces/20261106-215531-72d4f9.json",
+        "final_status": "검토 필요",
+        "cost": {
+          "by_stage": {
+            "① 의도 분석": {
+              "llm_calls": 1,
+              "cost_usd": 0.004256,
+              "ms": 3185
+            },
+            "② 상태 고르기": {
+              "llm_calls": 1,
+              "cost_usd": 0.003896,
+              "ms": 2281
+            }
+          },
+          "ms": 5576,
+          "cost_usd": 0.008152,
+          "llm_calls": 2
+        }
+      },
+      "score": {
+        "id": "S06",
+        "category": "정상",
+        "utterance": "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘",
+        "stages": {
+          "intent": {
+            "verdict": "맞음",
+            "alone": "맞음",
+            "fields": [
+              {
+                "stage": "intent",
+                "key": "original_question",
+                "where": "original_question",
+                "verdict": "맞음",
+                "got": "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘"
+              },
+              {
+                "stage": "intent",
+                "key": "업무 수",
+                "where": "tasks",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "intent",
+                "key": "sequence",
+                "where": "tasks[1].sequence",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "intent",
+                "key": "domain",
+                "where": "tasks[1].domain",
+                "verdict": "맞음",
+                "got": "PD"
+              },
+              {
+                "stage": "intent",
+                "key": "origin",
+                "where": "tasks[1].origin",
+                "verdict": "맞음",
+                "got": "신규"
+              },
+              {
+                "stage": "intent",
+                "key": "action",
+                "where": "tasks[1].action",
+                "verdict": "맞음",
+                "got": "상품생성"
+              },
+              {
+                "stage": "intent",
+                "key": "conditions",
+                "where": "tasks[1].conditions",
+                "verdict": "맞음",
+                "got": "브랜드와 제조사가 “아디다스”인 상품 1개를 신규 생성한다."
+              },
+              {
+                "stage": "intent",
+                "key": "count",
+                "where": "tasks[1].count",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "intent",
+                "key": "depends_on",
+                "where": "tasks[1].depends_on",
+                "verdict": "맞음",
+                "got": []
+              },
+              {
+                "stage": "intent",
+                "key": "source_phrases",
+                "where": "tasks[1].source_phrases",
+                "verdict": "맞음",
+                "got": [
+                  "브랜드와 제조사가 “아디다스”인 상품을 1개 생성해줘"
+                ]
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.value",
+                "where": "tasks[1].constraints[브랜드].value",
+                "verdict": "맞음",
+                "got": "아디다스"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.name",
+                "where": "tasks[1].constraints[브랜드].name",
+                "verdict": "맞음",
+                "got": "브랜드"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.role",
+                "where": "tasks[1].constraints[브랜드].role",
+                "verdict": "맞음",
+                "got": "설정값"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.source_phrase",
+                "where": "tasks[1].constraints[브랜드].source_phrase",
+                "verdict": "맞음",
+                "got": "브랜드와 제조사가 “아디다스”인"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.value",
+                "where": "tasks[1].constraints[제조사].value",
+                "verdict": "맞음",
+                "got": "아디다스"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.name",
+                "where": "tasks[1].constraints[제조사].name",
+                "verdict": "맞음",
+                "got": "제조사"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.role",
+                "where": "tasks[1].constraints[제조사].role",
+                "verdict": "맞음",
+                "got": "설정값"
+              },
+              {
+                "stage": "intent",
+                "key": "constraints.source_phrase",
+                "where": "tasks[1].constraints[제조사].source_phrase",
+                "verdict": "맞음",
+                "got": "브랜드와 제조사가 “아디다스”인"
+              },
+              {
+                "stage": "intent",
+                "key": "unresolved",
+                "where": "unresolved",
+                "verdict": "맞음",
+                "got": []
+              },
+              {
+                "stage": "intent",
+                "key": "injections",
+                "where": "injections",
+                "verdict": "맞음",
+                "got": []
+              }
+            ]
+          },
+          "paths": {
+            "verdict": "맞음",
+            "alone": "맞음",
+            "fields": [
+              {
+                "stage": "paths",
+                "key": "경로 수",
+                "where": "paths",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "paths",
+                "key": "sequence",
+                "where": "paths[1].sequence",
+                "verdict": "맞음",
+                "got": 1
+              },
+              {
+                "stage": "paths",
+                "key": "domain",
+                "where": "paths[1].domain",
+                "verdict": "맞음",
+                "got": "PD"
+              },
+              {
+                "stage": "paths",
+                "key": "graph_id",
+                "where": "paths[1].graph_id",
+                "verdict": "맞음",
+                "got": null
+              },
+              {
+                "stage": "paths",
+                "key": "status",
+                "where": "paths[1].status",
+                "verdict": "맞음",
+                "got": "그래프 없음"
+              }
+            ]
+          },
+          "apis": {
+            "verdict": "틀림",
+            "alone": "틀림",
+            "fields": [
+              {
+                "stage": "apis",
+                "key": "단계 수",
+                "where": "apis",
+                "verdict": "틀림",
+                "got": 1,
+                "want": 3
+              },
+              {
+                "stage": "apis",
+                "key": "api",
+                "where": "1-1.api",
+                "verdict": "틀림",
+                "got": "multiItem",
+                "want": "selectBrndList"
+              },
+              {
+                "stage": "apis",
+                "key": "selector",
+                "where": "1-1.selector",
+                "verdict": "맞음",
+                "got": {}
+              },
+              {
+                "stage": "apis",
+                "key": "tier",
+                "where": "1-1.tier",
+                "verdict": "틀림",
+                "got": "R2",
+                "want": "R0"
+              },
+              {
+                "stage": "apis",
+                "key": "단계",
+                "where": "1-2",
+                "verdict": "틀림",
+                "why": "그 단계가 없음",
+                "got": null
+              },
+              {
+                "stage": "apis",
+                "key": "단계",
+                "where": "1-3",
+                "verdict": "틀림",
+                "why": "그 단계가 없음",
+                "got": null
+              }
+            ]
+          },
+          "params": {
+            "verdict": "앞 단계 제외",
+            "alone": "틀림",
+            "fields": [
+              {
+                "stage": "params",
+                "key": "IR 생성",
+                "where": "ir",
+                "verdict": "틀림",
+                "why": "IR 없음 — ValueError: 생성 예산 도달: INSUFFICIENT_REQUEST_TOKENS",
+                "got": null
+              }
+            ],
+            "skipped_because": "③ API 틀림"
+          },
+          "final": {
+            "verdict": "틀림",
+            "alone": "틀림",
+            "fields": [
+              {
+                "stage": "final",
+                "key": "status",
+                "where": "final.status",
+                "verdict": "틀림",
+                "got": "검토 필요",
+                "want": {
+                  "any_of": [
+                    "완료"
+                  ]
+                }
+              },
+              {
+                "stage": "final",
+                "key": "gate",
+                "where": "final.gate",
+                "verdict": "맞음",
+                "got": "승인 필요"
+              }
+            ]
+          }
+        },
+        "first_fail": "③ API"
+      }
+    }
+  ]
+}

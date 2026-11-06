@@ -200,6 +200,12 @@ def to_choices(out: BaseModel | dict[str, Any], tp: TaskPlan,
             notes.append(f"{n}번 업무: {g.name} 그래프를 골랐지만 상태를 하나도 고르지 않아 상태 그래프를 쓰지 않는 업무로 봄")
             res[n] = {"graph_id": None, "from": None, "to": None, "must": [], "phrases": [], "reason": c.get("reason") or ""}
             continue
+        # 신규인데 그래프로 만들 길이 없고(새로 만들기 화살표 · 기본 완성 상태 없음) 요청도 목표 상태를 말하지 않음 — 그래프 없이 API 를 바로 고름 (2026-11-06)
+        # 요청이 상태를 말했으면(예: 승인완료된 상품 만들어줘) 그 상태를 버리지 않도록 그대로 두어 경로 없음으로 거절한다
+        if origin[n] == "신규" and not g.out_edges(NEW) and not g.ready_state and not c.get("to_state") and not c.get("must_pass"):
+            notes.append(f"{n}번 업무: {g.name} 그래프에 새로 만들기('{NEW}') 화살표 · 기본 완성 상태가 없어 그래프 없는 업무로 봄 — API 를 바로 고름")
+            res[n] = {"graph_id": None, "from": None, "to": None, "must": [], "phrases": [], "reason": c.get("reason") or ""}
+            continue
         wrong = [s for s in states if s and g.code_of(s) is None]
         if wrong:
             raise GoalError(f"{n}번 업무: {g.name} 그래프에 없는 상태 {wrong}")

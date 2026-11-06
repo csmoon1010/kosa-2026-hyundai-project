@@ -25,7 +25,7 @@ from tap.graph.paths import PathPlan, TaskPath
 SCOPE = ["pd", "od", "ds"]                      # 1차 범위 — 후보를 찾는 도메인
 MARGIN = 0.15                                   # 1순위가 2순위보다 이만큼 높으면 규칙이 고른다
 TOP = 5
-KIND_API = {"조회": "read", "상태변경": "write", "수정": "write"}
+KIND_API = {"조회": "read", "상태변경": "write", "수정": "write", "생성": "write"}
 STATUS = ("선택", "가선택", "보류")
 
 
@@ -46,7 +46,7 @@ class Selected(BaseModel):
 class StepSelection(BaseModel):
     path_sequence: int
     step: int                                   # 0 = 출발 데이터 조회 (start_by 조회일 때)
-    kind: Literal["조회", "상태변경", "수정"]
+    kind: Literal["조회", "상태변경", "수정", "생성"]
     domain: str
     edge: str
     from_: str | None = Field(alias="from")
@@ -137,15 +137,45 @@ def _no_graph_candidates(kind: str, action: str, names: list[str], metadata: lis
     return out[:TOP]
 
 
+CREATE_WORDS = ("생성", "만들기", "추가", "신규")              # 업무 이름의 '새로 만듦' 낱말 — API 이름 쪽 말(등록)로 맞춰 비교
+
+
+def _create_candidates(action: str, names: list[str], domain: str, metadata: list[dict[str, Any]],
+                       ops: dict[str, dict[str, Any]]) -> list[Candidate]:
+    """그래프 없는 신규 업무 — 새로 만드는 쓰기 API(Metadata action 등록 · 생성)만 후보로 (2026-11-06).
+
+    업무 도메인에 그런 API 가 있으면 그 도메인 것만 본다. 점수 = 0.2(새로 만드는 API) + 이름 0.6 + 업무 용어 0.4.
+    """
+    act = action
+    for w in CREATE_WORDS:
+        act = act.replace(w, "등록")
+    pool = [m for m in metadata if m["kind"] == "write" and m.get("tool_enabled", True) and m["domain"] in SCOPE
+            and any(w in (m.get("action") or "") for w in _CREATE)]
+    pool = [m for m in pool if m["domain"] == domain.lower()] or pool
+    out = []
+    for m in pool:
+        s = max(sim(act, m["api_name"]), *(sim(act, a) for a in m.get("aliases") or [""]))
+        hits = _field_hits(names, m["api_id"], ops)
+        score = min(1.0, 0.2 + 0.6 * max(s, 0.0) + (0.4 * len(hits) / len(names) if names else 0.0))
+        reasons = [f"새로 {m['action']}하는 API", f"이름 '{m['api_name']}'"] + ([f"요청 필드에 {', '.join(hits)}"] if hits else [])
+        if score >= 0.3:
+            out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], score=round(score, 3), reasons=reasons))
+    out.sort(key=lambda c: (-c.score, c.api_id))
+    return out[:TOP]
+
+
 def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[dict[str, Any]],
               operations: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """경로 하나 → 고를 단계들 (kind · edge · from · to · 후보)."""
     ops = {o["api_id"]: o for o in operations}
     out: list[dict[str, Any]] = []
-    if g is None:                               # 그래프 없는 업무: 대상 찾기(대상조건이 있으면) + 수정
+    if g is None:                               # 그래프 없는 업무: 신규는 생성 하나, 기존은 대상 찾기(대상조건이 있으면) + 수정
         task = next(t for t in tp.tasks if t.sequence == p.sequence)
         find = [c.name for c in task.constraints if c.role == "대상조건"]
         put = [c.name for c in task.constraints if c.role == "설정값"]
+        if task.origin == "신규":                # 찾을 데이터가 없다 — 새로 만드는 API 를 바로 고른다
+            return [{"step": 1, "kind": "생성", "edge": task.action, "from": None, "to": None,
+                     "cands": _create_candidates(task.action, put, p.domain, metadata, ops), "loose": True}]
         if find:
             out.append({"step": 0, "kind": "조회", "edge": f"{task.action} 대상 찾기 ({', '.join(find)})", "from": None, "to": None,
                         "cands": _no_graph_candidates("조회", task.action, find, metadata, ops), "loose": True})
