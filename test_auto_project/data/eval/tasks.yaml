@@ -135,13 +135,16 @@
     paths: [{graph_id: ORD_STAT_GBCD, status: 경로 없음}]
     status: [보류]
 
-- id: R03
-  category: 거절
+- id: N12
+  category: 정상
   utterance: 상품 하나 만들어줘
-  note: 판매상품승인 그래프에 화살표가 없고 목표 상태도 없음 (공개 명세에 상품 등록 · 승인 API 없음)
+  note: (예전 R03 거절) 2026-11-06 지은 결정 — 상품 생성은 그래프 없이 상품 등록 1번. 판매상품승인 그래프에 새로 만들기 화살표 · 기본 완성 상태가 없어 ② 가 그래프 없음으로, ③ 이 새로 만드는 API 를 고름 (가선택 · R2)
   expect:
-    tasks: [{domain: PD, origin: 신규}]
-    status: [보류]
+    tasks: [{domain: PD, origin: 신규, count: 1}]
+    paths: [{graph_id: null, status: 그래프 없음}]
+    apis: [[1, 1, multiItem, {}]]
+    status: [검토 필요]
+    gate: [승인 필요]
 
 - id: R04
   category: 거절

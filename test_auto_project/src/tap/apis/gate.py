@@ -226,8 +226,8 @@ def gate_for(sel: ApiSelection, pp: PathPlan, graphs: list[StateGraph], metadata
                 tier, reasons = "R3", reasons + [f"업무 도메인 {p.domain} 이 1차 범위 밖"]
             if tier == "R1":
                 g = by_id.get(p.graph_id or "") if p else None
-                if r.kind == "수정" or g is None:
-                    tier, reasons = "R2", reasons + ["그래프 없는 수정 — 되돌리는 방법을 모름"]
+                if r.kind in ("수정", "생성") or g is None:
+                    tier, reasons = "R2", reasons + [f"그래프 없는 {r.kind} — 되돌리는 방법을 모름"]
                 elif r.kind == "상태변경":
                     a = NEW if r.from_ == NEW else g.code_of(r.from_ or "")
                     b = g.code_of(r.to or "")

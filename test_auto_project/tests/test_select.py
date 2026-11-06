@@ -136,9 +136,24 @@ def test_no_graph_task_is_always_tentative(graphs):
     assert all(x.selection_status in ("가선택", "보류") for x in r.api_selection_results) and r.status != "완료"
 
 
+def test_new_task_without_graph_creates(graphs):
+    """그래프 없는 신규 업무 — 대상 찾기 없이 '생성' 하나, 새로 만드는 API(상품 등록)를 고른다. 사람 확인 · 되돌릴 수 없음 (2026-11-06)."""
+    from tap.apis.gate import gate_for, load_permissions
+    q = "주문제작 상품을 2개 생성해줘"
+    cons = [{"name": "상품 종류", "value": "주문제작 상품", "role": "설정값", "source_phrase": "주문제작 상품"}]
+    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q], constraints=cons, action="상품생성")],
+                   [choice(graph="SLITM_APRVL_GBCD")])                 # 새로 만들기 화살표 없는 그래프 → ② 가 그래프 없음으로
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
+    [x] = r.api_selection_results
+    assert (x.step, x.kind, x.selected.api_id.rsplit("/", 1)[-1], x.selection_status) == (1, "생성", "multiItem.do", "가선택")
+    assert x.api_candidates[0].score - x.api_candidates[1].score >= 0.15 and "새로 등록하는 API" in x.selection_reason
+    g = gate_for(r, pp, graphs, META, load_permissions(ROOT / "data/config/permissions.yaml"))
+    assert [(s.tier, s.requirement) for s in g.steps] == [("R2", "단계 승인")] and g.status == "승인 필요"
+
+
 def test_no_path_and_alternative_hint(graphs):
-    q = "상품 하나 만들어줘"
-    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q])], [choice(graph="SLITM_APRVL_GBCD")])
+    q = "승인완료된 상품 하나 만들어줘"            # 승인완료로 만들 길이 없음 → 경로 없음 → 업무 보류
+    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q])], [choice(graph="SLITM_APRVL_GBCD", to="승인완료")])
     r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
     assert r.status == "보류" and r.api_selection_results == [] and {u.path_sequence for u in r.unresolved} == {1}
     g = ord_of(graphs).model_copy(deep=True)                                                         # 출고완료 화살표의 API 를 못 찾는 그래프

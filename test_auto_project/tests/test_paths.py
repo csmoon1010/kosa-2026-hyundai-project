@@ -131,10 +131,10 @@ def test_new_with_create_edge_and_requires(graphs):
 
 
 def test_no_target_and_no_path(graphs):
-    q = "상품 하나 만들어줘"
-    pp = run(tp(q, task(origin="신규", domain="PD", phrases=[q])), graphs, choice(graph="SLITM_APRVL_GBCD"))[0]
-    assert pp.paths[0].status == "경로 없음" and "목표 상태를 정할 수 없습니다" in pp.unresolved[0]
-    q2 = "승인완료된 상품 하나 만들어줘"
+    q = "상품 하나 만들어줘"                     # 판매상품승인 그래프에 새로 만들기 화살표 · 기본 완성 상태가 없음 → 그래프 없는 업무로 (2026-11-06)
+    pp, notes = run(tp(q, task(origin="신규", domain="PD", phrases=[q])), graphs, choice(graph="SLITM_APRVL_GBCD"))
+    assert pp.paths[0].status == "그래프 없음" and pp.unresolved == [] and "그래프 없는 업무로 봄" in notes[0]
+    q2 = "승인완료된 상품 하나 만들어줘"            # 요청이 상태를 말했으면 그 상태를 버리지 않는다 — 그대로 경로 없음
     pp2 = run(tp(q2, task(origin="신규", domain="PD", phrases=[q2])), graphs,
               choice(graph="SLITM_APRVL_GBCD", to="승인완료", phrases=["승인완료된 상품"]))[0]
     p = pp2.paths[0]                     # 승인완료 상품을 조회로 찾을 수는 있지만 쓰기 0회 — '만들어줘'에 그대로 넘기지 않는다
@@ -202,9 +202,10 @@ def test_state_must_come_from_request_words(graphs):
 
 
 def test_dependency_failure_noted(graphs):
-    q = "상품을 만들고 주문해서 출고까지"
-    plan_ = tp(q, task(1, "신규", "PD", ["상품을 만들고"]), task(2, "신규", "OD", ["주문해서 출고까지"], [1]))
-    pp, _ = run(plan_, graphs, choice(1, "SLITM_APRVL_GBCD"), choice(2, to="출고", phrases=["출고까지"]))
+    q = "승인완료된 상품을 만들고 주문해서 출고까지"           # 1번: 승인완료로 만들 길이 없음 → 경로 없음
+    plan_ = tp(q, task(1, "신규", "PD", ["승인완료된 상품을 만들고"]), task(2, "신규", "OD", ["주문해서 출고까지"], [1]))
+    pp, _ = run(plan_, graphs, choice(1, "SLITM_APRVL_GBCD", to="승인완료", phrases=["승인완료된 상품"]),
+                choice(2, to="출고", phrases=["출고까지"]))
     a, b = pp.paths
     assert a.status == "경로 없음" and a.notes == []                                      # 조회로도 못 하면 '조회로 만듭니다' 안내 없음
     assert b.status == "ok" and any("앞 업무 [1]번이 경로 없음" in n for n in b.notes)
@@ -221,6 +222,10 @@ def test_existing_task_with_graph_but_no_state_is_graphless(graphs):
     q2 = "발송된 주문 하나 줘"                                                           # 고른 상태를 코드가 버린 경우는 그대로 (경로 없음)
     ch2, u2, _ = to_choices({"choices": [choice(to="출고")], "unresolved": []}, tp(q2, task(phrases=[q2])), graphs)
     assert ch2[1]["graph_id"] == "ORD_STAT_GBCD" and ch2[1]["to"] is None
-    ch3, _, n3 = to_choices({"choices": [choice(graph="SLITM_APRVL_GBCD")], "unresolved": []},
-                            tp("상품 하나 만들어줘", task(origin="신규", domain="PD", phrases=["상품"])), graphs)
-    assert ch3[1]["graph_id"] == "SLITM_APRVL_GBCD" and n3 == []                          # 신규는 목표를 코드가 채울 수 있어 그대로
+    new = tp("상품 하나 만들어줘", task(origin="신규", domain="PD", phrases=["상품"]))
+    slitm = G(graphs, "SLITM_APRVL_GBCD").model_copy(deep=True)
+    slitm.ready_state = "2"                                                              # 기본 완성 상태가 있으면 코드가 목표를 채울 수 있어 그대로
+    ch3, _, n3 = to_choices({"choices": [choice(graph="SLITM_APRVL_GBCD")], "unresolved": []}, new, [slitm])
+    assert ch3[1]["graph_id"] == "SLITM_APRVL_GBCD" and n3 == []
+    ch4, _, n4 = to_choices({"choices": [choice(graph="SLITM_APRVL_GBCD")], "unresolved": []}, new, graphs)
+    assert ch4[1]["graph_id"] is None and "새로 만들기('시작') 화살표" in n4[0]           # 없으면 그래프 없는 업무

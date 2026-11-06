@@ -56,6 +56,7 @@ PYTHONPATH=src .venv/bin/python -m tap.cli intent "설치상품을 만들고 주
 PYTHONPATH=src .venv/bin/python -m tap.cli path "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 업무 목록 → 업무마다 그래프 · 출발/목표 상태 · 경로
 PYTHONPATH=src .venv/bin/python -m tap.cli select "배송완료된 주문 3건을 배송완료 취소시켜줘"   # 경로 → 단계마다 API + 구분값 (고정 · 선택 · 가선택 · 보류)  · 트레이스는 data/out/traces/ (예산 · 가격: data/config/llm.yaml)
 PYTHONPATH=src .venv/bin/python -m tap.cli eval                      # 태스크셋(data/eval/tasks.yaml) 채점 → data/out/eval/*.md · *.json (결과 · 궤적 · 비용 · 지연)
+PYTHONPATH=src .venv/bin/python -m tap.cli eval-stages --runs 3       # 단계별 평가(data/eval/stage_gold.json) — ①②③ + ④ IR 파라미터, 판단 보류 · 일치율 → data/out/eval/stages/ (--no-ir 이면 ①②③ 만)
 PYTHONPATH=src .venv/bin/python -m tap.cli run "배송완료된 주문 3건을 배송완료 취소시켜줘" --approve [--steps 1-1] [--confirm 1-1]   # 등록 때 승인 → 실행 때 R2 확인 → 드라이런
 PYTHONPATH=src .venv/bin/python -m tap.cli extract-graph --runs 2     # (실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점
 PYTHONPATH=src .venv/bin/python -m tap.cli match-graph               # 화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점
