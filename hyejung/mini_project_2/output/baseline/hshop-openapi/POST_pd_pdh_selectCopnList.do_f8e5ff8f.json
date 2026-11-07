@@ -1,0 +1,96 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdh/selectCopnList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsCond",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.copnTypeGbcd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/copnTypeGbcd",
+      "name": "copnTypeGbcd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "03",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.famtFxrtGbcd",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/famtFxrtGbcd",
+      "name": "famtFxrtGbcd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "1",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.copnNo",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/copnNo",
+      "name": "copnNo",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "00003551",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.copnNm",
+      "xmlPath": "/Root/Dataset[@id=\"dsCond\"]/rows/row/copnNm",
+      "name": "copnNm",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "1% 바로사용쿠폰",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsCond\"><rows><row><copnTypeGbcd>03</copnTypeGbcd><famtFxrtGbcd>1</famtFxrtGbcd><copnNo>00003551</copnNo><copnNm>1% 바로사용쿠폰</copnNm></row></rows></Dataset></Root>"
+}

@@ -1,0 +1,48 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pda/selectCnryCodeList.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body",
+      "xmlPath": "",
+      "name": "body",
+      "location": "body",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    }
+  ],
+  "baseline_xml": null
+}

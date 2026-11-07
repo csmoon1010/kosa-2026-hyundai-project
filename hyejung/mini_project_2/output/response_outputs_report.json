@@ -1,7 +1,7 @@
 {
-  "document_id": "hmall-openapi-v1",
+  "document_id": "hshop-openapi",
   "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
-  "generated_at": "2026-10-27T14:30:44.922123+00:00",
+  "generated_at": "2026-10-31T07:42:44.394820+00:00",
   "database_path": "/home/ubuntu/work/kosa-2026-hyundai-project/hyejung/mini_project_2/output/response_outputs.db",
   "api_count": 43,
   "response_count": 84,
@@ -13,376 +13,7 @@
   "deactivated": 0,
   "api_results": [
     {
-      "api_id": "getSdlvcVenMngDtlList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 20,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 17,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "insertItnDispModReqList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "insertSellUitmDtl",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "insertVenAdrMng",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 7,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 4,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiItem",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 5,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 5,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiItemImg",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiItemQnaAnsw",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiOshpBackProcess",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 5,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 2,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiOshpProcess",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 5,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 2,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiTcktOrdProcess",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 7,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 4,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiTcktWtdwProcess",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 7,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 4,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiVenSdlvcMngInf",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 10,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 7,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "multiWtdwProcess",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 5,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 2,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectBrndList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 17,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 14,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectCnclList",
+      "api_id": "POST:/cs/csh/selectItemArltList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 38,
@@ -409,7 +40,88 @@
       ]
     },
     {
-      "api_id": "selectCnryCodeList",
+      "api_id": "POST:/hmgb/getSdlvcVenMngDtlList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 20,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 17,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/hmgb/multiVenSdlvcMngInf.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 10,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 7,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/om/oma/selectSectMstList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 20,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 17,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pda/selectCnryCodeList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 11,
@@ -436,7 +148,34 @@
       ]
     },
     {
-      "api_id": "selectCopnList",
+      "api_id": "POST:/pd/pda/selectItemCsfCdList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 40,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 37,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pda/selectItemCsfUnitList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 16,
@@ -463,7 +202,52 @@
       ]
     },
     {
-      "api_id": "selectDptsPchList",
+      "api_id": "POST:/pd/pdb/multiItem.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 5,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 5,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdb/multiItemImg.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdb/selectInfNotfBsicDtlList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 14,
@@ -490,34 +274,7 @@
       ]
     },
     {
-      "api_id": "selectInfNotfBsicDtlList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 14,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 11,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectItem",
+      "api_id": "POST:/pd/pdb/selectItem.do",
       "status": "PARTIAL",
       "created": 0,
       "updated": 206,
@@ -605,25 +362,16 @@
       ]
     },
     {
-      "api_id": "selectItemArltList",
+      "api_id": "POST:/pd/pdb/updateItemByVen.do",
       "status": "COMPLETE",
       "created": 0,
-      "updated": 38,
+      "updated": 3,
       "deactivated": 0,
       "responses": [
         {
           "response_key": "200",
           "content_type": "application/xml",
           "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 35,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
           "status_code": "200",
           "output_count": 3,
           "status": "COMPLETE",
@@ -632,61 +380,7 @@
       ]
     },
     {
-      "api_id": "selectItemCsfCdList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 40,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 37,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectItemCsfUnitList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 16,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 13,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectItemInfNotfBsicDtlAllList",
+      "api_id": "POST:/pd/pdb/uploadItemImgUrl.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 6,
@@ -713,61 +407,7 @@
       ]
     },
     {
-      "api_id": "selectItemQnaAnswList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 20,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 17,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectItemQnaQstnList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 27,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 24,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectMdList",
+      "api_id": "POST:/pd/pdc/insertItnDispModReqList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 6,
@@ -794,10 +434,10 @@
       ]
     },
     {
-      "api_id": "selectMkcoList",
+      "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
       "status": "COMPLETE",
       "created": 0,
-      "updated": 26,
+      "updated": 6,
       "deactivated": 0,
       "responses": [
         {
@@ -805,7 +445,7 @@
           "content_type": "application/xml",
           "response_kind": "SUCCESS",
           "status_code": "200",
-          "output_count": 23,
+          "output_count": 3,
           "status": "COMPLETE",
           "warnings": []
         },
@@ -821,115 +461,7 @@
       ]
     },
     {
-      "api_id": "selectOshpDtlList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 83,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 80,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectSectMstList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 20,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 17,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectTcktOshpList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 27,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 24,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectTcktWtdwList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 29,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 26,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectUnitStocks",
+      "api_id": "POST:/pd/pdc/selectUnitStocks.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 38,
@@ -956,61 +488,7 @@
       ]
     },
     {
-      "api_id": "selectUseTermList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 9,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 6,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectVenAdrList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 53,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 50,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "selectVenSellItemQryList",
+      "api_id": "POST:/pd/pdc/selectVenSellItemQryList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 107,
@@ -1037,7 +515,601 @@
       ]
     },
     {
-      "api_id": "selectWtdwDtlList",
+      "api_id": "POST:/pd/pdc/updateUnitStockByExcel.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdc/updateVenSellItemList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdd/multiItemQnaAnsw.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdd/selectItemQnaAnswList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 20,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 17,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdd/selectItemQnaQstnList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 27,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 24,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectBrndList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 17,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 14,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectCopnList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 16,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 13,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectDptsPchList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 14,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 11,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectMdList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectMkcoList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 26,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 23,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/selectUseTermList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 9,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 6,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/pd/pdh/updateItemPrcHist.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 6,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 5,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 2,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 5,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 2,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 7,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 4,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 7,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 4,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/multiWtdwProcess.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 5,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 2,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectCnclList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 38,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 35,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 83,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 80,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktOshpList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 27,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 24,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectTcktWtdwList.do",
+      "status": "COMPLETE",
+      "created": 0,
+      "updated": 29,
+      "deactivated": 0,
+      "responses": [
+        {
+          "response_key": "200",
+          "content_type": "application/xml",
+          "response_kind": "SUCCESS",
+          "status_code": "200",
+          "output_count": 26,
+          "status": "COMPLETE",
+          "warnings": []
+        },
+        {
+          "response_key": "200_fail",
+          "content_type": "application/xml",
+          "response_kind": "FAILURE",
+          "status_code": "200",
+          "output_count": 3,
+          "status": "COMPLETE",
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "api_id": "POST:/sc/scb/scbd/selectWtdwDtlList.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 64,
@@ -1064,10 +1136,10 @@
       ]
     },
     {
-      "api_id": "updateItemByVen",
+      "api_id": "POST:/vd/vda/insertVenAdrMng.do",
       "status": "COMPLETE",
       "created": 0,
-      "updated": 3,
+      "updated": 7,
       "deactivated": 0,
       "responses": [
         {
@@ -1075,25 +1147,7 @@
           "content_type": "application/xml",
           "response_kind": "SUCCESS",
           "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "updateItemPrcHist",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
+          "output_count": 4,
           "status": "COMPLETE",
           "warnings": []
         },
@@ -1109,10 +1163,10 @@
       ]
     },
     {
-      "api_id": "updateUnitStockByExcel",
+      "api_id": "POST:/vd/vda/selectVenAdrList.do",
       "status": "COMPLETE",
       "created": 0,
-      "updated": 6,
+      "updated": 53,
       "deactivated": 0,
       "responses": [
         {
@@ -1120,7 +1174,7 @@
           "content_type": "application/xml",
           "response_kind": "SUCCESS",
           "status_code": "200",
-          "output_count": 3,
+          "output_count": 50,
           "status": "COMPLETE",
           "warnings": []
         },
@@ -1136,61 +1190,7 @@
       ]
     },
     {
-      "api_id": "updateVenAdrMng",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "updateVenSellItemList",
-      "status": "COMPLETE",
-      "created": 0,
-      "updated": 6,
-      "deactivated": 0,
-      "responses": [
-        {
-          "response_key": "200",
-          "content_type": "application/xml",
-          "response_kind": "SUCCESS",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        },
-        {
-          "response_key": "200_fail",
-          "content_type": "application/xml",
-          "response_kind": "FAILURE",
-          "status_code": "200",
-          "output_count": 3,
-          "status": "COMPLETE",
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "api_id": "uploadItemImgUrl",
+      "api_id": "POST:/vd/vda/updateVenAdrMng.do",
       "status": "COMPLETE",
       "created": 0,
       "updated": 6,

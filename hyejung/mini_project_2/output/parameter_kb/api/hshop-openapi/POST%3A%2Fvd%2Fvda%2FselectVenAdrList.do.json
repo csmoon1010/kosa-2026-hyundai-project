@@ -1,0 +1,395 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/vd/vda/selectVenAdrList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ospaYn",
+        "parameter_path": "$.body.data1.data2.data3.ospaYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "출고지여부",
+        "display_name": "ospaYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6e4fc617c6dd59b1f8dd10d49e812b5efa4f576061c3ffbbedc01922bbe613a7",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "출고지여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ospaYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ospaYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.ospaYn ospaYn 출고지여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "useYn",
+        "parameter_path": "$.body.data1.data2.data3.useYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용여부",
+        "display_name": "useYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "525ca4012dfa8fbe5dad149a1d9ba99ca159c5a5ee91e00abdd3bfb7e3b282ab",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "useYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/useYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.useYn useYn 사용여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "85324888e0fedc8b38d0f769cfa2fc5e759e092e13748408702aba6fd323557f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6799fe803075a9fb1c277c13939f92686bc1ce1a75b11888c40f51a67f4803c4",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:000619)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venGbcd",
+        "parameter_path": "$.body.data1.data2.data3.venGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사구분코드",
+        "display_name": "venGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e0048c5eb433a26ac4abda885042f4b6e7a4949fbc4250fbda7fb8d3868b4b36",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사구분코드(타입:string, 예: 1:1차협력사 / 2:2차협력사)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.venGbcd venGbcd 협력사구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "wtplcYn",
+        "parameter_path": "$.body.data1.data2.data3.wtplcYn"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "회수지여부",
+        "display_name": "wtplcYn",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "482a219d2c49162d4fb0fc85e5379b902b31cea588cb1a72cc23143cba5be13e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "회수지여부(타입:string, 예:Y)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "wtplcYn",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/wtplcYn"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.data2.data3.wtplcYn wtplcYn 회수지여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "d4b8649e754bbfdef7310d77029b51bfe95552f66c34fc31fb2f54f9245bf619",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectVenAdrListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/vd/vda/selectVenAdrList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/vd/vda/selectVenAdrList.do 협력사 주소지 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

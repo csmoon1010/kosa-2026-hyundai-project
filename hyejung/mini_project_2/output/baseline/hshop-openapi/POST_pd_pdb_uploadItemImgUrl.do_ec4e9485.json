@@ -1,0 +1,96 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdb/uploadItemImgUrl.do",
+  "selected_api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsItemImgUrl\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsItemImgUrl",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.slitmCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsItemImgUrl\"]/rows/row/slitmCd",
+      "name": "slitmCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "판매상품코드타입:string, 예:3200009929)",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.slitmImgSeq",
+      "xmlPath": "/Root/Dataset[@id=\"dsItemImgUrl\"]/rows/row/slitmImgSeq",
+      "name": "slitmImgSeq",
+      "location": "body",
+      "type": "integer",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "0",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.urlPath",
+      "xmlPath": "/Root/Dataset[@id=\"dsItemImgUrl\"]/rows/row/urlPath",
+      "name": "urlPath",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "https://image.hmall.com/static/9/5/43/54/2154435930_0.jpg",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.imgGb",
+      "xmlPath": "/Root/Dataset[@id=\"dsItemImgUrl\"]/rows/row/imgGb",
+      "name": "imgGb",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "item",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsItemImgUrl\"><rows><row><slitmCd>판매상품코드타입:string, 예:3200009929)</slitmCd><slitmImgSeq>0</slitmImgSeq><urlPath>https://image.hmall.com/static/9/5/43/54/2154435930_0.jpg</urlPath><imgGb>item</imgGb></row></rows></Dataset></Root>"
+}

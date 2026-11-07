@@ -1,0 +1,120 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/vd/vda/selectVenAdrList.do",
+  "selected_api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+  "content_type": "application/xml",
+  "source": "EXAMPLE",
+  "user_registered": false,
+  "validation_status": "EXAMPLE_ONLY",
+  "parameters": [
+    {
+      "parameter_path": "$.headers.oauserId",
+      "xmlPath": null,
+      "name": "oauserId",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.headers.oauseKey",
+      "xmlPath": null,
+      "name": "oauseKey",
+      "location": "header",
+      "type": "string",
+      "required": true,
+      "requiredDeclared": true,
+      "xmlAttribute": false,
+      "value": null,
+      "value_source": "UNRESOLVED"
+    },
+    {
+      "parameter_path": "$.body.data1.id",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+      "name": "id",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": true,
+      "value": "dsInput",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.venCd",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+      "name": "venCd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "000619",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ven2Cd",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ven2Cd",
+      "name": "ven2Cd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "000000",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.venGbcd",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venGbcd",
+      "name": "venGbcd",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "1:1차협력사 / 2:2차협력사",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.ospaYn",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ospaYn",
+      "name": "ospaYn",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "N",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.wtplcYn",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/wtplcYn",
+      "name": "wtplcYn",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "Y",
+      "value_source": "EXAMPLE"
+    },
+    {
+      "parameter_path": "$.body.data1.data2.data3.useYn",
+      "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/useYn",
+      "name": "useYn",
+      "location": "body",
+      "type": "string",
+      "required": false,
+      "requiredDeclared": false,
+      "xmlAttribute": false,
+      "value": "Y",
+      "value_source": "EXAMPLE"
+    }
+  ],
+  "baseline_xml": "<Root><Dataset id=\"dsInput\"><rows><row><venCd>000619</venCd><ven2Cd>000000</ven2Cd><venGbcd>1:1차협력사 / 2:2차협력사</venGbcd><ospaYn>N</ospaYn><wtplcYn>Y</wtplcYn><useYn>Y</useYn></row></rows></Dataset></Root>"
+}

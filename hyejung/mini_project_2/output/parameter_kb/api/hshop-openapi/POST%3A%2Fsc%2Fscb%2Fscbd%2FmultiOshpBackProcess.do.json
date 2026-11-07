@@ -1,0 +1,524 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "chk",
+        "parameter_path": "$.body.data1.data2.data3.chk"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "확인",
+        "display_name": "chk",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "11764010ea50b5edee42d53bf40cea5e596a805caac4ea0e8f4ae2ff5a06c1b1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "확인(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "chk",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/chk"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.chk chk 확인"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvstNo",
+        "parameter_path": "$.body.data1.data2.data3.dlvstNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송지시번호",
+        "display_name": "dlvstNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "875984031a0577dfc0fb61cd4cf18669b51675d59a4fd0e2aad568fb0fa0459b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송지시번호(타입:string, 예:20160118617141)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvstNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.dlvstNo dlvstNo 배송지시번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dlvstPtcSeq",
+        "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "배송지시상세순번",
+        "display_name": "dlvstPtcSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "f9663b6f1e00493bf74f47305df83860a52ef8b87f0bec14f180399c102f8470",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "배송지시상세순번(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dlvstPtcSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.dlvstPtcSeq dlvstPtcSeq 배송지시상세순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordNo",
+        "parameter_path": "$.body.data1.data2.data3.ordNo"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문번호",
+        "display_name": "ordNo",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fee78fb50a8b9eb16f0a69e92d034bcd4907da2b5d734d717c812a073ffe86f1",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문번호(타입:string, 예:20160118110258)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordNo",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordNo"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.ordNo ordNo 주문번호"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ordPtcSeq",
+        "parameter_path": "$.body.data1.data2.data3.ordPtcSeq"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "주문상세순번",
+        "display_name": "ordPtcSeq",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6d609fe2394faf07a1cb6031d19f28d349eaa6c693eb23364efe8bd6314a6f46",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "주문상세순번(타입:string, 예:1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ordPtcSeq",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/ordPtcSeq"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.ordPtcSeq ordPtcSeq 주문상세순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "procGb",
+        "parameter_path": "$.body.data1.data2.data3.procGb"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "진행구분코드",
+        "display_name": "procGb",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8bc109b82be47b404523d0411d412971fcbd549d33dbf0623e5e73fc0d48d90e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "진행구분코드(타입:string, 예:PB1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "procGb",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/procGb"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.procGb procGb 진행구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rgstId",
+        "parameter_path": "$.body.data1.data2.data3.rgstId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "등록ID",
+        "display_name": "rgstId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dcd3ca588e97ca44f90e184cf34755609b2fe6698b47cade0e9bed6d2b17f151",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "등록ID(타입:string, 예:test)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rgstId",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/rgstId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.rgstId rgstId 등록ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "rgstIp",
+        "parameter_path": "$.body.data1.data2.data3.rgstIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "등록IP",
+        "display_name": "rgstIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0a4ce32419fb9f367ef1c1847cd1f094508fe0ae1dfee29716adafc0008bde28",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "등록IP(타입:string, 예:127.0.0.1)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "rgstIp",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/rgstIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.rgstIp rgstIp 등록IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "dca9a6836f60a8b18410b5377646bd7e1bff3570386594c3c797de37cb25cacc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:003766)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "fe61c7b071ffb62d1d2a2773ade08d7ae379e6962cd65584359192f6bf00137b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/multiOshpBackProcessRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsInput",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsInput\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/sc/scb/scbd/multiOshpBackProcess.do 출고취소처리 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

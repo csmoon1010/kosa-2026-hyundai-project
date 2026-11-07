@@ -1,0 +1,653 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userGbcd",
+        "parameter_path": "$.body.data1.data1.data1.userGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자구분코드",
+        "display_name": "userGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "8b6b286b765d4da46fb5c609e10666a3219fe94feb23924868fdade7754d3046",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자구분코드(타입:string, 예:20)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userGbcd",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data1.data1.data1.userGbcd userGbcd 사용자구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userId",
+        "parameter_path": "$.body.data1.data1.data1.userId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자ID",
+        "display_name": "userId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "569cfc302fcbbb2a31601efeabd118cad72f53c4c37806e03ce3cf78b5d29c1f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자ID(타입:string, 예:hs606876)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userId",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userId"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data1.data1.data1.userId userId 사용자ID"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userIp",
+        "parameter_path": "$.body.data1.data1.data1.userIp"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자IP",
+        "display_name": "userIp",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "78da0aaa5be27b95f03bd351c8feb0df6156874edfa81bf252ee58f9eaa15325",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자IP(타입:string, 예:225.225.225.225)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userIp",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userIp"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data1.data1.data1.userIp userIp 사용자IP"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "userNm",
+        "parameter_path": "$.body.data1.data1.data1.userNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "사용자명",
+        "display_name": "userNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "506fad9a2cd31caa66f355a5e51b49677bd1aeb56f93635f48a3319d8c807eb9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "사용자명(타입:string, 예:홍길동)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "userNm",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/rows/row/userNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data1.data1.data1.userNm userNm 사용자명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "0fb0f7e747f8dc399d67bfda9d2c91c3cffd5df0fc1d0a24d4aa7390c8baadf3",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "sessionVO",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"sessionVO\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "maxSellPossQty",
+        "parameter_path": "$.body.data2.data2.data3.maxSellPossQty"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "최대판매가능수량",
+        "display_name": "maxSellPossQty",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bb7e7c710cfef2c0585cf9123dac04a0b1b591b712896c5d1ef9bf679594df23",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "최대판매가능수량(타입:string, 예:999)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "maxSellPossQty",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/maxSellPossQty"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.maxSellPossQty maxSellPossQty 최대판매가능수량"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellEndDt",
+        "parameter_path": "$.body.data2.data2.data3.sellEndDt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매종료일자",
+        "display_name": "sellEndDt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4f3179aa9dc2019c034e4b385c45a51501064a062d5661dd171f1dec4fc79006",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매종료일자(타입:string, 예:20460514)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellEndDt",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/sellEndDt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.sellEndDt sellEndDt 판매종료일자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellGbcd",
+        "parameter_path": "$.body.data2.data2.data3.sellGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매구분코드",
+        "display_name": "sellGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ce0665c8a2ee07ffa9c87e11b0ec2ed55bb56346e38e832e53987eb7c695539a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매구분코드(타입:string, 예:00)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/sellGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.sellGbcd sellGbcd 판매구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellStrtDt",
+        "parameter_path": "$.body.data2.data2.data3.sellStrtDt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매시작일자",
+        "display_name": "sellStrtDt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "489bcc97b5a0bfacf1a5e8fd886b71f38cfeae417cf5551d2c01d0731e07d73e",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매시작일자(타입:string, 예:20260514)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellStrtDt",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/sellStrtDt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.sellStrtDt sellStrtDt 판매시작일자"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data2.data2.data3.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2d2c1e8331fbae5010b8d485c90970a9446e1db0060a73025b3c5ff5180ecefa",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2044634081)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sortOrdg",
+        "parameter_path": "$.body.data2.data2.data3.sortOrdg"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "정렬순번",
+        "display_name": "sortOrdg",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "ed71f07f46d9c3f4721db5ad153f618305ad632413c23ab02a11b5aba0cfd9cc",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "정렬순번(예:2)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "integer",
+        "xml_attribute": false,
+        "xml_name": "sortOrdg",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/sortOrdg"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.sortOrdg sortOrdg 정렬순번"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "uitmTotNm",
+        "parameter_path": "$.body.data2.data2.data3.uitmTotNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품속성전체명",
+        "display_name": "uitmTotNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "bf28e49496faab42261b17cba61d684b81943013a99aa514e1b618545b0fcf1c",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품속성전체명(예:레드)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "uitmTotNm",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/rows/row/uitmTotNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.data2.data3.uitmTotNm uitmTotNm 상품속성전체명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data2.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "60c6a4718ac68678f9c33b292731e68dd016072f790e16696deca810cadc63f9",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/insertSellUitmDtlRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsList",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsList\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.body.data2.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/pd/pdc/insertSellUitmDtl.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/pd/pdc/insertSellUitmDtl.do [상품 속성별 재고관리] 속성 등록 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}

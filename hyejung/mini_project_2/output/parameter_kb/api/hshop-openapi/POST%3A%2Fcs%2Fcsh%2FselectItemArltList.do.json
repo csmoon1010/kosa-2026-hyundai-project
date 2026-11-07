@@ -1,0 +1,868 @@
+{
+  "document_id": "hshop-openapi",
+  "api_id": "POST:/cs/csh/selectItemArltList.do",
+  "parameters": [
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "afeMdCd",
+        "parameter_path": "$.body.data1.data2.data3.afeMdCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매업무지원MD코드",
+        "display_name": "afeMdCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a94f6a84ae40dd37efcc32dcee7c21cde5bc7b43898bbee40b1f481f0e578b8a",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매업무지원MD코드(타입:string, 예:8020)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "afeMdCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/afeMdCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.afeMdCd afeMdCd 판매업무지원MD코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "alliRefCd",
+        "parameter_path": "$.body.data1.data2.data3.alliRefCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제휴레퍼코드",
+        "display_name": "alliRefCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "188705220a35afbcc889415eaa86745ed3825d6a68bc642b004efd4c9a263a55",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제휴레퍼코드(타입:string, 예:800)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "alliRefCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/alliRefCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.alliRefCd alliRefCd 제휴레퍼코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "brndCd",
+        "parameter_path": "$.body.data1.data2.data3.brndCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "브랜드코드",
+        "display_name": "brndCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b3a7d9113e1a7a05e908d8edda9e4b68e4b2501c7ed8d67bb5c4f06a4695d9fe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "브랜드코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "brndCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/brndCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.brndCd brndCd 브랜드코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "dsptPchCd",
+        "parameter_path": "$.body.data1.data2.data3.dsptPchCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "백화점펀칭코드",
+        "display_name": "dsptPchCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "7e30a0b6d31a398f579eb3369b9d31de91dd8f4bf3e91b4813b11081e05f6650",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "백화점펀칭코드(타입:string, 예:000100)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "dsptPchCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/dsptPchCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.dsptPchCd dsptPchCd 백화점펀칭코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "endDt",
+        "parameter_path": "$.body.data1.data2.data3.endDt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "집계일시",
+        "display_name": "endDt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "43d9fe5752408d2526a23910bf9d057683d64bc3fcfb286ad38f2424407563fe",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "집계일시(타입:string, 예:20221012)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "endDt",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/endDt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.endDt endDt 집계일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "intgItemGbcd",
+        "parameter_path": "$.body.data1.data2.data3.intgItemGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "무형상품구분코드",
+        "display_name": "intgItemGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "95a4775378647d20c562b7dd2e212b7be1f23b9c28615fd0239487d43b40a075",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "무형상품구분코드(타입:string, 예:02)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "intgItemGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/intgItemGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.intgItemGbcd intgItemGbcd 무형상품구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemGbcd",
+        "parameter_path": "$.body.data1.data2.data3.itemGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "폐쇄몰여부",
+        "display_name": "itemGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e9f21e50cc3ee38d559fa091dfce784e4e6a98900849945bbe903a662cdeb9c6",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "폐쇄몰여부(타입:string, 예:N)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.itemGbcd itemGbcd 폐쇄몰여부"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemLCsfCd",
+        "parameter_path": "$.body.data1.data2.data3.itemLCsfCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "상품대분류코드",
+        "display_name": "itemLCsfCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "27f105b31d94cf725994f70442819d9673c9d73f1d6811f032fabf2a91cf90c0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "상품대분류코드(타입:string, 예:40)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemLCsfCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemLCsfCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.itemLCsfCd itemLCsfCd 상품대분류코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "itemNm",
+        "parameter_path": "$.body.data1.data2.data3.itemNm"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품명",
+        "display_name": "itemNm",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "a604ea3b4d26c8e7fcd7a890e96c01eb34e398bb458e6960cd8cba555b945989",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품명(타입:string, 예:[한만두] 맛보기 고기 만두 패키지 1255g / 총 5봉)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "itemNm",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/itemNm"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.itemNm itemNm 판매상품명"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mdCd",
+        "parameter_path": "$.body.data1.data2.data3.mdCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "MD코드",
+        "display_name": "mdCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "2442928e04aa9e5182250dafb4041d970e274b3eac33dc5a6eecd174e4dcea8f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "MD코드(타입:string, 예:0991)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mdCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.mdCd mdCd MD코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mdaGbcd",
+        "parameter_path": "$.body.data1.data2.data3.mdaGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매매체구분코드",
+        "display_name": "mdaGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "695afea72cabc0cbe69d3530d258811212431d863dff50fc541b9b6235cdf642",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매매체구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mdaGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mdaGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.mdaGbcd mdaGbcd 판매매체구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "mkcoCd",
+        "parameter_path": "$.body.data1.data2.data3.mkcoCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "제조사코드",
+        "display_name": "mkcoCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4d2ed8842ab224925ba9619ff944a23d840a862d3fe3bbe5a8900ed8b9306080",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "제조사코드(타입:string, 예:8667)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "mkcoCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/mkcoCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.mkcoCd mkcoCd 제조사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "sellMdaGbcd",
+        "parameter_path": "$.body.data1.data2.data3.sellMdaGbcd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매매체구분코드",
+        "display_name": "sellMdaGbcd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "e4ab246dbedcc78eec0cee9c27302fae1673e029aabbc97a29e75d8eabd2e2a0",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매매체구분코드(타입:string, 예:01)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "sellMdaGbcd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/sellMdaGbcd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.sellMdaGbcd sellMdaGbcd 판매매체구분코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "slitmCd",
+        "parameter_path": "$.body.data1.data2.data3.slitmCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "판매상품코드",
+        "display_name": "slitmCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "b049d9e3aa4e5aa7b0475703d92878bb7abb94e5ff8b23e311a745088f5d9c37",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "판매상품코드(타입:string, 예:2025183122)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "slitmCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/slitmCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.slitmCd slitmCd 판매상품코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "strtDt",
+        "parameter_path": "$.body.data1.data2.data3.strtDt"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "집계일시",
+        "display_name": "strtDt",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "6dd1a7ebd9dd636ae3ca37341595eeeff3e3c6dff0399f7f7c4aed76a16a5c8b",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "집계일시(타입:string, 예:20221010)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "strtDt",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/strtDt"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.strtDt strtDt 집계일시"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "ven2Cd",
+        "parameter_path": "$.body.data1.data2.data3.ven2Cd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "2차협력사코드",
+        "display_name": "ven2Cd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "936e1e1b0451519272fc1352eda5c69f68b518a18eb24b4b8e088f9c720f17a5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "2차협력사코드(타입:string, 예:000000)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "ven2Cd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/ven2Cd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.ven2Cd ven2Cd 2차협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "venCd",
+        "parameter_path": "$.body.data1.data2.data3.venCd"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": "협력사코드",
+        "display_name": "venCd",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "be43fc1d9eb2f7ebbca9ef7b161395db9fef4eac1cd6c46945188f1753e039bf",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "협력사코드(타입:string, 예:004562)",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "venCd",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/rows/row/venCd"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.data2.data3.venCd venCd 협력사코드"
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "body",
+        "parameter_name": "id",
+        "parameter_path": "$.body.data1.id"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "id",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "00d989b9a654220117588c3420fedd2eac07cf3079cecec2864c1fc9e0070c2f",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": "#/components/schemas/selectItemArltListRequest",
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": "dsCond",
+        "format": null,
+        "required": false,
+        "required_declared": false,
+        "required_state": "UNSPECIFIED",
+        "type": "string",
+        "xml_attribute": true,
+        "xml_name": "id",
+        "xml_path": "/Root/Dataset[@id=\"dsCond\"]/@id"
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.body.data1.id id "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauseKey",
+        "parameter_path": "$.headers.oauseKey"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauseKey",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "4cc4858fbcf69ee4226af2095a47992b97084561ded6bd5f043a57c6668580b5",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauseKey",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.headers.oauseKey oauseKey "
+      }
+    },
+    {
+      "identity": {
+        "api_id": "POST:/cs/csh/selectItemArltList.do",
+        "document_id": "hshop-openapi",
+        "location": "header",
+        "parameter_name": "oauserId",
+        "parameter_path": "$.headers.oauserId"
+      },
+      "knowledge": {
+        "aliases": [],
+        "defaults": [],
+        "dependencies": [],
+        "description": null,
+        "display_name": "oauserId",
+        "rules": [],
+        "value_mappings": []
+      },
+      "provenance": {
+        "canonical_hash": "51220ff4010ef4627d247932f896e98a437bc0a7ae2d423ce7092465c274be06",
+        "document_id": "hshop-openapi",
+        "meaning_verified": false,
+        "source": "CANONICAL_DERIVED",
+        "sourceRef": null,
+        "warnings": []
+      },
+      "requestBodyRequired": true,
+      "schema": {
+        "enum": null,
+        "example": null,
+        "format": null,
+        "required": true,
+        "required_declared": true,
+        "required_state": "REQUIRED",
+        "type": "string",
+        "xml_attribute": false,
+        "xml_name": "oauserId",
+        "xml_path": null
+      },
+      "search": {
+        "embedding_version": null,
+        "search_text": "POST:/cs/csh/selectItemArltList.do 상품별 실적 조회 $.headers.oauserId oauserId "
+      }
+    }
+  ],
+  "api_knowledge": [],
+  "common_candidates": []
+}
