@@ -46,3 +46,22 @@ def test_cross_task_dependency_unchanged():
                                      task(2, "1번 업무에서 조회한 주문을 배송완료 상태까지 처리한다.")])
     assert [d["dependency_id"] for d in out[1]["input_dependencies"]] == ["D-1-to-2"] == [d["dependency_id"] for d in out[2]["input_dependencies"]]
     assert [d["consumer_task_sequence"] for d in out[0]["output_consumers"]] == [2]           # 업무 하나당 기록 하나 (원래 동작)
+
+
+def test_reference_sources_one_dependency_each():
+    """참조 조회 단계 여럿 → 쓰기 단계 하나 (2026-11-11). 출처마다 관계 하나, 꺼낼 출력 · 넣을 입력을 함께."""
+    pd = "hshop-openapi:POST:/pd/"
+    plan = [{**row(1, 1, "브랜드코드 찾기", "x"), "selected_api_id": pd + "pdh/selectBrndList.do"},
+            {**row(1, 2, "제조사코드 찾기", "x"), "selected_api_id": pd + "pdh/selectMkcoList.do"},
+            {**row(1, 3, "상품생성", "x"), "selected_api_id": pd + "pdb/multiItem.do", "reference_sources": [
+                {"source_step_id": "1-1", "source_output_names": ["brndCd"], "input_field": "brndCd"},
+                {"source_step_id": "1-2", "source_output_names": ["mkcoCd"], "input_field": "mkcoCd"}]}]
+    out = attach_dependencies(plan, [task(1, "조회한 브랜드코드와 제조사코드로 상품을 만든다.", "상품생성")])
+    deps = out[2]["input_dependencies"]
+    assert [(d["source_step_id"], d["source_output_names"], d["input_field"], d["status"]) for d in deps] == [
+        ("1-1", ["brndCd"], "brndCd", "resolved"), ("1-2", ["mkcoCd"], "mkcoCd", "resolved")]
+    assert deps[1]["source_pointer"] == "/api_selection_results/2/reference_sources/1/source_step_id"
+    assert [d["dependency_id"] for d in out[0]["output_consumers"]] == ["D-1-1-to-1-3"] and out[0]["input_dependencies"] == []
+    bad = [row(1, 1, "a", "x", reference_sources=[{"source_step_id": "1-2"}]), row(1, 2, "b", "y")]
+    with pytest.raises(ValueError, match="앞 단계가 아닙니다"):
+        attach_dependencies(bad, [task(1, "c")])

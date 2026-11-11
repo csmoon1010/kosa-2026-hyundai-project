@@ -4,6 +4,8 @@
    화살표 이름 · 출발/도착 상태를 API 이름 · 별칭 · 구분값 이름과 맞춘다 (매칭기 tap.graph.match — 화면 미리보기와 같은 점수)
 ② 확정 검사 — API 메타데이터: 종류 · 사용 여부 · 구분값 필드가 요청에 있는지 · 값이 구분값 목록에 있는지 · 되돌림 불가
 ③ 고르기 — 통과 1개 / 1순위가 확실 → 규칙, 비슷한 후보 여럿 → LLM (후보 안에서만)
+④ 참조 조회 — 고른 쓰기 API 의 코드 필드(brndCd 브랜드코드)에 넣을 설정값이 이름("아디다스")이면, 이름으로 그 코드를
+   찾아 주는 조회 API(요청에 브랜드명 · 응답에 brndCd)를 쓰기 앞 단계로 넣는다 → 단계 수는 고르기까지 끝나야 확정된다
 그래프는 노드 흐름만 갖는다 — 그래프 파일에 API 가 적혀 있어도 쓰지 않고 늘 여기서 고른다. 사람이 바로잡는 곳은 API Metadata(규칙 입력).
 
 selection_status: 선택 · 가선택(사람 확인 필요) · 보류(고를 API 없음)
@@ -43,6 +45,16 @@ class Selected(BaseModel):
     selector: dict[str, str]
 
 
+class Reference(BaseModel):
+    """참조 조회 단계 — 쓰기 단계에 넣을 코드를 이름으로 찾는다 (2026-11-11)."""
+    for_step: int                               # 이 조회 결과를 쓰는 쓰기 단계 번호 (같은 업무)
+    term: str                                   # 업무 용어 (① constraints name — 브랜드코드)
+    value: str                                  # 요청의 이름 값 (아디다스)
+    code_field: str                             # 쓰기 요청의 코드 필드 (brndCd)
+    name_field: str | None = None               # 조회 요청에 이름을 넣을 필드 (brndNm) — 고른 API 기준
+    output_field: str | None = None             # 조회 응답에서 꺼낼 필드 (보통 code_field 와 같음)
+
+
 class StepSelection(BaseModel):
     path_sequence: int
     step: int                                   # 0 = 출발 데이터 조회 (start_by 조회일 때)
@@ -56,6 +68,7 @@ class StepSelection(BaseModel):
     selection_status: Literal[STATUS]  # type: ignore[valid-type]
     selected_by: Literal["규칙", "LLM"] | None
     selection_reason: str
+    reference: Reference | None = None          # 참조 조회 단계만
 
     model_config = {"populate_by_name": True}
 
@@ -290,6 +303,169 @@ def pick_messages(tp: TaskPlan, blocks: list[str]) -> list[dict[str, str]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": "단계마다 API 를 골라 줘."}]
 
 
+def _ask_llm(ask: list, rows: list[dict[str, Any]], tp: TaskPlan, ops: dict[str, dict[str, Any]],
+             meta: dict[str, dict[str, Any]], llm: LLMParse | None, unresolved: list[Unresolved]) -> None:
+    """규칙으로 못 고른 단계(ask)를 한 번에 LLM 에 — 후보 안에서만 고른다. rows 의 '_key' 행을 채운다."""
+    if not ask:
+        return
+    if llm is None:
+        raise ValueError("후보가 비슷한 단계가 있어 LLM 이 필요합니다")
+    blocks = [_llm_block(k, st, ps, g, ops, meta) for k, st, ps, g in ask]
+    out = llm(pick_messages(tp, blocks), pick_schema([k for k, *_ in ask], max(len(ps) for _, _, ps, _ in ask)))
+    picks = {x["key"]: x for x in out.model_dump()["picks"]}
+    for row in rows:
+        if "_key" not in row:
+            continue
+        key, passed, loose = row.pop("_key"), row.pop("_passed"), row.pop("_loose")
+        x = picks.get(key)
+        i = ord(x["choice"]) - 65 if x and x["choice"] != "없음" else None
+        if i is None or i >= len(passed):
+            why = "LLM 이 맞는 후보가 없다고 함" + (f" — {x['reason']}" if x else " (답 없음)")
+            row.update(selected=None, selection_status="보류", selected_by="LLM" if x else None, selection_reason=why)
+            unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=f"'{row['edge']}': {why}"))
+            continue
+        c, k, w = passed[i]
+        concerns = list(x["concerns"]) + ([w] if w else []) + (["그래프 없는 업무라 명세만으로 고름"] if loose else [])
+        row.update(selected=Selected(api_id=c.api_id, selector=c.selector), selected_by="LLM",
+                   selection_status="가선택" if concerns else "선택",
+                   selection_reason=x["reason"] + (f" (확인: {' · '.join(concerns)})" if concerns else ""))
+        for cc in concerns:
+            unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=cc))
+
+
+# ─── ④ 참조 조회 — 쓰기에 넣을 코드를 이름으로 찾는 조회 (2026-11-11) ─────────────────────────────
+
+WRITE_KINDS = ("생성", "수정", "상태변경")
+_SUFFIXES = ("코드", "이름", "명", "code", "name", "cd", "nm")
+
+
+def _clean(s: str | None) -> str:
+    return re.sub(r"[\s\"'“”‘’·_\-]+", "", s or "")
+
+
+def _base(term: str | None) -> str:
+    """업무 용어 · 필드 한글명의 뿌리 — 브랜드코드 · 브랜드명 · 브랜드 → 브랜드."""
+    s = _clean(term).lower()
+    for suf in _SUFFIXES:
+        if s.endswith(suf) and len(s) > len(suf):
+            return s[: -len(suf)]
+    return s
+
+
+def _is_code(f: dict[str, Any]) -> bool:
+    return bool(re.search(r"(Cd|CD|Code|CODE)$", f["name"])) or _clean(f.get("label")).endswith("코드")
+
+
+def _is_name(f: dict[str, Any]) -> bool:
+    return bool(re.search(r"(Nm|NM|Name|NAME)$", f["name"])) or _clean(f.get("label")).endswith(("명", "이름"))
+
+
+def looks_like_name(value: str | None) -> bool:
+    """코드가 아니라 이름인 값 — 한글이 있거나 숫자가 하나도 없다 ("아디다스" · "Nike"). "1234" · "B001" 은 코드."""
+    v = _clean(value)
+    return bool(v) and (bool(re.search(r"[가-힣]", v)) or not re.search(r"\d", v))
+
+
+def code_field(term: str, api_id: str, ops: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    """쓰기 API 요청에서 업무 용어에 맞는 코드 필드 (브랜드코드 · 브랜드 → brndCd(브랜드코드))."""
+    b = _base(term)
+    if not b:
+        return None
+    return next((f for f in ops.get(api_id, {}).get("request_fields") or [] if _is_code(f) and _base(f.get("label")) == b), None)
+
+
+def ref_candidates(term: str, field: str, metadata: list[dict[str, Any]],
+                   ops: dict[str, dict[str, Any]]) -> tuple[list[Candidate], dict[str, tuple[str, str]]]:
+    """이름으로 코드를 찾아 주는 조회 API — 요청에 이름 필드(브랜드명) · 응답에 그 코드 필드(brndCd)가 둘 다 있어야 한다.
+
+    명세 근거가 둘이라 기본 0.75(찾음), API 이름이 '브랜드 조회'에 가까울수록 더한다. 돌려주는 표: api_id → (이름 필드, 출력 필드).
+    """
+    b = _base(term)
+    out, fields = [], {}
+    for m in metadata:
+        if m["kind"] != "read" or not m.get("tool_enabled", True) or m["domain"] not in SCOPE:
+            continue
+        o = ops.get(m["api_id"]) or {}
+        res = o.get("response_fields") or []
+        got = next((f for f in res if f["name"] == field), None) or \
+            next((f for f in res if _is_code(f) and _base(f.get("label")) == b), None)
+        name = next((f for f in o.get("request_fields") or [] if _is_name(f) and _base(f.get("label") or f["name"]) == b), None)
+        if got is None or name is None:
+            continue
+        score = min(1.0, 0.75 + 0.25 * sim(b + "조회", m["api_name"]))
+        out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], score=round(score, 3),
+                             reasons=[f"요청에 {name['name']}({name.get('label') or ''}) — 이름으로 찾음",
+                                      f"응답에 {got['name']}({got.get('label') or ''})"]))
+        fields[m["api_id"]] = (name["name"], got["name"])
+    out.sort(key=lambda c: (-c.score, c.api_id))
+    return out[:TOP], fields
+
+
+def _add_references(rows: list[dict[str, Any]], tp: TaskPlan, metadata: list[dict[str, Any]],
+                    ops: dict[str, dict[str, Any]], meta: dict[str, dict[str, Any]], req: dict[str, set[str]]):
+    """쓰기 단계마다: 설정값이 이름이고 고른 API 에 그 코드 필드가 있으면 참조 조회 단계를 바로 앞에 넣는다.
+
+    업무 안의 단계 번호를 1부터 다시 매긴다 (0번 출발 데이터 조회는 그대로). 설정값 하나는 한 번만 (처음 맞는 쓰기 단계).
+    돌려줌: 새 행 목록 · LLM 에 물을 참조 단계 · 옛 번호 → 새 번호 · 참조 단계의 미해결.
+    """
+    tasks = {t.sequence: t for t in tp.tasks}
+    out: list[dict[str, Any]] = []
+    ask: list = []
+    remap: dict[tuple[int, int], int] = {}
+    unresolved: list[Unresolved] = []
+    groups: dict[int, list[dict[str, Any]]] = {}
+    for r in rows:
+        groups.setdefault(r["path_sequence"], []).append(r)
+    for seq, group in groups.items():
+        task = tasks.get(seq)
+        # 신규 업무엔 찾을 기존 데이터가 없다 — ① 이 대상조건으로 적어도("…코드를 조회하고") 새 데이터에 넣을 값으로 본다
+        todo = [c for c in (task.constraints if task else [])
+                if (c.role == "설정값" or task.origin == "신규") and looks_like_name(c.value)]
+        n = 0
+        for r in group:
+            if r["step"] == 0:
+                remap[(seq, 0)] = 0
+                out.append(r)
+                continue
+            refs = []
+            sel = r.get("selected")
+            if r["kind"] in WRITE_KINDS and sel is not None:
+                for c in list(todo):
+                    f = code_field(c.name, sel.api_id, ops)
+                    if f:
+                        refs.append((c, f))
+                        todo.remove(c)
+            write_no = n + len(refs) + 1
+            for c, f in refs:
+                n += 1
+                value = c.value.strip(" \"'“”‘’") or c.value              # ① 이 따옴표째 적기도 한다 ("\"아디다스\"")
+                cands, fields = ref_candidates(c.name, f["name"], metadata, ops)
+                st = {"kind": "조회", "edge": f"{c.name} 찾기 — 이름 '{value}'로 조회해 {f['name']} 를 {seq}-{write_no} 에 넘김",
+                      "from": None, "to": None, "cands": cands, "loose": False, "terms": [c.name]}
+                judged = [(x, *check(x, "조회", meta, req, None)) for x in cands]
+                row = {"path_sequence": seq, "step": n, "kind": "조회", "domain": r["domain"], "edge": st["edge"],
+                       "from": None, "to": None, "_names": fields,
+                       "reference": Reference(for_step=write_no, term=c.name, value=value, code_field=f["name"]),
+                       "api_candidates": [ApiCandidate(api_id=x.api_id, name=x.api_name, selector=x.selector, score=x.score,
+                                                       check=k, check_reason=w) for x, k, w in judged]}
+                passed = sorted([x for x in judged if x[1] != "탈락" and x[0].score >= CHECK], key=lambda x: -x[0].score)
+                pick = _rule_pick(st, passed)
+                if pick is None:
+                    key = f"{seq}-{n}"
+                    ask.append((key, st, passed[:TOP], None))
+                    out.append({**row, "_key": key, "_passed": passed[:TOP], "_loose": False})
+                    continue
+                if pick["status"] == "보류":
+                    pick["reason"] = f"'{value}'를 {f['name']} 코드로 바꿀 조회 API 가 없음 — 코드를 직접 주거나 개발 담당자 확인"
+                    unresolved.append(Unresolved(path_sequence=seq, step=n, reason=f"'{c.name}': {pick['reason']}"))
+                out.append({**row, "selected": pick["selected"], "selection_status": pick["status"], "selected_by": pick["by"],
+                            "selection_reason": pick["reason"]})
+            n += 1
+            remap[(seq, r["step"])] = n
+            out.append({**r, "step": n})
+    return out, ask, remap, unresolved
+
+
 def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: list[dict[str, Any]],
                 operations: list[dict[str, Any]], catalog: dict[str, Any] | None = None,
                 llm: LLMParse | None = None) -> ApiSelection:
@@ -332,30 +508,18 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
             if r["status"] == "보류":
                 unresolved.append(Unresolved(path_sequence=p.sequence, step=st["step"], reason=f"'{st['edge']}': {r['reason']}"))
 
-    if ask:                                     # 애매한 단계만 한 번에 LLM 에
-        if llm is None:
-            raise ValueError("후보가 비슷한 단계가 있어 LLM 이 필요합니다")
-        blocks = [_llm_block(k, st, ps, g, ops, meta) for k, st, ps, g in ask]
-        out = llm(pick_messages(tp, blocks), pick_schema([k for k, *_ in ask], max(len(ps) for _, _, ps, _ in ask)))
-        picks = {x["key"]: x for x in out.model_dump()["picks"]}
-        for row in rows:
-            if "_key" not in row:
-                continue
-            key, passed, loose = row.pop("_key"), row.pop("_passed"), row.pop("_loose")
-            x = picks.get(key)
-            i = ord(x["choice"]) - 65 if x and x["choice"] != "없음" else None
-            if i is None or i >= len(passed):
-                why = "LLM 이 맞는 후보가 없다고 함" + (f" — {x['reason']}" if x else " (답 없음)")
-                row.update(selected=None, selection_status="보류", selected_by="LLM" if x else None, selection_reason=why)
-                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=f"'{row['edge']}': {why}"))
-                continue
-            c, k, w = passed[i]
-            concerns = list(x["concerns"]) + ([w] if w else []) + (["그래프 없는 업무라 명세만으로 고름"] if loose else [])
-            row.update(selected=Selected(api_id=c.api_id, selector=c.selector), selected_by="LLM",
-                       selection_status="가선택" if concerns else "선택",
-                       selection_reason=x["reason"] + (f" (확인: {' · '.join(concerns)})" if concerns else ""))
-            for cc in concerns:
-                unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=cc))
+    _ask_llm(ask, rows, tp, ops, meta, llm, unresolved)    # 애매한 단계만 한 번에 LLM 에
+
+    rows, ref_ask, remap, ref_unresolved = _add_references(rows, tp, metadata, ops, meta, req)
+    for u in unresolved:                        # 참조 조회가 끼어 단계 번호가 밀렸으면 미해결도 같이
+        if u.step is not None and (u.path_sequence, u.step) in remap:
+            u.step = remap[(u.path_sequence, u.step)]
+    unresolved += ref_unresolved
+    _ask_llm(ref_ask, rows, tp, ops, meta, llm, unresolved)
+    for row in rows:                            # 참조 조회: 고른 API 의 이름 · 출력 필드를 적는다
+        names = row.pop("_names", None)
+        if names is not None and row.get("selected") is not None:
+            row["reference"].name_field, row["reference"].output_field = names[row["selected"].api_id]
 
     results = [StepSelection.model_validate(r) for r in rows]
     for p in pp.paths:                          # 기본 경로에 보류가 있으면 — 모든 단계에 API 가 있는 대안 경로를 안내 (바꾸지는 않음)

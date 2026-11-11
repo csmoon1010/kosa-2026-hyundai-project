@@ -10,6 +10,8 @@ Output Binding → Scenario IR 초안을 만든다. 우리 승인(/api/approve)�
   도메인      혜정은 단계 도메인 = 업무 도메인을 요구 → 업무 도메인을 경로(그래프)의 도메인으로 맞춘다
   앞 단계 결과 업무가 출발 데이터 조회(우리 0번 단계)로 시작하면, 그 뒤 단계 행에 source_step_id(조회 단계)를 적는다
               → 혜정 dependencies 가 조회 단계에 output_consumers, 뒤 단계에 input_dependencies 를 붙여 Binding 을 만든다
+  참조 조회   (2026-11-11) 쓰기에 넣을 코드를 이름으로 찾는 조회 단계 — 그 행에 reference(넣을 이름 · 필드),
+              쓰기 행에 reference_sources(조회 단계 · 꺼낼 출력 필드 · 넣을 입력 필드)를 적는다 → dependencies 가 출처마다 관계를 붙인다
 """
 from __future__ import annotations
 
@@ -33,6 +35,14 @@ def hyejung_approved(tp: TaskPlan, pp: PathPlan, sel: ApiSelection, gate: Gate, 
     for seq in sorted({r.path_sequence for r in sel.api_selection_results}):
         mine = sorted((r for r in sel.api_selection_results if r.path_sequence == seq), key=lambda r: r.step)
         lookup = f"{seq}-1" if len(mine) > 1 and mine[0].step == 0 and mine[0].kind == "조회" else None   # 출발 데이터 조회
+        new_no = {r.step: i for i, r in enumerate(mine, 1)}
+        refs: dict[int, list[dict[str, Any]]] = {}               # 쓰기 단계(새 번호) → 그 단계가 쓰는 참조 조회들
+        for r in mine:
+            if r.reference and r.reference.for_step in new_no:
+                ref = r.reference
+                refs.setdefault(new_no[ref.for_step], []).append(
+                    {"source_step_id": f"{seq}-{new_no[r.step]}", "source_output_names": [ref.output_field or ref.code_field],
+                     "input_field": ref.code_field, "term": ref.term, "value": ref.value})
         for i, r in enumerate(mine, 1):
             if r.selected is None:
                 raise ValueError(f"단계 {seq}-{r.step} 에 고른 API 가 없어 IR 을 만들 수 없습니다")
@@ -42,7 +52,11 @@ def hyejung_approved(tp: TaskPlan, pp: PathPlan, sel: ApiSelection, gate: Gate, 
                          "selection_status": r.selection_status, "selected_by": r.selected_by,
                          "selection_reason": r.selection_reason, "approval_status": "approved",
                          "source_step": f"{seq}-{r.step}", "kind": r.kind, "from": r.from_, "to": r.to,
-                         **({"source_step_id": lookup} if lookup and i > 1 else {})})
+                         **({"source_step_id": lookup} if lookup and i > 1 and not r.reference else {}),
+                         **({"reference": {"term": r.reference.term, "value": r.reference.value,      # 조회 요청에 넣을 이름
+                                           "name_field": r.reference.name_field, "output_field": r.reference.output_field,
+                                           "for_step_id": f"{seq}-{new_no[r.reference.for_step]}"}} if r.reference else {}),
+                         **({"reference_sources": refs[i]} if i in refs else {})})
     unresolved = [{"path_sequence": u.path_sequence, "step": None, "reason": u.reason} for u in sel.unresolved if u.step is None]
     return {"original_question": tp.original_question, "approval_status": "approved", "intent_tasks": tasks,
             "api_selection_results": rows, "unresolved": unresolved, "source_files": source_files or {},

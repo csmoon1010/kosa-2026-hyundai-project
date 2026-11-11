@@ -151,6 +151,43 @@ def test_new_task_without_graph_creates(graphs):
     assert [(s.tier, s.requirement) for s in g.steps] == [("R2", "단계 승인")] and g.status == "승인 필요"
 
 
+def test_reference_lookups_before_write(graphs, tmp_path):
+    """설정값이 이름("아디다스")이고 고른 쓰기 API 에 그 코드 필드가 있으면 — 이름으로 코드를 찾는 조회를 앞 단계로 (2026-11-11)."""
+    from tap.apis.gate import approve, gate_for, load_permissions
+    from tap.ir.draft_build import fixed_plan
+    from tap.ir.handoff import hyejung_approved
+    q = '"아디다스" 브랜드코드와 "아디다스" 제조사코드를 조회하고 조회한 코드들로 상품을 1개 생성해줘'
+    cons = [{"name": "브랜드코드", "value": '"아디다스"', "role": "설정값", "source_phrase": '"아디다스" 브랜드코드'},
+            {"name": "제조사", "value": "아디다스", "role": "대상조건", "source_phrase": '"아디다스" 제조사코드'}]   # 신규라 대상조건도 넣을 값
+    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q], constraints=cons, action="상품생성")],
+                   [choice(graph="SLITM_APRVL_GBCD")])
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
+    got = [(x.step, x.kind, x.selected.api_id.rsplit("/", 1)[-1], x.selection_status) for x in r.api_selection_results]
+    assert got == [(1, "조회", "selectBrndList.do", "선택"), (2, "조회", "selectMkcoList.do", "선택"), (3, "생성", "multiItem.do", "가선택")]
+    a, b, _ = r.api_selection_results
+    assert (a.reference.value, a.reference.name_field, a.reference.code_field, a.reference.for_step) == ("아디다스", "brndNm", "brndCd", 3)
+    assert (b.reference.name_field, b.reference.output_field) == ("edtMkcoName", "mkcoCd")
+    g = gate_for(r, pp, graphs, META, load_permissions(ROOT / "data/config/permissions.yaml"))
+    assert [(s.key, s.tier) for s in g.steps] == [("1-1", "R0"), ("1-2", "R0"), ("1-3", "R2")]
+    data = hyejung_approved(tp, pp, r, g, approve(g, "t", True, list(g.need_steps)))
+    plan = fixed_plan(json.loads(json.dumps(data)))
+    assert [(d["source_step_id"], d["input_field"]) for d in plan[2]["input_dependencies"]] == [("1-1", "brndCd"), ("1-2", "mkcoCd")]
+    assert data["api_selection_results"][0]["reference"]["for_step_id"] == "1-3"
+
+
+def test_reference_skipped_for_code_values(graphs):
+    """값이 코드("1234")거나 쓰기 API 에 코드 필드가 없는 설정값(가격)은 참조 조회를 만들지 않는다."""
+    from tap.apis.select import looks_like_name
+    assert [looks_like_name(v) for v in ('"아디다스"', "Nike", "1234", "B001")] == [True, True, False, False]
+    q = "브랜드코드 1234, 가격 오천원인 상품을 1개 생성해줘"
+    cons = [{"name": "브랜드코드", "value": "1234", "role": "설정값", "source_phrase": "브랜드코드 1234"},
+            {"name": "가격", "value": "오천원", "role": "설정값", "source_phrase": "가격 오천원"}]
+    tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q], constraints=cons, action="상품생성")],
+                   [choice(graph="SLITM_APRVL_GBCD")])
+    r = select_apis(tp, pp, graphs, META, OPS, CAT, no_llm)
+    assert [(x.step, x.kind) for x in r.api_selection_results] == [(1, "생성")]
+
+
 def test_no_path_and_alternative_hint(graphs):
     q = "승인완료된 상품 하나 만들어줘"            # 승인완료로 만들 길이 없음 → 경로 없음 → 업무 보류
     tp, pp = paths(q, graphs, [task(origin="신규", domain="PD", phrases=[q])], [choice(graph="SLITM_APRVL_GBCD", to="승인완료")])

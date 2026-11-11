@@ -4,6 +4,7 @@
 같은 업무 안(2026-11-05 지은 병합): 출처 단계가 소비 단계보다 앞이면 허용하고, 관계는 출처 단계 뒤의 단계에만 붙인다.
   - 업무 조건의 구조화 기록이 같은 업무의 단계(source_step_id)를 가리킬 때
   - 승인본 행(api_selection_results)에 source_step_id 가 있을 때 — 그 행 하나에만 붙인다
+  - 승인본 행에 reference_sources 가 있을 때 (2026-11-11) — 참조 조회 단계 여럿 → 그 쓰기 행 하나에, 출처마다 관계 하나
 """
 import re
 import json
@@ -102,3 +103,35 @@ def _attach_row_sources(plan):
             dependency['source_output_names'] = sorted(set(names))
         step['input_dependencies'].append(deepcopy(dependency))
         source['output_consumers'].append(deepcopy(dependency))
+    _attach_reference_sources(plan, by_id)
+
+
+def _attach_reference_sources(plan, by_id):
+    """승인본 행의 reference_sources (2026-11-11 지은 병합) — 쓰기 단계가 참조 조회 단계 여럿의 결과(코드)를 쓴다.
+
+    출처마다 관계 하나: 꺼낼 출력(source_output_names) · 넣을 입력(input_field)을 함께 적는다. 출처는 소비 단계보다 앞이어야 한다.
+    """
+    for index, step in enumerate(plan):
+        refs = step.get('reference_sources')
+        if not isinstance(refs, list):
+            continue
+        for j, ref in enumerate(refs):
+            source_id = ref.get('source_step_id') if isinstance(ref, dict) else None
+            source = by_id.get(source_id)
+            if source is None or _order(source) >= _order(step):
+                raise ValueError(f'{step["step_id"]} 의 reference_sources 출처 {source_id} 는 앞 단계가 아닙니다')
+            if any(d.get('source_step_id') == source_id for d in step['input_dependencies']):
+                continue
+            dependency = dict(dependency_id=f'D-{source_id}-to-{step["step_id"]}',
+                source_task_sequence=source['path_sequence'], consumer_task_sequence=step['path_sequence'],
+                source_step_id=source_id, source_api_id=source['selected_api_id'], candidate_source_step_ids=[source_id],
+                conditions=step['intent_task'].get('conditions'),
+                source_pointer=f'/api_selection_results/{index}/reference_sources/{j}/source_step_id',
+                status='resolved')
+            names = ref.get('source_output_names')
+            if isinstance(names, list) and names and all(isinstance(n, str) for n in names):
+                dependency['source_output_names'] = sorted(set(names))
+            if isinstance(ref.get('input_field'), str):
+                dependency['input_field'] = ref['input_field']
+            step['input_dependencies'].append(deepcopy(dependency))
+            source['output_consumers'].append(deepcopy(dependency))
