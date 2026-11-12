@@ -15,7 +15,7 @@ import time
 
 from tap.agent.config import CONFIG
 from tap.agent.parameter_tools import ParameterTools
-from tap.ir.draft_build import generate, fixed_plan
+from tap.ir.draft_build import IR_INPUTS, generate, fixed_plan
 from tap.ir.draft_validate import validate_final_ir
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -43,13 +43,13 @@ def score(ir,tools,plan):
 def run(options,trial,top_k):
     with tempfile.TemporaryDirectory(prefix='tap-context-eval-') as directory:
         root=Path(directory)
-        (root/'prototype/approved').mkdir(parents=True)
-        approved=json.loads((ROOT/'prototype/approved'/FILE).read_text())
+        (root/IR_INPUTS).mkdir(parents=True)
+        approved=json.loads((ROOT/'tests/fixtures'/FILE).read_text())
         # Structured conditions use the existing intent interpretation; no query
         # decomposition request is introduced by this evaluation.
         for task in approved['intent_tasks']:
             task['conditions']=[dict(condition_id=f"C-{task['sequence']}",search_query=task['conditions'])]
-        (root/'prototype/approved'/FILE).write_text(json.dumps(approved,ensure_ascii=False))
+        (root/IR_INPUTS/FILE).write_text(json.dumps(approved,ensure_ascii=False))
         (root/'data/out').mkdir(parents=True)
         (root/'data/out/parameters').symlink_to(ROOT/'data/out/parameters',target_is_directory=True)
         start=time.monotonic()

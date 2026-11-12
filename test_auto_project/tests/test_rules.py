@@ -76,30 +76,11 @@ def test_server_baseline(server):  # noqa: F811
     assert e.value.code == 400 and "noSuch" in json.loads(e.value.read())["error"]
 
 
-def test_server_scenario_and_run(server):  # noqa: F811
-    base, root = server
-    from pathlib import Path as _P
-    from tap.cli import plan_request
-    gold = _P(__file__).resolve().parents[1] / "data/golden/ORD_STAT_GBCD.yaml"           # 예전 방식(Scenario IR)은 API 가 적힌 그래프에서만
-    mk = lambda u, t: plan_request(u, gold, root / "data/out", goal_json=json.dumps({"graph_id": "ORD_STAT_GBCD", "target": t}))["ir"].model_dump(mode="json")
-    ir = mk("출고된 주문 1건 만들어줘.", "45")
-    r = json.loads(call(base + "/api/scenarios", {"name": "출고 주문", "utterance": ir["request"], "domains": ["order"], "ir": ir}))
-    sc = r["scenario"]
-    assert [x["id"] for x in r["data"]["scenarios"]] == [sc["id"]] and (root / "data/scenarios" / f"{sc['id']}.json").exists()
-    rej = mk("결제완료", "20")
-    with pytest.raises(urllib.error.HTTPError) as e:
-        call(base + "/api/scenarios", {"name": "x", "ir": rej})
-    assert e.value.code == 400 and "거절" in json.loads(e.value.read())["error"]
-    run = json.loads(call(base + "/api/runs", {"rows": [{"scenario_id": sc["id"], "count": 1}], "calls": [{"api": "a"}]}))
-    assert run["run"]["kind"] == "드라이런" and run["data"]["runs"][0]["id"] == run["run"]["id"]
-    r = json.loads(call(base + "/api/scenarios/delete", {"id": sc["id"]}))
-    assert r["data"]["scenarios"] == []
-
-
-def test_synonyms_reach_goal_prompt():
+def test_synonyms_reach_path_prompt():
+    """화면에서 넣은 다른 표현(동의어)이 ② 경로 탐색 프롬프트의 상태 목록에 들어간다."""
     from pathlib import Path
     from tap.catalog.rules import synonyms_of
-    from tap.goal.extract import build_messages
+    from tap.graph.paths import graphs_text
     from tap.graph.build import load_knowledge
     rules = [{"doc": "sv", "item": "syn", "target": "ORD_STAT_GBCD:30", "body": "피킹 중, 출고 작업 중"},
              {"doc": "sv", "item": "syn", "target": "ORD_STAT_GBCD:30", "body": "피킹 중 · 포장 중"},
@@ -108,4 +89,4 @@ def test_synonyms_reach_goal_prompt():
     assert syn == {"30": ["피킹 중", "출고 작업 중", "포장 중"]}                       # 그래프별 · 여러 규칙 합침
     g = load_knowledge(Path(__file__).resolve().parents[1] / "data/golden/ORD_STAT_GBCD.yaml")
     next(n for n in g.nodes if n.code == "30").synonyms = syn["30"]
-    assert "- 출고진행 (30) · 다른 표현: 피킹 중, 출고 작업 중, 포장 중" in build_messages("x", g)[0]["content"]
+    assert "출고진행(다른 표현: 피킹 중/출고 작업 중/포장 중)" in graphs_text([g])

@@ -14,7 +14,7 @@ def test_progress_ui_stream_chunks_and_failure():
         node = str(candidate) if candidate.exists() else None
     if not node:
         pytest.skip('Node runtime not installed')
-    source = (Path(__file__).resolve().parents[1]/'prototype/scenario-ir-draft.js').read_text()
+    source = (Path(__file__).resolve().parents[1]/'web/scenario-ir-draft.js').read_text()
     setup = r'''
 const assert=require('node:assert/strict');
 class Element {
@@ -222,7 +222,7 @@ global.fetch=async(url,options)=>{
 
 def test_ir_region_is_full_width_sibling_after_editor():
     from html.parser import HTMLParser
-    html=(Path(__file__).resolve().parents[1]/'prototype/offline-ui.html').read_text()
+    html=(Path(__file__).resolve().parents[1]/'web/offline-ui.html').read_text()
     class Layout(HTMLParser):
         def __init__(self): super().__init__();self.stack=[];self.ir_parent=None;self.ir_ancestors=[]
         def handle_starttag(self,tag,attrs):

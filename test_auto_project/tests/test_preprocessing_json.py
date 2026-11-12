@@ -91,7 +91,7 @@ class PreprocessingJsonTests(unittest.TestCase):
             save_preprocessing_baseline(self.root, self.sid, {'venCd': '001442'})
 
     def test_refresh_and_registration_endpoints_use_json_and_update_static_snapshot(self):
-        (self.root / 'prototype').mkdir(parents=True)
+        (self.root / 'web').mkdir(parents=True)
         server = ThreadingHTTPServer(('127.0.0.1', 0), make_handler(self.root))
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()
@@ -103,7 +103,7 @@ class PreprocessingJsonTests(unittest.TestCase):
                     return json.load(response)
             refreshed = post('/api/preprocessing/refresh', {})
             self.assertIn(self.sid, refreshed['data']['preprocessing']['canonical_schema'])
-            snapshot = self.root / 'prototype/tap-data.js'
+            snapshot = self.root / 'web/tap-data.js'
             self.assertTrue(snapshot.is_file())
             registered = post('/api/preprocessing/baseline', {
                 'selected_api_id': self.sid, 'values': {self.path: '000009'}})

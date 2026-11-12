@@ -5,6 +5,7 @@
 """
 from __future__ import annotations
 
+import csv
 from collections import deque
 from pathlib import Path
 from typing import Any
@@ -186,3 +187,13 @@ def merge_saved(old: dict[str, Any] | None, new: dict[str, Any]) -> tuple[dict[s
     out["transitions"] = [{k: v for k, v in t.items() if k in ("name", "from", "to", "kind")} for t in new.get("transitions") or []]
     out.pop("lookups", None)
     return out, kept
+
+
+def load_code_table(path: str | Path, group_id: str) -> dict[str, Any]:
+    """공통코드 테이블 export(CSV) 에서 코드 그룹 하나. 사용여부 Y 만, 정렬순서대로."""
+    with open(path, encoding="utf-8", newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["코드그룹ID"] == group_id and r.get("사용여부", "Y") == "Y"]
+    if not rows:
+        raise ValueError(f"코드 그룹 {group_id} 가 {path} 에 없습니다")
+    rows.sort(key=lambda r: int(r.get("정렬순서") or 0))
+    return {"id": group_id, "name": rows[0]["코드그룹명"], "codes": {r["코드값"]: r["코드명"] for r in rows}}

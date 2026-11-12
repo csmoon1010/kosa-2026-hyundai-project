@@ -1,8 +1,11 @@
-"""1단계 사전 작업 실행기.
+"""명령 실행기 — build · intent · path · select · run · eval-stages · ui-data · serve.
 
-    PYTHONPATH=src python -m tap.cli build --spec data/specs/hmall-openapi.json
+    PYTHONPATH=src python -m tap.cli serve                 화면 + 실제 계산 (http://127.0.0.1:8765/)
+    PYTHONPATH=src python -m tap.cli build                 명세 → API 문서 (아래)
+    PYTHONPATH=src python -m tap.cli select "요청"          ① 요청 이해 → ② 경로 → ③ API (analyze_select — 서버도 이 함수를 쓴다)
+    PYTHONPATH=src python -m tap.cli eval-stages --runs 3  단계별 평가 (docs/evaluation.md)
 
-산출물 (data/out/) — 세 문서는 모두 api_id 로 연결된다
+build 산출물 (data/out/) — 세 문서는 모두 api_id 로 연결된다
     api_operations.json   파싱 결과 — 혜정의 Canonical Schema 변환 입력
     tool_registry.json    Tool Registry (도메인별 연결 설정 + API별 도구, PK = api_id)
     api_metadata.json     API Metadata (Catalog 의 원본, tool_enabled 는 Tool Registry 에서 복사)
@@ -101,7 +104,6 @@ def build(spec_path: Path, out_dir: Path, domains_cfg: Path, services_cfg: Path,
 
 
 GRAPH_DIR = ROOT / "data/graphs"        # 상태 그래프는 여기 한 곳 — 손으로 쓴 것 · 화면에서 그린 것 모두 <코드그룹ID>.yaml
-GOLDEN = ROOT / "data/golden/ORD_STAT_GBCD.yaml"   # 채점 · 테스트용 정답지 (고정 복사본)
 
 
 def _apply_synonyms(graphs, rules_cfg: Path | None) -> None:
@@ -263,161 +265,7 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
     return result
 
 
-def plan_request(utterance: str, graphs_from: Path | list[Path], out_dir: Path, goal_json: str | None = None,
-                 model: str | None = None, rules_cfg: Path | None = None) -> dict:
-    """자연어 한 문장 → (그래프 고르기) → 목표 → 경로 → Scenario IR. data/out/ 의 1단계 산출물을 쓴다.
-
-    graphs_from: 그래프 yaml 하나 또는 폴더 목록 (보통 [GRAPH_DIR]). 그래프가 여럿이면 LLM 이 요청에 맞는 그래프를 먼저 고른다.
-    """
-    import hashlib
-
-    from tap.goal.extract import choose_graph, extract_goal, openai_parse
-    from tap.graph.build import load_graphs, validate_graph
-    from tap.graph.plan import Goal, plan
-    from tap.ir.build import ScenarioIR, build_ir
-
-    ops = _load(out_dir / "api_operations.json")
-    meta = _load(out_dir / "api_metadata.json")
-    cat = _load(out_dir / "api_catalog.json") or {}
-    if ops is None or meta is None:
-        raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
-    graphs, _notes = load_graphs(graphs_from if isinstance(graphs_from, (list, tuple)) else [graphs_from])
-    if not graphs:
-        raise ValueError("시나리오 생성에 쓸 상태 그래프가 없습니다")
-    _apply_synonyms(graphs, rules_cfg)
-
-    if goal_json:
-        goal = Goal.model_validate_json(goal_json)
-        graph, why = next((g for g in graphs if g.graph_id == goal.graph_id), graphs[0]), "목표를 직접 지정"
-    else:
-        llm = openai_parse(model)
-        graph, why = choose_graph(utterance, graphs, llm)
-        goal = extract_goal(utterance, graph, llm) if graph else None
-    if graph is None:
-        ir = ScenarioIR(status="rejected", request=utterance, goal=Goal(graph_id="-", target="-"), graph_id="-",
-                        catalog_version=cat.get("catalog_version"), reason=f"요청에 맞는 상태 그래프가 없습니다 — {why}", graph_reason=why)
-    else:
-        errors = [i for i in validate_graph(graph, meta, ops) if i["level"] == "error"]
-        if errors:
-            raise ValueError(f"그래프 {graph.graph_id} 오류: {errors}")
-        ir = build_ir(utterance, goal, graph, plan(graph, goal), ops, meta, cat.get("catalog_version"))
-        ir.graph_reason = why
-    ir_dir = out_dir / "ir"
-    ir_dir.mkdir(parents=True, exist_ok=True)
-    name = hashlib.sha1(utterance.encode("utf-8")).hexdigest()[:8]
-    _dump(ir_dir / f"{name}.json", ir)
-    return {"file": str(ir_dir / f"{name}.json"), "ir": ir}
-
-
-def _print_ir(ir) -> None:
-    g = ir.goal
-    print(f"\n▶ {ir.request}")
-    print(f"  목표: target={g.target} must_pass={g.must_pass} count={g.count}  근거={g.source_phrases}"
-          + (f"  표현 못한 조건={g.unsupported}" if g.unsupported else ""))
-    if ir.status != "ok":
-        print(f"  ✕ 거절: {ir.reason}")
-        return
-    p = ir.plan
-    print(f"  A {p.strategy}: 시작 {p.start} · 쓰기 {p.writes}회 · 상태 {' → '.join(p.states)}")
-    for s in ir.steps:
-        extra = f" 되돌리기={s.compensate_with.rsplit(':', 1)[-1]}" if s.compensate_with else ""
-        print(f"    {s.no}. [{s.kind}] {s.name} {s.selector or ''}{extra}")
-    if ir.alternative:
-        a = ir.alternative
-        print(f"  B 대안 {a.strategy}: 시작 {a.start} · 쓰기 {a.writes}회 · 상태 {' → '.join(a.states)}")
-    print(f"  실행 시 입력: {list(ir.run_inputs)} · 미해결 {len(ir.unresolved)}개 · 승인 필요={ir.requires_approval}")
-
-
 # 한 바퀴 때 쓴 목표 4개 — 추출한 그래프로도 같은 경로가 나오는지 본다
-LOOP_GOALS = [dict(target="45"), dict(target="45", must_pass=["50"]), dict(target="50", count=2), dict(target="20")]
-
-
-def extract_graph(codes_csv: Path, group: str, golden: Path | None, out_dir: Path,
-                  model: str | None = None, tag: str = "1", domain: str = "od") -> dict:
-    """공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점. data/out/extract/ 에 저장."""
-    import os
-
-    import yaml
-
-    from tap.goal.extract import openai_parse
-    from tap.graph.extract import extract_knowledge, load_code_table
-    from tap.graph.plan import Goal
-    from tap.graph.score import score
-
-    ops, meta = _load(out_dir / "api_operations.json"), _load(out_dir / "api_metadata.json")
-    if ops is None or meta is None:
-        raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
-    cg = load_code_table(codes_csv, group)
-    got = extract_knowledge(cg, ops, meta, openai_parse(model), domain)
-    used = model or os.environ.get("OPENAI_DEFAULT_MODEL", "llm")
-
-    ex_dir = out_dir / "extract"
-    ex_dir.mkdir(parents=True, exist_ok=True)
-    stem = f"{group}.{used}.{tag}"               # 모델명에 점이 있어 with_suffix 를 쓰지 않는다
-    (ex_dir / f"{stem}.yaml").write_text(
-        f"# 자동 추출 (실험) — 공통코드 + 명세만, 모델 {used}. 사람 확인 전\n"
-        + yaml.safe_dump(got, allow_unicode=True, sort_keys=False), encoding="utf-8")
-    result = {"model": used, "file": str(ex_dir / f"{stem}.yaml"), "knowledge": got}
-    if golden:
-        gold = yaml.safe_load(golden.read_text(encoding="utf-8"))
-        result["score"] = score(gold, got, [Goal(graph_id=group, **g) for g in LOOP_GOALS])
-        _dump(ex_dir / f"{stem}.score.json", result["score"])
-    return result
-
-
-def rescore(files: list[Path], group: str, golden: Path) -> list[dict]:
-    """이미 추출해 둔 yaml 을 LLM 없이 다시 채점 (채점 규칙을 고쳤을 때 · 사람이 고친 뒤)."""
-    import yaml
-
-    from tap.graph.plan import Goal
-    from tap.graph.score import score
-
-    gold = yaml.safe_load(golden.read_text(encoding="utf-8"))
-    out = []
-    for f in files:
-        got = yaml.safe_load(f.read_text(encoding="utf-8"))
-        r = {"model": f.name.split(".", 1)[1].rsplit(".", 1)[0], "file": str(f), "knowledge": got,
-             "score": score(gold, got, [Goal(graph_id=group, **g) for g in LOOP_GOALS])}
-        _dump(f.with_name(f.name[: -len(".yaml")] + ".score.json"), r["score"])
-        out.append(r)
-    return out
-
-
-def match_graph(golden: Path, out_dir: Path, domains: list[str]) -> dict:
-    """정답 그래프의 화살표 이름 · 상태만 주고 API 후보를 찾아 채점. data/out/match/ 에 저장."""
-    import yaml
-
-    from tap.graph.match import evaluate
-
-    ops, meta = _load(out_dir / "api_operations.json"), _load(out_dir / "api_metadata.json")
-    if ops is None or meta is None:
-        raise SystemExit("data/out 산출물이 없습니다 — 먼저 build 를 실행하세요")
-    gold = yaml.safe_load(golden.read_text(encoding="utf-8"))
-    r = evaluate(gold, meta, ops, domains)
-    (out_dir / "match").mkdir(parents=True, exist_ok=True)
-    _dump(out_dir / "match" / f"{gold['graph']['id']}.json", r)
-    return r
-
-
-def _print_score(r: dict) -> None:
-    s = r["score"]
-    print(f"\n■ {r['model']} → {r['file']}")
-    for name, rows in (("전이", s["transitions"]), ("조회 방법", s["lookups"])):
-        c = s["summary"]["transitions" if name == "전이" else "lookups"]
-        print(f"  {name}: 정답 {c['정답']}개 중 정확 {c['정확']} · 틀림 {c['틀림']} · 없음 {c['없음']} · 정답에 없는 추가 {c['추가']}")
-        for x in rows:
-            nm = f" 이름 {x['got_name']}" + (f" (정답 {x['gold_name']})" if x["gold_name"] and x["got_name"] != x["gold_name"] else "") \
-                if x.get("got_name") else ""
-            print(f"    [{x['status']}] {x['item']}: 정답 {x['gold']} / 추출 {x['got']}{nm} · {x['basis'] or ''}")
-    for f in s["fields"]:
-        print(f"  [{f['status']}] {f['item']}: 정답 {f['gold']} / 추출 {f['got']}")
-    for p in s["paths"]:
-        print(f"  경로 목표 {p['goal']}\n    A [{p['status_A']}] 정답 {p['gold_A']} / 추출 {p['got_A']}"
-              f"\n    B [{p['status_B']}] 정답 {p['gold_B']} / 추출 {p['got_B']}")
-    for q in s["open_questions"]:
-        print(f"  ? {q}")
-
-
 def datetime_now() -> str:
     from datetime import datetime
     return datetime.now().astimezone().isoformat(timespec="seconds")
@@ -433,12 +281,6 @@ def main() -> None:
     b.add_argument("--services", default=str(ROOT / "data/config/services.yaml"))
     b.add_argument("--overrides", default=str(ROOT / "data/config/overrides.yaml"))
     b.add_argument("--rules", default=str(ROOT / "data/config/rules.ui.yaml"), help="화면에서 넣은 규칙")
-    pl = sub.add_parser("plan", help="(예전 방식) 자연어 → 목표 → 경로 → Scenario IR — API 가 적힌 그래프(정답지)에서만")
-    pl.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
-    pl.add_argument("--graphs", default=str(GOLDEN), help="API 가 적힌 그래프 yaml (기본: 정답지 — data/graphs 는 노드 흐름만이라 안 됨)")
-    pl.add_argument("--out", default=str(ROOT / "data/out"))
-    pl.add_argument("--goal", default=None, help="LLM 없이 목표 JSON 을 직접 지정")
-    pl.add_argument("--model", default=None)
     it = sub.add_parser("intent", help="자연어 → 업무 목록 (도메인 · 신규/기존 · 제약)")
     it.add_argument("utterance", nargs="+", help="자연어 요청 (여러 개 가능)")
     it.add_argument("--model", default=None)
@@ -454,13 +296,6 @@ def main() -> None:
     rn.add_argument("--approver", default="권지은")
     rn.add_argument("--model", default=None)
     rn.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
-    ev = sub.add_parser("eval", help="태스크셋 채점 — 결과(단계별 정답) · 궤적 · 비용 · 지연")
-    ev.add_argument("--tasks", default=str(ROOT / "data/eval/tasks.yaml"))
-    ev.add_argument("--ids", default=None, help="일부만 (예: N01,R02)")
-    ev.add_argument("--model", default=None)
-    ev.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
-    ev.add_argument("--out", default=str(ROOT / "data/out/eval"))
-    ev.add_argument("--rescore", default=None, help="저장된 채점 결과(json)를 지금 태스크셋 기준으로 다시 채점 (LLM 안 부름)")
     es = sub.add_parser("eval-stages", help="단계별 평가 — ① 의도 ② 경로 ③ API ④ 파라미터(IR) 를 정답셋으로 따로 채점 · 반복 실행 일치율")
     es.add_argument("--gold", default=str(ROOT / "data/eval/stage_gold.json"))
     es.add_argument("--ids", default=None, help="일부만 (예: S01,S03)")
@@ -476,51 +311,20 @@ def main() -> None:
     se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
     se.add_argument("--model", default=None)
     se.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
-    ex = sub.add_parser("extract-graph", help="(실험) 공통코드 + 명세만으로 그래프 재료 추출 → 정답지와 채점")
-    ex.add_argument("--codes", default=str(ROOT / "data/codes/common_codes.csv"))
-    ex.add_argument("--group", default="ORD_STAT_GBCD")
-    ex.add_argument("--domain", default="od", help="그래프 담당 도메인 = 상태 코드 그룹의 주인")
-    ex.add_argument("--golden", default=str(GOLDEN))
-    ex.add_argument("--out", default=str(ROOT / "data/out"))
-    ex.add_argument("--model", default=None)
-    ex.add_argument("--runs", type=int, default=1, help="같은 입력으로 몇 번 돌릴지 (흔들림 확인)")
-    ex.add_argument("--rescore", nargs="+", default=None, help="LLM 없이 이미 추출한 yaml 을 다시 채점")
-    mg = sub.add_parser("match-graph", help="화살표 이름 · 상태만으로 API 후보 찾기 → 정답지와 채점")
-    mg.add_argument("--golden", default=str(GOLDEN))
-    mg.add_argument("--out", default=str(ROOT / "data/out"))
-    mg.add_argument("--domains", default="pd,od,ds")
-    sub.add_parser("ui-data", help="실제 산출물 → prototype/tap-data.js (오프라인 UI 가 읽는다)")
+    sub.add_parser("ui-data", help="실제 산출물 → web/tap-data.js (서버 없이 화면을 열 때 읽는다)")
     sv = sub.add_parser("serve", help="오프라인 UI 로컬 서버 — 시나리오 생성 · 그래프 저장을 실제로 실행")
     sv.add_argument("--port", type=int, default=8765)
     sv.add_argument("--host", default="127.0.0.1", help="WSL 밖 브라우저에서 안 열리면 0.0.0.0")
     a = ap.parse_args()
     if a.cmd == "ui-data":
         from tap.ui.export import write_ui_data
-        print(write_ui_data(ROOT, ROOT / "prototype/tap-data.js"))
+        print(write_ui_data(ROOT, ROOT / "web/tap-data.js"))
         return
     if a.cmd == "serve":
         from tap.ui.export import write_ui_data
         from tap.ui.serve import serve
-        write_ui_data(ROOT, ROOT / "prototype/tap-data.js")
+        write_ui_data(ROOT, ROOT / "web/tap-data.js")
         serve(ROOT, a.port, a.host)
-        return
-    if a.cmd == "match-graph":
-        r = match_graph(Path(a.golden), Path(a.out), a.domains.split(","))
-        for k, v in r["summary"].items():
-            print(f"■ {k}: {v}")
-        for x in r["rows"]:
-            print(f"  [{x['result']} · {x['status']}] {x['kind']} {x['item']}  정답 {x['want']}  후보 {x['top'][:2]}")
-        return
-    if a.cmd == "extract-graph" and a.rescore:
-        for r in rescore([Path(f) for f in a.rescore], a.group, Path(a.golden)):
-            _print_score(r)
-        return
-    if a.cmd == "extract-graph":
-        for i in range(1, a.runs + 1):
-            r = extract_graph(Path(a.codes), a.group, Path(a.golden) if a.golden else None, Path(a.out),
-                              a.model, str(i), a.domain)
-            if "score" in r:
-                _print_score(r)
         return
     if a.cmd == "intent":
         for u in a.utterance:
@@ -563,31 +367,6 @@ def main() -> None:
         for c in calls:
             print(f"    {c['key']} {c['kind']} {c['api_id'].rsplit('/', 1)[-1]} {c['selector']} ({c['tier']})")
         print(r["trace"].summary())
-        return
-    if a.cmd == "eval":
-        import os
-        from tap import evaluate as E
-        cases = E.load_tasks(a.tasks)
-        if a.ids:
-            cases = [c for c in cases if c["id"] in a.ids.split(",")]
-        results = []
-        if a.rescore:
-            saved = json.loads(Path(a.rescore).read_text(encoding="utf-8"))
-            results = E.rescore(saved, cases)
-            cases = []
-        for c in cases:
-            r = E.run_case(c, lambda u: analyze_select(u, rules_cfg=ROOT / "data/config/rules.ui.yaml", model=a.model, stop_retry=a.stop_retry,
-                                                       trace_dir=Path(a.out) / "traces"))
-            t = r["trajectory"]
-            print(f"  {c['id']} {'O' if r['passed'] else 'X'} {r['final_status']} · LLM {t['llm_calls']} · {t['ms']}ms"
-                  + (f" · 처음 틀린 단계 {r['first_fail']}" if r["first_fail"] else "") + (f" · 뚫림 {r['violations']}" if r.get("violations") else ""), flush=True)
-            results.append(r)
-        summary = E.summarize(results)
-        meta = {"at": datetime_now(), "model": a.model or os.environ.get("OPENAI_DEFAULT_MODEL") or (saved["meta"].get("model") if a.rescore else None),
-                "tasks_file": a.tasks, "stop_retry": a.stop_retry, **({"rescored_from": a.rescore} if a.rescore else {})}
-        j, m = E.save(results, summary, meta, a.out)
-        print(m.read_text(encoding="utf-8").split("\n\n| id |")[0])
-        print(f"→ {m}\n→ {j}")
         return
     if a.cmd == "eval-stages":
         import os
@@ -637,12 +416,6 @@ def main() -> None:
             print(json.dumps({"tasks": r["tasks"].model_dump(), "paths": r["paths"].dump()}, ensure_ascii=False, indent=2))
             for n in r["notes"]:
                 print(f"  (검사) {n}")
-        return
-    if a.cmd == "plan":
-        for u in a.utterance:
-            r = plan_request(u, Path(a.graphs) if a.graphs else [GRAPH_DIR], Path(a.out), a.goal, a.model, ROOT / "data/config/rules.ui.yaml")
-            _print_ir(r["ir"])
-            print(f"  → {r['file']}")
         return
     if a.cmd == "build":
         r = build(Path(a.spec), Path(a.out), Path(a.domains), Path(a.services), Path(a.overrides), rules_cfg=Path(a.rules))

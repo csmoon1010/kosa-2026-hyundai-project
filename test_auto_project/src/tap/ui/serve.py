@@ -7,29 +7,25 @@
   POST /api/select           {utterance} → ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 (+ 트레이스)
                              Accept: application/x-ndjson 이면 단계 시작마다 {"event":"stage","stage":…} 후 {"event":"done"|"error",…}
   POST /api/approve          {selection_hash, scenario, steps, approver} → 등록 때 승인 (서버가 계산한 게이트로 확인) → 승인본 data/approved/
-  POST /api/run              {selection_hash, confirm} → 실행 때 확인 (승인본 · 해시 · R2 단계 확인) → 드라이런
   POST /api/graph/save       {graph_id, yaml} → data/graphs/<id>.yaml (노드 흐름만, 기존 파일 위에 합침 — 진입 상태 · 상태 필드 · 확인 키 유지, 이전 파일은 data/out/graph_history/)
   POST /api/rules            {place, doc, item, dom, target, body} → data/config/rules.ui.yaml + 다시 빌드 → 새 TAP_DATA
   POST /api/rules/delete     {id} → 화면 규칙 삭제 + 다시 빌드
   POST /api/baseline         {api_id, body} → data/baselines/<api>.json
-  ── 혜정: Baseline · Parameter KB 참조 → 입력값 매핑 → Output Binding → Scenario IR 초안 (승인 뒤에만) ──
+  ── 혜정: Baseline · Parameter KB 참조 → 입력값 매핑 → Output Binding → Scenario IR 초안 (승인본 · 승인 전 검토 초안) ──
   POST /api/preprocessing/refresh   생성된 전처리 JSON 재조회 + tap-data.js 갱신 (노트북 실행 없음)
   POST /api/preprocessing/baseline  {selected_api_id, values} → data/baselines/preprocessing/*.json
-  POST /api/approved-selections     {filename, approved_json} → prototype/approved/<filename>.json
   POST /api/scenario-ir-drafts      {approved_filename, …} → IR 초안 (Accept: application/x-ndjson 이면 실시간 진행)
   GET  /api/approved-selections · /api/scenario-ir-budget · /api/scenario-ir-log-summaries · /api/scenario-ir-logs/<파일>
   GET/POST /api/scenario-ir-reviews/…   IR 입력 검토
-  /api/approve 가 승인에 성공하면 혜정 형식 승인본(prototype/approved/tdg-*.json)도 만들어 준다 (tap.ir.handoff)
-  POST /api/review-draft     {selection_hash} → 승인 전 검토용 초안 prototype/approved/review-*.json (최종 등록 화면 — 분석 → IR → 승인)
+  /api/approve 가 승인에 성공하면 혜정 형식 승인본(data/ir_inputs/tdg-*.json)도 만들어 준다 (tap.ir.handoff)
+  POST /api/review-draft     {selection_hash} → 승인 전 검토용 초안 data/ir_inputs/review-*.json (최종 등록 화면 — 분석 → IR → 승인)
   POST /api/register         {selection_hash, name, approver, steps, review_file, ir_file} → 승인 + 등록 data/registered/<id>.json
   GET  /api/registered/<id>  등록 시나리오 전체 · POST /api/registered/delete {id}
   POST /api/registered/run   {items: [{id, n, confirm}]} → 실행 확인(승인 · 해시 · R2 단계) → IR 로 드라이런 → data/runs/
   POST /api/build            명세 · 설정을 다시 읽어 빌드 (최신화 · 변경 확인)
-  POST /api/scenarios        {name, utterance, domains, ir} → data/scenarios/<id>.json (확인 후 저장 = 승인본 고정)
-  POST /api/scenarios/delete {id}
-  POST /api/runs             {rows, steps, unresolved} → data/runs/<id>.json (드라이런 — 실제 API 호출 없음)
 """
 from __future__ import annotations
+
 
 import json
 import re
@@ -40,6 +36,7 @@ from typing import Any
 
 import yaml
 
+from tap.ir.draft_build import IR_INPUTS
 from tap.ui.export import ui_data, write_ui_data
 from tap.ui.preprocessing import save_preprocessing_baseline
 
@@ -173,22 +170,6 @@ def _stamp() -> tuple[str, str]:
     return now.strftime("%Y%m%d-%H%M%S-%f")[:-3], now.strftime("%Y-%m-%d %H:%M")
 
 
-def save_scenario(root: Path, body: dict) -> dict:
-    """확인 후 저장 — Scenario IR 을 그대로 고정한다 (승인본). 거절된 계획 · 이름 없음은 저장하지 않는다."""
-    ir, name = body.get("ir") or {}, str(body.get("name") or "").strip()
-    if not name:
-        raise ValueError("시나리오 이름을 적으세요")
-    if ir.get("status") != "ok":
-        raise ValueError("거절된 계획은 저장할 수 없습니다")
-    sid, at = _stamp()
-    sc = {"id": "sc-" + sid, "name": name, "utterance": body.get("utterance") or ir.get("request"), "domains": body.get("domains") or [],
-          "graph_id": ir.get("graph_id"), "catalog_version": ir.get("catalog_version"), "approved_at": at, "by": "화면", "ir": ir}
-    dest = root / "data/scenarios" / f"{sc['id']}.json"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps(sc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return sc
-
-
 def _registered_path(root: Path, sid: str) -> Path:
     p = root / "data/registered" / (re.sub(r"[^A-Za-z0-9\-]", "", str(sid)) + ".json")
     if not p.exists():
@@ -222,7 +203,7 @@ def register_scenario(root: Path, body: dict, pending: dict) -> dict:
     if not re.fullmatch(r"SCN-[A-Za-z0-9\-]+\.json", ir_name) or not ir_path.is_file():
         raise ValueError("시나리오(IR) 파일이 없습니다 — 시나리오 생성이 끝난 뒤 등록하세요")
     ir = json.loads(ir_path.read_text(encoding="utf-8"))
-    if ((ir.get("sources") or {}).get("approved") or {}).get("file") != f"prototype/approved/{review_file}":
+    if ((ir.get("sources") or {}).get("approved") or {}).get("file") != f"{IR_INPUTS}/{review_file}":
         raise ValueError("시나리오(IR)가 이 분석 결과로 만든 것이 아닙니다 — 다시 만드세요")
     ap = approve(g, approver, bool(g.need_scenario), list(body.get("steps") or []))      # 모자라면 GateError
     pending["approval"] = ap
@@ -294,13 +275,6 @@ def run_registered(root: Path, body: dict) -> dict:
     return save_run(root, {"rows": rows, "calls": calls, "unresolved": unresolved, "rollback": rollback})
 
 
-def delete_scenario(root: Path, sid: str) -> None:
-    p = root / "data/scenarios" / (re.sub(r"[^A-Za-z0-9\-]", "", sid) + ".json")
-    if not p.exists():
-        raise ValueError(f"없는 시나리오: {sid}")
-    p.unlink()
-
-
 def save_run(root: Path, body: dict) -> dict:
     """드라이런 기록 — 실행기 연결 전이라 API 를 호출하지 않고 호출 계획만 남긴다."""
     rid, at = _stamp()
@@ -357,48 +331,14 @@ def save_graph(root: Path, graph_id: str, text: str) -> dict[str, Any]:
             "backup": str(backup.relative_to(root)) if backup else None}
 
 
-def save_approved_selection(root: Path, body: dict) -> dict:
-    """의도와 API 선택 승인을 prototype/approved 에 통합 JSON 으로 저장한다."""
-    data = body.get("approved_json")
-    if not isinstance(data, dict):
-        raise ValueError("approved_json은 JSON 객체여야 합니다")
-    if not str(data.get("original_question") or "").strip():
-        raise ValueError("original_question이 필요합니다")
-    if data.get("approval_status") not in {"approved", "unapproved"}:
-        raise ValueError("approval_status는 approved 또는 unapproved여야 합니다")
-    if not isinstance(data.get("intent_tasks"), list) or not data["intent_tasks"]:
-        raise ValueError("intent_tasks가 필요합니다")
-    rows = data.get("api_selection_results")
-    if not isinstance(rows, list) or not rows:
-        raise ValueError("api_selection_results가 필요합니다")
-    statuses = [row.get("approval_status") if isinstance(row, dict) else None for row in rows]
-    if any(status not in {"approved", "unapproved"} for status in statuses):
-        raise ValueError("각 API 선택 결과의 approval_status는 approved 또는 unapproved여야 합니다")
-    if data["approval_status"] == "approved" and any(status != "approved" for status in statuses):
-        raise ValueError("미승인 API가 있어 전체 승인 상태를 approved로 저장할 수 없습니다")
-
-    requested = Path(str(body.get("filename") or "api-selection-approved.json")).name
-    filename = re.sub(r"[^A-Za-z0-9._-]", "-", requested).strip(".-") or "api-selection-approved.json"
-    if not filename.lower().endswith(".json"):
-        filename += ".json"
-    dest_dir = root / "prototype/approved"
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    dest = dest_dir / filename
-    if dest.exists():
-        stamp, _ = _stamp()
-        dest = dest_dir / f"{dest.stem}-{stamp}{dest.suffix}"
-    dest.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return {"file": str(dest.relative_to(root)), "filename": dest.name}
-
-
 def make_handler(root: Path, llm=None):
     """llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI."""
-    proto = root / "prototype"
+    web = root / "web"                         # 화면 파일 (정적 서빙)
     pending: dict[str, dict[str, Any]] = {}    # selection_hash → 서버가 계산한 선택 결과 · 게이트 (승인은 이것으로만 확인한다)
 
     class Handler(SimpleHTTPRequestHandler):
         def __init__(self, *a, **kw):
-            super().__init__(*a, directory=str(proto), **kw)
+            super().__init__(*a, directory=str(web), **kw)
 
         def end_headers(self):
             # 화면 파일(html · js · css)을 브라우저가 옛것으로 쓰지 않게 — 매번 서버에 바뀌었는지 묻는다 (2026-11-05)
@@ -453,7 +393,7 @@ def make_handler(root: Path, llm=None):
             if path == "/api/approved-selections":
                 from tap.agent.config import DEFAULTS, DEFAULT_OPTIONS, DEFAULT_GENERATION_MODE, GENERATION_MODES
                 rows = []
-                for file in sorted((root / "prototype/approved").glob("*.json")):
+                for file in sorted((root / IR_INPUTS).glob("*.json")):
                     try:
                         data = json.loads(file.read_text(encoding="utf-8-sig"))
                         if data.get("approval_status") == "review":      # 최종 등록 화면의 검토 전 초안 — 확인용 목록엔 승인본만
@@ -539,7 +479,8 @@ def make_handler(root: Path, llm=None):
             return p
 
         def _approve(self, body: dict[str, Any]) -> None:
-            """등록 때 승인 — 계획이 맞는가. 승인본을 data/approved/ 에 고정한다 (실행은 /api/run)."""
+            """확인용 등록 화면의 승인 — 계획이 맞는가. 승인 기록을 data/approved/ 에 남기고 IR 생성 입력(tdg-*.json)을 만든다.
+            최종 등록 화면은 /api/register 가 승인과 등록을 함께 한다."""
             from tap.apis.gate import GateError, approve
             p = self._pending(body)
             g = p["gate"]
@@ -579,19 +520,8 @@ def make_handler(root: Path, llm=None):
                 name = save_hyejung_approved(root, data)
             except (ValueError, KeyError) as e:
                 return {"filename": None, "error": f"IR 초안 생성으로 넘기지 못함: {e}"}
-            return {"filename": name, "file": f"prototype/approved/{name}", "steps": [
+            return {"filename": name, "file": f"{IR_INPUTS}/{name}", "steps": [
                 {"step_id": f"{r['path_sequence']}-{r['step']}", "source_step": r["source_step"]} for r in data["api_selection_results"]]}
-
-        def _run(self, body: dict[str, Any]) -> None:
-            """실행 때 확인 — 승인본이 있는지, 그 뒤 바뀌지 않았는지, R2 단계를 이번 실행에서 확인했는지. 통과하면 드라이런."""
-            from tap.apis.gate import GateError, dry_run
-            p = self._pending(body)
-            try:
-                calls = dry_run(p["apis"], p["gate"], p.get("approval"), list(body.get("confirm") or []))
-            except GateError as e:
-                return self._json(400, {"error": str(e), "refused": True})
-            return self._json(200, {"calls": calls, "confirmed": list(body.get("confirm") or []),
-                                    "approval": p["approval"].model_dump() if p.get("approval") else None})
 
         def _guard_human_values(self, values) -> None:
             """사람이 넣는 값에 지시문이 있으면 저장하지 않는다 (요청 원문과 같은 지시문 낱말 · 2026-11-05 병합)."""
@@ -668,8 +598,6 @@ def make_handler(root: Path, llm=None):
                 if self.path == "/api/registered/delete":
                     _registered_path(root, body.get("id")).unlink()
                     return self._json(200, {"ok": True})
-                if self.path == "/api/run":
-                    return self._run(body)
                 if self.path == "/api/rules":
                     r = save_rule(root, body)
                     return self._json(200, {"build": r, "data": ui_data(root)})
@@ -681,28 +609,17 @@ def make_handler(root: Path, llm=None):
                     return self._json(200, {"file": str(dest.relative_to(root)), "data": ui_data(root)})
                 if self.path == "/api/preprocessing/refresh":
                     # 노트북은 실행하지 않고 이미 생성된 JSON을 다시 읽어 정적 화면에도 반영한다.
-                    write_ui_data(root, root / "prototype/tap-data.js")
+                    write_ui_data(root, root / "web/tap-data.js")
                     return self._json(200, {"data": ui_data(root)})
                 if self.path == "/api/preprocessing/baseline":
                     dest = save_preprocessing_baseline(root, body["selected_api_id"], body["values"])
                     return self._json(200, {"file": str(dest.relative_to(root)), "data": ui_data(root)})
-                if self.path == "/api/scenarios":
-                    sc = save_scenario(root, body)
-                    return self._json(200, {"scenario": sc, "data": ui_data(root)})
-                if self.path == "/api/scenarios/delete":
-                    delete_scenario(root, body["id"])
-                    return self._json(200, {"data": ui_data(root)})
-                if self.path == "/api/runs":
-                    run = save_run(root, body)
-                    return self._json(200, {"run": run, "data": ui_data(root)})
                 if self.path == "/api/build":
                     before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))
                     r = rebuild(root)
                     return self._json(200, {"build": r, "changed": r["catalog_version"] != before.get("catalog_version"), "data": ui_data(root)})
                 if self.path == "/api/graph/save":
                     return self._json(200, save_graph(root, body["graph_id"], body["yaml"]))
-                if self.path == "/api/approved-selections":
-                    return self._json(200, save_approved_selection(root, body))
                 return self._json(404, {"error": "없는 경로"})
             except Exception as e:                              # 화면에 그대로 보여 준다
                 from tap.ir.input_review import ReviewConflict
@@ -715,5 +632,5 @@ def make_handler(root: Path, llm=None):
 def serve(root: Path, port: int = 8765, host: str = "127.0.0.1") -> None:
     """host 기본은 이 컴퓨터에서만. WSL 밖(Windows 브라우저)에서 localhost 로 안 열리면 --host 0.0.0.0 으로 띄우고 WSL IP 로 연다."""
     httpd = ThreadingHTTPServer((host, port), make_handler(root))
-    print(f"오프라인 UI → http://127.0.0.1:{port}/  (상태 그래프만: /graph-editor.html, 끝내려면 Ctrl+C)", flush=True)
+    print(f"오프라인 UI → http://127.0.0.1:{port}/  (끝내려면 Ctrl+C)", flush=True)
     httpd.serve_forever()

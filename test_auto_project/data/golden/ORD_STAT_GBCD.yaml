@@ -1,5 +1,5 @@
 # 정답지 (채점 · 테스트용 고정 복사본) — 시나리오 생성 · 화면은 이 파일을 쓰지 않는다. 실제 그래프는 data/graphs/ORD_STAT_GBCD.yaml
-# extract-graph · match-graph 채점과 테스트가 화면 편집에 흔들리지 않게 2026-10-29 시점 그래프를 고정해 둔 것
+# 화살표 → API 매칭 채점(tap.graph.match.evaluate)과 그래프 · 경로 테스트가 화면 편집에 흔들리지 않게 2026-10-29 시점 그래프를 고정해 둔 것
 # 주문상태 그래프 재료 — 사람이 확인한 업무 지식 (자동 생성 아님)
 # 출처: 권지은, 2026-10-25 — 공통코드 ORD_STAT_GBCD + multiOshpProcess · multiOshpBackProcess 소스 확인
 

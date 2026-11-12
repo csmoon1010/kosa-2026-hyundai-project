@@ -36,11 +36,11 @@ class ReviewRuntime:
         return result
 
 def draft(root,validated=False,empty=False):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     approved['intent_tasks']=approved['intent_tasks'][:1]
     approved['api_selection_results']=approved['api_selection_results'][:1]
     approved['unresolved']=[]
-    (root/'prototype/approved'/FILENAME).write_text(json.dumps(approved,ensure_ascii=False))
+    (root/'data/ir_inputs'/FILENAME).write_text(json.dumps(approved,ensure_ascii=False))
     factory=ReviewRuntime
     if empty:
         class Empty(ReviewRuntime):
@@ -115,7 +115,7 @@ def test_material_change_and_concurrent_submission(root):
         except ReviewConflict:return 'conflict'
     with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(try_save,['001234','005678']))
     assert sorted(results,key=str)==[2,'conflict']
-    approved=root/'prototype/approved'/FILENAME;approved.write_text(approved.read_text()+'\n')
+    approved=root/'data/ir_inputs'/FILENAME;approved.write_text(approved.read_text()+'\n')
     current=load(root,sid)
     with pytest.raises(ReviewConflict,match='변경'):submit(root,sid,dict(expected_revision=current['review']['revision']),confirm=True)
 
@@ -184,7 +184,7 @@ def test_http_gate_routes_and_invalid_option_combinations(root):
 
 
 def test_enum_and_ambiguous_dependency_require_valid_decisions(root,monkeypatch):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     api=approved['api_selection_results'][0]['selected_api_id']
     for file in (root/'data/out/parameters/canonical_schema').rglob('*.json'):
         schema=json.loads(file.read_text())
@@ -237,13 +237,13 @@ def test_normal_approval_word_is_not_keyword_blocked(root):
 
 @pytest.mark.parametrize('uses_previous_input',[False,True])
 def test_only_linked_downstream_fixed_values_require_recheck(root,uses_previous_input):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     first_task=deepcopy(approved['intent_tasks'][0]);first_task['conditions']='협력사 코드 001442'
     second_task=deepcopy(first_task);second_task.update(sequence=2,conditions='1번 업무의 조회 결과를 사용')
     first_row=deepcopy(approved['api_selection_results'][0])
     second_row=deepcopy(first_row);second_row.update(path_sequence=2,step=1)
     approved.update(intent_tasks=[first_task,second_task],api_selection_results=[first_row,second_row],unresolved=[])
-    (root/'prototype/approved'/FILENAME).write_text(json.dumps(approved,ensure_ascii=False))
+    (root/'data/ir_inputs'/FILENAME).write_text(json.dumps(approved,ensure_ascii=False))
     class Related(ReviewRuntime):
         def run(self,current,previous,*args):
             result=super().run(current,previous,*args)

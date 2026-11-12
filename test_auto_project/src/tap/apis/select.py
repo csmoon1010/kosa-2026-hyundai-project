@@ -9,9 +9,9 @@
    선택 · 가선택 규칙은 그래프 유무와 상관없이 같다 (2026-11-11). 그래프 없는 단계만 다른 점 하나:
    확정 기준(0.45) 이상 후보가 없으면 0.3 이상 후보로 LLM 에 묻는다 (보류 대신, 점수가 낮아 결과는 가선택)
    선택 = 점수 0.75 이상 · 확정 검사 통과 · (LLM 이 골랐으면) 확인 사항 없음. LLM 이 골라도 0.75 미만이면 가선택 (2026-11-12)
-⑤ 행 상태값 — 고른 API 요청에 rowType · rowFlag 가 있으면 업무 동작으로 채운다 (신규 추가 INSERT · I / 수정 UPDATE · U / 삭제 DELETE · D)
 ④ 참조 조회 — 고른 쓰기 API 의 코드 필드(brndCd 브랜드코드)에 넣을 설정값이 이름("아디다스")이면, 이름으로 그 코드를
    찾아 주는 조회 API(요청에 브랜드명 · 응답에 brndCd)를 쓰기 앞 단계로 넣는다 → 단계 수는 고르기까지 끝나야 확정된다
+⑤ 행 상태값 — 고른 API 요청에 rowType · rowFlag 가 있으면 업무 동작으로 채운다 (신규 추가 INSERT · I / 수정 UPDATE · U / 삭제 DELETE · D)
 그래프는 노드 흐름만 갖는다 — 그래프 파일에 API 가 적혀 있어도 쓰지 않고 늘 여기서 고른다. 사람이 바로잡는 곳은 API Metadata(규칙 입력).
 
 selection_status: 선택 · 가선택(사람 확인 필요) · 보류(고를 API 없음)
@@ -307,8 +307,7 @@ def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[di
         out.append({"step": 0, "kind": "조회", "edge": f"{node.name} 데이터 찾기", "from": None, "to": node.name,
                     "cands": match_lookup(node.name, c, metadata, operations, g.state_field, SCOPE, top=TOP), "loose": False})
     for s in p.steps:
-        a, b = code(s.from_), code(s.to)
-        e = next((x for x in g.edges if (x.from_code, x.to_code, x.name) == (a, b, s.edge)), None)
+        b = code(s.to)
         out.append({"step": s.step, "kind": "상태변경", "edge": s.edge, "from": s.from_, "to": s.to,
                     "cands": match_edge(s.edge, s.from_, s.to, metadata, SCOPE, top=TOP, operations=operations,
                                         state_field=g.state_field, to_code=b), "loose": False})

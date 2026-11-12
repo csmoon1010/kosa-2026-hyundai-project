@@ -4,9 +4,19 @@ data/out/eval/traces/
 data/approved/
 data/registered/
 data/runs/
-prototype/approved/tdg-*.json
-prototype/approved/review-*.json
+data/ir_inputs/
+# 화면 데이터 — 서버가 요청마다 새로 만든다 (서버 없이 열 때는 tap.cli ui-data)
+web/tap-data.js
+# 평가 · 실험 명령을 돌릴 때마다 생기는 결과물 (eval · eval-stages · plan · extract-graph · match-graph) — ir-options 평가 결과는 남긴다
+data/out/eval/*.md
+data/out/eval/*.json
+data/out/eval/stages/
+data/out/ir/
+data/out/extract/
+data/out/match/
 # 혜정 IR 초안 생성 — 실행할 때마다 생기는 결과물
 data/out/scenario_ir_drafts/
 data/out/scenario_ir_logs/
 data/out/scenario_ir_reviews/
+# 편집 모드 설치(uv pip install -e .)가 만든다
+*.egg-info/

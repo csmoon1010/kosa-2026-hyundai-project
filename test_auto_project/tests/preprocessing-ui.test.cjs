@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
-const source = fs.readFileSync(path.join(__dirname, '../prototype/preprocessing-ui.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '../web/preprocessing-ui.js'), 'utf8');
 
 function mount() {
   const elements = new Map();

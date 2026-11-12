@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 from tap.cli import ROOT, analyze_select, datetime_now
 from tap.eval_stages import _stage_cost, compact_ir, load_gold, score
 from tap.apis.gate import approve
-from tap.ir.draft_build import fixed_plan, generate
+from tap.ir.draft_build import IR_INPUTS, fixed_plan, generate
 from tap.ir.handoff import hyejung_approved, missing_materials, save_hyejung_approved
 
 OPTION_NAMES = ("stop_retry", "kb_rag", "dependency_projection")
@@ -114,7 +114,7 @@ def evaluate(cases, analyze, run_dir, parameters, repeats, report, save):
             task["skip_reason"] = str(error)
             save()
             continue
-        task["approved_file"] = str(task_root / "prototype/approved" / approved)
+        task["approved_file"] = str(task_root / IR_INPUTS / approved)
         save()
 
         for flags in product((False, True), repeat=len(OPTION_NAMES)):

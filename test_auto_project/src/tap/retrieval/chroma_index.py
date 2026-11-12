@@ -32,16 +32,6 @@ class ConceptRef(StrictModel):
 
 
 # ConceptRef의 검색어 변환 : 개념별로 원문에서 얻은 용어와 짧은 설명만 사용해 검색어를 구성한다.
-def build_concept_query(concept):
-    ref = ConceptRef.model_validate(concept)
-    parts = [ref.term]
-    if ref.terms:
-        parts.append(', '.join(ref.terms))
-    if ref.context:
-        parts.append(ref.context)
-    return '\n'.join(parts)
-
-
 # API 임베딩 대상 텍스트 구성 : 승인된 API 의미·별칭을 Canonical 설명에 보완하되 값 예시·enum은 임베딩에서 제외한다.
 # 필드명, 설명, 승인된 의미, 별칭, 상위 경로, API 업무와 설명
 def build_parameter_search_text(api, parameter, approved_knowledge):

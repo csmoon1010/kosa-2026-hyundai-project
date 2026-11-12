@@ -1,6 +1,6 @@
 """①②③ + 승인 → 혜정 IR 초안 생성의 입력(승인본 JSON). 혜정 코드는 고치지 않고 형식만 맞춘다.
 
-혜정 쪽(tap.ir.draft_build)은 prototype/approved/<파일>.json 을 읽어 Baseline · Parameter KB 참조 → 입력값 매핑 →
+혜정 쪽(tap.ir.draft_build)은 data/ir_inputs/<파일>.json 을 읽어 Baseline · Parameter KB 참조 → 입력값 매핑 →
 Output Binding → Scenario IR 초안을 만든다. 우리 승인(/api/approve)이 성공했을 때만 이 파일을 만든다.
 
 형식을 맞추는 곳 (2026-11-03 지은 결정)
@@ -26,6 +26,7 @@ from typing import Any
 from tap.apis.gate import Approval, Gate
 from tap.apis.select import ApiSelection
 from tap.goal.extract import TaskPlan
+from tap.ir.draft_build import IR_INPUTS
 from tap.graph.paths import PathPlan
 
 
@@ -119,10 +120,10 @@ def missing_materials(root: Path, data: dict[str, Any], plan: list[dict[str, Any
 
 
 def save_hyejung_approved(root: Path, data: dict[str, Any]) -> str:
-    """prototype/approved/tdg-<해시 12자>.json (검토 전 초안은 review-<해시 12자>.json) — 같은 선택 결과면 덮어쓴다. 파일 이름을 돌려준다."""
+    """data/ir_inputs/tdg-<해시 12자>.json (검토 전 초안은 review-<해시 12자>.json) — 같은 선택 결과면 덮어쓴다. 파일 이름을 돌려준다."""
     prefix, block = ("tdg", data["tdg_approval"]) if "tdg_approval" in data else ("review", data["tdg_review"])
     name = f"{prefix}-{block['selection_hash'].split(':')[1][:12]}.json"
-    d = root / "prototype/approved"
+    d = root / IR_INPUTS
     d.mkdir(parents=True, exist_ok=True)
     (d / name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return name

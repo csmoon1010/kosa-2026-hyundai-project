@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tap"
+version = "0.1.0"
+description = "테스트 데이터 생성기 — 자연어 요청으로 테스트 데이터 시나리오를 만들고 실행한다"
+readme = "README.md"
+requires-python = ">=3.10"
+# 2026-11-12 실제로 쓰고 테스트한 버전으로 고정한다. 올릴 때는 테스트(pytest · node)를 모두 통과시킨 뒤 함께 바꾼다
+dependencies = [
+    "pydantic==2.14.1",
+    "PyYAML==6.0.3",
+    "openai==3.37.0",
+    "python-dotenv==1.2.4",
+    "chromadb==1.5.9",         # IR 생성 압축 1 — Parameter KB 벡터 검색 (data/out/parameters/parameter_vectors)
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

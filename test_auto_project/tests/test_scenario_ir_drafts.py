@@ -18,7 +18,8 @@ FILENAME = 'api-selection-approved-order-shipment.json'
 
 @pytest.fixture
 def root(tmp_path):
-    shutil.copytree(PROJECT / 'prototype/approved', tmp_path / 'prototype/approved')
+    (tmp_path / 'data/ir_inputs').mkdir(parents=True)
+    shutil.copy(PROJECT / 'tests/fixtures' / FILENAME, tmp_path / 'data/ir_inputs' / FILENAME)
     shutil.copytree(PROJECT / 'data/out/parameters', tmp_path / 'data/out/parameters')
     return tmp_path
 
@@ -75,9 +76,9 @@ def test_fixed_plan_and_saved_draft(root):
     assert [len(t['steps']) for t in ir['tasks']]==[1,3]
     assert [s['step_id'] for t in ir['tasks'] for s in t['steps']]==['1-1','2-1','2-2','2-3']
     assert ir['status']=='needs_input'
-    assert ir['unresolved'][0]['reason']==json.loads((root/'prototype/approved'/FILENAME).read_text())['unresolved'][0]['reason']
+    assert ir['unresolved'][0]['reason']==json.loads((root/'data/ir_inputs'/FILENAME).read_text())['unresolved'][0]['reason']
     assert ir['generation']['config']['max_turns']==20
-    assert not (root/'data/scenarios').exists()
+    assert not (root/'data/registered').exists()                     # IR 생성은 등록하지 않는다 — 등록은 승인 뒤 /api/register
     assert not any(k in ir for k in ['execution_policy','approvals'])
     again=generate(root,FILENAME,runtime_factory=FakeRuntime)
     assert result['file']!=again['file']
@@ -105,7 +106,7 @@ def test_sparse_baseline_replacements_ignore_required_metadata(root):
 
 
 def test_validator_paths_types_references_and_evidence(root):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     current=unit_plan(approved)[0]
     tools=ParameterTools(root,approved)
     c=candidate(tools,current,{})
@@ -125,7 +126,7 @@ def test_settings_and_input_identity(root):
     with pytest.raises(ValueError): configuration({'max_turns':True})
     with pytest.raises(ValueError): configuration({'max_tokens':1})
     with pytest.raises(ValueError): approved_path(root,'../secret.json')
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     a['api_selection_results'][0]['domain']='PD'
     with pytest.raises(ValueError): fixed_plan(a)
 
@@ -149,7 +150,7 @@ def test_config_snapshot_and_numeric_api_contract():
 def test_registry_definitions_and_error_configuration(root):
     from tap.agent.config import harness_configuration
     from tap.agent.tool_registry import ToolRegistry
-    a = json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a = json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools = ParameterTools(root, a)
     errors = harness_configuration()['errors']
     errors.update(tool='도구 실패: {e}', unknown_tool='등록되지 않은 도구')
@@ -167,7 +168,7 @@ def test_registry_definitions_and_error_configuration(root):
 
 def test_runtime_reads_instructions_and_errors_from_config(root, monkeypatch):
     from tap.agent.config import CONFIG
-    a = json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a = json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools = ParameterTools(root, a)
     current = unit_plan(a)[0]
     monkeypatch.setitem(CONFIG, 'instructions', '테스트 지시문')
@@ -188,7 +189,7 @@ def test_runtime_reads_instructions_and_errors_from_config(root, monkeypatch):
 
 
 def test_harness_returns_analysis_after_reads_without_validator(root):
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     current=unit_plan(a)[0]; tools=ParameterTools(root,a)
     c=candidate(tools,current,{})
     reasoning=dict(type='reasoning', id='rs-1', summary=[], encrypted_content='opaque-context')
@@ -217,7 +218,7 @@ def test_harness_returns_analysis_after_reads_without_validator(root):
 
 
 def test_harness_exhaustion(root):
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,a); current=unit_plan(a)[0]
     def create(**kw): return api_response(content='{}',tokens=(1,1))
     r=Runtime(tools,configuration({'max_turns':1}),client=NS(responses=NS(create=create)),model='test')
@@ -260,7 +261,7 @@ def test_progress_snapshots_redact_credentials(monkeypatch):
 
 
 def test_runtime_progress_includes_prompt_usage_and_tool_events(root):
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,a);current=unit_plan(a)[0]; c=candidate(tools,current,{})
     queue=[api_response(read_calls(tools,current)),api_response(content=json.dumps(c))]
     def create(**kw): return queue.pop(0)
@@ -338,7 +339,7 @@ def test_http_stream_success_still_saves_draft(root,monkeypatch):
 def test_analysis_acceptance_needs_reads_but_not_validator(root):
     from tap.agent.config import harness_configuration
     from tap.agent.tool_registry import ToolRegistry
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,a);current=unit_plan(a)[0]
     registry=ToolRegistry(tools,current,{},harness_configuration()['errors'])
     c=dict(step_id=current['step_id'],inputs=[],outputs=[],bindings=[],assertions=[],unresolved=[])
@@ -450,7 +451,7 @@ def test_per_step_baseline_comparison_and_response_binding(root):
 
 @pytest.mark.parametrize('case', ['max_output_tokens', 'content_filter', 'failed', 'refusal'])
 def test_responses_terminal_errors_do_not_execute_tools(root, monkeypatch, case):
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     current=unit_plan(a)[0]; tools=ParameterTools(root,a)
     def forbidden(*args, **kwargs):
         raise AssertionError('불완전 응답의 도구가 실행됨')
@@ -481,7 +482,7 @@ def test_sdk_responses_http_contract_and_step_context_reset(root):
     except ImportError:
         import httpx
     from openai import OpenAI
-    a=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    a=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     plan=unit_plan(a);tools=ParameterTools(root,a)
     proposals=[candidate(tools,current,{}) for current in plan[:2]]
     # Exercise the final typed output, preserving the leading-zero identifier.
@@ -518,7 +519,7 @@ def test_sdk_responses_http_contract_and_step_context_reset(root):
 def material_context(root):
     from tap.agent.config import harness_configuration
     from tap.agent.tool_registry import ToolRegistry
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=unit_plan(approved)
     registry=ToolRegistry(tools,plan[0],{},harness_configuration()['errors'])
     return approved,tools,plan,registry
@@ -647,7 +648,7 @@ def test_backend_comparison_missing_and_null_are_distinct(root):
 
 
 def test_generate_uses_real_runtime_with_conditional_tools(root):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=fixed_plan(approved)
     out=output_definition(tools,plan[0]['selected_api_id'])
     proposals=[];queue=[]
@@ -720,7 +721,7 @@ def test_kb_api_mismatch_is_fatal_and_canonical_is_not_model_tool(material_conte
 
 def test_fixed_plan_includes_consumer_conditions_and_result_dependencies(root):
     from copy import deepcopy
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     plan=fixed_plan(approved)
     dependency=plan[0]['output_consumers'][0]
     assert dependency['source_step_id']=='1-1' and dependency['consumer_task_sequence']==2
@@ -734,7 +735,7 @@ def test_fixed_plan_includes_consumer_conditions_and_result_dependencies(root):
 
 
 def test_log_regression_empty_arrays_cannot_skip_producer_response_read(root):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=fixed_plan(approved);current=plan[0]
     # Same failure as IRRUN-20261101-153421: KB only, no outputs or bindings.
     omitted=empty_proposal(current)
@@ -761,7 +762,7 @@ def test_log_regression_empty_arrays_cannot_skip_producer_response_read(root):
 def test_dependency_unresolved_only_after_response_read_and_scoped_reason(root):
     from tap.agent.config import harness_configuration
     from tap.agent.tool_registry import ToolRegistry
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);current=fixed_plan(approved)[0]
     registry=ToolRegistry(tools,current,{},harness_configuration()['errors'])
     registry.call_tool('get_parameter_knowledge',json.dumps({'selected_api_id':current['selected_api_id']}))
@@ -777,7 +778,7 @@ def test_dependency_unresolved_only_after_response_read_and_scoped_reason(root):
 
 def test_consumer_queries_missing_source_and_backfills_only_confirmed_output(root):
     from copy import deepcopy
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=fixed_plan(approved);current=plan[1]
     prior={'1-1':dict(api={'api_id':plan[0]['selected_api_id']},inputs=[{'value':'001442'}],outputs=[])}
     original_inputs=deepcopy(prior['1-1']['inputs'])
@@ -807,7 +808,7 @@ def test_consumer_queries_missing_source_and_backfills_only_confirmed_output(roo
 def test_existing_outputs_need_used_binding_without_extra_response_read(root):
     from tap.agent.config import harness_configuration
     from tap.agent.tool_registry import ToolRegistry
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=fixed_plan(approved);current=plan[1]
     out=output_definition(tools,plan[0]['selected_api_id'])
     previous={'1-1':{'api':{'api_id':plan[0]['selected_api_id']},'outputs':[out]}}
@@ -844,7 +845,7 @@ def test_unconfirmed_upstream_output_cannot_patch_previous(material_context):
 
 
 def test_late_output_patch_is_saved_with_final_output_and_source_target(root):
-    approved=json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved=json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     tools=ParameterTools(root,approved);plan=fixed_plan(approved)
     out=output_definition(tools,plan[0]['selected_api_id']);queue=[]
     for index,current in enumerate(plan[1:]):
@@ -880,10 +881,10 @@ def test_late_output_patch_is_saved_with_final_output_and_source_target(root):
 
 def test_review_draft_generates_before_approval(root):
     """최종 등록 화면 — 승인 전 검토용 초안(approval_status review)으로도 IR 을 만든다. 행 상태가 섞이거나 미승인이면 거부 (2026-11-12)."""
-    data=json.loads((root/'prototype/approved'/FILENAME).read_text(encoding='utf-8-sig'))
+    data=json.loads((root/'data/ir_inputs'/FILENAME).read_text(encoding='utf-8-sig'))
     data['approval_status']='review'
     for row in data['api_selection_results']: row['approval_status']='review'
-    (root/'prototype/approved/review-test.json').write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8')
+    (root/'data/ir_inputs/review-test.json').write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8')
     ir=generate(root,'review-test.json',runtime_factory=FakeRuntime)['ir']
     assert [s['step_id'] for t in ir['tasks'] for s in t['steps']]==['1-1','2-1','2-2','2-3']
     data['api_selection_results'][0]['approval_status']='approved'

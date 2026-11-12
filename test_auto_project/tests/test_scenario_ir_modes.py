@@ -21,7 +21,7 @@ from tap.ir.draft_validate import FinalValidationError, validate_final_ir
 
 
 def context(root, dependent=False):
-    approved = json.loads((root/'prototype/approved'/FILENAME).read_text())
+    approved = json.loads((root/'data/ir_inputs'/FILENAME).read_text())
     return approved, ParameterTools(root, approved), (fixed_plan if dependent else unit_plan)(approved)
 
 

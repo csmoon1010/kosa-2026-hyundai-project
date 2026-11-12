@@ -16,10 +16,13 @@ from tap.ir.dependencies import attach_dependencies
 from tap.ir.xml_preview import build_xml_preview
 
 
+IR_INPUTS = 'data/ir_inputs'   # IR 생성 입력(승인본 · 검토 초안) 폴더 — 2026-11-12 prototype/approved 에서 옮김
+
+
 def approved_path(root, filename):
     if not isinstance(filename,str) or Path(filename).name != filename or not filename.endswith('.json'):
         raise ValueError('승인 파일 이름을 선택하세요')
-    folder=(Path(root)/'prototype/approved').resolve()
+    folder=(Path(root)/IR_INPUTS).resolve()
     p=(folder/filename).resolve()
     if p.parent!=folder or not p.is_file(): raise ValueError('승인 파일이 없습니다')
     return p
@@ -174,7 +177,7 @@ def _assemble(filename, approved, plan, config, tools, runtime, result_provider,
         for o in step['outputs']:
             if o['name'].lower().endswith(('no','code','id')):
                 final.append(dict(name=o['name'],ref=dict(from_step_id=step['step_id'],output_name=o['name'],**{k:o[k] for k in ['response_key','content_type','response_path','path_type','row_scope']})))
-    ir=dict(scenario_id=sid,version=1,created_at=now.isoformat(),ir_version='approved-selection-draft-v1',original_question=approved['original_question'],status='needs_input',sources=dict(approved=dict(source_id='approved',file='prototype/approved/'+filename,version=None),source_files=approved.get('source_files',{}),artifacts=tools.used_sources),tasks=tasks,final_outputs=final,unresolved=issues,generation=dict(config=config,usage=runtime.usage,trace=runtime.trace))
+    ir=dict(scenario_id=sid,version=1,created_at=now.isoformat(),ir_version='approved-selection-draft-v1',original_question=approved['original_question'],status='needs_input',sources=dict(approved=dict(source_id='approved',file=f'{IR_INPUTS}/'+filename,version=None),source_files=approved.get('source_files',{}),artifacts=tools.used_sources),tasks=tasks,final_outputs=final,unresolved=issues,generation=dict(config=config,usage=runtime.usage,trace=runtime.trace))
     ir['generation']['log_file'] = log_file
     ir['generation']['mode'] = 'baseline_replacements'
     ir['generation']['tool_policy'] = 'kb_first_conditional'

@@ -167,10 +167,12 @@ def test_final_repair_keeps_options_and_projection(root, monkeypatch, options):
     assert ('inputs' not in refreshed['1-1']) is options['dependency_projection']
 
 
-def test_existing_chroma_query_without_paid_embedding():
-    """Query an existing stored vector; proves local DB and API filtering work."""
-    root=Path(__file__).resolve().parents[1]
-    index=ExistingChromaIndex(root/'data/out/parameters/parameter_vectors',model_name=MODEL)
+def test_existing_chroma_query_without_paid_embedding(tmp_path):
+    """Query an existing stored vector; proves local DB and API filtering work.
+    임시 복사본을 연다 — Chroma 는 열기만 해도 sqlite 를 고쳐 써서, 저장소의 고정본이 바뀌지 않게 (2026-11-12)."""
+    import shutil
+    src=Path(__file__).resolve().parents[1]/'data/out/parameters/parameter_vectors'
+    index=ExistingChromaIndex(shutil.copytree(src,tmp_path/'parameter_vectors'),model_name=MODEL)
     collection=index._open()
     item=collection.get(limit=1,include=['metadatas','embeddings'])
     meta=item['metadatas'][0]

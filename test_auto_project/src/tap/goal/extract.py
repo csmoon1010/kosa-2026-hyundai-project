@@ -1,12 +1,10 @@
-"""자연어 → 목표(Goal) · 업무 목록(TaskPlan). LLM 은 목표 상태만 고르고, 호출 순서는 고르지 않는다.
+"""① 업무 의도 분석 — 자연어 → 업무 목록(TaskPlan). 요청을 업무(task) 여러 개로 나누고 업무마다 도메인 · 신규/기존 · 제약.
 
-- extract_goal: 그래프 하나 안에서 목표 상태 (지금 시나리오 생성이 쓰는 것)
-- extract_tasks: 요청을 업무(task) 여러 개로 나누고 업무마다 도메인 · 신규/기존 · 제약 (업무 의도 분석, 그래프는 안 봄)
-
-- 상태는 그래프의 상태 이름 목록(Literal) 안에서만 고를 수 있다 — 없는 상태를 지어내지 못한다
+- 도메인은 목록(Literal) 안에서만 고른다 — 없는 도메인을 지어내지 못한다
 - 근거 구절(source_phrases)이 원문에 없으면 환각으로 보고 버린다
-- 표현하지 못한 조건은 unsupported 에 남긴다 — 조용히 버리지 않는다
-- 만들 수 있는지는 판단하지 않는다 — 그건 그래프가 증명한다 (예: 결제완료는 경로 계산에서 거절)
+- 표현하지 못한 조건은 unresolved 에 남긴다 — 조용히 버리지 않는다
+- 만들 수 있는지는 판단하지 않는다 — 그건 ② 경로 탐색(그래프)이 정한다
+- openai_parse: LLM 호출(Structured Output) — ① ② ③ 이 같이 쓴다
 """
 from __future__ import annotations
 
@@ -15,8 +13,6 @@ from typing import Any, Callable, Literal
 
 from pydantic import BaseModel, Field, create_model
 
-from tap.graph.model import StateGraph
-from tap.graph.plan import Goal
 
 # (messages, 응답 스키마) → 스키마 인스턴스. 테스트에서는 가짜로 바꿔 끼운다.
 LLMParse = Callable[[list[dict[str, str]], type[BaseModel]], BaseModel]
@@ -24,46 +20,6 @@ LLMParse = Callable[[list[dict[str, str]], type[BaseModel]], BaseModel]
 
 class GoalError(ValueError):
     pass
-
-
-def goal_schema(graph: StateGraph) -> type[BaseModel]:
-    names = tuple(n.name for n in graph.nodes)
-    State = Literal[names]  # type: ignore[valid-type]
-    return create_model(
-        "GoalOut",
-        target=(State, Field(description="요청이 끝났을 때 데이터가 있어야 할 상태")),
-        must_pass=(list[State], Field(default_factory=list,
-                                      description="target 전에 반드시 거쳐야 할 상태. 예: '배송완료된 주문을 배송완료 취소' → 배송완료")),
-        count=(int, Field(default=1, ge=1, le=100, description="건수. 말하지 않으면 1")),
-        source_phrases=(list[str], Field(description="target · must_pass · count 를 정한 근거 — 요청 원문에서 그대로 복사한 구절")),
-        unsupported=(list[str], Field(default_factory=list, description="이 그래프로 표현할 수 없는 조건 (예: 특정 브랜드, 금액)")),
-    )
-
-
-def build_messages(utterance: str, graph: StateGraph) -> list[dict[str, str]]:
-    states = "\n".join(f"- {n.name} ({n.code})" + (f" · 다른 표현: {', '.join(n.synonyms)}" if n.synonyms else "")
-                       for n in graph.nodes)
-    actions = "\n".join(f"- {e.name}: {graph.node(e.from_code).name} → {graph.node(e.to_code).name}"
-                        for e in graph.edges if e.kind == "api")
-    system = f"""당신은 테스트 데이터 요청을 '목표 상태'로 바꾸는 역할만 한다.
-대상: {graph.entity} ({graph.name} 그래프)
-
-[상태 목록 — 이 이름 중에서만 고른다. '다른 표현'으로 말해도 고르는 값은 앞의 상태 이름]
-{states}
-
-[참고: 상태를 바꾸는 동작]
-{actions}
-
-규칙
-1. target 은 요청이 끝났을 때 {graph.entity}가 있어야 할 상태다.
-2. '…된 {graph.entity}를 ○○ 취소' 처럼 어떤 상태를 거쳤다가 되돌리는 요청은,
-   되돌린 뒤의 상태를 target 으로, 거쳐야 하는 상태를 must_pass 로 둔다. 동작 목록을 보고 판단한다.
-3. count 는 요청의 건수. 없으면 1.
-4. source_phrases 에는 판단 근거가 된 구절을 요청 원문에서 글자 그대로 복사한다.
-5. 만들 수 있는지는 판단하지 않는다. 요청이 가리키는 상태를 그대로 고른다.
-6. 상태 목록으로 표현할 수 없는 조건은 unsupported 에 적는다.
-7. 요청이 상태 이름 대신 '다른 표현'을 쓰면 그 상태로 본다 (예: 다른 표현에 '발송된' 이 있으면 출고)."""
-    return [{"role": "system", "content": system}, {"role": "user", "content": utterance}]
 
 
 def openai_parse(model: str | None = None, sdk_retries: int = 2, max_output_tokens: int | None = None) -> LLMParse:
@@ -110,64 +66,6 @@ def openai_parse(model: str | None = None, sdk_retries: int = 2, max_output_toke
 
 def _norm(s: str) -> str:
     return "".join(s.split())
-
-
-def to_goal(out: BaseModel | dict[str, Any], utterance: str, graph: StateGraph) -> Goal:
-    """LLM 출력을 검증해 Goal 로 바꾼다. 근거 구절이 원문에 없으면 거절."""
-    d = out.model_dump() if isinstance(out, BaseModel) else dict(out)
-    if not d.get("source_phrases"):
-        raise GoalError("근거 구절이 없습니다")
-    missing = [p for p in d["source_phrases"] if _norm(p) not in _norm(utterance)]
-    if missing:
-        raise GoalError(f"근거 구절이 원문에 없습니다(환각 의심): {missing}")
-    code = graph.code_of(d["target"])
-    if code is None:
-        raise GoalError(f"알 수 없는 상태: {d['target']}")
-    must = [graph.code_of(n) for n in d.get("must_pass") or []]
-    if None in must:
-        raise GoalError(f"알 수 없는 상태: {d.get('must_pass')}")
-    return Goal(graph_id=graph.graph_id, target=code, must_pass=[m for m in must if m != code],
-                count=int(d.get("count") or 1), source_phrases=d["source_phrases"],
-                unsupported=d.get("unsupported") or [])
-
-
-def graph_schema(graphs: list[StateGraph]) -> type[BaseModel]:
-    ids = tuple(g.graph_id for g in graphs) + ("없음",)
-    return create_model("GraphChoice",
-                        graph_id=(Literal[ids], Field(description="요청이 말하는 대상 · 상태에 맞는 그래프. 맞는 게 없으면 '없음'")),  # type: ignore[valid-type]
-                        reason=(str, Field(description="고른 이유 — 요청의 어떤 말이 어떤 그래프의 대상 · 상태와 맞는지")))
-
-
-def graph_messages(utterance: str, graphs: list[StateGraph]) -> list[dict[str, str]]:
-    lines = []
-    for g in graphs:
-        states = ", ".join(n.name + (f"({'/'.join(n.synonyms)})" if n.synonyms else "") for n in g.nodes)
-        lines.append(f"- {g.graph_id}: {g.name} — 대상 {g.entity} · 상태 {states}")
-    system = f"""당신은 테스트 데이터 요청이 어떤 상태 그래프에 해당하는지 고르는 역할만 한다.
-그래프 하나 = 어떤 대상의 상태 코드 그룹 하나다.
-
-[그래프 목록]
-{chr(10).join(lines)}
-
-규칙
-1. 요청이 말하는 대상(주문 · 상품 …)과 상태가 들어 있는 그래프 하나를 고른다.
-2. 맞는 그래프가 없으면 '없음'을 고른다. 억지로 고르지 않는다.
-3. reason 에 요청의 어떤 말 때문에 골랐는지 적는다."""
-    return [{"role": "system", "content": system}, {"role": "user", "content": utterance}]
-
-
-def choose_graph(utterance: str, graphs: list[StateGraph], llm: LLMParse) -> tuple[StateGraph | None, str]:
-    """요청에 맞는 그래프 고르기. 그래프가 하나뿐이면 묻지 않는다."""
-    if len(graphs) == 1:
-        return graphs[0], "그래프가 하나뿐"
-    out = llm(graph_messages(utterance, graphs), graph_schema(graphs)).model_dump()
-    g = next((x for x in graphs if x.graph_id == out["graph_id"]), None)
-    return g, out["reason"]
-
-
-def extract_goal(utterance: str, graph: StateGraph, llm: LLMParse) -> Goal:
-    out = llm(build_messages(utterance, graph), goal_schema(graph))
-    return to_goal(out, utterance, graph)
 
 
 # ─── 업무 의도 분석 — 자연어 → 업무(task) 목록 ─────────────────────────────────────────

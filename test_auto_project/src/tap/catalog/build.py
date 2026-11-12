@@ -125,14 +125,6 @@ _STATUS_LABEL = re.compile(r"(상태|진행|단계)")
 _STATUS_NAME = re.compile(r"(Stat|Status|StatGbcd|Step)$", re.I)   # 일반 '구분(Gb)' 은 제외 — 상태가 아닌 경우가 많다
 
 
-def status_fields(op: ApiOperation) -> list[str]:
-    """상태 전이에 쓰일 만한 요청 필드 — 이름 · 한글 이름으로 고른다 (State Graph 단서)."""
-    out: list[str] = []
-    for f in op.request_fields:
-        if (_STATUS_LABEL.search(f.label or "") or _STATUS_NAME.search(f.name)) and f.name not in out:
-            out.append(f.name)
-    return out
-
 # ------------------------------------------------------------------ 구분값 (selectors)
 
 _CODE_VALUE = re.compile(r"^[A-Z]{1,2}\d{1,2}$")                     # P1 · PB1 · P0

@@ -12,7 +12,7 @@ def test_review_controls_and_option_dependency():
         path=Path('/mnt/c/Program Files/nodejs/node.exe')
         node=str(path) if path.exists() else None
     if not node:pytest.skip('Node runtime not installed')
-    source=(Path(__file__).resolve().parents[1]/'prototype/scenario-ir-draft.js').read_text()
+    source=(Path(__file__).resolve().parents[1]/'web/scenario-ir-draft.js').read_text()
     setup=r'''
 const assert=require('node:assert/strict');
 class Element {

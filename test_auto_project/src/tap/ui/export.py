@@ -1,7 +1,7 @@
-"""오프라인 UI 에 실제 산출물을 입힌다 — data/out · data/graphs 를 window.TAP_DATA 한 덩어리로.
+"""화면 데이터 — data/out · data/graphs · data/registered · data/runs 를 window.TAP_DATA 한 덩어리로 (GET /tap-data.js).
 
-화면은 이 값이 있으면 구현된 영역(데이터 조회 · 상태 그래프 · 시나리오 생성 결과 · 검수 목록)을 실제 산출물로 그리고,
-없으면 예전처럼 시연 데이터를 쓴다. 파라미터 산출물 JSON은 data/out/parameters 에서 읽는다.
+화면은 이 값으로 API 문서 · 상태 그래프 · 검수 목록 · 보정 규칙 · Baseline · 전처리 산출물(data/out/parameters) ·
+등록 시나리오 목록(요약) · 실행 이력을 그린다. 값이 없으면(서버 없이 HTML 만 열면) 시연 데이터를 쓴다.
 """
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ def _code_groups(path: Path) -> list[dict[str, Any]]:
     """공통코드 테이블 export 전체 — 그룹별 (사용여부 Y, 정렬순서대로). '새 그래프' 에서 고른다."""
     if not path.exists():
         return []
-    from tap.graph.extract import load_code_table
+    from tap.graph.build import load_code_table
     with open(path, encoding="utf-8", newline="") as f:
         ids = list(dict.fromkeys(r["코드그룹ID"] for r in csv.DictReader(f)))
     out = [load_code_table(path, g) for g in ids]
@@ -82,12 +82,10 @@ def ui_data(root: Path) -> dict[str, Any]:
         "preprocessing": preprocessing,
         "baselines": {**{b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
                       **legacy_baselines(preprocessing)},
-        "scenarios": [x for x in (_load(p) for p in sorted((root / "data/scenarios").glob("*.json"), reverse=True)) if x],
         "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
         # 최종 등록 화면에서 승인 · 등록한 시나리오 (2026-11-12) — 예전 형식(scenarios)과 따로 둔다. 화면 목록엔 요약만
         "registered": [registered_summary(x) for x in (_load(p) for p in sorted((root / "data/registered").glob("*.json"), reverse=True)) if x],
         "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
-        "irs": [_load(p) for p in sorted((out / "ir").glob("*.json"))],
     }
 
 

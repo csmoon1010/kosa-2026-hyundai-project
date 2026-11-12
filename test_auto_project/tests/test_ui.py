@@ -12,6 +12,9 @@ from tap.ui.export import ui_data, write_ui_data
 from tap.ui.serve import make_handler
 
 ROOT = Path(__file__).resolve().parents[1]
+# 실행할 때 생기는 폴더는 테스트 서버에 복사하지 않는다 — 테스트가 실제 등록 · 승인 · 실행 기록에 기대지 않게 (2026-11-12)
+RUNTIME = {"registered", "runs", "approved", "ir_inputs", "traces", "scenario_ir_drafts", "scenario_ir_logs", "scenario_ir_reviews", "graph_history"}
+COPY_DATA = dict(ignore=lambda d, names: [n for n in names if n in RUNTIME])
 
 
 def test_ui_data_has_implemented_areas():
@@ -37,9 +40,9 @@ def test_write_ui_data(tmp_path):
 @pytest.fixture()
 def server(tmp_path):
     root = tmp_path / "root"
-    shutil.copytree(ROOT / "data", root / "data")
-    (root / "prototype").mkdir()
-    (root / "prototype" / "offline-ui.html").write_text("<p>ui</p>", encoding="utf-8")
+    shutil.copytree(ROOT / "data", root / "data", **COPY_DATA)
+    (root / "web").mkdir()
+    (root / "web" / "offline-ui.html").write_text("<p>ui</p>", encoding="utf-8")
     httpd = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(root))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", root
@@ -105,8 +108,8 @@ def fake_llm(messages, schema):
 @pytest.fixture()
 def agent_server(tmp_path):
     root = tmp_path / "root"
-    shutil.copytree(ROOT / "data", root / "data")
-    (root / "prototype").mkdir()
+    shutil.copytree(ROOT / "data", root / "data", **COPY_DATA)
+    (root / "web").mkdir()
     httpd = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(root, llm=fake_llm))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", root
@@ -123,28 +126,23 @@ def test_server_select_and_approval_gate(agent_server):
     assert g["status"] == "승인 필요" and [s["tier"] for s in g["steps"]] == ["R0", "R1"]
     assert [s["name"] for s in r["trace"]["spans"]] == ["① 의도 분석", "② 경로 탐색", "③ API 선택"] and r["trace"]["totals"]["llm_calls"] == 2
     h = g["selection_hash"]
-    with pytest.raises(urllib.error.HTTPError) as e:                                     # 승인 없이 실행 → 거부
-        call(base + "/api/run", {"selection_hash": h})
-    assert e.value.code == 400 and "승인 없이 실행할 수 없습니다" in json.loads(e.value.read().decode("utf-8"))["error"]
     with pytest.raises(urllib.error.HTTPError) as e:                                     # 승인이 모자람 → 거부
         call(base + "/api/approve", {"selection_hash": h, "scenario": False})
     body = json.loads(e.value.read().decode("utf-8"))
     assert body["refused"] and "시나리오 승인" in body["error"]
     ok = json.loads(call(base + "/api/approve", {"selection_hash": h, "scenario": True, "approver": "지은"}))
     assert ok["approval"]["approver"] == "지은" and ok["confirm_steps"] == [] and (root / ok["file"]).exists()
-    run = json.loads(call(base + "/api/run", {"selection_hash": h, "confirm": []}))      # R1 만 — 실행 때 추가 확인 없음
-    assert [c["key"] for c in run["calls"]] == ["1-0", "1-1"]
     with pytest.raises(urllib.error.HTTPError) as e2:                                    # 서버가 모르는 결과는 승인 불가
         call(base + "/api/approve", {"selection_hash": "sha256:가짜", "scenario": True})
     assert "서버가 모릅니다" in json.loads(e2.value.read().decode("utf-8"))["error"]
 
 
 def test_approval_hands_off_to_ir_draft(agent_server):
-    """승인해야만 혜정 IR 초안 생성의 입력(prototype/approved/tdg-*.json)이 생긴다 — 혜정 fixed_plan 으로 읽을 수 있는 형식."""
+    """승인해야만 혜정 IR 초안 생성의 입력(data/ir_inputs/tdg-*.json)이 생긴다 — 혜정 fixed_plan 으로 읽을 수 있는 형식."""
     from tap.ir.draft_build import fixed_plan
     base, root = agent_server
     r = json.loads(call(base + "/api/select", {"utterance": Q}))
-    assert not (root / "prototype/approved").exists()                                   # 승인 전에는 없음
+    assert not (root / "data/ir_inputs").exists()                                   # 승인 전에는 없음
     ok = json.loads(call(base + "/api/approve", {"selection_hash": r["gate"]["selection_hash"], "scenario": True}))
     h = ok["ir_handoff"]
     assert h["filename"].startswith("tdg-") and [(x["source_step"], x["step_id"]) for x in h["steps"]] == [("1-0", "1-1"), ("1-1", "1-2")]
@@ -187,8 +185,8 @@ def test_register_after_review_ir(agent_server):
     irs = root / "data/out/scenario_ir_drafts"
     irs.mkdir(parents=True, exist_ok=True)
     (irs / "SCN-test-v1.json").write_text(json.dumps({"scenario_id": "SCN-test", "tasks": [], "unresolved": [],
-                                                      "sources": {"approved": {"file": "prototype/approved/" + h["filename"]}}}), encoding="utf-8")
-    (irs / "SCN-other-v1.json").write_text(json.dumps({"sources": {"approved": {"file": "prototype/approved/tdg-x.json"}}}), encoding="utf-8")
+                                                      "sources": {"approved": {"file": "data/ir_inputs/" + h["filename"]}}}), encoding="utf-8")
+    (irs / "SCN-other-v1.json").write_text(json.dumps({"sources": {"approved": {"file": "data/ir_inputs/tdg-x.json"}}}), encoding="utf-8")
     body = {"selection_hash": r["gate"]["selection_hash"], "name": "배송완료 취소", "approver": "지은", "steps": [],
             "review_file": h["filename"], "ir_file": "data/out/scenario_ir_drafts/SCN-test-v1.json"}
     for bad, why in [({"ir_file": "data/out/scenario_ir_drafts/SCN-other-v1.json"}, "이 분석 결과로 만든 것이 아닙니다"),
@@ -219,7 +217,7 @@ def test_run_registered_dry_run(agent_server):
     step = lambda sid, edge, inputs, binds=(): {"step_id": sid, "edge": edge, "api": {"api_id": "x:" + edge}, "inputs": inputs,
                                                 "bindings": list(binds), "baseline": {"file": "data/out/parameters/none.json"}}
     ir = {"scenario_id": "SCN-t", "unresolved": [{"status": "open", "reason": "3건 선택 기준"}],
-          "sources": {"approved": {"file": "prototype/approved/" + h["filename"]}},
+          "sources": {"approved": {"file": "data/ir_inputs/" + h["filename"]}},
           "tasks": [{"steps": [step("1-1", "배송완료 데이터 찾기", [{"field": "prgrGb", "source": "fixed", "value": "P3"}]),
                                step("1-2", "배송완료취소", [{"field": "ordNo", "source": "bind", "ref": "B-1"}],
                                     [{"binding_id": "B-1", "from": {"from_step_id": "1-1", "output_name": "ordNo"}}])]}]}
@@ -264,7 +262,7 @@ def test_handoff_stops_when_ir_material_missing(agent_server):
     ok = json.loads(call(base + "/api/approve", {"selection_hash": r["gate"]["selection_hash"], "scenario": True}))
     h = ok["ir_handoff"]
     assert ok["approval"] and h["filename"] is None and h["missing"] == ["1-1 selectOshpDtlList.do: Parameter KB 없음"]
-    assert not list((root / "prototype/approved").glob("tdg-*.json")) if (root / "prototype/approved").exists() else True
+    assert not list((root / "data/ir_inputs").glob("tdg-*.json")) if (root / "data/ir_inputs").exists() else True
 
 
 def test_server_select_streams_stages(agent_server):
