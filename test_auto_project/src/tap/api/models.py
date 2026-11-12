@@ -30,13 +30,49 @@ class Doc(BaseModel):
 
 # ─── 공통 ───────────────────────────────────────────────────────────────────────────
 
+class TraceSpan(Doc):
+    name: str = Field(description="① 의도 분석 · ② 경로 탐색 · ③ API 선택")
+    ms: int
+    llm_calls: int
+
+
+class TraceCall(Doc):
+    stage: str
+    attempt: int
+    status: str
+    ms: int
+    model: Optional[str] = None
+    input_tokens: Optional[int] = Field(None, description="LLM 이 알려 주지 않으면 null (가짜 LLM 등)")
+    output_tokens: Optional[int] = None
+    cost_usd: Optional[float] = None
+
+
+class TraceTotals(Doc):
+    llm_calls: int
+    input_tokens: int
+    output_tokens: int
+    tokens: int
+    cost_usd: Optional[float] = Field(None, description="가격을 설정하지 않은 모델이면 null")
+    llm_ms: int
+    ms: int
+
+
+class Trace(Doc):
+    """①②③ 트레이스 (tap.trace.Trace.to_dict)."""
+    request: str
+    status: str
+    totals: TraceTotals
+    spans: list[TraceSpan]
+    calls: list[TraceCall]
+
+
 class ErrorBody(Doc):
     error: str
     refused: bool | None = Field(None, description="승인 · 실행 확인이 모자라 거부")
     missing: list[str] | None = Field(None, description="IR 생성에 필요한 자료가 없음")
     log_file: str | None = None
     log_url: str | None = None
-    trace: dict[str, Any] | None = Field(None, description="분석 실패 때의 트레이스")
+    trace: Optional[Trace] = Field(None, description="분석 실패 때의 트레이스")
 
 
 class Health(Doc):
@@ -61,7 +97,7 @@ class AnalyzeResult(Doc):
     paths: PathPlan
     apis: ApiSelection
     gate: Gate
-    trace: dict[str, Any]
+    trace: Trace
     notes: list[str]
     trace_file: str
 
@@ -204,6 +240,82 @@ class ApproveResult(Doc):
     file: str
     confirm_steps: list[str]
     ir_handoff: ReviewDraft
+
+
+class ApprovedFile(Doc):
+    filename: str
+    original_question: Optional[str] = None
+    approval_status: Optional[str] = None
+
+
+class GenerationMode(Doc):
+    value: str
+    label: str
+
+
+class ApprovedList(Doc):
+    """확인용 IR 영역 — 저장된 승인본 목록 · 생성 기본값 (혜정)."""
+    files: list[ApprovedFile]
+    defaults: dict[str, Any] = {}
+    default_generation_options: dict[str, bool] = {}
+    default_generation_mode: Optional[str] = None
+    generation_modes: list[GenerationMode] = []
+
+
+class BudgetLimits(Doc):
+    llm_calls: int
+    tokens: int
+    seconds: float
+
+
+class IrBudget(Doc):
+    """IR 생성 예산 — 서버가 STEP 수로 산정 (step_budget_v1)."""
+    version: Optional[str] = None
+    step_count: int
+    limits: BudgetLimits
+    policy: dict[str, Any] = {}
+    calculated: dict[str, Any] = {}
+    capped: dict[str, Any] = {}
+    max_output_tokens: Optional[int] = None
+
+
+class BudgetResult(Doc):
+    budget: IrBudget
+
+
+class BudgetUsage(Doc):
+    llm_calls: int = 0
+    steps: dict[str, int] = {}
+    reserve_calls: int = 0
+    total_tokens: int = 0
+    elapsed_seconds: float = 0
+    token_reserve_used: int = 0
+    time_reserve_used: float = 0
+
+
+class IrRunSummary(Doc):
+    """누적 IR 실행 기록 한 줄 (JSONL 로그 요약 — 프롬프트는 싣지 않는다)."""
+    run_id: Optional[str] = None
+    filename: Optional[str] = None
+    started_at: Optional[str] = None
+    options: Optional[dict[str, bool]] = None
+    status: Optional[str] = None
+    duration_seconds: Optional[float] = None
+    budget: Optional[IrBudget] = None
+    budget_usage: Optional[BudgetUsage] = None
+    budget_reason: Optional[str] = None
+    step_count: Optional[int] = None
+    embedding_calls: Optional[int] = None
+    model_calls: Optional[int] = None
+    turns: Optional[int] = None
+    input_tokens: Optional[int] = None
+    output_tokens: Optional[int] = None
+    embedding_tokens: Optional[int] = None
+    total_tokens: Optional[int] = None
+
+
+class IrRunList(Doc):
+    runs: list[IrRunSummary]
 
 
 class InspectIrRequest(Body):
@@ -375,7 +487,24 @@ class EnvironmentPart(Doc):
     overrides_file: Any = None
 
 
-DATA_PART_MODELS: dict[str, type[BaseModel]] = {"operations": OperationsPart, "environment": EnvironmentPart}
+class GraphHead(Doc):
+    id: str
+    name: Optional[str] = None
+    domain: Optional[str] = None
+
+
+class GraphFile(Doc):
+    """상태 그래프 YAML 한 개 — 화면은 graph(머리)부터 읽는다. 상태 · 화살표 칸은 그래프 편집기(R5)에서 적는다."""
+    graph: GraphHead
+
+
+class GraphsPart(Doc):
+    graphs: list[GraphFile]
+    drafts: list[GraphFile] = Field(description="화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)")
+
+
+DATA_PART_MODELS: dict[str, type[BaseModel]] = {"operations": OperationsPart, "environment": EnvironmentPart,
+                                                 "graphs": GraphsPart}
 
 
 class RuleRequest(Body):

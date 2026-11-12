@@ -1,0 +1,10 @@
+.key {
+  color: var(--accent);
+}
+.string {
+  color: var(--ink-2);
+}
+.literal {
+  color: var(--accent);
+  font-weight: 600;
+}

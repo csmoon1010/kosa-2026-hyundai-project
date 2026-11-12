@@ -167,6 +167,7 @@ IR 입력 검토(승인게이트) 화면은 지금도 숨김이라 옮기지 않
   - 스트림 하나면 `useNdjson`.
   - 여러 단계를 잇는 흐름(등록: 분석 → 시나리오 생성 → 등록)은 `postStream` + 화면 밖 저장소(`lib/store.ts`)로 — 예: `pages/register/flow.ts`. 메뉴를 옮겨도 진행 · 입력이 남는다.
 - 서버 데이터는 TanStack Query 로만 들고 있는다. 저장(등록 · 삭제 · 규칙 · 빌드) 뒤에는 관련 쿼리를 다시 불러온다 — 지금의 `rerenderAll` 대신.
+  - 예외: 혜정 IR 영역의 승인본 목록 · 예산은 'IR 생성을 시작할 때 다시 읽고 → 예산을 산정하고 → 생성'하는 순서에 묶여 있어 생성 진행과 같은 저장소(`pages/inspect/ir/irStore.ts`)에 둔다. 누적 실행 기록은 Query.
 - 브라우저에 기억하는 값(승인자 · 생성 옵션 · 고른 탭)은 `localStorage` 를 감싼 훅 하나로, 막혀 있어도 동작하게.
 - 컴포넌트는 한 파일 300줄 안쪽으로. 페이지 안에서만 쓰는 것은 그 페이지 폴더에, 두 페이지 이상이 쓰면 `components/` 로.
 - 지금 코드에서 옮길 때 **문구 · 흐름을 바꾸지 않는다.** 바꾸고 싶은 것은 이 문서 '나중에' 목록에 적고 전환 뒤에 한다.
@@ -218,7 +219,7 @@ Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `ta
 | R0. 준비 (FastAPI 5단계 포함) | 완료 — R0-1 화면 데이터 나누기 · 매칭 API, R0-2 요청 · 응답 모델, R0-3 `frontend/` 뼈대 (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트), R0-4 가짜 LLM 서버 옵션 · Playwright. pytest 335 · node 4 · vitest 16 · Playwright 3 |
 | R1. 시나리오 등록 | 완료 — 4.1 전부 (`pages/register/`). 화면 데이터 칸 설명 추가(operations · environment). 화면 점검 1 을 실제 LLM 으로 통과 (진행 표시가 프록시를 거쳐 단계마다 바뀜, 콘솔 오류 0). vitest 32 · Playwright 5 |
 | R2. 실행 · 이력 | 완료 — 4.3 · 4.4 전부 (`pages/run/` · `pages/history/`). 등록 · 실행이 같이 쓰는 모양은 `components/scenario.module.css` 로. 등록 목록 · 실행 이력 API 가 화면 데이터 전체를 만들지 않게. 화면 점검 2 를 실제 서버로 통과 (콘솔 오류 0). vitest 41 · Playwright 6 |
-| R3. 확인용 | 대기 |
+| R3. 확인용 | 완료 — 4.2 전부 (`pages/inspect/`, 혜정 IR 영역은 `pages/inspect/ir/`). IR 진행 이벤트 → 로그 행 · STEP 규칙(`irLog.ts`)은 예전 `scenario-ir-draft.js` 에 같은 실제 생성 로그(성공 · 실패)를 흘려 넣어 표 · STEP 이 칸까지 같은지 대조. 트레이스 · 승인본 목록 · 예산 · 실행 기록 응답 모델. vitest 57 · Playwright 7. 화면 점검 3 을 실제 LLM 으로 통과 (콘솔 오류 0) |
 | R4. 관리자 | 대기 |
 | R5. 그래프 편집기 | 대기 |
 | R6. 바꾸기 | 대기 |

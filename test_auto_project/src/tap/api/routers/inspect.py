@@ -6,7 +6,8 @@ from fastapi.responses import Response
 
 from tap.api import services
 from tap.api.deps import dump, ir_mode, state
-from tap.api.models import ApproveRequest, ApproveResult, InspectIrRequest, IrResult, ReviewRequest, doc
+from tap.api.models import (ApprovedList, ApproveRequest, ApproveResult, BudgetResult, InspectIrRequest, IrResult, IrRunList,
+                            ReviewRequest, doc)
 from tap.api.streaming import ndjson, wants_stream
 
 router = APIRouter(prefix="/api/inspect", tags=["시나리오 등록(확인용)"])
@@ -35,12 +36,12 @@ def ir(request: Request, req: InspectIrRequest | None = None):
     return services.generate_ir(root, body, mode)
 
 
-@router.get("/ir/approved")
+@router.get("/ir/approved", responses=doc(ApprovedList))
 def approved(request: Request):
     return services.approved_selections(state(request).root)
 
 
-@router.get("/ir/budget", responses=doc(None, 400))
+@router.get("/ir/budget", responses=doc(BudgetResult, 400))
 def budget(request: Request, filename: str = ""):
     try:
         return services.ir_budget(state(request).root, filename)
@@ -48,7 +49,7 @@ def budget(request: Request, filename: str = ""):
         return _json(400, {"error": str(error)})
 
 
-@router.get("/ir/logs")
+@router.get("/ir/logs", responses=doc(IrRunList))
 def logs(request: Request):
     return {"runs": services.scenario_ir_log_summaries(state(request).root)}
 

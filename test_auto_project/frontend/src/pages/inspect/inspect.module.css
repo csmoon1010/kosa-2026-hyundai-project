@@ -1,0 +1,119 @@
+/* 시나리오 등록(확인용) — 지금 화면(.warn · .state-pill · .srcchips · 출력 JSON)과 같은 모양 */
+.warn {
+  display: block;
+  font-size: 12.5px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  background: var(--signal-soft);
+  color: var(--signal);
+  border: 1px solid var(--signal);
+}
+.warn b {
+  font-weight: 600;
+}
+.muted {
+  color: var(--muted);
+}
+.note0 {
+  margin: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.chips span {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--panel-3);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.statePill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin: 0 4px 4px 0;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.steps td {
+  vertical-align: top;
+}
+.small {
+  font-size: 12.5px;
+}
+.xs {
+  font-size: 12px;
+}
+.code11 {
+  font-size: 11px;
+}
+.path {
+  padding: 8px 0;
+  border-top: 1px solid var(--hair);
+}
+.pathHead {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.json {
+  margin-top: 10px;
+}
+.json summary {
+  display: inline-flex;
+  list-style: none;
+  cursor: pointer;
+}
+.json pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 480px;
+  overflow: auto;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  padding: 12px;
+  background: var(--panel-2);
+  border-radius: 7px;
+  margin-top: 6px;
+}
+.candidates summary {
+  cursor: pointer;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.utterance {
+  min-height: 150px;
+}
+.stop {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 6px 0 0;
+}
+.wide {
+  width: 100%;
+}
+.approver {
+  display: block;
+  margin: 8px 0 0;
+}
+.approver input {
+  width: 120px;
+  margin-left: 6px;
+}
+.check {
+  display: block;
+  margin: 4px 0;
+  font-size: 13px;
+}
+.cardGap {
+  margin-top: 12px;
+}

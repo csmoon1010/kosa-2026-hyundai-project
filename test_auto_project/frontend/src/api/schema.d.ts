@@ -719,10 +719,7 @@ export interface components {
       paths: components['schemas']['PathPlan'];
       apis: components['schemas']['ApiSelection'];
       gate: components['schemas']['Gate'];
-      /** Trace */
-      trace: {
-        [key: string]: unknown;
-      };
+      trace: components['schemas']['Trace'];
       /** Notes */
       notes: string[];
       /** Trace File */
@@ -810,6 +807,48 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** ApprovedFile */
+    ApprovedFile: {
+      /** Filename */
+      filename: string;
+      /** Original Question */
+      original_question?: string | null;
+      /** Approval Status */
+      approval_status?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * ApprovedList
+     * @description 확인용 IR 영역 — 저장된 승인본 목록 · 생성 기본값 (혜정).
+     */
+    ApprovedList: {
+      /** Files */
+      files: components['schemas']['ApprovedFile'][];
+      /**
+       * Defaults
+       * @default {}
+       */
+      defaults: {
+        [key: string]: unknown;
+      };
+      /**
+       * Default Generation Options
+       * @default {}
+       */
+      default_generation_options: {
+        [key: string]: boolean;
+      };
+      /** Default Generation Mode */
+      default_generation_mode?: string | null;
+      /**
+       * Generation Modes
+       * @default []
+       */
+      generation_modes: components['schemas']['GenerationMode'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** BaselineRequest */
     BaselineRequest: {
       /** Api Id */
@@ -818,6 +857,65 @@ export interface components {
       body: {
         [key: string]: unknown;
       };
+    } & {
+      [key: string]: unknown;
+    };
+    /** BudgetLimits */
+    BudgetLimits: {
+      /** Llm Calls */
+      llm_calls: number;
+      /** Tokens */
+      tokens: number;
+      /** Seconds */
+      seconds: number;
+    } & {
+      [key: string]: unknown;
+    };
+    /** BudgetResult */
+    BudgetResult: {
+      budget: components['schemas']['IrBudget'];
+    } & {
+      [key: string]: unknown;
+    };
+    /** BudgetUsage */
+    BudgetUsage: {
+      /**
+       * Llm Calls
+       * @default 0
+       */
+      llm_calls: number;
+      /**
+       * Steps
+       * @default {}
+       */
+      steps: {
+        [key: string]: number;
+      };
+      /**
+       * Reserve Calls
+       * @default 0
+       */
+      reserve_calls: number;
+      /**
+       * Total Tokens
+       * @default 0
+       */
+      total_tokens: number;
+      /**
+       * Elapsed Seconds
+       * @default 0
+       */
+      elapsed_seconds: number;
+      /**
+       * Token Reserve Used
+       * @default 0
+       */
+      token_reserve_used: number;
+      /**
+       * Time Reserve Used
+       * @default 0
+       */
+      time_reserve_used: number;
     } & {
       [key: string]: unknown;
     };
@@ -978,13 +1076,10 @@ export interface components {
        */
       log_url: string | null;
       /**
-       * Trace
        * @description 분석 실패 때의 트레이스
        * @default null
        */
-      trace: {
-        [key: string]: unknown;
-      } | null;
+      trace: components['schemas']['Trace'] | null;
     } & {
       [key: string]: unknown;
     };
@@ -1007,6 +1102,35 @@ export interface components {
       confirm_steps?: string[];
       /** Selection Hash */
       selection_hash: string;
+    };
+    /** GenerationMode */
+    GenerationMode: {
+      /** Value */
+      value: string;
+      /** Label */
+      label: string;
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * GraphFile
+     * @description 상태 그래프 YAML 한 개 — 화면은 graph(머리)부터 읽는다. 상태 · 화살표 칸은 그래프 편집기(R5)에서 적는다.
+     */
+    GraphFile: {
+      graph: components['schemas']['GraphHead'];
+    } & {
+      [key: string]: unknown;
+    };
+    /** GraphHead */
+    GraphHead: {
+      /** Id */
+      id: string;
+      /** Name */
+      name?: string | null;
+      /** Domain */
+      domain?: string | null;
+    } & {
+      [key: string]: unknown;
     };
     /** GraphMatchRequest */
     GraphMatchRequest: {
@@ -1059,6 +1183,18 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** GraphsPart */
+    GraphsPart: {
+      /** Graphs */
+      graphs: components['schemas']['GraphFile'][];
+      /**
+       * Drafts
+       * @description 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
+       */
+      drafts: components['schemas']['GraphFile'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** Health */
     Health: {
       /** Ok */
@@ -1092,6 +1228,42 @@ export interface components {
       generation_config?: {
         [key: string]: number;
       } | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * IrBudget
+     * @description IR 생성 예산 — 서버가 STEP 수로 산정 (step_budget_v1).
+     */
+    IrBudget: {
+      /** Version */
+      version?: string | null;
+      /** Step Count */
+      step_count: number;
+      limits: components['schemas']['BudgetLimits'];
+      /**
+       * Policy
+       * @default {}
+       */
+      policy: {
+        [key: string]: unknown;
+      };
+      /**
+       * Calculated
+       * @default {}
+       */
+      calculated: {
+        [key: string]: unknown;
+      };
+      /**
+       * Capped
+       * @default {}
+       */
+      capped: {
+        [key: string]: unknown;
+      };
+      /** Max Output Tokens */
+      max_output_tokens?: number | null;
     } & {
       [key: string]: unknown;
     };
@@ -1147,6 +1319,55 @@ export interface components {
        * @default null
        */
       log_url: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** IrRunList */
+    IrRunList: {
+      /** Runs */
+      runs: components['schemas']['IrRunSummary'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * IrRunSummary
+     * @description 누적 IR 실행 기록 한 줄 (JSONL 로그 요약 — 프롬프트는 싣지 않는다).
+     */
+    IrRunSummary: {
+      /** Run Id */
+      run_id?: string | null;
+      /** Filename */
+      filename?: string | null;
+      /** Started At */
+      started_at?: string | null;
+      /** Options */
+      options?: {
+        [key: string]: boolean;
+      } | null;
+      /** Status */
+      status?: string | null;
+      /** Duration Seconds */
+      duration_seconds?: number | null;
+      budget?: components['schemas']['IrBudget'] | null;
+      budget_usage?: components['schemas']['BudgetUsage'] | null;
+      /** Budget Reason */
+      budget_reason?: string | null;
+      /** Step Count */
+      step_count?: number | null;
+      /** Embedding Calls */
+      embedding_calls?: number | null;
+      /** Model Calls */
+      model_calls?: number | null;
+      /** Turns */
+      turns?: number | null;
+      /** Input Tokens */
+      input_tokens?: number | null;
+      /** Output Tokens */
+      output_tokens?: number | null;
+      /** Embedding Tokens */
+      embedding_tokens?: number | null;
+      /** Total Tokens */
+      total_tokens?: number | null;
     } & {
       [key: string]: unknown;
     };
@@ -1765,6 +1986,94 @@ export interface components {
       /** Injections */
       injections?: string[];
     };
+    /**
+     * Trace
+     * @description ①②③ 트레이스 (tap.trace.Trace.to_dict).
+     */
+    Trace: {
+      /** Request */
+      request: string;
+      /** Status */
+      status: string;
+      totals: components['schemas']['TraceTotals'];
+      /** Spans */
+      spans: components['schemas']['TraceSpan'][];
+      /** Calls */
+      calls: components['schemas']['TraceCall'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** TraceCall */
+    TraceCall: {
+      /** Stage */
+      stage: string;
+      /** Attempt */
+      attempt: number;
+      /** Status */
+      status: string;
+      /** Ms */
+      ms: number;
+      /**
+       * Model
+       * @default null
+       */
+      model: string | null;
+      /**
+       * Input Tokens
+       * @description LLM 이 알려 주지 않으면 null (가짜 LLM 등)
+       * @default null
+       */
+      input_tokens: number | null;
+      /**
+       * Output Tokens
+       * @default null
+       */
+      output_tokens: number | null;
+      /**
+       * Cost Usd
+       * @default null
+       */
+      cost_usd: number | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** TraceSpan */
+    TraceSpan: {
+      /**
+       * Name
+       * @description ① 의도 분석 · ② 경로 탐색 · ③ API 선택
+       */
+      name: string;
+      /** Ms */
+      ms: number;
+      /** Llm Calls */
+      llm_calls: number;
+    } & {
+      [key: string]: unknown;
+    };
+    /** TraceTotals */
+    TraceTotals: {
+      /** Llm Calls */
+      llm_calls: number;
+      /** Input Tokens */
+      input_tokens: number;
+      /** Output Tokens */
+      output_tokens: number;
+      /** Tokens */
+      tokens: number;
+      /**
+       * Cost Usd
+       * @description 가격을 설정하지 않은 모델이면 null
+       * @default null
+       */
+      cost_usd: number | null;
+      /** Llm Ms */
+      llm_ms: number;
+      /** Ms */
+      ms: number;
+    } & {
+      [key: string]: unknown;
+    };
     /** Unresolved */
     Unresolved: {
       /** Path Sequence */
@@ -2188,7 +2497,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['ApprovedList'];
         };
       };
     };
@@ -2210,7 +2519,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['BudgetResult'];
         };
       };
       /** @description Bad Request */
@@ -2239,7 +2548,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['IrRunList'];
         };
       };
     };
@@ -2809,7 +3118,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['GraphsPart'];
         };
       };
     };

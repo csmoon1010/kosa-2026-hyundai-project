@@ -1,0 +1,383 @@
+{
+  "analyze": {
+    "request": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+    "tasks": {
+      "original_question": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+      "tasks": [
+        {
+          "sequence": 1,
+          "domain": "OD",
+          "origin": "기존",
+          "action": "배송완료취소",
+          "conditions": "배송완료된 주문",
+          "constraints": [],
+          "depends_on": [],
+          "count": 1,
+          "source_phrases": ["배송완료된 주문 1건을 배송완료 취소시켜줘"]
+        }
+      ],
+      "unresolved": [],
+      "injections": []
+    },
+    "paths": {
+      "original_question": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+      "paths": [
+        {
+          "sequence": 1,
+          "domain": "OD",
+          "graph_id": "ORD_STAT_GBCD",
+          "origin": "기존",
+          "depends_on": [],
+          "from_state": "배송완료",
+          "start_by": "조회",
+          "to_state": "출고",
+          "to_state_reason": "요청",
+          "must_pass": [],
+          "steps": [
+            {
+              "step": 1,
+              "from": "배송완료",
+              "to": "출고",
+              "edge": "배송완료취소"
+            }
+          ],
+          "alternatives": [
+            {
+              "from_state": "출고대기",
+              "start_by": "조회",
+              "steps": [
+                {
+                  "step": 1,
+                  "from": "출고대기",
+                  "to": "출고진행",
+                  "edge": "출고진행"
+                },
+                {
+                  "step": 2,
+                  "from": "출고진행",
+                  "to": "출고",
+                  "edge": "출고완료"
+                },
+                {
+                  "step": 3,
+                  "from": "출고",
+                  "to": "배송완료",
+                  "edge": "배송완료"
+                },
+                {
+                  "step": 4,
+                  "from": "배송완료",
+                  "to": "출고",
+                  "edge": "배송완료취소"
+                }
+              ],
+              "why": "출고대기 데이터를 조회로 찾아 진행 (쓰기 4회)"
+            }
+          ],
+          "status": "ok",
+          "notes": []
+        }
+      ],
+      "unresolved": []
+    },
+    "apis": {
+      "original_question": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+      "status": "완료",
+      "api_selection_results": [
+        {
+          "path_sequence": 1,
+          "step": 0,
+          "kind": "조회",
+          "domain": "OD",
+          "edge": "배송완료 데이터 찾기",
+          "from": null,
+          "to": "배송완료",
+          "api_candidates": [
+            {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "name": "출고조회",
+              "selector": {
+                "prgrGb": "P3"
+              },
+              "score": 1.0,
+              "check": "통과",
+              "check_reason": null
+            }
+          ],
+          "selected": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+            "selector": {
+              "prgrGb": "P3"
+            }
+          },
+          "selection_status": "선택",
+          "selected_by": "규칙",
+          "selection_reason": "구분값 이름 '배송완료(50)만' 과(와) 비슷함; 구분값 이름에 코드 50 가 있음",
+          "reference": null,
+          "row_values": {}
+        },
+        {
+          "path_sequence": 1,
+          "step": 1,
+          "kind": "상태변경",
+          "domain": "OD",
+          "edge": "배송완료취소",
+          "from": "배송완료",
+          "to": "출고",
+          "api_candidates": [
+            {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+              "name": "출고취소처리",
+              "selector": {
+                "procGb": "PB3"
+              },
+              "score": 1.0,
+              "check": "통과",
+              "check_reason": null
+            },
+            {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+              "name": "출고취소처리",
+              "selector": {
+                "procGb": "PB2"
+              },
+              "score": 0.5,
+              "check": "통과",
+              "check_reason": null
+            },
+            {
+              "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+              "name": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+              "selector": {
+                "procGb": "P3"
+              },
+              "score": 0.441,
+              "check": "통과",
+              "check_reason": null
+            }
+          ],
+          "selected": {
+            "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+            "selector": {
+              "procGb": "PB3"
+            }
+          },
+          "selection_status": "선택",
+          "selected_by": "규칙",
+          "selection_reason": "구분값 이름 '배송완료취소' 과(와) 비슷함; 사람이 확인한 구분값",
+          "reference": null,
+          "row_values": {}
+        }
+      ],
+      "unresolved": []
+    },
+    "gate": {
+      "status": "승인 필요",
+      "steps": [
+        {
+          "key": "1-0",
+          "path_sequence": 1,
+          "step": 0,
+          "kind": "조회",
+          "edge": "배송완료 데이터 찾기",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "selector": {
+            "prgrGb": "P3"
+          },
+          "tier": "R0",
+          "requirement": "자동",
+          "confirm_on_run": false,
+          "reasons": ["조회"]
+        },
+        {
+          "key": "1-1",
+          "path_sequence": 1,
+          "step": 1,
+          "kind": "상태변경",
+          "edge": "배송완료취소",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+          "selector": {
+            "procGb": "PB3"
+          },
+          "tier": "R1",
+          "requirement": "시나리오 승인",
+          "confirm_on_run": false,
+          "reasons": ["쓰기", "출고 → 배송완료 로 되돌릴 수 있음"]
+        }
+      ],
+      "blocked": [],
+      "need_scenario": true,
+      "need_steps": [],
+      "confirm_steps": [],
+      "selection_hash": "sha256:6f2366f95ddd3ea5313c244ce7fef919db79b3929ecfdff9136801147330ef70"
+    },
+    "trace": {
+      "request": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+      "started": "2026-11-13T08:40:03+09:00",
+      "status": "완료",
+      "options": {
+        "stop_retry": true
+      },
+      "budget": {
+        "max_llm_calls": 6,
+        "max_tokens": 60000,
+        "max_seconds": 180,
+        "max_cost_usd": 0.5,
+        "retries": 1,
+        "max_output_tokens": 4096
+      },
+      "totals": {
+        "llm_calls": 2,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "tokens": 0,
+        "cost_usd": null,
+        "llm_ms": 0,
+        "ms": 148
+      },
+      "spans": [
+        {
+          "name": "① 의도 분석",
+          "ms": 3,
+          "llm_calls": 1
+        },
+        {
+          "name": "② 경로 탐색",
+          "ms": 3,
+          "llm_calls": 1
+        },
+        {
+          "name": "③ API 선택",
+          "ms": 4,
+          "llm_calls": 0
+        }
+      ],
+      "calls": [
+        {
+          "stage": "① 의도 분석",
+          "attempt": 1,
+          "status": "ok",
+          "ms": 0,
+          "model": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cached_tokens": null,
+          "prompt_chars": 3699,
+          "cost_usd": null
+        },
+        {
+          "stage": "② 상태 고르기",
+          "attempt": 1,
+          "status": "ok",
+          "ms": 0,
+          "model": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "cached_tokens": null,
+          "prompt_chars": 2030,
+          "cost_usd": null
+        }
+      ]
+    },
+    "notes": [],
+    "trace_file": "data/out/traces/fixture.json"
+  },
+  "approve": {
+    "approval": {
+      "selection_hash": "sha256:6f2366f95ddd3ea5313c244ce7fef919db79b3929ecfdff9136801147330ef70",
+      "approver": "권지은",
+      "at": "2026-11-13T08:40:03+09:00",
+      "scenario": true,
+      "steps": []
+    },
+    "file": "data/approved/6f2366f95ddd.json",
+    "confirm_steps": [],
+    "ir_handoff": {
+      "filename": "tdg-6f2366f95ddd.json",
+      "file": "data/ir_inputs/tdg-6f2366f95ddd.json",
+      "steps": [
+        {
+          "step_id": "1-1",
+          "source_step": "1-0"
+        },
+        {
+          "step_id": "1-2",
+          "source_step": "1-1"
+        }
+      ]
+    }
+  },
+  "approved": {
+    "files": [
+      {
+        "filename": "tdg-6f2366f95ddd.json",
+        "original_question": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+        "approval_status": "approved"
+      }
+    ],
+    "defaults": {
+      "max_turns": 16,
+      "max_tokens": 150000,
+      "max_seconds": 180,
+      "max_output_tokens": 4096
+    },
+    "default_generation_options": {
+      "stop_retry": false,
+      "kb_rag": false,
+      "dependency_projection": false,
+      "approval_gate": false
+    },
+    "default_generation_mode": "basic",
+    "generation_modes": [
+      {
+        "value": "basic",
+        "label": "기본 모드"
+      },
+      {
+        "value": "validated",
+        "label": "정지·재시도 적용 모드"
+      }
+    ]
+  },
+  "budget": {
+    "budget": {
+      "version": "step_budget_v1",
+      "step_count": 2,
+      "policy": {
+        "version": "step_budget_v1",
+        "per_step": {
+          "llm_calls": 5,
+          "tokens": 50000,
+          "seconds": 60
+        },
+        "reserve": {
+          "llm_calls": 2,
+          "tokens": 30000,
+          "seconds": 30
+        },
+        "absolute": {
+          "llm_calls": 40,
+          "tokens": 400000,
+          "seconds": 600
+        },
+        "max_output_tokens": 4096
+      },
+      "calculated": {
+        "llm_calls": 12,
+        "tokens": 130000,
+        "seconds": 150
+      },
+      "limits": {
+        "llm_calls": 12,
+        "tokens": 130000,
+        "seconds": 150
+      },
+      "capped": {
+        "llm_calls": false,
+        "tokens": false,
+        "seconds": false
+      },
+      "max_output_tokens": 4096
+    }
+  }
+}

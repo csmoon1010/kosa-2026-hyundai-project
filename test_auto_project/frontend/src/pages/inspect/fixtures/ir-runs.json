@@ -1,0 +1,225 @@
+{
+  "runs": [
+    {
+      "run_id": "IRRUN-20261112-212851-0fb2cca9a1d04d6993d3e445b0cc98d5",
+      "filename": "IRRUN-20261112-212851-0fb2cca9a1d04d6993d3e445b0cc98d5.jsonl",
+      "started_at": "2026-11-12T21:28:51.876473+09:00",
+      "options": {
+        "stop_retry": true,
+        "kb_rag": false,
+        "dependency_projection": false,
+        "approval_gate": false
+      },
+      "status": "완료",
+      "duration_seconds": 38.095,
+      "budget": {
+        "version": "step_budget_v1",
+        "step_count": 2,
+        "policy": {
+          "version": "step_budget_v1",
+          "per_step": {
+            "llm_calls": 5,
+            "tokens": 50000,
+            "seconds": 60
+          },
+          "reserve": {
+            "llm_calls": 2,
+            "tokens": 30000,
+            "seconds": 30
+          },
+          "absolute": {
+            "llm_calls": 40,
+            "tokens": 400000,
+            "seconds": 600
+          },
+          "max_output_tokens": 4096
+        },
+        "calculated": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "limits": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "capped": {
+          "llm_calls": false,
+          "tokens": false,
+          "seconds": false
+        },
+        "max_output_tokens": 4096
+      },
+      "budget_usage": {
+        "llm_calls": 7,
+        "steps": {
+          "1-1": 4,
+          "1-2": 3
+        },
+        "reserve_calls": 0,
+        "reserve_remaining": 2,
+        "total_tokens": 93302,
+        "elapsed_seconds": 37.989,
+        "token_reserve_used": 0,
+        "time_reserve_used": 0
+      },
+      "budget_reason": null,
+      "step_count": 2,
+      "embedding_calls": null,
+      "model_calls": 7,
+      "turns": 7,
+      "input_tokens": 89873,
+      "output_tokens": 3429,
+      "embedding_tokens": 0,
+      "total_tokens": 93302
+    },
+    {
+      "run_id": "IRRUN-20261112-212701-62a865dfa40840ccbe4e5f2781d9446e",
+      "filename": "IRRUN-20261112-212701-62a865dfa40840ccbe4e5f2781d9446e.jsonl",
+      "started_at": "2026-11-12T21:27:01.998550+09:00",
+      "options": {
+        "stop_retry": true,
+        "kb_rag": false,
+        "dependency_projection": false,
+        "approval_gate": false
+      },
+      "status": "실패",
+      "duration_seconds": 25.723,
+      "budget": {
+        "version": "step_budget_v1",
+        "step_count": 2,
+        "policy": {
+          "version": "step_budget_v1",
+          "per_step": {
+            "llm_calls": 5,
+            "tokens": 50000,
+            "seconds": 60
+          },
+          "reserve": {
+            "llm_calls": 2,
+            "tokens": 30000,
+            "seconds": 30
+          },
+          "absolute": {
+            "llm_calls": 40,
+            "tokens": 400000,
+            "seconds": 600
+          },
+          "max_output_tokens": 4096
+        },
+        "calculated": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "limits": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "capped": {
+          "llm_calls": false,
+          "tokens": false,
+          "seconds": false
+        },
+        "max_output_tokens": 4096
+      },
+      "budget_usage": {
+        "llm_calls": 4,
+        "steps": {
+          "1-1": 4
+        },
+        "reserve_calls": 0,
+        "reserve_remaining": 2,
+        "total_tokens": 63166,
+        "elapsed_seconds": 25.635,
+        "token_reserve_used": 0,
+        "time_reserve_used": 0
+      },
+      "budget_reason": null,
+      "step_count": 2,
+      "embedding_calls": null,
+      "model_calls": 4,
+      "turns": 4,
+      "input_tokens": 61067,
+      "output_tokens": 2099,
+      "embedding_tokens": 0,
+      "total_tokens": 63166
+    },
+    {
+      "run_id": "IRRUN-20261112-154111-fa0606118cf74a15be62d1f01a372ca6",
+      "filename": "IRRUN-20261112-154111-fa0606118cf74a15be62d1f01a372ca6.jsonl",
+      "started_at": "2026-11-12T15:41:11.303477+09:00",
+      "options": {
+        "stop_retry": true,
+        "kb_rag": true,
+        "dependency_projection": false,
+        "approval_gate": false
+      },
+      "status": "실패",
+      "duration_seconds": 35.842,
+      "budget": {
+        "version": "step_budget_v1",
+        "step_count": 2,
+        "policy": {
+          "version": "step_budget_v1",
+          "per_step": {
+            "llm_calls": 5,
+            "tokens": 50000,
+            "seconds": 60
+          },
+          "reserve": {
+            "llm_calls": 2,
+            "tokens": 30000,
+            "seconds": 30
+          },
+          "absolute": {
+            "llm_calls": 40,
+            "tokens": 400000,
+            "seconds": 600
+          },
+          "max_output_tokens": 4096
+        },
+        "calculated": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "limits": {
+          "llm_calls": 12,
+          "tokens": 130000,
+          "seconds": 150
+        },
+        "capped": {
+          "llm_calls": false,
+          "tokens": false,
+          "seconds": false
+        },
+        "max_output_tokens": 4096
+      },
+      "budget_usage": {
+        "llm_calls": 8,
+        "steps": {
+          "1-1": 4,
+          "2-1": 4
+        },
+        "reserve_calls": 0,
+        "reserve_remaining": 2,
+        "total_tokens": 107600,
+        "elapsed_seconds": 35.757,
+        "token_reserve_used": 7600,
+        "time_reserve_used": 0
+      },
+      "budget_reason": null,
+      "step_count": 2,
+      "embedding_calls": 2,
+      "model_calls": 8,
+      "turns": 8,
+      "input_tokens": 104787,
+      "output_tokens": 2546,
+      "embedding_tokens": 267,
+      "total_tokens": 107600
+    }
+  ]
+}

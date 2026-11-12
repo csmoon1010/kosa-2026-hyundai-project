@@ -402,7 +402,12 @@ def test_responses_match_models(agent_server, stub_ir):
     assert run.id in [x.id for x in M.RunList.model_validate(get("/api/history/runs")).runs]
     M.Ok.model_validate(post("/api/register/scenarios/" + reg.id, None, "DELETE"))
 
-    M.ApproveResult.model_validate(post("/api/inspect/approve", {"selection_hash": h, "scenario": True, "approver": "지은"}))
+    ap = M.ApproveResult.model_validate(post("/api/inspect/approve", {"selection_hash": h, "scenario": True, "approver": "지은"}))
+    approved = M.ApprovedList.model_validate(get("/api/inspect/ir/approved"))                    # 확인용 IR 영역 (혜정)
+    assert ap.ir_handoff.filename in [f.filename for f in approved.files]
+    M.BudgetResult.model_validate(get("/api/inspect/ir/budget?filename=" + ap.ir_handoff.filename))
+    M.IrRunList.model_validate(get("/api/inspect/ir/logs"))
+    M.GraphsPart.model_validate(get("/api/admin/graphs"))
     m = M.GraphMatchResult.model_validate(post("/api/admin/graphs/match", {"edges": [{"from_name": "배송완료", "to_name": "출고", "to_code": "PB3"}],
                                                                           "lookups": [{"state_name": "배송완료", "state_code": "P3"}]}))
     assert m.edges[0].candidates and m.lookups[0].candidates

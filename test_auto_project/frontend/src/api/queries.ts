@@ -102,6 +102,15 @@ export function useEnvironment() {
   });
 }
 
+/** 상태 그래프 (머리만 쓸 때 — 이름 · 도메인). 화면에서 저장한 것(drafts)을 먼저 */
+export function useGraphs() {
+  return useQuery({
+    queryKey: keys.part('graphs'),
+    queryFn: ({ signal }) => get<Schemas['GraphsPart']>('/api/admin/graphs', signal),
+    staleTime: 60_000,
+  });
+}
+
 /** (api_id, 필드) → 명세의 한글 이름. 없으면 '' — 입력값 표의 '필드설명' */
 export function useFieldLabel() {
   const { data } = useOperations();

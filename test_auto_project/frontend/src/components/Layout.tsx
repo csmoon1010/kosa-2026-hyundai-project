@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router';
 
 import { useHealth } from '../api/queries';
 import { MENUS } from '../lib/menus';
 import styles from './Layout.module.css';
+import { PageActionsSlot } from './pageActionsSlot';
 import { Pill } from './Pill';
 
 /** 지금 화면의 머리 오른쪽 배지 — 서버(FastAPI)와 연결됐는지, 가짜 LLM 으로 띄운 서버인지 */
@@ -30,6 +32,7 @@ function ServerBadge() {
 export function Layout() {
   const { pathname } = useLocation();
   const menu = MENUS.find((m) => pathname === m.path || pathname.startsWith(m.path + '/'));
+  const [actions, setActions] = useState<HTMLElement | null>(null);
   return (
     <div className={styles.shell}>
       <nav className={styles.side} aria-label="메뉴">
@@ -57,9 +60,12 @@ export function Layout() {
           <h1>{menu?.label ?? '테스트 데이터 생성기'}</h1>
           <div className={styles.headRight}>
             <ServerBadge />
+            <span ref={setActions} className={styles.headRight} />
           </div>
         </header>
-        <Outlet />
+        <PageActionsSlot.Provider value={actions}>
+          <Outlet />
+        </PageActionsSlot.Provider>
       </main>
     </div>
   );
