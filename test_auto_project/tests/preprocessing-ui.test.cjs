@@ -33,7 +33,7 @@ function mount() {
     tbl: (headers, rows, empty) => `<table>${headers.join('|')}${rows.length ? rows.join('') : empty}</table>`,
     el, renderBaseline() {}, saveBaseline() {}, openDoc() {}, toast() {},
     document: { activeElement: null, querySelector: () => el('baselineLabel') }, location: { protocol: 'http:' }, window: {},
-    api: async (route, body) => { requests.push({ route, body }); return { file: 'data/baselines/preprocessing/test.json' }; },
+    api: async (route, body, method = 'POST') => { requests.push({ route, body, method }); return { file: 'data/baselines/preprocessing/test.json' }; },
     rerenderAll: () => ctx.renderBaseline() };
   vm.runInNewContext(source, ctx);
   return { ctx, sid, field, el, requests };
@@ -55,11 +55,12 @@ test('예시 Baseline을 미등록으로 표시하고 저장 시 경로별 값�
   const values = JSON.parse(el('blBody').value);
   assert.equal(values[field.parameter_path], '001442');
   await ctx.saveBaseline();
-  assert.equal(requests[0].route, '/api/preprocessing/baseline');
+  assert.equal(requests[0].route, '/api/admin/preprocessing/baselines');
+  assert.equal(requests[0].method, 'PUT');
   assert.equal(requests[0].body.selected_api_id, sid);
   assert.equal(requests[0].body.values[field.parameter_path], '001442');
   await el('refreshPreprocessing').events.click();
-  assert.equal(requests[1].route, '/api/preprocessing/refresh');
+  assert.equal(requests[1].route, '/api/admin/preprocessing/refresh');
   assert.equal(el('refreshPreprocessing').disabled, false);
 });
 
