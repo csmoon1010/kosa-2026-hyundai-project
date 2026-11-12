@@ -314,3 +314,25 @@ def test_server_select_streams_stages(agent_server):
     last = lines[-1]
     assert last["event"] == "done" and last["result"]["gate"]["status"] == "승인 필요"
     assert [x["selection_status"] for x in last["result"]["apis"]["api_selection_results"]] == ["선택", "선택"]
+
+
+def test_admin_data_parts_and_graph_match(server):
+    """React 전환 R0 — 화면 데이터를 나눈 API 는 예전 한 덩어리와 같은 값, 그래프 매칭은 서버 한 벌 (2026-11-12)."""
+    from tap.ui.export import ui_data
+    base, root = server
+    whole = ui_data(root)
+    for part, keys in {"environment": ["generated_at", "build", "connections", "tools", "overrides_file"], "catalog": ["catalog"],
+                       "metadata": ["metadata"], "operations": ["ops"], "review": ["review"], "graphs": ["graphs", "drafts"],
+                       "codes": ["codes"], "rules": ["rules"], "baselines": ["baselines"], "preprocessing": ["preprocessing"]}.items():
+        got = json.loads(call(base + "/api/admin/" + part))
+        same = lambda k: ({**got[k], "loaded_at": None} == {**whole[k], "loaded_at": None}) if k == "preprocessing" else got[k] == whole[k]
+        assert sorted(got) == sorted(keys) and all(same(k) for k in keys if k != "generated_at"), part   # 읽은 시각만 다르다
+    m = json.loads(call(base + "/api/admin/graphs/match", {
+        "edges": [{"name": "출고진행", "from_name": "출고대기", "to_name": "출고진행", "to_code": "30"},
+                  {"name": "배송완료취소", "from_name": "배송완료", "to_name": "출고", "to_code": "45"}],
+        "lookups": [{"state_name": "배송완료", "state_code": "50"}], "state_field": "lastDlvstPrgrGbcd"}))
+    top = [(x["status"], x["candidates"][0]["api_id"].rsplit("/", 1)[-1], x["candidates"][0]["selector"]) for x in m["edges"] + m["lookups"]]
+    assert top == [("찾음", "multiOshpProcess.do", {"procGb": "P1"}), ("찾음", "multiOshpBackProcess.do", {"procGb": "PB3"}),
+                   ("찾음", "selectOshpDtlList.do", {"prgrGb": "P3"})]
+    assert all(len(x["candidates"]) <= 3 for x in m["edges"] + m["lookups"])               # 편집기와 같게 상위 3개
+    assert json.loads(call(base + "/api/admin/graph-review"))["items"] == []               # 지금 그래프는 모두 찾음

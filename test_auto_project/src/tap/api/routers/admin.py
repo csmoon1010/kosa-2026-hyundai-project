@@ -50,3 +50,29 @@ def refresh_preprocessing(request: Request):
 def save_preprocessing(request: Request, body: dict = Depends(json_body)):
     """전처리 Baseline 등록 — 값에서 지시문 검사."""
     return services.save_preprocessing(state(request).root, body)
+
+
+# ─── 화면 데이터 (나눠서) · 그래프 매칭 — React 전환 R0 ───────────────────────────────────────
+
+def _part(name: str):
+    def read(request: Request):
+        return services.data_part(state(request).root, name)
+    read.__name__ = f"read_{name}"
+    read.__doc__ = f"화면 데이터 — {name} ({' · '.join(services.DATA_PARTS[name])})"
+    return read
+
+
+for _name in services.DATA_PARTS:
+    router.add_api_route(f"/{_name}", _part(_name), methods=["GET"])
+
+
+@router.get("/graph-review")
+def graph_review(request: Request):
+    """전사 검수 목록의 상태 그래프 부분 — API 를 못 찾을 것 같은 화살표 · 애매한 조회."""
+    return {"items": services.graph_review(state(request).root)}
+
+
+@router.post("/graphs/match")
+def graph_match(request: Request, body: dict = Depends(json_body)):
+    """그래프 편집기의 API 후보 미리보기 — {edges:[{name, from_name, to_name, to_code}], lookups:[{state_name, state_code}], state_field, domains}."""
+    return services.graph_match(state(request).root, body)

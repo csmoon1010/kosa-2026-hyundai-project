@@ -519,3 +519,69 @@ def save_preprocessing(root: Path, body: dict[str, Any]) -> dict[str, Any]:
     guard_human_values(root, body.get("values"))
     dest = save_preprocessing_baseline(root, body["selected_api_id"], body["values"])
     return {"file": str(dest.relative_to(root)), "data": ui_data(root)}
+
+
+# ─── 화면 데이터 나누기 · 그래프 매칭 (React 전환 R0, docs/react.md 6절) ─────────────────────
+
+DATA_PARTS = {                              # 화면이 필요한 만큼만 — 예전 /tap-data.js 한 덩어리를 나눈 것
+    "environment": ("generated_at", "build", "connections", "tools", "overrides_file"),
+    "catalog": ("catalog",), "metadata": ("metadata",), "operations": ("ops",), "review": ("review",),
+    "graphs": ("graphs", "drafts"), "codes": ("codes",), "rules": ("rules",), "baselines": ("baselines",),
+    "preprocessing": ("preprocessing",),
+}
+
+
+def data_part(root: Path, part: str) -> dict[str, Any]:
+    d = ui_data(root)
+    return {k: d[k] for k in DATA_PARTS[part]}
+
+
+def _match_inputs(root: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    out = root / "data/out"
+    return (json.loads((out / "api_metadata.json").read_text(encoding="utf-8")),
+            json.loads((out / "api_operations.json").read_text(encoding="utf-8")))
+
+
+def graph_match(root: Path, body: dict[str, Any]) -> dict[str, Any]:
+    """상태 그래프 편집기의 API 후보 미리보기 — 화살표(쓰기) · 상태(조회)마다 후보와 찾음 / 확인 필요 / 없음.
+    예전에는 graph-editor.js 가 tap.graph.match 를 JS 로 복사해 계산했다 — 이제 서버의 한 벌만 쓴다."""
+    from tap.graph.match import match_edge, match_lookup, status_of
+    metadata, operations = _match_inputs(root)
+    doms = body.get("domains") or ["pd", "od", "ds"]
+    field, top = body.get("state_field"), int(body.get("top") or 3)          # 편집기와 같게 상위 3개
+    dump = lambda cs: {"status": status_of(cs), "candidates": [c.model_dump() for c in cs]}
+    return {
+        "edges": [dump(match_edge(e.get("name"), str(e.get("from_name") or ""), str(e.get("to_name") or ""), metadata, doms,
+                                  top=top, operations=operations, state_field=field, to_code=e.get("to_code")))
+                  for e in body.get("edges") or []],
+        "lookups": [dump(match_lookup(str(x.get("state_name") or ""), str(x.get("state_code") or ""), metadata, operations,
+                                      field, doms, top=top)) for x in body.get("lookups") or []],
+    }
+
+
+def graph_review(root: Path, domains: list[str] | None = None) -> list[dict[str, Any]]:
+    """관리자 › 전사 검수 목록의 '상태 그래프' 부분 — API 를 못 찾을 것 같은 화살표 · 애매한 조회 (예전 GraphEditor.reviewItems)."""
+    from tap.graph.match import match_edge, match_lookup, status_of
+    metadata, operations = _match_inputs(root)
+    doms = domains or ["pd", "od", "ds"]
+    d = ui_data(root)
+    graphs = d["graphs"] + [x for x in d["drafts"] if x and x.get("graph") and not any(g["graph"]["id"] == x["graph"]["id"] for g in d["graphs"])]
+    out = []
+    for g in graphs:
+        codes = next((c for c in d["codes"] if c["id"] == g["code_group"]["id"]), g["code_group"])
+        nm = lambda c: codes["codes"].get(str(c), str(c))
+        field = g["graph"].get("state_field")
+        for t in [t for t in g.get("transitions") or [] if t.get("name")]:
+            cs = match_edge(t["name"], nm(t["from"]), nm(t["to"]), metadata, doms, top=5, operations=operations,
+                            state_field=field, to_code=str(t["to"]))
+            if status_of(cs) != "찾음":
+                out.append({"graph": g["graph"]["name"], "gid": g["graph"]["id"], "kind": "화살표", "status": status_of(cs),
+                            "item": f"{t['name']} ({nm(t['from'])} → {nm(t['to'])})",
+                            "why": " · ".join(cs[0].reasons) if cs else "후보 없음 — 명세 summary · 별칭 · 구분값 어디에도 비슷한 이름이 없음"})
+        states = list(dict.fromkeys([str(s) for t in g.get("transitions") or [] for s in (t["from"], t["to"])] + list((g.get("layout") or {}).keys())))
+        for c in states:
+            cs = match_lookup(nm(c), c, metadata, operations, field, doms, top=5)
+            if status_of(cs) == "확인 필요":
+                out.append({"graph": g["graph"]["name"], "gid": g["graph"]["id"], "kind": "조회", "item": f"{c} {nm(c)}",
+                            "status": "확인 필요", "why": " · ".join(cs[0].reasons)})
+    return out
