@@ -11,8 +11,9 @@ router = APIRouter(prefix="/api/common", tags=["공통"])
 
 
 @router.get("/health", responses=doc(Health))
-def health():
-    return {"ok": True}
+def health(request: Request):
+    """fake_llm: 가짜 LLM 으로 띄운 서버 (tap.cli serve --fake-llm) — 화면이 표시한다."""
+    return {"ok": True, "fake_llm": state(request).llm is not None}
 
 
 @router.get("/data")

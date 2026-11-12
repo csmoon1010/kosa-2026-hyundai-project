@@ -42,7 +42,8 @@ web/  ── FastAPI 가 그대로 내려줌             frontend/  ── 개�
 
 ```
 frontend/
-├── package.json · vite.config.ts(Vitest 설정 포함) · tsconfig.json · eslint.config.js · .prettierrc.json · playwright.config.ts(R0-4)
+├── package.json · vite.config.ts(Vitest 설정 포함) · tsconfig.json · eslint.config.js · .prettierrc.json · playwright.config.ts
+├── e2e/                              Playwright — 실제 서버(가짜 LLM)로 화면 끝까지
 ├── index.html
 └── src/
     ├── main.tsx · App.tsx            라우터 · 쿼리 클라이언트 · 공통 레이아웃(사이드 메뉴 · 머리)
@@ -184,7 +185,12 @@ IR 입력 검토(승인게이트) 화면은 지금도 숨김이라 옮기지 않
 | 끝까지 | Playwright — 실제 서버(가짜 LLM 모드)로 등록 → IR → 등록 → 드라이런 → 이력, 확인용 승인 → IR, 관리자 규칙 · 그래프 저장 |
 | 실제 LLM 점검 | 단계마다 한 번, [fastapi.md](fastapi.md) 6.3 화면 점검을 React 화면으로 |
 
-Playwright 를 실제 LLM 없이 돌리려면 서버에 가짜 LLM 으로 띄우는 실행 옵션이 필요하다 (R0 에서 `tap.cli serve --fake-llm` 같은 테스트 전용 옵션 — 결정 4).
+Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `tap.cli serve --fake-llm --temp-data`(8799)로, Vite 를 5199 로 띄운다 (`playwright.config.ts`).
+
+- 가짜 LLM(`src/tap/api/fake.py`): 어떤 요청이든 '배송완료 주문을 배송완료 취소' 업무 하나, IR 은 입력값을 모두 '확인 필요'. 화면 머리에 **가짜 LLM** 배지가 뜬다 (`/api/common/health` 의 `fake_llm`).
+- `--temp-data`: `data/` 를 임시 폴더(`/tmp/tap-serve-<포트>`)에 복사해 쓴다 — 테스트 등록 · 실행 기록이 저장소 `data/` 에 남지 않는다. 다음 실행 때 비우고 다시 쓴다.
+- 처음 한 번 `npx playwright install chromium`. WSL 에 브라우저 라이브러리(libnss3 · libasound2)가 없으면 `sudo npx playwright install-deps chromium`.
+- 가짜 LLM 은 바로 답하므로 스트림이 프록시에서 **조금씩** 오는지는 볼 수 없다 — 실제 LLM 화면 점검(fastapi.md 6.3) 때 확인한다.
 
 ### 8.4 커밋 · 협업
 
@@ -207,7 +213,7 @@ Playwright 를 실제 LLM 없이 돌리려면 서버에 가짜 LLM 으로 띄우
 
 | 단계 | 상태 |
 |---|---|
-| R0. 준비 (FastAPI 5단계 포함) | 진행 중 — R0-1 화면 데이터 나누기 · 매칭 API ✓, R0-2 요청 · 응답 모델 ✓, R0-3 `frontend/` 뼈대 ✓ (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트, vitest 15개), R0-4 가짜 LLM 실행 옵션 · Playwright 남음 |
+| R0. 준비 (FastAPI 5단계 포함) | 완료 — R0-1 화면 데이터 나누기 · 매칭 API, R0-2 요청 · 응답 모델, R0-3 `frontend/` 뼈대 (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트), R0-4 가짜 LLM 서버 옵션 · Playwright. pytest 335 · node 4 · vitest 16 · Playwright 3 |
 | R1. 시나리오 등록 | 대기 |
 | R2. 실행 · 이력 | 대기 |
 | R3. 확인용 | 대기 |

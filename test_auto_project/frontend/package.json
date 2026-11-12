@@ -16,7 +16,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "gen:api": "openapi-typescript ${API_URL:-http://127.0.0.1:8765}/api/openapi.json -o src/api/schema.d.ts && prettier --write src/api/schema.d.ts"
+    "gen:api": "openapi-typescript ${API_URL:-http://127.0.0.1:8765}/api/openapi.json -o src/api/schema.d.ts && prettier --write src/api/schema.d.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tanstack/react-query": "5.107.1",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",

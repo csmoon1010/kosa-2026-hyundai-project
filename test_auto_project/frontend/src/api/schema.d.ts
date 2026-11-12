@@ -647,7 +647,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Health */
+    /**
+     * Health
+     * @description fake_llm: 가짜 LLM 으로 띄운 서버 (tap.cli serve --fake-llm) — 화면이 표시한다.
+     */
     get: operations['health_api_common_health_get'];
     put?: never;
     post?: never;
@@ -1004,6 +1007,12 @@ export interface components {
     Health: {
       /** Ok */
       ok: boolean;
+      /**
+       * Fake Llm
+       * @description 가짜 LLM 으로 띄운 서버 (테스트 · 화면 개발용)
+       * @default false
+       */
+      fake_llm: boolean;
     } & {
       [key: string]: unknown;
     };

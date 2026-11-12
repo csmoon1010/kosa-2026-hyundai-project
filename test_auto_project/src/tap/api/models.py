@@ -41,6 +41,7 @@ class ErrorBody(Doc):
 
 class Health(Doc):
     ok: bool
+    fake_llm: bool = Field(False, description="가짜 LLM 으로 띄운 서버 (테스트 · 화면 개발용)")
 
 
 class Ok(Doc):

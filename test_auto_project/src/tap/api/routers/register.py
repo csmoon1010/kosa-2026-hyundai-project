@@ -6,7 +6,7 @@ from typing import Any
 from fastapi import APIRouter, Request
 
 from tap.api import services
-from tap.api.deps import dump, state
+from tap.api.deps import dump, ir_mode, state
 from tap.api.models import (AnalyzeRequest, AnalyzeResult, IrRequest, Ok, RegisteredRecord, RegisterIrResult,
                             RegisterRequest, RegisterResult, ScenarioList, doc)
 from tap.api.streaming import ndjson, wants_stream
@@ -42,7 +42,7 @@ def ir(request: Request, req: IrRequest | None = None):
     스트림이면 첫 줄 {"event":"review_draft",…} → IR 진행 → {"event":"generation_complete"|"generation_error",…}."""
     st = state(request)
     body = dump(req)
-    mode = services.check_ir_request(body)
+    mode = ir_mode(request, body)
     code, review = services.review_draft(st.root, st.pending, body)
     if code != 200:
         return _json(code, review)

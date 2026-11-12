@@ -5,16 +5,25 @@ import { MENUS } from '../lib/menus';
 import styles from './Layout.module.css';
 import { Pill } from './Pill';
 
-/** 지금 화면의 머리 오른쪽 배지 — 서버(FastAPI)와 연결됐는지 */
+/** 지금 화면의 머리 오른쪽 배지 — 서버(FastAPI)와 연결됐는지, 가짜 LLM 으로 띄운 서버인지 */
 function ServerBadge() {
   const health = useHealth();
   if (health.isPending) return null;
-  return health.data?.ok ? (
-    <Pill tone="good">서버 연결됨</Pill>
-  ) : (
-    <Pill tone="danger" title={health.error?.message}>
-      서버 없음
-    </Pill>
+  if (!health.data?.ok)
+    return (
+      <Pill tone="danger" title={health.error?.message}>
+        서버 없음
+      </Pill>
+    );
+  return (
+    <>
+      {health.data.fake_llm && (
+        <Pill tone="signal" title="tap.cli serve --fake-llm — 분석 · IR 생성 결과가 실제가 아닙니다">
+          가짜 LLM
+        </Pill>
+      )}
+      <Pill tone="good">서버 연결됨</Pill>
+    </>
   );
 }
 

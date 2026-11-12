@@ -58,7 +58,7 @@ def call(url, body=None, method=None):
 
 def test_server_health_static_and_data(server):
     base, _ = server
-    assert json.loads(call(base + "/api/common/health")) == {"ok": True}
+    assert json.loads(call(base + "/api/common/health")) == {"ok": True, "fake_llm": False}
     assert call(base + "/") == "<p>ui</p>"
     assert call(base + "/tap-data.js").startswith("window.TAP_DATA = ")
 
@@ -415,3 +415,32 @@ def test_responses_match_models(agent_server, stub_ir):
     for path, events in M.STREAMS.items():
         ref = spec["paths"][path]["post"]["responses"]["200"]["content"]["application/x-ndjson"]["schema"]["oneOf"]
         assert [x["$ref"].rsplit("/", 1)[1] for x in ref] == [e.__name__ for e in events]
+
+
+def test_fake_llm_server_runs_whole_flow(tmp_path):
+    """React R0-4 — serve --fake-llm: 비용 없이 분석 → IR → 등록 → 드라이런까지 (Playwright 가 쓰는 서버, 2026-11-12)."""
+    from tap.api.fake import FakeRuntime, fake_llm
+    root = tmp_path / "root"
+    shutil.copytree(ROOT / "data", root / "data", **COPY_DATA)
+    httpd = AppServer(create_app(root, llm=fake_llm, ir_runtime=FakeRuntime))
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{httpd.server_address[1]}"
+    try:
+        assert json.loads(call(base + "/api/common/health")) == {"ok": True, "fake_llm": True}
+        utt = "아무 요청이나 — 가짜 LLM 은 늘 배송완료 취소로 답한다"
+        r = json.loads(call(base + "/api/register/analyze", {"utterance": utt}))
+        assert r["tasks"]["original_question"] == utt and r["tasks"]["tasks"][0]["source_phrases"] == [utt]
+        assert [x["selection_status"] for x in r["apis"]["api_selection_results"]] == ["선택", "선택"]
+        h = r["gate"]["selection_hash"]
+        opts = {"stop_retry": True, "kb_rag": True, "dependency_projection": True}           # 화면 기본 옵션 그대로
+        ir = json.loads(call(base + "/api/register/ir", {"selection_hash": h, "generation_options": opts}))
+        steps = [s for t in ir["ir"]["tasks"] for s in t["steps"]]
+        assert [s["step_id"] for s in steps] == ["1-1", "1-2"] and ir["file"]
+        assert all(i["source"] == "unresolved" for s in steps for i in s["inputs"])
+        reg = json.loads(call(base + "/api/register/scenarios", {"selection_hash": h, "name": "가짜", "approver": "테스트",
+                                                                "review_file": ir["review"]["filename"], "ir_file": ir["file"]}))
+        run = json.loads(call(base + "/api/run/dry-run", {"items": [{"id": reg["id"], "n": 1}]}))["run"]
+        assert [c["step_id"] for c in run["calls"]] == ["1-1", "1-2"]
+        assert not (ROOT / "data/registered" / f"{reg['id']}.json").exists()               # 저장소의 data 는 건드리지 않는다
+    finally:
+        httpd.shutdown()

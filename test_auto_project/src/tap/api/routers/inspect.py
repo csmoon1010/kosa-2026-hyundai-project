@@ -5,7 +5,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import Response
 
 from tap.api import services
-from tap.api.deps import dump, state
+from tap.api.deps import dump, ir_mode, state
 from tap.api.models import ApproveRequest, ApproveResult, InspectIrRequest, IrResult, ReviewRequest, doc
 from tap.api.streaming import ndjson, wants_stream
 
@@ -29,7 +29,7 @@ def ir(request: Request, req: InspectIrRequest | None = None):
     """저장된 승인본(approved_filename)으로 IR 생성. 스트림 지원. budget · budget_policy 를 보내면 400."""
     root = state(request).root
     body = dump(req)
-    mode = services.check_ir_request(body)
+    mode = ir_mode(request, body)
     if wants_stream(request):
         return ndjson(lambda emit: services.generate_ir_stream(root, body, mode, emit))
     return services.generate_ir(root, body, mode)

@@ -25,6 +25,7 @@ uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"   # 시스
 .venv/bin/python -m tap.cli serve      # 화면 → http://127.0.0.1:8765/
 .venv/bin/python -m pytest -q && node --test tests/*.cjs   # 전부 통과해야 커밋
 cd frontend && npm ci && npm run typecheck && npm run lint && npm test   # React 화면(옮기는 중) — 고쳤으면 이것도 통과해야 커밋
+cd frontend && npm run test:e2e          # 화면 끝까지 (Playwright, 가짜 LLM 서버를 직접 띄움 — 비용 없음)
 ```
 
 - Python 3.10. LLM 은 OpenAI — 키 · 모델 이름은 `.env`(`.env.example` 참고)에서 읽고 코드에 박지 않는다.

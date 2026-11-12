@@ -37,6 +37,12 @@ describe('레이아웃 · 메뉴', () => {
     expect(screen.getByRole('link', { name: '관리자 메뉴' })).toHaveAttribute('aria-current', 'page');
   });
 
+  it('가짜 LLM 으로 띄운 서버면 표시한다', async () => {
+    server.use(http.get('/api/common/health', () => HttpResponse.json({ ok: true, fake_llm: true })));
+    renderWithApp(<AppRoutes />);
+    expect(await screen.findByText('가짜 LLM')).toBeInTheDocument();
+  });
+
   it('서버가 없으면 표시한다', async () => {
     server.use(http.get('/api/common/health', () => HttpResponse.error()));
     renderWithApp(<AppRoutes />, '/run');

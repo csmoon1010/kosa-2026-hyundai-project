@@ -72,13 +72,14 @@ def _openapi(app: FastAPI) -> dict[str, Any]:
     return spec
 
 
-def create_app(root: Path, llm=None) -> FastAPI:
-    """llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI."""
+def create_app(root: Path, llm=None, ir_runtime=None) -> FastAPI:
+    """llm · ir_runtime: 가짜 LLM(분석) · 가짜 IR 생성 런타임을 끼울 때 (테스트 · tap.api.fake). 없으면 .env 의 OpenAI."""
     root = Path(root)
     app = FastAPI(title="테스트 데이터 생성기", default_response_class=JSON,
                   docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None)
     app.state.root = root
     app.state.llm = llm
+    app.state.ir_runtime = ir_runtime
     app.state.pending = services.Pending()
 
     @app.exception_handler(ValueError)
