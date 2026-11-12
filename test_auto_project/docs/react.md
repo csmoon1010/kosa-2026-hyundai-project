@@ -53,7 +53,7 @@ frontend/
     │   ├── stream.ts                 useNdjson — NDJSON 한 줄씩
     │   └── queries.ts                메뉴별 조회 · 저장 훅 (useRegisteredScenarios · useAnalyze …)
     ├── styles/                       tokens.css (지금 :root 변수 · 다크 모드) · base.css (글꼴 · 입력 · 버튼 공통 클래스)
-    ├── components/                   공통 — Layout · Card · Pill · Stepper · Spinner (R0) · ParamTable (R1, 등록 · 실행). Modal · Toast 는 처음 쓰는 단계에서
+    ├── components/                   공통 — Layout · Card · Pill · Stepper · Spinner (R0) · ParamTable · scenario.module.css (등록 · 실행 공용 모양). Modal · Toast 는 처음 쓰는 단계에서
     ├── lib/                          menus(사이드 메뉴) · storage(localStorage 감싸기) · store(화면 밖 진행 상태) · format(도메인 이름 · API 짧은 이름)
     ├── test/                         Vitest 준비 — MSW 가짜 API(server.ts) · 그리기 도우미(render.tsx)
     └── pages/
@@ -217,7 +217,7 @@ Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `ta
 |---|---|
 | R0. 준비 (FastAPI 5단계 포함) | 완료 — R0-1 화면 데이터 나누기 · 매칭 API, R0-2 요청 · 응답 모델, R0-3 `frontend/` 뼈대 (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트), R0-4 가짜 LLM 서버 옵션 · Playwright. pytest 335 · node 4 · vitest 16 · Playwright 3 |
 | R1. 시나리오 등록 | 완료 — 4.1 전부 (`pages/register/`). 화면 데이터 칸 설명 추가(operations · environment). 화면 점검 1 을 실제 LLM 으로 통과 (진행 표시가 프록시를 거쳐 단계마다 바뀜, 콘솔 오류 0). vitest 32 · Playwright 5 |
-| R2. 실행 · 이력 | 대기 |
+| R2. 실행 · 이력 | 완료 — 4.3 · 4.4 전부 (`pages/run/` · `pages/history/`). 등록 · 실행이 같이 쓰는 모양은 `components/scenario.module.css` 로. 등록 목록 · 실행 이력 API 가 화면 데이터 전체를 만들지 않게. 화면 점검 2 를 실제 서버로 통과 (콘솔 오류 0). vitest 41 · Playwright 6 |
 | R3. 확인용 | 대기 |
 | R4. 관리자 | 대기 |
 | R5. 그래프 편집기 | 대기 |

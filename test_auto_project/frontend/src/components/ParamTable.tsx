@@ -39,7 +39,13 @@ export function ParamTable({
   );
 }
 
-function Value({ input, from }: { input: IrInput; from?: { from_step_id?: string; output_name?: string } }) {
+function Value({
+  input,
+  from,
+}: {
+  input: IrInput;
+  from?: { from_step_id?: string | null; output_name?: string | null };
+}) {
   if (input.source === 'fixed') return <td className={styles.value}>{String(input.value ?? '')}</td>;
   if (input.source === 'bind') {
     const n =

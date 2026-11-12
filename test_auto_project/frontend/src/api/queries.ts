@@ -9,6 +9,7 @@ export const keys = {
   scenarios: ['register', 'scenarios'] as const,
   scenario: (id: string) => ['register', 'scenarios', id] as const,
   part: (name: string) => ['admin', 'part', name] as const,
+  runs: ['history', 'runs'] as const,
 };
 
 export function useHealth() {
@@ -55,6 +56,32 @@ export function useDeleteScenario() {
 export function useRefreshScenarios() {
   const client = useQueryClient();
   return useCallback(() => client.invalidateQueries({ queryKey: keys.scenarios, exact: true }), [client]);
+}
+
+/** 등록 시나리오가 지금 API Catalog 버전과 다르면 재승인 필요 — 등록 · 실행 화면 공통 */
+export function useIsStale() {
+  const version = useEnvironment().data?.build.catalog_version;
+  return useCallback(
+    (s: { catalog_version?: number | null }) =>
+      s.catalog_version != null && version != null && s.catalog_version !== version,
+    [version],
+  );
+}
+
+// ─── 실행 이력 ────────────────────────────────────────────────────────────────
+
+export function useRuns() {
+  return useQuery({
+    queryKey: keys.runs,
+    queryFn: ({ signal }) => get<Schemas['RunList']>('/api/history/runs', signal),
+    select: (data) => data.runs,
+  });
+}
+
+/** 드라이런 뒤 이력을 다시 불러온다 */
+export function useRefreshRuns() {
+  const client = useQueryClient();
+  return useCallback(() => client.invalidateQueries({ queryKey: keys.runs, exact: true }), [client]);
 }
 
 // ─── 화면 데이터 (관리자 API 를 나눠 받는다) ─────────────────────────────────────────

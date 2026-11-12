@@ -12,9 +12,9 @@ export interface IrInput {
 /** IR 모양({binding_id, from:{…}}) · 실행 이력 모양({binding_id, from_step_id, output_name}) 둘 다 */
 export interface IrBinding {
   binding_id: string;
-  from?: { from_step_id?: string; output_name?: string };
-  from_step_id?: string;
-  output_name?: string;
+  from?: { from_step_id?: string | null; output_name?: string | null };
+  from_step_id?: string | null;
+  output_name?: string | null;
 }
 
 export interface IrStep {

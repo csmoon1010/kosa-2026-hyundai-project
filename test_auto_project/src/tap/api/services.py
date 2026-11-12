@@ -425,7 +425,8 @@ def register(root: Path, pending: Pending, body: dict[str, Any]) -> tuple[int, d
 
 
 def registered_list(root: Path) -> list[dict[str, Any]]:
-    return ui_data(root)["registered"]
+    from tap.ui.export import registered_list as load
+    return load(root)                       # 화면 데이터 전체(약 3MB)를 만들지 않는다
 
 
 def registered_get(root: Path, sid: str) -> dict[str, Any]:
@@ -437,7 +438,8 @@ def registered_delete(root: Path, sid: str) -> None:
 
 
 def runs_list(root: Path) -> list[dict[str, Any]]:
-    return ui_data(root)["runs"]
+    from tap.ui.export import runs_list as load
+    return load(root)
 
 
 # ─── IR 생성 (혜정) ─────────────────────────────────────────────────────────────────────

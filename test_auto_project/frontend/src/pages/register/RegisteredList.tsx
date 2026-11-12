@@ -1,18 +1,19 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
 
-import { useDeleteScenario, useEnvironment, useRegisteredScenarios } from '../../api/queries';
+import { useDeleteScenario, useIsStale, useRegisteredScenarios } from '../../api/queries';
 import { Card } from '../../components/Card';
 import { Pill } from '../../components/Pill';
 import { Spinner } from '../../components/Spinner';
 import { domName } from '../../lib/format';
 import { useStore } from '../../lib/store';
 import { flow, forget, openSaved } from './flow';
+import sc from '../../components/scenario.module.css';
 import styles from './register.module.css';
 
 /** 등록된 시나리오 — 행을 누르면 열어 보기(읽기 전용), 삭제는 두 번 눌러 확인 */
 export function RegisteredList() {
   const list = useRegisteredScenarios();
-  const env = useEnvironment();
+  const isStale = useIsStale();
   const remove = useDeleteScenario();
   const { viewingId } = useStore(flow);
   const [armed, setArmed] = useState<string | null>(null);
@@ -23,8 +24,6 @@ export function RegisteredList() {
     return () => window.clearTimeout(timer);
   }, [armed]);
 
-  const version = env.data?.build.catalog_version;
-  const stale = (v: number | null | undefined) => v != null && version != null && v !== version;
   const rows = list.data ?? [];
 
   async function onDelete(id: string) {
@@ -103,7 +102,7 @@ export function RegisteredList() {
                         {s.irreversible > 0 && (
                           <>
                             {' '}
-                            <span className={`${styles.badge} ${styles.warnB}`} title="되돌릴 수 없는 단계">
+                            <span className={`${sc.badge} ${sc.warnB}`} title="되돌릴 수 없는 단계">
                               R2 {s.irreversible}
                             </span>
                           </>
@@ -115,11 +114,7 @@ export function RegisteredList() {
                         <span className={styles.who}>{s.approver ?? ''}</span>
                       </td>
                       <td>
-                        {stale(s.catalog_version) ? (
-                          <Pill tone="signal">재승인 필요</Pill>
-                        ) : (
-                          <Pill tone="good">등록</Pill>
-                        )}
+                        {isStale(s) ? <Pill tone="signal">재승인 필요</Pill> : <Pill tone="good">등록</Pill>}
                       </td>
                       <td className={styles.acts} data-acts>
                         <button

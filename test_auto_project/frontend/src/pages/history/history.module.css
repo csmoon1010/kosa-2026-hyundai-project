@@ -1,0 +1,36 @@
+/* 실행 이력 — 지금 화면(이력 표 · .srcchips)과 같은 모양 */
+.row {
+  cursor: pointer;
+}
+.row:hover td {
+  background: var(--panel-2);
+}
+.row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.row.open td {
+  background: var(--accent-soft);
+}
+.names {
+  font-size: 12.5px;
+}
+.unresolved {
+  color: var(--signal);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.chips span {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--panel-3);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.rollback {
+  margin-top: 6px;
+}

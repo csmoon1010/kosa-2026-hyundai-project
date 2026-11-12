@@ -1,0 +1,826 @@
+{
+  "scenarios": [
+    {
+      "id": "rs-20261112-214048-164",
+      "name": "배송완료 취소",
+      "utterance": "배송완료된 주문 1건을 배송완료 취소시켜줘",
+      "domains": ["od"],
+      "registered_at": "2026-11-12 21:40",
+      "catalog_version": 3,
+      "approver": "지은",
+      "steps": 2,
+      "irreversible": 0,
+      "confirm_steps": []
+    }
+  ],
+  "run": {
+    "id": "run-20261112-214048-172",
+    "at": "2026-11-12 21:40",
+    "kind": "드라이런",
+    "rows": [
+      {
+        "scenario_id": "rs-20261112-214048-164",
+        "name": "배송완료 취소",
+        "count": 2,
+        "confirmed": []
+      }
+    ],
+    "calls": [
+      {
+        "scenario": "배송완료 취소",
+        "scenario_id": "rs-20261112-214048-164",
+        "k": 1,
+        "step_id": "1-1",
+        "name": "배송완료 데이터 찾기",
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "tier": "R0",
+        "xml": "<Root>\n  <Dataset id=\"{{입력 필요: id}}\">\n    <rows>\n      <row>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <fromDate>20230501</fromDate>\n        <toDate>20230515</toDate>\n        <mdaGb>20</mdaGb>\n        <prgrGb>P0</prgrGb>\n        <dlvFormGbcd>40</dlvFormGbcd>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <drctBuyYn>Y</drctBuyYn>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+        "inputs": [
+          {
+            "field": "oauserId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "oauseKey",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "id",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "venCd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ven2Cd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "fromDate",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "toDate",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "mdaGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "prgrGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvFormGbcd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "drctBuyYn",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          }
+        ],
+        "bindings": []
+      },
+      {
+        "scenario": "배송완료 취소",
+        "scenario_id": "rs-20261112-214048-164",
+        "k": 1,
+        "step_id": "1-2",
+        "name": "배송완료취소",
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "tier": "R1",
+        "xml": "<Root>\n  <Dataset id=\"{{입력 필요: id}}\">\n    <rows>\n      <row>\n        <venCd>003766</venCd>\n        <chk>1</chk>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <dlvstNo>20160118617141</dlvstNo>\n        <dlvstPtcSeq>1</dlvstPtcSeq>\n        <procGb>PB1</procGb>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+        "inputs": [
+          {
+            "field": "oauserId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "oauseKey",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "id",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "venCd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "chk",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvstNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvstPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "procGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "rgstId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "rgstIp",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          }
+        ],
+        "bindings": []
+      },
+      {
+        "scenario": "배송완료 취소",
+        "scenario_id": "rs-20261112-214048-164",
+        "k": 2,
+        "step_id": "1-1",
+        "name": "배송완료 데이터 찾기",
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "tier": "R0",
+        "xml": null,
+        "inputs": [
+          {
+            "field": "oauserId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "oauseKey",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "id",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "venCd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ven2Cd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "fromDate",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "toDate",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "mdaGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "prgrGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvFormGbcd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "drctBuyYn",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          }
+        ],
+        "bindings": []
+      },
+      {
+        "scenario": "배송완료 취소",
+        "scenario_id": "rs-20261112-214048-164",
+        "k": 2,
+        "step_id": "1-2",
+        "name": "배송완료취소",
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "tier": "R1",
+        "xml": null,
+        "inputs": [
+          {
+            "field": "oauserId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "oauseKey",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "id",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "venCd",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "chk",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "ordPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvstNo",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "dlvstPtcSeq",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "procGb",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "rgstId",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          },
+          {
+            "field": "rgstIp",
+            "source": "unresolved",
+            "value": null,
+            "ref": null
+          }
+        ],
+        "bindings": []
+      }
+    ],
+    "unresolved": [
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+      "배송완료 취소 · 가짜 LLM — 값 확인 필요"
+    ],
+    "rollback": [
+      {
+        "name": "배송완료 취소 #2 배송완료취소",
+        "with": "되돌리는 화살표 있음"
+      },
+      {
+        "name": "배송완료 취소 #1 배송완료취소",
+        "with": "되돌리는 화살표 있음"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "id": "run-20261112-214048-172",
+      "at": "2026-11-12 21:40",
+      "kind": "드라이런",
+      "rows": [
+        {
+          "scenario_id": "rs-20261112-214048-164",
+          "name": "배송완료 취소",
+          "count": 2,
+          "confirmed": []
+        }
+      ],
+      "calls": [
+        {
+          "scenario": "배송완료 취소",
+          "scenario_id": "rs-20261112-214048-164",
+          "k": 1,
+          "step_id": "1-1",
+          "name": "배송완료 데이터 찾기",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "tier": "R0",
+          "xml": "<Root>\n  <Dataset id=\"{{입력 필요: id}}\">\n    <rows>\n      <row>\n        <venCd>003766</venCd>\n        <ven2Cd>010539</ven2Cd>\n        <fromDate>20230501</fromDate>\n        <toDate>20230515</toDate>\n        <mdaGb>20</mdaGb>\n        <prgrGb>P0</prgrGb>\n        <dlvFormGbcd>40</dlvFormGbcd>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <drctBuyYn>Y</drctBuyYn>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+          "inputs": [
+            {
+              "field": "oauserId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "oauseKey",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "id",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "venCd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ven2Cd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "fromDate",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "toDate",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "mdaGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "prgrGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvFormGbcd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "drctBuyYn",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            }
+          ],
+          "bindings": []
+        },
+        {
+          "scenario": "배송완료 취소",
+          "scenario_id": "rs-20261112-214048-164",
+          "k": 1,
+          "step_id": "1-2",
+          "name": "배송완료취소",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+          "tier": "R1",
+          "xml": "<Root>\n  <Dataset id=\"{{입력 필요: id}}\">\n    <rows>\n      <row>\n        <venCd>003766</venCd>\n        <chk>1</chk>\n        <ordNo>20160118110258</ordNo>\n        <ordPtcSeq>1</ordPtcSeq>\n        <dlvstNo>20160118617141</dlvstNo>\n        <dlvstPtcSeq>1</dlvstPtcSeq>\n        <procGb>PB1</procGb>\n        <rgstId>test</rgstId>\n        <rgstIp>127.0.0.1</rgstIp>\n      </row>\n    </rows>\n  </Dataset>\n</Root>",
+          "inputs": [
+            {
+              "field": "oauserId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "oauseKey",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "id",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "venCd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "chk",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvstNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvstPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "procGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "rgstId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "rgstIp",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            }
+          ],
+          "bindings": []
+        },
+        {
+          "scenario": "배송완료 취소",
+          "scenario_id": "rs-20261112-214048-164",
+          "k": 2,
+          "step_id": "1-1",
+          "name": "배송완료 데이터 찾기",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "tier": "R0",
+          "xml": null,
+          "inputs": [
+            {
+              "field": "oauserId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "oauseKey",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "id",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "venCd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ven2Cd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "fromDate",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "toDate",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "mdaGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "prgrGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvFormGbcd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "drctBuyYn",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            }
+          ],
+          "bindings": []
+        },
+        {
+          "scenario": "배송완료 취소",
+          "scenario_id": "rs-20261112-214048-164",
+          "k": 2,
+          "step_id": "1-2",
+          "name": "배송완료취소",
+          "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+          "tier": "R1",
+          "xml": null,
+          "inputs": [
+            {
+              "field": "oauserId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "oauseKey",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "id",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "venCd",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "chk",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "ordPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvstNo",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "dlvstPtcSeq",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "procGb",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "rgstId",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            },
+            {
+              "field": "rgstIp",
+              "source": "unresolved",
+              "value": null,
+              "ref": null
+            }
+          ],
+          "bindings": []
+        }
+      ],
+      "unresolved": [
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요",
+        "배송완료 취소 · 가짜 LLM — 값 확인 필요"
+      ],
+      "rollback": [
+        {
+          "name": "배송완료 취소 #2 배송완료취소",
+          "with": "되돌리는 화살표 있음"
+        },
+        {
+          "name": "배송완료 취소 #1 배송완료취소",
+          "with": "되돌리는 화살표 있음"
+        }
+      ]
+    }
+  ]
+}

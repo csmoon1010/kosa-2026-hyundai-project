@@ -82,11 +82,21 @@ def ui_data(root: Path) -> dict[str, Any]:
         "preprocessing": preprocessing,
         "baselines": {**{b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
                       **legacy_baselines(preprocessing)},
-        "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
+        "runs": runs_list(root),
         # 최종 등록 화면에서 승인 · 등록한 시나리오 (2026-11-12) — 예전 형식(scenarios)과 따로 둔다. 화면 목록엔 요약만
-        "registered": [registered_summary(x) for x in (_load(p) for p in sorted((root / "data/registered").glob("*.json"), reverse=True)) if x],
+        "registered": registered_list(root),
         "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
     }
+
+
+def runs_list(root: Path) -> list[dict[str, Any]]:
+    """실행 이력 — 최신순. 화면 데이터 전체를 만들지 않고 이것만 (실행 이력 API)."""
+    return [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x]
+
+
+def registered_list(root: Path) -> list[dict[str, Any]]:
+    """등록 시나리오 목록(요약) — 최신순. 화면 데이터 전체를 만들지 않고 이것만 (등록 목록 API)."""
+    return [registered_summary(x) for x in (_load(p) for p in sorted((root / "data/registered").glob("*.json"), reverse=True)) if x]
 
 
 def registered_summary(rec: dict[str, Any]) -> dict[str, Any]:

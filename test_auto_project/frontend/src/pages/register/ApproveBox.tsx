@@ -5,6 +5,7 @@ import { useStored } from '../../lib/storage';
 import { useStore } from '../../lib/store';
 import { flow, register, setChecked } from './flow';
 import type { ConfirmItem, View } from './model';
+import sc from '../../components/scenario.module.css';
 import styles from './register.module.css';
 
 /** 확인할 것 체크 · 승인자 · 승인하고 등록. 등록 기록이면 체크한 것과 승인 정보만 */
@@ -22,7 +23,7 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
       <h3>
         확인할 것 <span className="cnt">{confirm.length}</span>
       </h3>
-      <ul className={styles.checks}>
+      <ul className={sc.checks}>
         {confirm.map((c) => (
           <li key={c.key}>
             <label>
@@ -34,7 +35,7 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
               />{' '}
               <b>{c.label}</b> {c.head} — API 가 맞는지 확인했어요
             </label>
-            {c.why.length > 0 && <span className={styles.why}>{c.why.join(' · ')}</span>}
+            {c.why.length > 0 && <span className={sc.why}>{c.why.join(' · ')}</span>}
           </li>
         ))}
       </ul>
@@ -43,18 +44,18 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
 
   if (rec)
     return (
-      <div className={styles.approve}>
+      <div className={sc.approve}>
         {confirmBox}
-        <p className={styles.done}>
+        <p className={sc.done}>
           ✓ 등록됨 — 승인 {rec.approval.approver} · {rec.registered_at}
         </p>
       </div>
     );
   if (s.registered)
     return (
-      <div className={styles.approve}>
+      <div className={sc.approve}>
         {confirmBox}
-        <p className={styles.done}>✓ 등록했어요 — {s.registered.name}</p>
+        <p className={sc.done}>✓ 등록했어요 — {s.registered.name}</p>
       </div>
     );
 
@@ -89,7 +90,7 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
   }
 
   return (
-    <div className={styles.approve}>
+    <div className={sc.approve}>
       {confirmBox}
       <div className={styles.approver}>
         <label htmlFor="finWho">승인자</label>
@@ -102,7 +103,7 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
           onChange={(e) => setApprover(e.target.value)}
         />
       </div>
-      {r2 && <p className={styles.why}>되돌릴 수 없는 단계는 실행할 때마다 다시 확인해요.</p>}
+      {r2 && <p className={sc.why}>되돌릴 수 없는 단계는 실행할 때마다 다시 확인해요.</p>}
       <div className="btn-row">
         <button
           className="btn btn-primary"
@@ -113,8 +114,8 @@ export function ApproveBox({ v, confirm }: { v: View; confirm: ConfirmItem[] }) 
           {s.regBusy ? '등록 중…' : '승인하고 등록'}
         </button>
       </div>
-      <p className={styles.why}>{why}</p>
-      {s.regError && <p className={styles.err}>{s.regError}</p>}
+      <p className={sc.why}>{why}</p>
+      {s.regError && <p className={sc.err}>{s.regError}</p>}
     </div>
   );
 }

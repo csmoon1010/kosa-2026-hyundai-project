@@ -1439,6 +1439,18 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** RollbackItem */
+    RollbackItem: {
+      /** Name */
+      name: string;
+      /**
+       * With
+       * @description 되돌리는 방법 — '되돌리는 화살표 있음' 등
+       */
+      with?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
     /** RuleRequest */
     RuleRequest: {
       /** Place */
@@ -1477,9 +1489,18 @@ export interface components {
        * Rollback
        * @default []
        */
-      rollback: {
-        [key: string]: unknown;
-      }[];
+      rollback: components['schemas']['RollbackItem'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** RunBinding */
+    RunBinding: {
+      /** Binding Id */
+      binding_id: string;
+      /** From Step Id */
+      from_step_id?: string | null;
+      /** Output Name */
+      output_name?: string | null;
     } & {
       [key: string]: unknown;
     };
@@ -1505,16 +1526,28 @@ export interface components {
        * Inputs
        * @default []
        */
-      inputs: {
-        [key: string]: unknown;
-      }[];
+      inputs: components['schemas']['RunInput'][];
       /**
        * Bindings
        * @default []
        */
-      bindings: {
-        [key: string]: unknown;
-      }[];
+      bindings: components['schemas']['RunBinding'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** RunInput */
+    RunInput: {
+      /** Field */
+      field: string;
+      /**
+       * Source
+       * @description fixed 값 · bind 앞 단계 결과 · unresolved 정해지지 않음
+       */
+      source: string;
+      /** Value */
+      value?: unknown;
+      /** Ref */
+      ref?: string | null;
     } & {
       [key: string]: unknown;
     };

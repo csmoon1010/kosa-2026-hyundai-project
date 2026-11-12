@@ -8,7 +8,9 @@ const WEB_PORT = 5199;
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 30_000,
+  timeout: 60_000,
+  // 실제 서버 — 화면 데이터 API 가 요청마다 데이터를 새로 만들고, 가짜 IR 생성도 자료를 읽는다. 5초 기본값은 빠듯하다
+  expect: { timeout: 15_000 },
   fullyParallel: false,
   workers: 1,
   reporter: [['list']],

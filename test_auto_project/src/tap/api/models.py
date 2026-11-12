@@ -237,6 +237,25 @@ class RunRow(Doc):
     confirmed: list[str] = []
 
 
+class RunInput(Doc):
+    field: str
+    source: str = Field(description="fixed 값 · bind 앞 단계 결과 · unresolved 정해지지 않음")
+    value: Any = None
+    ref: Optional[str] = None
+
+
+class RunBinding(Doc):
+    binding_id: str
+    from_step_id: Optional[str] = None
+    output_name: Optional[str] = None
+
+
+class RollbackItem(Doc):
+    name: str
+    with_: Optional[str] = Field(None, alias="with", description="되돌리는 방법 — '되돌리는 화살표 있음' 등")
+    model_config = ConfigDict(extra="allow", populate_by_name=True, serialize_by_alias=True)
+
+
 class RunCall(Doc):
     scenario: str | None = None
     scenario_id: str | None = None
@@ -246,8 +265,8 @@ class RunCall(Doc):
     api_id: str | None = None
     tier: str | None = None
     xml: str | None = None
-    inputs: list[dict[str, Any]] = []
-    bindings: list[dict[str, Any]] = []
+    inputs: list[RunInput] = []
+    bindings: list[RunBinding] = []
 
 
 class Run(Doc):
@@ -257,7 +276,7 @@ class Run(Doc):
     rows: list[RunRow]
     calls: list[RunCall]
     unresolved: list[str] = []
-    rollback: list[dict[str, Any]] = []
+    rollback: list[RollbackItem] = []
 
 
 class RunResult(Doc):
