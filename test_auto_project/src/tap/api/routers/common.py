@@ -4,12 +4,13 @@ from __future__ import annotations
 from fastapi import APIRouter, Request
 
 from tap.api.deps import state
+from tap.api.models import Health, doc
 from tap.ui.export import ui_data
 
 router = APIRouter(prefix="/api/common", tags=["공통"])
 
 
-@router.get("/health")
+@router.get("/health", responses=doc(Health))
 def health():
     return {"ok": True}
 

@@ -133,7 +133,7 @@ IR 입력 검토(승인게이트) 화면은 지금도 숨김이라 옮기지 않
 
 | 할 일 | 내용 |
 |---|---|
-| 요청 · 응답 모델 | API 마다 pydantic 모델 → `/api/openapi.json` 이 칸까지 설명. 칸 이름 · 값은 바꾸지 않는다 (지금 화면 · 테스트가 쓴다) |
+| 요청 · 응답 모델 | API 마다 pydantic 모델(`tap/api/models.py`) → `/api/openapi.json` 이 칸까지 설명. 칸 이름 · 값은 바꾸지 않는다 (지금 화면 · 테스트가 쓴다). 요청 검사 실패도 400 `{"error"}` (422 를 쓰지 않음), 모델 밖의 칸은 서비스로 넘긴다. 응답 모델은 문서용 — 실행 중 다시 검사하지 않는다(예전 기록에서 서버 오류가 나지 않게). 진행 스트림 줄 모양은 스트림 경로의 `application/x-ndjson` 응답에 `oneOf` 로. 화면 데이터(`/api/admin/{part}` · `/api/common/data`) · 확인용 IR 검토 · 로그는 아직 칸 설명 없음 — 해당 화면을 옮길 때 추가 |
 | 타입 자동 생성 | `openapi-typescript` 로 `frontend/src/api/schema.d.ts`. `npm run gen:api` 로 다시 만든다 — 서버 모델을 바꾸면 같이 커밋 |
 | 화면 데이터 나누기 | 지금 `/api/common/data` 는 한 덩어리(약 3MB). React 는 필요한 것만: `GET /api/admin/catalog` · `metadata` · `operations`(필드 한글명) · `graphs` · `codes` · `rules` · `review` · `preprocessing` · `environment` — 같은 `ui_data` 를 나눠 돌려준다 |
 | 그래프 매칭을 서버로 | 그래프 편집기의 API 후보 미리보기는 지금 `graph-editor.js` 가 `graph/match.py` 를 JS 로 **복사**해 계산한다 (두 벌). `POST /api/admin/graphs/match` 로 파이썬 하나만 쓰게 한다 |
@@ -204,7 +204,7 @@ Playwright 를 실제 LLM 없이 돌리려면 서버에 가짜 LLM 으로 띄우
 
 | 단계 | 상태 |
 |---|---|
-| R0. 준비 (FastAPI 5단계 포함) | 대기 |
+| R0. 준비 (FastAPI 5단계 포함) | 진행 중 — R0-1 화면 데이터 나누기 · 매칭 API ✓, R0-2 요청 · 응답 모델 ✓, R0-3 `frontend/` 뼈대 · R0-4 가짜 LLM 실행 옵션 남음 |
 | R1. 시나리오 등록 | 대기 |
 | R2. 실행 · 이력 | 대기 |
 | R3. 확인용 | 대기 |

@@ -5,6 +5,7 @@
 경로는 메뉴 이름 기준 — /api/register(시나리오 등록) · /api/inspect(확인용) · /api/run(실행) · /api/history(실행 이력) ·
 /api/admin(관리자) · /api/common(공통). 오류 응답은 {"error": …} (입력 · 검사 오류 400 · 검토 충돌 409 · 없음 404 · 그 밖 500).
 라우터는 일반 함수(def) — LLM 호출 · 파일 쓰기가 동기 코드라 스레드풀에서 돈다. API 목록: /api/docs
+요청 · 응답 모양은 tap.api.models — 요청 검사 실패도 400 {"error"}. 명세: /api/openapi.json (React 타입 생성)
 """
 from __future__ import annotations
 
@@ -13,10 +14,12 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from tap.api import services
+from tap.api import models, services
 from tap.api.routers import admin, common, history, inspect, register, run
 from tap.ui.export import ui_data
 
@@ -36,6 +39,39 @@ def _error(code: int, error: Exception, message: str) -> JSON:
     return JSON(body, status_code=code)
 
 
+def _validation_message(error: RequestValidationError) -> str:
+    """요청 모델 검사 실패 → 지금과 같은 {"error": 글} (422 대신 400)."""
+    first = (error.errors() or [{}])[0]
+    loc = [str(x) for x in first.get("loc", ()) if x != "body"]
+    if first.get("type") == "json_invalid" or (not loc and first.get("type") in ("model_attributes_type", "dict_type")):
+        return "요청은 JSON 객체여야 합니다"
+    return f"요청 형식 오류 — {'.'.join(loc) or '본문'}: {first.get('msg', '')}"
+
+
+def _openapi(app: FastAPI) -> dict[str, Any]:
+    """OpenAPI — 422 (쓰지 않음) 를 빼고, 진행 스트림 줄 모양을 components 와 스트림 경로의 application/x-ndjson 응답에 넣는다."""
+    if app.openapi_schema:
+        return app.openapi_schema
+    spec = get_openapi(title=app.title, version=app.version, routes=app.routes)
+    schemas = spec.setdefault("components", {}).setdefault("schemas", {})
+    for name in ("HTTPValidationError", "ValidationError"):
+        schemas.pop(name, None)
+    for model in models.STREAM_EVENTS:
+        js = model.model_json_schema(ref_template="#/components/schemas/{model}", mode="serialization")
+        schemas.update(js.pop("$defs", {}))
+        schemas[model.__name__] = js
+    for path, ops in spec.get("paths", {}).items():
+        for method, op in ops.items():
+            op.get("responses", {}).pop("422", None)
+            events = models.STREAMS.get(path)
+            if events and method == "post":
+                ok = op["responses"].setdefault("200", {"description": "Successful Response"})
+                ok.setdefault("content", {})["application/x-ndjson"] = {
+                    "schema": {"oneOf": [{"$ref": f"#/components/schemas/{m.__name__}"} for m in events]}}
+    app.openapi_schema = spec
+    return spec
+
+
 def create_app(root: Path, llm=None) -> FastAPI:
     """llm: 테스트에서 가짜 LLM 을 끼울 때. 없으면 .env 의 OpenAI."""
     root = Path(root)
@@ -49,6 +85,10 @@ def create_app(root: Path, llm=None) -> FastAPI:
     def _value_error(request: Request, error: ValueError) -> JSON:
         from tap.ir.input_review import ReviewConflict
         return _error(409 if isinstance(error, ReviewConflict) else 400, error, str(error))
+
+    @app.exception_handler(RequestValidationError)
+    def _bad_request(request: Request, error: RequestValidationError) -> JSON:
+        return JSON({"error": _validation_message(error)}, status_code=400)
 
     @app.exception_handler(Exception)
     def _server_error(request: Request, error: Exception) -> JSON:
@@ -78,5 +118,6 @@ def create_app(root: Path, llm=None) -> FastAPI:
     def index() -> FileResponse:
         return FileResponse(root / "web/offline-ui.html")
 
+    app.openapi = lambda: _openapi(app)
     app.mount("/", StaticFiles(directory=root / "web", check_dir=False), name="web")   # 화면 폴더가 없어도 API 는 뜬다 (테스트 · 예전과 같다)
     return app

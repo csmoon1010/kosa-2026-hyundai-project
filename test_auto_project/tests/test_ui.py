@@ -336,3 +336,82 @@ def test_admin_data_parts_and_graph_match(server):
                    ("찾음", "selectOshpDtlList.do", {"prgrGb": "P3"})]
     assert all(len(x["candidates"]) <= 3 for x in m["edges"] + m["lookups"])               # 편집기와 같게 상위 3개
     assert json.loads(call(base + "/api/admin/graph-review"))["items"] == []               # 지금 그래프는 모두 찾음
+
+
+def _fail(base, path, body=None, method=None, raw=None):
+    """오류 응답 (코드, 본문). raw 는 JSON 이 아닌 본문을 그대로 보낼 때."""
+    import urllib.error
+    data = raw if raw is not None else (json.dumps(body).encode() if body is not None else None)
+    req = urllib.request.Request(base + path, data=data, headers={"Content-Type": "application/json"}, method=method)
+    with pytest.raises(urllib.error.HTTPError) as e:
+        urllib.request.urlopen(req)
+    return e.value.code, json.loads(e.value.read().decode("utf-8"))
+
+
+def test_request_models_keep_error_format(agent_server):
+    """React 전환 R0-2 — 요청 모델 검사 실패도 422 가 아니라 지금처럼 400 {"error"}. 모델 밖의 칸은 서비스까지 간다 (2026-11-12)."""
+    base, _ = agent_server
+    assert _fail(base, "/api/register/analyze", [1]) == (400, {"error": "요청은 JSON 객체여야 합니다"})
+    assert _fail(base, "/api/register/analyze", raw=b"{not json") == (400, {"error": "요청은 JSON 객체여야 합니다"})
+    code, body = _fail(base, "/api/register/analyze", {"utterance": 3})
+    assert code == 400 and body["error"].startswith("요청 형식 오류 — utterance")
+    assert _fail(base, "/api/register/analyze", method="POST") == (400, {"error": "자연어 요청이 비어 있습니다"})           # 본문 없음 → {} → 서비스가 판단
+    code, body = _fail(base, "/api/run/dry-run", {"items": [{"n": 1}]})
+    assert code == 400 and body["error"].startswith("요청 형식 오류 — items.0.id")
+    code, body = _fail(base, "/api/admin/graphs/ORD_STAT_GBCD", {}, "PUT")
+    assert code == 400 and "yaml" in body["error"]
+    code, body = _fail(base, "/api/inspect/ir", {"approved_filename": "x.json", "budget": 1})          # 모델 밖의 칸 — 서비스가 거부
+    assert code == 400 and "예산" in body["error"]
+
+
+def test_responses_match_models(agent_server, stub_ir):
+    """React 전환 R0-2 — 실제 응답 · 스트림 줄이 OpenAPI 모델(tap.api.models)과 맞는다. OpenAPI 에 422 는 없고 스트림 줄 모양은 있다 (2026-11-12)."""
+    from pydantic import TypeAdapter
+    from tap.api import models as M
+    base, root = agent_server
+    get = lambda path: json.loads(call(base + path))
+    post = lambda path, body, method=None: json.loads(call(base + path, body, method))
+
+    def stream(path, body):
+        req = urllib.request.Request(base + path, data=json.dumps(body).encode("utf-8"),
+                                     headers={"Content-Type": "application/json", "Accept": "application/x-ndjson"})
+        with urllib.request.urlopen(req) as res:
+            return [json.loads(x) for x in res.read().decode("utf-8").splitlines() if x.strip()]
+
+    M.Health.model_validate(get("/api/common/health"))
+    r = M.AnalyzeResult.model_validate(post("/api/register/analyze", {"utterance": Q}))
+    h = r.gate.selection_hash
+    events = TypeAdapter(list[M.StageEvent | M.AnalyzeEndEvent]).validate_python(stream("/api/register/analyze", {"utterance": Q}))
+    assert isinstance(events[-1].result, M.AnalyzeResult)
+
+    ir = M.RegisterIrResult.model_validate(post("/api/register/ir", {"selection_hash": h}))
+    lines = stream("/api/register/ir", {"selection_hash": h})
+    M.ReviewDraftEvent.model_validate(lines[0])
+    M.IrProgressEvent.model_validate(lines[1])
+    M.GenerationComplete.model_validate(lines[-1])
+
+    irs = root / "data/out/scenario_ir_drafts"
+    irs.mkdir(parents=True, exist_ok=True)
+    (irs / "SCN-m-v1.json").write_text(json.dumps({"scenario_id": "SCN-m", "tasks": [], "unresolved": [],
+                                                   "sources": {"approved": {"file": "data/ir_inputs/" + ir.review.filename}}}), encoding="utf-8")
+    reg = M.RegisterResult.model_validate(post("/api/register/scenarios", {"selection_hash": h, "name": "모델", "approver": "지은",
+                                                                          "review_file": ir.review.filename, "ir_file": "data/out/scenario_ir_drafts/SCN-m-v1.json"}))
+    assert reg.id in [s.id for s in M.ScenarioList.model_validate(get("/api/register/scenarios")).scenarios]
+    M.RegisteredRecord.model_validate(get("/api/register/scenarios/" + reg.id))
+    run = M.RunResult.model_validate(post("/api/run/dry-run", {"items": [{"id": reg.id, "n": 1}]})).run
+    assert run.id in [x.id for x in M.RunList.model_validate(get("/api/history/runs")).runs]
+    M.Ok.model_validate(post("/api/register/scenarios/" + reg.id, None, "DELETE"))
+
+    M.ApproveResult.model_validate(post("/api/inspect/approve", {"selection_hash": h, "scenario": True, "approver": "지은"}))
+    m = M.GraphMatchResult.model_validate(post("/api/admin/graphs/match", {"edges": [{"from_name": "배송완료", "to_name": "출고", "to_code": "PB3"}],
+                                                                          "lookups": [{"state_name": "배송완료", "state_code": "P3"}]}))
+    assert m.edges[0].candidates and m.lookups[0].candidates
+
+    spec = get("/api/openapi.json")
+    assert not [p for p, ops in spec["paths"].items() for op in ops.values() if "422" in op["responses"]]
+    schemas = spec["components"]["schemas"]
+    assert {e.__name__ for e in M.STREAM_EVENTS} <= set(schemas) and "HTTPValidationError" not in schemas
+    assert "from" in schemas["Step"]["properties"]                                              # 응답과 같은 칸 이름 (alias)
+    for path, events in M.STREAMS.items():
+        ref = spec["paths"][path]["post"]["responses"]["200"]["content"]["application/x-ndjson"]["schema"]["oneOf"]
+        assert [x["$ref"].rsplit("/", 1)[1] for x in ref] == [e.__name__ for e in events]
