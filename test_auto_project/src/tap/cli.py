@@ -321,10 +321,12 @@ def main() -> None:
         print(write_ui_data(ROOT, ROOT / "web/tap-data.js"))
         return
     if a.cmd == "serve":
+        import uvicorn
+        from tap.api.app import create_app
         from tap.ui.export import write_ui_data
-        from tap.ui.serve import serve
-        write_ui_data(ROOT, ROOT / "web/tap-data.js")
-        serve(ROOT, a.port, a.host)
+        write_ui_data(ROOT, ROOT / "web/tap-data.js")              # 서버 없이 화면을 열 때 쓰는 화면 데이터
+        print(f"화면 → http://{a.host}:{a.port}/  (API 목록 /api/docs, 끝내려면 Ctrl+C)", flush=True)
+        uvicorn.run(create_app(ROOT), host=a.host, port=a.port, log_level="warning")
         return
     if a.cmd == "intent":
         for u in a.utterance:

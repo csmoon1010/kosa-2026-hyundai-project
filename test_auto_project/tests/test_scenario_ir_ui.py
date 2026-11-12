@@ -52,10 +52,10 @@ result.step_previews={'1-1':makePreview('venCd','003766','001442'),'2-1':makePre
 const planned=[{step_id:'1-1',edge:'주문 조회',task_sequence:1,task_action:'주문조회',conditions:'협력사 코드 조건',api:{api_id:'api-1'}},
  {step_id:'2-1',edge:'주문 확인',task_sequence:2,task_action:'주문 처리',conditions:'1번 업무의 조회 결과로 주문 처리',api:{api_id:'api-2'}}];
 global.fetch=async(url,options)=>{
- if(url.startsWith('/api/scenario-ir-budget?'))return {ok:true,json:async()=>({budget:{step_count:2,limits:{llm_calls:12,tokens:130000,seconds:150}}})};
- if(url==='/api/approved-selections')return {ok:true,json:async()=>({defaults,files:[{filename:'approved.json',original_question:'주문',approval_status:'approved'}]})};
- if(url==='/api/scenario-ir-reviews')return {ok:true,json:async()=>({reviews:[]})};
- if(url==='/api/scenario-ir-log-summaries')return {ok:true,json:async()=>({runs:[{run_id:'IRRUN-example',filename:'IRRUN-example.jsonl',started_at:'2026-11-01T10:00:00+09:00',options:{stop_retry:false,kb_rag:true,dependency_projection:true},status:'완료',duration_seconds:65,model_calls:3,turns:3,input_tokens:800,output_tokens:120,embedding_tokens:20,total_tokens:940}]})};
+ if(url.startsWith('/api/inspect/ir/budget?'))return {ok:true,json:async()=>({budget:{step_count:2,limits:{llm_calls:12,tokens:130000,seconds:150}}})};
+ if(url==='/api/inspect/ir/approved')return {ok:true,json:async()=>({defaults,files:[{filename:'approved.json',original_question:'주문',approval_status:'approved'}]})};
+ if(url==='/api/inspect/ir/reviews')return {ok:true,json:async()=>({reviews:[]})};
+ if(url==='/api/inspect/ir/logs')return {ok:true,json:async()=>({runs:[{run_id:'IRRUN-example',filename:'IRRUN-example.jsonl',started_at:'2026-11-01T10:00:00+09:00',options:{stop_retry:false,kb_rag:true,dependency_projection:true},status:'완료',duration_seconds:65,model_calls:3,turns:3,input_tokens:800,output_tokens:120,embedding_tokens:20,total_tokens:940}]})};
  assert.equal(options.headers.Accept,'application/x-ndjson');
  const selected=JSON.parse(options.body).generation_options;requestedOptions.push(selected);
  const mode=selected.stop_retry?'validated':'basic';requestedModes.push(mode);
@@ -63,7 +63,7 @@ global.fetch=async(url,options)=>{
  result.ir.generation.options=selected;
  for(const key of ['stop_retry','kb_rag','dependency_projection'])assert.equal(host.querySelector('[data-option-'+key+']').disabled,true);
  if(mode==='validated')result.ir.generation.execution_mode='validated';
- const events=[{event:'generation_start',log_file:'data/out/scenario_ir_logs/IRRUN-example.jsonl',log_url:'/api/scenario-ir-logs/IRRUN-example.jsonl'},{event:'llm_request',turn:0,next_turn:1,step_id:'1-1',step_turn:1,instructions:'공통 역할',input:[{role:'user',content:'한글 프롬프트'}],text:{format:{type:'json_schema',strict:true}},store:false,include:['reasoning.encrypted_content']},
+ const events=[{event:'generation_start',log_file:'data/out/scenario_ir_logs/IRRUN-example.jsonl',log_url:'/api/inspect/ir/logs/IRRUN-example.jsonl'},{event:'llm_request',turn:0,next_turn:1,step_id:'1-1',step_turn:1,instructions:'공통 역할',input:[{role:'user',content:'한글 프롬프트'}],text:{format:{type:'json_schema',strict:true}},store:false,include:['reasoning.encrypted_content']},
  {event:'llm_response',turn:1,step_id:'1-1',usage:result.usage,response_status:'completed',output:{object:'response',status:'completed',output:[{type:'message',content:[{type:'output_text',text:'한글 결과'}]}]}},
  {event:'tool_selected',turn:1,step_id:'1-1',call_id:'read',tool:'get_request_schema',arguments:'{}'},
  {event:'tool_start',turn:1,step_id:'1-1',call_id:'read',tool:'get_request_schema'},
@@ -112,7 +112,7 @@ global.fetch=async(url,options)=>{
  const get=k=>host.querySelector('[data-'+k+']');
  assert.match(get('status').textContent,/저장 완료/);
  assert.match(get('log-file').children[0].textContent,/IRRUN-example.jsonl/);
- assert.equal(get('log-file').children[1].href,'/api/scenario-ir-logs/IRRUN-example.jsonl');
+ assert.equal(get('log-file').children[1].href,'/api/inspect/ir/logs/IRRUN-example.jsonl');
  assert.match(get('progress').textContent,/누적 토큰 12/);
  assert.match(get('runs-status').textContent,/JSONL 로그 1 \/ 1개/);
  assert.match(get('runs-table').textContent,/2026/);

@@ -226,21 +226,21 @@ def test_harness_exhaustion(root):
 
 
 def test_http_list_generate_and_save(root, monkeypatch):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request, urlopen
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     from tap.ir import draft_build
     original=draft_build.generate
     monkeypatch.setattr(draft_build,'generate',lambda r,f,c:original(r,f,c,runtime_factory=FakeRuntime))
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     url=f'http://127.0.0.1:{server.server_port}'
     try:
-        with urlopen(url+'/api/approved-selections') as response: listing=json.load(response)
+        with urlopen(url+'/api/inspect/ir/approved') as response: listing=json.load(response)
         assert any(x['filename']==FILENAME for x in listing['files'])
         assert listing['defaults']['max_turns']==16
-        req=Request(url+'/api/scenario-ir-drafts',data=json.dumps(dict(approved_filename=FILENAME,generation_config={'max_turns':24})).encode(),headers={'Content-Type':'application/json'})
+        req=Request(url+'/api/inspect/ir',data=json.dumps(dict(approved_filename=FILENAME,generation_config={'max_turns':24})).encode(),headers={'Content-Type':'application/json'})
         with urlopen(req) as response: result=json.load(response)
         assert result['ir']['generation']['config']['max_turns']==24
         assert (root/result['file']).is_file()
@@ -286,10 +286,10 @@ def test_runtime_progress_includes_prompt_usage_and_tool_events(root):
 
 
 def test_http_stream_flushes_start_and_retains_failure(root, monkeypatch):
-    from http.server import ThreadingHTTPServer
     from threading import Thread, Event
     from urllib.request import Request, urlopen
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     from tap.ir import draft_build
     release=Event()
     def generate(r,f,c,on_event=None):
@@ -298,10 +298,10 @@ def test_http_stream_flushes_start_and_retains_failure(root, monkeypatch):
         assert release.wait(3)
         raise ValueError('진행 중 실패')
     monkeypatch.setattr(draft_build,'generate',generate)
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     try:
-        req=Request(f'http://127.0.0.1:{server.server_port}/api/scenario-ir-drafts',data=json.dumps({'approved_filename':FILENAME}).encode(),headers={'Content-Type':'application/json','Accept':'application/x-ndjson'})
+        req=Request(f'http://127.0.0.1:{server.server_port}/api/inspect/ir',data=json.dumps({'approved_filename':FILENAME}).encode(),headers={'Content-Type':'application/json','Accept':'application/x-ndjson'})
         with urlopen(req,timeout=3) as response:
             assert response.headers.get_content_type()=='application/x-ndjson'
             assert json.loads(response.readline())['event']=='generation_start'
@@ -314,17 +314,17 @@ def test_http_stream_flushes_start_and_retains_failure(root, monkeypatch):
 
 
 def test_http_stream_success_still_saves_draft(root,monkeypatch):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request,urlopen
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     from tap.ir import draft_build
     original=draft_build.generate
     monkeypatch.setattr(draft_build,'generate',lambda r,f,c,on_event=None:original(r,f,c,runtime_factory=FakeRuntime,on_event=on_event))
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     try:
-        req=Request(f'http://127.0.0.1:{server.server_port}/api/scenario-ir-drafts',data=json.dumps({'approved_filename':FILENAME}).encode(),headers={'Content-Type':'application/json','Accept':'application/x-ndjson'})
+        req=Request(f'http://127.0.0.1:{server.server_port}/api/inspect/ir',data=json.dumps({'approved_filename':FILENAME}).encode(),headers={'Content-Type':'application/json','Accept':'application/x-ndjson'})
         with urlopen(req,timeout=3) as response: events=[json.loads(line) for line in response]
         assert events[0]['event']=='generation_start' and events[-1]['event']=='generation_complete'
         assert sum(e['event']=='backend_canonical' for e in events)==4
@@ -402,16 +402,16 @@ def test_failed_generation_journal_is_flushed_and_closed(root):
 
 
 def test_log_download_for_failed_http_generation(root):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request,urlopen
     from urllib.error import HTTPError
-    from tap.ui.serve import make_handler
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    from tap.api.app import create_app
+    from app_server import AppServer
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     base=f'http://127.0.0.1:{server.server_port}'
     try:
-        req=Request(base+'/api/scenario-ir-drafts',data=json.dumps({'approved_filename':'missing.json'}).encode(),headers={'Content-Type':'application/json'})
+        req=Request(base+'/api/inspect/ir',data=json.dumps({'approved_filename':'missing.json'}).encode(),headers={'Content-Type':'application/json'})
         with pytest.raises(HTTPError) as caught: urlopen(req,timeout=3)
         error=json.load(caught.value)
         assert error['log_file']
@@ -421,7 +421,7 @@ def test_log_download_for_failed_http_generation(root):
         assert raw==(root/error['log_file']).read_bytes()
         events=[json.loads(x) for x in raw.decode().splitlines()]
         assert events[-1]['event']=='generation_error'
-        with pytest.raises(HTTPError): urlopen(base+'/api/scenario-ir-logs/not-a-log.jsonl')
+        with pytest.raises(HTTPError): urlopen(base+'/api/inspect/ir/logs/not-a-log.jsonl')
     finally:
         server.shutdown();server.server_close();thread.join()
 

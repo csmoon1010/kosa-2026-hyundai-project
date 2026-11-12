@@ -74,7 +74,7 @@
     if(!data?.log_file)return;
     const area=get('log-file');area.replaceChildren();
     const label=document.createElement('span');label.textContent='전체 로그: '+data.log_file+' ';area.append(label);
-    if(data.log_url?.startsWith('/api/scenario-ir-logs/')){
+    if(data.log_url?.startsWith('/api/inspect/ir/logs/')){
       const link=document.createElement('a');link.href=data.log_url;link.download='';link.textContent='JSONL 다운로드';area.append(link);
     }
   }
@@ -111,7 +111,7 @@
       for(const value of values){const cell=document.createElement('td');cell.textContent=String(value);row.append(cell);}
       const linkCell=document.createElement('td');
       if(typeof run.filename==='string'&&/^IRRUN-[A-Za-z0-9-]+\.jsonl$/.test(run.filename)){
-        const link=document.createElement('a');link.href='/api/scenario-ir-logs/'+encodeURIComponent(run.filename);link.download=run.filename;link.textContent='JSONL';linkCell.append(link);
+        const link=document.createElement('a');link.href='/api/inspect/ir/logs/'+encodeURIComponent(run.filename);link.download=run.filename;link.textContent='JSONL';linkCell.append(link);
       }else linkCell.textContent='—';
       row.append(linkCell);body.append(row);
     }
@@ -120,7 +120,7 @@
   }
   function applyRunFilters(){renderRunSummaries(filteredRunSummaries());}
   async function loadRunSummaries(){
-    const response=await fetch('/api/scenario-ir-log-summaries',{cache:'no-store'});
+    const response=await fetch('/api/inspect/ir/logs',{cache:'no-store'});
     if(!response.ok)throw new Error('저장된 IR 로그 요약을 불러오지 못했습니다.');
     const data=await response.json();savedRunSummaries=data.runs||[];applyRunFilters();
   }
@@ -305,7 +305,7 @@
     get('generate').disabled=true;
     if(!filename)return;
     try {
-      const response=await fetch('/api/scenario-ir-budget?filename='+encodeURIComponent(filename),{cache:'no-store'});
+      const response=await fetch('/api/inspect/ir/budget?filename='+encodeURIComponent(filename),{cache:'no-store'});
       const data=await response.json();
       if(request!==budgetRequest)return;
       if(!response.ok)throw new Error(data.error||'예산 산정 실패');
@@ -314,7 +314,7 @@
   }
   async function refresh(selected) {
     if (location.protocol === 'file:') { status('로컬 서버로 열어야 IR을 생성할 수 있습니다.'); return; }
-    const r = await fetch('/api/approved-selections');
+    const r = await fetch('/api/inspect/ir/approved');
     if (!r.ok) throw new Error('승인본 목록 조회 실패');
     const data = await r.json();
     if (!Object.keys(defaults).length) {
@@ -470,7 +470,7 @@
     return data;
   }
   async function loadReviews(selected){
-    const data=await reviewRequest('/api/scenario-ir-reviews');
+    const data=await reviewRequest('/api/inspect/ir/reviews');
     const prior=selected||get('reviews').value;
     get('reviews').replaceChildren(...data.reviews.map(row=>{
       const option=document.createElement('option');option.value=row.scenario_id;
@@ -547,7 +547,7 @@
         return result;
       });
       const id=currentReview.ir.scenario_id;
-      const data=await reviewRequest('/api/scenario-ir-reviews/'+encodeURIComponent(id)+'/'+(confirm?'confirm':'decisions'),body);
+      const data=await reviewRequest('/api/inspect/ir/reviews/'+encodeURIComponent(id)+'/'+(confirm?'confirm':'decisions'),body);
       preview(data);showReview(data);await loadReviews(id);
       get('review-status').textContent=confirm?'결정본을 확정했습니다. 실제 업무 API는 실행하지 않았습니다.':'검토 내용을 저장했습니다.';
     }catch(error){get('review-status').textContent=error.message+' · 오래된 버전이면 검토 불러오기를 눌러 갱신하세요.';}
@@ -572,7 +572,7 @@
       activeOptions={...chosenOptions};activeMode=activeOptions.stop_retry?'validated':'basic';writeOptions(activeOptions);
       get('mode-status').textContent='실행 옵션: '+describeOptions(activeOptions);
       status('승인 JSON 저장 완료 · IR 초안 생성 중…');
-      const r=await fetch('/api/scenario-ir-drafts',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/x-ndjson'},body:JSON.stringify({approved_filename:chosen,generation_options:activeOptions})});
+      const r=await fetch('/api/inspect/ir',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/x-ndjson'},body:JSON.stringify({approved_filename:chosen,generation_options:activeOptions})});
       const data=await receive(r);
       showLogFile(data);preview(data);if(data.review){showReview(data);await loadReviews(data.ir.scenario_id);}else{currentReview=null;get('review-content').replaceChildren();get('review-status').textContent='이 실행은 IR 입력 검토를 적용하지 않았습니다.';}status('IR 초안 저장 완료 · 실행용 시나리오에는 등록하지 않았습니다.');
     } catch(e) {
@@ -589,7 +589,7 @@
   get('review-load').addEventListener('click',async()=>{
     if(busy||reviewBusy)return;
     try{const id=get('reviews').value;if(!id)throw new Error('검토 초안을 선택하세요');
-      const data=await reviewRequest('/api/scenario-ir-reviews/'+encodeURIComponent(id));resetSteps();preview(data);showReview(data);
+      const data=await reviewRequest('/api/inspect/ir/reviews/'+encodeURIComponent(id));resetSteps();preview(data);showReview(data);
     }catch(error){get('review-status').textContent=error.message;}
   });
   loadReviews().catch(error=>{get('review-status').textContent=error.message;});

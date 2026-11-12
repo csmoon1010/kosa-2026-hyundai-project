@@ -1,7 +1,7 @@
 """①②③ + 승인 → 혜정 IR 초안 생성의 입력(승인본 JSON). 혜정 코드는 고치지 않고 형식만 맞춘다.
 
 혜정 쪽(tap.ir.draft_build)은 data/ir_inputs/<파일>.json 을 읽어 Baseline · Parameter KB 참조 → 입력값 매핑 →
-Output Binding → Scenario IR 초안을 만든다. 우리 승인(/api/approve)이 성공했을 때만 이 파일을 만든다.
+Output Binding → Scenario IR 초안을 만든다. 확인용 승인(/api/inspect/approve) 때 승인본(tdg-*), 최종 등록 화면의 IR 생성(/api/register/ir) 때 검토 초안(review-*)을 만든다.
 
 형식을 맞추는 곳 (2026-11-03 지은 결정)
   단계 번호   혜정은 1 이상만 받는다 → 업무마다 1부터 다시 매기고, 우리 단계 key(1-0 …)는 source_step 에 남긴다

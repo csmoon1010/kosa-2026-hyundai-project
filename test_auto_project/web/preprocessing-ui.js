@@ -91,7 +91,7 @@
     try {
       if (location.protocol === 'file:') throw new Error('로컬 서버로 열어야 사용자 등록값을 저장할 수 있습니다.');
       const values = JSON.parse(el('blBody').value);
-      const saved = await api('/api/preprocessing/baseline', { selected_api_id: sid, values });
+      const saved = await api('/api/admin/preprocessing/baselines', { selected_api_id: sid, values }, 'PUT');
       rerenderAll();
       toast('blToast', `사용자 등록값 저장 · ${saved.file}`);
     } catch (error) { toast('blToast', '저장 실패: ' + error.message); }
@@ -156,7 +156,7 @@
     refresh.disabled = true;
     try {
       if (location.protocol === 'file:') throw new Error('갱신은 로컬 서버(tap.cli serve)로 열어 사용해 주세요.');
-      await api('/api/preprocessing/refresh');
+      await api('/api/admin/preprocessing/refresh');
       showStatus(); rerenderAll();
       if (activeDoc && !el('modal').hidden) openDoc(activeDoc.id, activeDoc.dom);
     } catch (error) { status.textContent = '갱신 실패: ' + error.message; }

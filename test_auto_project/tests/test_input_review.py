@@ -152,33 +152,33 @@ def test_rule_ignore_attack_hits_existing_validator(root):
 
 
 def test_http_gate_routes_and_invalid_option_combinations(root):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request,urlopen
     from urllib.error import HTTPError
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     result=draft(root);sid=result['ir']['scenario_id']
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     base=f'http://127.0.0.1:{server.server_port}'
     def call(path,body=None,accept='application/json'):
         request=Request(base+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json','Accept':accept})
         with urlopen(request) as response:return json.load(response)
     try:
-        assert call('/api/scenario-ir-reviews')['reviews'][0]['scenario_id']==sid
-        assert call('/api/scenario-ir-reviews/'+sid)['review']['revision']==1
+        assert call('/api/inspect/ir/reviews')['reviews'][0]['scenario_id']==sid
+        assert call('/api/inspect/ir/reviews/'+sid)['review']['revision']==1
         for accept in ['application/json','application/x-ndjson']:
             with pytest.raises(HTTPError) as caught:
-                call('/api/scenario-ir-drafts',dict(approved_filename=FILENAME,generation_options={'injection_guard':True}),accept)
+                call('/api/inspect/ir',dict(approved_filename=FILENAME,generation_options={'injection_guard':True}),accept)
             assert caught.value.code==400
         with pytest.raises(HTTPError) as caught:
-            call('/api/scenario-ir-reviews/'+sid+'/confirm',dict(expected_revision=1,status='confirmed'))
+            call('/api/inspect/ir/reviews/'+sid+'/confirm',dict(expected_revision=1,status='confirmed'))
         assert caught.value.code==400
-        saved=call('/api/scenario-ir-reviews/'+sid+'/decisions',choose(result,'runtime'))
+        saved=call('/api/inspect/ir/reviews/'+sid+'/decisions',choose(result,'runtime'))
         with pytest.raises(HTTPError) as caught:
-            call('/api/scenario-ir-reviews/'+sid+'/confirm',dict(expected_revision=1))
+            call('/api/inspect/ir/reviews/'+sid+'/confirm',dict(expected_revision=1))
         assert caught.value.code==409
-        assert call('/api/scenario-ir-reviews/'+sid+'/confirm',dict(expected_revision=saved['review']['revision']))['review']['status']=='confirmed'
+        assert call('/api/inspect/ir/reviews/'+sid+'/confirm',dict(expected_revision=saved['review']['revision']))['review']['status']=='confirmed'
     finally:
         server.shutdown();server.server_close();thread.join()
 

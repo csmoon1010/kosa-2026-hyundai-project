@@ -357,26 +357,26 @@ def test_malformed_required_artifact_is_not_a_model_repair(root):
 
 @pytest.mark.parametrize('stream',[False,True])
 def test_server_mode_contract_json_and_ndjson(root, monkeypatch, stream):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request,urlopen
     import tap.ir.draft_build as build
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     a,tools,plan=context(root,True);queue,_=scenario_queue(tools,plan)
     original=build.generate
     def run(r,f,c,**kwargs):
         return original(r,f,c,runtime_factory=lambda tools,config:queued_runtime(tools,queue)[0],**kwargs)
     monkeypatch.setattr(build,'generate',run)
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     url=f'http://127.0.0.1:{server.server_port}'
     try:
-        with urlopen(url+'/api/approved-selections') as response: defaults=json.load(response)
+        with urlopen(url+'/api/inspect/ir/approved') as response: defaults=json.load(response)
         assert defaults['default_generation_mode']=='basic'
         assert {m['value'] for m in defaults['generation_modes']}=={'basic','validated'}
         body=json.dumps(dict(approved_filename=FILENAME,generation_mode='validated')).encode()
         headers={'Content-Type':'application/json','Accept':'application/x-ndjson' if stream else 'application/json'}
-        with urlopen(Request(url+'/api/scenario-ir-drafts',data=body,headers=headers)) as response:
+        with urlopen(Request(url+'/api/inspect/ir',data=body,headers=headers)) as response:
             raw=response.read().decode()
         if stream:
             events=[json.loads(line) for line in raw.splitlines()]

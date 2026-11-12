@@ -4427,7 +4427,7 @@ function mountEditor(){
   else if (GE_INST._d !== d){ GE_INST.setDomain(d); GE_INST._d = d; }
 }
 if (TAP && location.protocol.startsWith('http'))
-  fetch('/api/health').then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok){ SERVER = true; renderDataBadge(); rerenderAll(); } }).catch(() => {});
+  fetch('/api/common/health').then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok){ SERVER = true; renderDataBadge(); rerenderAll(); } }).catch(() => {});
 
 
 /* ============================ 관리자 메뉴 — 실제 산출물 연결 ============================ */
@@ -4449,8 +4449,8 @@ const apiLabel = m => `${m.api_name} · ${shortApi(m.api_id).split('/').pop()}`;
 const META_KEY_LABEL = { description:['cat','desc'], aliases:['cat','kw'], enabled:['cat','excl'], irreversible:['meta','irrev'], memo:['meta','memo'], selectors:['meta','sel'] };
 let BL_DRAFT = null;
 
-async function api(path, body){
-  const r = await fetch(path, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(body || {}) });
+async function api(path, body, method = 'POST'){
+  const r = await fetch(path, { method, headers:{ 'Content-Type':'application/json' }, body: method === 'DELETE' ? undefined : JSON.stringify(body || {}) });
   const j = await r.json();
   if (!r.ok) throw new Error(j.error || r.status);
   if (j.data) Object.assign(TAP, j.data);
@@ -4534,7 +4534,7 @@ if (TAP){
     }
     el(p + 'Save').disabled = true;
     try {
-      const j = await api('/api/rules', rule);
+      const j = await api('/api/admin/rules', rule);
       el(p + 'Body').value = ''; rerenderAll();
       toast(p + 'Toast', `${DOC_LABEL[doc]} · ${itemMeta(doc, item)[1]} 저장 — data/config/rules.ui.yaml${(doc === 'cat' || doc === 'meta') ? ` · 다시 빌드 (catalog v${j.build.catalog_version})`
         : doc === 'sv' ? ' · 다음 시나리오 생성부터 목표 추출에 쓰입니다' : ' (이 값을 쓰는 단계는 아직 없음)'}`);
@@ -4562,7 +4562,7 @@ if (TAP){
         <span class="f" title="${esc(r.target)}">${esc(tl(r.doc, r.target))}</span><span>${esc(r.body)}</span>
         <span class="m">${esc(r.by)} · ${esc(r.at)}${!r.file && SERVER && typeof r.id === 'number' ? ` <button class="xlink" data-rdel="${r.id}">삭제</button>` : ''}</span></div>`; }).join('');
     box.querySelectorAll('[data-rdel]').forEach(b => b.addEventListener('click', async () => {
-      try { await api('/api/rules/delete', { id: +b.dataset.rdel }); rerenderAll(); if (el('histBox')) renderRuleList(place, el('histBox')); toast(place + 'Toast', '규칙을 지우고 다시 빌드했습니다.'); }
+      try { await api('/api/admin/rules/' + (+b.dataset.rdel), null, 'DELETE'); rerenderAll(); if (el('histBox')) renderRuleList(place, el('histBox')); toast(place + 'Toast', '규칙을 지우고 다시 빌드했습니다.'); }
       catch (e){ toast(place + 'Toast', '삭제 실패: ' + e.message); } }));
   };
 
@@ -4586,7 +4586,7 @@ if (TAP){
   refreshSwagger = async function(){
     if (!SERVER) return;
     el('swgRefresh').disabled = true;
-    try { const j = await api('/api/build'); rerenderAll(); toast('swgToast', j.changed ? `다시 빌드 — catalog v${j.build.catalog_version} 로 바뀌었습니다.` : `다시 빌드 — 바뀐 것 없음 (catalog v${j.build.catalog_version}).`); }
+    try { const j = await api('/api/admin/build'); rerenderAll(); toast('swgToast', j.changed ? `다시 빌드 — catalog v${j.build.catalog_version} 로 바뀌었습니다.` : `다시 빌드 — 바뀐 것 없음 (catalog v${j.build.catalog_version}).`); }
     catch (e){ toast('swgToast', '빌드 실패: ' + e.message); } finally { el('swgRefresh').disabled = !SERVER; }
   };
   renderSwaggerAll = function(){
@@ -4605,7 +4605,7 @@ if (TAP){
   };
   pollSwagger = async function(){
     if (!SERVER) return;
-    try { const j = await api('/api/build'); rerenderAll(); toast('swgAllToast', j.changed ? `다시 빌드 — catalog v${j.build.catalog_version} 로 바뀌었습니다.` : `바뀐 것 없음 — catalog v${j.build.catalog_version}.`); }
+    try { const j = await api('/api/admin/build'); rerenderAll(); toast('swgAllToast', j.changed ? `다시 빌드 — catalog v${j.build.catalog_version} 로 바뀌었습니다.` : `바뀐 것 없음 — catalog v${j.build.catalog_version}.`); }
     catch (e){ toast('swgAllToast', '빌드 실패: ' + e.message); }
   };
 
@@ -4647,7 +4647,7 @@ if (TAP){
     if (!ok){ toast('blToast', '검증 실패 — 저장하지 않았습니다.'); return; }
     if (!SERVER){ TAP.baselines[a] = { api_id: a, body: obj, by: '화면 · 저장 안 됨', at: realStamp() }; BL_DRAFT = null; renderBaseline();
       toast('blToast', '이 화면에만 넣었습니다. 로컬 서버(tap.cli serve)로 열면 data/baselines/ 에 저장됩니다.'); return; }
-    try { const j = await api('/api/baseline', { api_id: a, body: obj }); BL_DRAFT = null; rerenderAll(); toast('blToast', `전문 저장 — ${j.file}`); }
+    try { const j = await api('/api/admin/baselines', { api_id: a, body: obj }, 'PUT'); BL_DRAFT = null; rerenderAll(); toast('blToast', `전문 저장 — ${j.file}`); }
     catch (e){ out.push([false, e.message]); show('서버가 거절했습니다.'); toast('blToast', '저장 실패: ' + e.message); }
   };
 
@@ -4992,7 +4992,7 @@ async function agApprove(a){
     steps: Array.from(document.querySelectorAll('[data-agstep]')).filter(c => c.checked).map(c => c.dataset.agstep) };
   const box = el('agRes'); box.innerHTML = '<p class="note">서버가 승인 확인 중…</p>';
   try {
-    const { ok, j } = await agPost('/api/approve', body);
+    const { ok, j } = await agPost('/api/inspect/approve', body);
     if (!ok){ box.innerHTML = `<div class="warn" style="display:block;padding:9px 12px;border-radius:8px;margin-top:10px"><b>✗ 승인 불가</b><br>${esc(j.error)}</div>`; return; }
     a.approved = j.approval; a.approvedFile = j.file; a.irHandoff = j.ir_handoff; renderReg();
     const h = j.ir_handoff || {};
@@ -5020,7 +5020,7 @@ async function doAgent(){
   out.innerHTML = '<div class="loading" role="status" aria-live="polite"><div class="spinner" aria-hidden="true"></div><span class="sr-only">분석 중</span></div>';
   out.setAttribute('aria-busy', 'true');
   let j;
-  try { const r = await fetch('/api/select', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ utterance: utt, stop_retry: stopRetry }) }); j = await r.json(); }
+  try { const r = await fetch('/api/register/analyze', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ utterance: utt, stop_retry: stopRetry }) }); j = await r.json(); }
   catch (e){ btn.disabled = false; out.innerHTML = ''; out.removeAttribute('aria-busy'); toast('regToast', '서버에 연결하지 못했습니다: ' + e.message); return; }
   finally { out.removeAttribute('aria-busy'); }
   btn.disabled = false;

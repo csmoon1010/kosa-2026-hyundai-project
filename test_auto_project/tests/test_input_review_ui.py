@@ -32,11 +32,11 @@ const id='SCN-20261103-abcdef123456';
 const options={stop_retry:true,approval_gate:true,kb_rag:false,dependency_projection:false};
 let review={ir:{scenario_id:id,version:1,status:'needs_input',tasks:[{sequence:1,action:'조회',conditions:'조건',steps:[{step_id:'1-1',edge:'조회',api:{api_id:'demo'},inputs:[],outputs:[],bindings:[],unresolved:['u']}]}],generation:{options}},review:{revision:1,status:'awaiting_decision',open_count:1,resolved_count:0,deferred_count:0},targets:[{target_id:'t1',step_id:'1-1',api_id:'demo',parameter_path:'$.code',label:'고객코드',type:'string',enum:null,reasons:['값 필요'],editable:true}],decisions:{},file:'draft.json',step_previews:{}};
 const posts=[];global.fetch=async(url,request)=>{
- if(url==='/api/approved-selections')return {ok:true,json:async()=>({defaults:{},files:[]})};
- if(url.startsWith('/api/scenario-ir-budget'))return {ok:true,json:async()=>({budget:null})};
- if(url==='/api/scenario-ir-log-summaries')return {ok:true,json:async()=>({runs:[]})};
- if(url==='/api/scenario-ir-reviews')return {ok:true,json:async()=>({reviews:[{scenario_id:id,review:review.review,original_question:'주문'}]})};
- if(url==='/api/scenario-ir-reviews/'+id)return {ok:true,json:async()=>structuredClone(review)};
+ if(url==='/api/inspect/ir/approved')return {ok:true,json:async()=>({defaults:{},files:[]})};
+ if(url.startsWith('/api/inspect/ir/budget'))return {ok:true,json:async()=>({budget:null})};
+ if(url==='/api/inspect/ir/logs')return {ok:true,json:async()=>({runs:[]})};
+ if(url==='/api/inspect/ir/reviews')return {ok:true,json:async()=>({reviews:[{scenario_id:id,review:review.review,original_question:'주문'}]})};
+ if(url==='/api/inspect/ir/reviews/'+id)return {ok:true,json:async()=>structuredClone(review)};
  const body=JSON.parse(request.body);posts.push({url,body});
  assert.equal(body.expected_revision,review.review.revision);
  review.review.revision++;review.ir.version++;

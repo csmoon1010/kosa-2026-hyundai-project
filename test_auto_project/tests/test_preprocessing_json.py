@@ -3,13 +3,13 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import tempfile
-from http.server import ThreadingHTTPServer
 from threading import Thread
 import unittest
 from urllib.request import Request, urlopen
 
 from tap.ui.preprocessing import load_preprocessing, save_preprocessing_baseline
-from tap.ui.serve import make_handler
+from tap.api.app import create_app
+from app_server import AppServer
 
 
 class PreprocessingJsonTests(unittest.TestCase):
@@ -92,24 +92,24 @@ class PreprocessingJsonTests(unittest.TestCase):
 
     def test_refresh_and_registration_endpoints_use_json_and_update_static_snapshot(self):
         (self.root / 'web').mkdir(parents=True)
-        server = ThreadingHTTPServer(('127.0.0.1', 0), make_handler(self.root))
+        server = AppServer(create_app(self.root))
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()
         try:
-            def post(path, body):
+            def post(path, body, method='POST'):
                 request = Request(f'http://127.0.0.1:{server.server_port}{path}',
-                                  data=json.dumps(body).encode(), headers={'Content-Type': 'application/json'})
+                                  data=json.dumps(body).encode(), headers={'Content-Type': 'application/json'}, method=method)
                 with urlopen(request) as response:
                     return json.load(response)
-            refreshed = post('/api/preprocessing/refresh', {})
+            refreshed = post('/api/admin/preprocessing/refresh', {})
             self.assertIn(self.sid, refreshed['data']['preprocessing']['canonical_schema'])
             snapshot = self.root / 'web/tap-data.js'
             self.assertTrue(snapshot.is_file())
-            registered = post('/api/preprocessing/baseline', {
-                'selected_api_id': self.sid, 'values': {self.path: '000009'}})
+            registered = post('/api/admin/preprocessing/baselines', {
+                'selected_api_id': self.sid, 'values': {self.path: '000009'}}, 'PUT')
             self.assertTrue((self.root / registered['file']).is_file())
             self.assertTrue(registered['data']['preprocessing']['baselines'][self.sid]['user_registered'])
-            post('/api/preprocessing/refresh', {})
+            post('/api/admin/preprocessing/refresh', {})
             saved = json.loads(snapshot.read_text().split('window.TAP_DATA = ', 1)[1].strip().removesuffix(';'))
             self.assertEqual(saved['preprocessing']['baselines'][self.sid]['parameters'][0]['value'], '000009')
         finally:

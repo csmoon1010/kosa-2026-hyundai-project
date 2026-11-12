@@ -1,7 +1,7 @@
 /* 시나리오 실행 — 최종 화면 (2026-11-12, P4)
    최종 '시나리오 등록'에서 승인 · 등록한 시나리오(TAP.registered)를 골라 실행한다. 실행기 연결 전이라 드라이런만:
    API 를 부르지 않고 IR 로 요청(Baseline 에 입력값을 덮은 XML)을 만들어 실행 이력(data/runs)에 남긴다.
-   되돌릴 수 없는 단계(R2)는 승인본과 별개로 실행할 때마다 확인한다 — 서버가 다시 확인 (POST /api/registered/run).
+   되돌릴 수 없는 단계(R2)는 승인본과 별개로 실행할 때마다 확인한다 — 서버가 다시 확인 (POST /api/run/dry-run).
    offline-ui.html 의 실행 메뉴 함수(renderRunList · renderRunStage)를 실서버 모드에서만 바꿔 끼운다. */
 (function(){
   'use strict';
@@ -84,7 +84,7 @@
     const items = R.rows.map(r => { const s = regOf(r.id);
       return { id: r.id, n: r.n, confirm: needs(s) && R.confirm[r.key] ? s.confirm_steps.map(c => c.key) : [] }; });
     try {
-      const res = await fetch('/api/registered/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) });
+      const res = await fetch('/api/run/dry-run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(j.error || `서버 오류 (${res.status})`);
       R.result = j.run; TAP.runs.unshift(j.run);

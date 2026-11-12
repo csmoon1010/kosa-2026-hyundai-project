@@ -10,7 +10,7 @@ from .progress import snapshot
 
 
 def log_url(file):
-    return '/api/scenario-ir-logs/' + Path(file).name
+    return '/api/inspect/ir/logs/' + Path(file).name
 
 
 class GenerationJournal:

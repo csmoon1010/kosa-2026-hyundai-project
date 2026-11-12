@@ -1,11 +1,10 @@
 /* 시나리오 등록 — 최종 화면 (2026-11-12, P1 · P2 · P3)
    자연어 요청 → ① 요청 이해 → ② 경로 찾기 → ③ API 고르기 → 시나리오 생성(혜정 IR) → 승인 · 등록 → (P4) 실행 메뉴
    중간 산출물(후보 · 점수 · 트레이스 · JSON · 생성 로그)은 보여 주지 않는다 — 그건 '시나리오 등록(확인용)' 화면.
-   서버
-     POST /api/select (Accept: application/x-ndjson)   단계 시작마다 {"event":"stage"}, 마지막 줄이 결과
-     POST /api/review-draft {selection_hash}           승인 전 검토용 초안 (data/ir_inputs/review-*.json)
-     POST /api/scenario-ir-drafts (ndjson)             혜정 IR — scenario_steps → step_preview(단계마다) → generation_complete
-     POST /api/register                                 승인 + 등록 (data/registered/) · GET /api/registered/<id> · POST /api/registered/delete
+   서버 (docs/fastapi.md 3.1)
+     POST /api/register/analyze (Accept: application/x-ndjson)   단계 시작마다 {"event":"stage"}, 마지막 줄이 결과
+     POST /api/register/ir (ndjson)                              검토 초안(review_draft) → IR 진행(step_preview …) → generation_complete
+     GET · POST /api/register/scenarios · GET · DELETE /api/register/scenarios/<id>   등록 시나리오
    확인할 것 = 사람이 확인하지 않은 API 선택(가선택 · LLM) — 단계마다 체크해야 등록된다.
    메모 = ①② 미해결 · IR 이 남긴 질문 — 접어서 보여 주기만 (2026-11-12 결정)
    offline-ui.html 의 전역 도우미(el · esc · RDOM_NAME · DOM_NAME · shortApi · SERVER · S · TAP)를 쓴다. */
@@ -31,8 +30,9 @@
   };
   const store = { get(k){ try { return localStorage.getItem(k) || ''; } catch (e){ return ''; } },
                   set(k, v){ try { localStorage.setItem(k, v); } catch (e){ /* 저장 못 해도 동작 */ } } };
-  async function post(url, body){
-    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const post = (url, body) => call(url, body, 'POST');
+  async function call(url, body, method){
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: method === 'DELETE' ? undefined : JSON.stringify(body) });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(j.error || `서버 오류 (${r.status})`);
     return j;
@@ -81,7 +81,7 @@
       if (!b.dataset.armed){ b.dataset.armed = '1'; b.textContent = '삭제 확인'; b.style.color = 'var(--danger)';
         setTimeout(() => { if (b.isConnected){ delete b.dataset.armed; b.textContent = '삭제'; b.style.color = ''; } }, 3000); return; }
       const id = b.dataset.regdel;
-      try { await post('/api/registered/delete', { id }); }
+      try { await call('/api/register/scenarios/' + encodeURIComponent(id), null, 'DELETE'); }
       catch (e){ say('삭제하지 못했어요: ' + e.message); return; }
       const i = regs.findIndex(x => x.id === id); if (i >= 0) regs.splice(i, 1);
       if (viewing && viewing.id === id) viewing = null;
@@ -91,7 +91,7 @@
   }
   async function openSaved(id){
     try {
-      const r = await fetch('/api/registered/' + encodeURIComponent(id), { cache: 'no-store' });
+      const r = await fetch('/api/register/scenarios/' + encodeURIComponent(id), { cache: 'no-store' });
       const rec = await r.json();
       if (!r.ok) throw new Error(rec.error || r.status);
       viewing = rec;
@@ -280,7 +280,7 @@
     setStage('intent'); renderResult();
     let result = null;
     try {
-      const res = await fetch('/api/select', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/x-ndjson' },
+      const res = await fetch('/api/register/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/x-ndjson' },
         body: JSON.stringify({ utterance: utt, stop_retry: true }) });
       const plain = await readLines(res, ev => {
         if (ev.event === 'stage') setStage(ev.stage);
@@ -313,15 +313,13 @@
     Object.assign(state, { handoff: null, irSteps: {}, irTotal: 0, ir: null, irFile: null, irError: null });
     state.stages.ir = 'now'; renderSteps(); renderResult();
     try {
-      const h = await post('/api/review-draft', { selection_hash: state.result.gate.selection_hash });
-      if (!h.filename) throw new Error(h.error || '초안을 만들지 못했어요');
-      state.handoff = h; state.irTotal = (h.steps || []).length;
-      renderSteps(); renderResult();
-      const res = await fetch('/api/scenario-ir-drafts', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/x-ndjson' },
-        body: JSON.stringify({ approved_filename: h.filename, generation_options: genOptions() }) });
+      // 검토 초안을 만들고 바로 IR 생성 — 한 번에 (POST /api/register/ir, 첫 줄이 검토 초안)
+      const res = await fetch('/api/register/ir', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/x-ndjson' },
+        body: JSON.stringify({ selection_hash: state.result.gate.selection_hash, generation_options: genOptions() }) });
       let done = null, fail = null;
       const plain = await readLines(res, ev => {
-        if (ev.event === 'scenario_steps') state.irTotal = (ev.steps || []).length || state.irTotal;
+        if (ev.event === 'review_draft'){ state.handoff = ev; state.irTotal = (ev.steps || []).length; renderSteps(); renderResult(); }
+        else if (ev.event === 'scenario_steps') state.irTotal = (ev.steps || []).length || state.irTotal;
         else if (ev.event === 'step_preview' && ev.step){ state.irSteps[ev.step_id] = ev.step; renderSteps(); renderResult(); }
         else if (ev.event === 'generation_complete') done = ev.result;
         else if (ev.event === 'generation_error') fail = ev.error || '생성 실패';
@@ -344,7 +342,7 @@
     if (!who){ state.regError = '승인자를 적으세요.'; renderResult(); $('finWho').focus(); return; }
     state.regBusy = true; state.regError = null; renderResult();
     try {
-      const j = await post('/api/register', { selection_hash: state.result.gate.selection_hash, name, approver: who,
+      const j = await post('/api/register/scenarios', { selection_hash: state.result.gate.selection_hash, name, approver: who,
         steps: Object.keys(state.checked).filter(k => state.checked[k]), review_file: state.handoff.filename, ir_file: state.irFile });
       store.set('tdg.approver', who);
       state.registered = j.scenario;

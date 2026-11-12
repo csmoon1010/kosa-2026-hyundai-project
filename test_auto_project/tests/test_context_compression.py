@@ -201,10 +201,10 @@ def test_transport_policy_is_independent_of_compression(root, bits):
 
 @pytest.mark.parametrize('stream', [False, True])
 def test_http_paths_forward_all_eight_options(root, monkeypatch, stream):
-    from http.server import ThreadingHTTPServer
     from threading import Thread
     from urllib.request import Request,urlopen
-    from tap.ui.serve import make_handler
+    from tap.api.app import create_app
+    from app_server import AppServer
     import tap.ir.draft_build as build
     seen=[]
     def fake(root,filename,config,on_event=None,**kwargs):
@@ -213,13 +213,13 @@ def test_http_paths_forward_all_eight_options(root, monkeypatch, stream):
         if on_event:on_event(dict(event='generation_start',options=options))
         return dict(ir={'generation':{'options':options}})
     monkeypatch.setattr(build,'generate',fake)
-    server=ThreadingHTTPServer(('127.0.0.1',0),make_handler(root))
+    server=AppServer(create_app(root))
     thread=Thread(target=server.serve_forever,daemon=True);thread.start()
     try:
         for bits in COMBINATIONS:
             options=dict(zip(['stop_retry','kb_rag','dependency_projection'],bits))
             body=json.dumps(dict(approved_filename=FILENAME,generation_options=options)).encode()
-            request=Request(f'http://127.0.0.1:{server.server_port}/api/scenario-ir-drafts',data=body,
+            request=Request(f'http://127.0.0.1:{server.server_port}/api/inspect/ir',data=body,
                 headers={'Content-Type':'application/json','Accept':'application/x-ndjson' if stream else 'application/json'})
             with urlopen(request) as response:text=response.read().decode()
             result=json.loads(text.splitlines()[-1])['result'] if stream else json.loads(text)

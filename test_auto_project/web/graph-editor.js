@@ -722,7 +722,7 @@
           <div class="row"><button class="gbtn pri" id="${id("save")}" ${err.length ? "disabled" : ""}>확인 후 저장</button><button class="gbtn ghost" data-x>취소</button></div></div>`;
         el("save").onclick = async () => {
           S.saved = { v: (S.saved ? S.saved.v : 0) + 1 }; let where = "";
-          if (S.server){ try { const r = await fetch("/api/graph/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ graph_id: S.graph, yaml: yaml() }) });
+          if (S.server){ try { const r = await fetch("/api/admin/graphs/" + encodeURIComponent(S.graph), { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ yaml: yaml() }) });
             const j = await r.json(); where = j.file ? ` · ${j.file}` : ` · 저장 실패: ${j.error}`; } catch (e){ where = " · 서버에 저장하지 못했습니다"; } }
           closeM(); refresh(); toast(`승인본 v${S.saved.v} 로 저장했습니다${where}`);
         };
@@ -751,7 +751,7 @@
       if (ev.key === "Escape"){ S.sel = { kind: "none" }; refresh(); }
       else if (ev.key === "Delete" || ev.key === "Backspace"){ ev.preventDefault(); if (S.sel.kind === "node") removeNode(S.sel.id); else if (S.sel.kind === "edge") removeEdge(S.sel.id); }
     });
-    if (location.protocol.startsWith("http")) fetch("/api/health").then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok){ S0.server = S.server = true; } }).catch(() => {});
+    if (location.protocol.startsWith("http")) fetch("/api/common/health").then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok){ S0.server = S.server = true; } }).catch(() => {});
     document.addEventListener("click", ev => { if (S.menu && !ev.target.closest(".more")){ S.menu = false; if (el("counts")) renderCounts(); } });
     render();
     return { refresh(){ render(); }, setDomain(d){ opts.domain = d; const g = GRAPHS.find(x => x.dom === d); switchTo(g ? g.id : S.graph); render(); } };

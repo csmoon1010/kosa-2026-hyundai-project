@@ -348,7 +348,7 @@ def compact_ir(ir: dict[str, Any]) -> dict[str, Any]:
 
 
 def make_ir(root: Path, stop_retry: bool = True) -> Callable[[dict[str, Any]], dict[str, Any]]:
-    """analyze_select 결과 → 승인 → 혜정 형식 승인본 → IR 생성. 화면(/api/approve → IR 생성)과 같은 길."""
+    """analyze_select 결과 → 승인 → 혜정 형식 승인본 → IR 생성. 화면(/api/inspect/approve → IR 생성)과 같은 길."""
     def run(r: dict[str, Any]) -> dict[str, Any]:
         from tap.apis.gate import approve
         from tap.ir.draft_build import fixed_plan, generate

@@ -49,30 +49,30 @@ def meta_of(data, api):
 
 def test_server_rule_saves_rebuilds_and_deletes(server):  # noqa: F811
     base, root = server
-    r = json.loads(call(base + "/api/rules", {"place": "ov", "doc": "meta", "item": "memo", "dom": "goods", "target": ITEM, "body": "단건 등록 전용"}))
+    r = json.loads(call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "memo", "dom": "goods", "target": ITEM, "body": "단건 등록 전용"}))
     assert meta_of(r["data"], ITEM)["memo"] == "단건 등록 전용" and r["data"]["rules"][0]["by"] == "화면"
     assert "단건 등록 전용" in (root / "data/config/rules.ui.yaml").read_text(encoding="utf-8")
-    r = json.loads(call(base + "/api/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "procGb: PB4 테스트취소"}))
+    r = json.loads(call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "procGb: PB4 테스트취소"}))
     assert [v["value"] for v in meta_of(r["data"], BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3", "PB4"]
     rid = r["data"]["rules"][-1]["id"]
-    r = json.loads(call(base + "/api/rules/delete", {"id": rid}))
+    r = json.loads(call(base + f"/api/admin/rules/{rid}", method="DELETE"))
     assert [v["value"] for v in meta_of(r["data"], BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3"]
 
 
 def test_server_rejects_bad_rule_and_keeps_file(server):  # noqa: F811
     base, root = server
     with pytest.raises(urllib.error.HTTPError) as e:
-        call(base + "/api/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "noSuchField: X 이름"})
+        call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "noSuchField: X 이름"})
     assert e.value.code == 400 and "noSuchField" in json.loads(e.value.read())["error"]
     assert not (root / "data/config/rules.ui.yaml").exists() or "noSuchField" not in (root / "data/config/rules.ui.yaml").read_text(encoding="utf-8")
 
 
 def test_server_baseline(server):  # noqa: F811
     base, root = server
-    r = json.loads(call(base + "/api/baseline", {"api_id": BACK, "body": {"procGb": "PB1", "ordNo": "20240101000001"}}))
+    r = json.loads(call(base + "/api/admin/baselines", {"api_id": BACK, "body": {"procGb": "PB1", "ordNo": "20240101000001"}}, "PUT"))
     assert r["data"]["baselines"][BACK]["body"]["procGb"] == "PB1" and (root / r["file"]).exists()
     with pytest.raises(urllib.error.HTTPError) as e:
-        call(base + "/api/baseline", {"api_id": BACK, "body": {"noSuch": "1"}})
+        call(base + "/api/admin/baselines", {"api_id": BACK, "body": {"noSuch": "1"}}, "PUT")
     assert e.value.code == 400 and "noSuch" in json.loads(e.value.read())["error"]
 
 
@@ -81,10 +81,10 @@ def test_server_build(server):  # noqa: F811
     (바뀌는지 자체는 이 컴퓨터의 화면 규칙 파일에 따라 다르다 — 단정하지 않는다)"""
     base, root = server
     before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))["catalog_version"]
-    r = json.loads(call(base + "/api/build", {}))
+    r = json.loads(call(base + "/api/admin/build", {}))
     now = r["build"]["catalog_version"]
     assert r["changed"] == (now != before) and r["data"]["build"]["catalog_version"] == now
-    again = json.loads(call(base + "/api/build", {}))                                  # 두 번째는 바뀐 것이 없다
+    again = json.loads(call(base + "/api/admin/build", {}))                                  # 두 번째는 바뀐 것이 없다
     assert again["changed"] is False and again["build"]["catalog_version"] == now
 
 
