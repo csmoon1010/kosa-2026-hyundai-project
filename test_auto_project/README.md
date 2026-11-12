@@ -60,6 +60,7 @@ WSL 밖 브라우저에서 열리지 않으면 `--host 0.0.0.0` 을 붙입니다
 .venv/bin/python -m tap.cli eval-stages --runs 3   # 단계별 평가 (docs/evaluation.md)
 .venv/bin/python -m tap.cli serve        # 화면 + 실제 계산 (FastAPI · API 목록 http://127.0.0.1:8765/api/docs)
 .venv/bin/python -m pytest -q && node --test tests/*.cjs           # 테스트 (LLM · 네트워크 없이)
+cd frontend && npm ci && npm run dev     # React 화면(옮기는 중, docs/react.md) → http://127.0.0.1:5173/ (/api 는 8765 서버로)
 ```
 
 ## 폴더
@@ -72,11 +73,12 @@ WSL 밖 브라우저에서 열리지 않으면 `--host 0.0.0.0` 을 붙입니다
 │   ├── apis/                      ③ API 선택(select) · 권한 등급 · 승인 게이트(gate)
 │   ├── ir/                        승인본 → IR 입력(handoff) · Scenario IR 생성(draft_build, 혜정) · 단계 의존성 · XML 미리보기
 │   ├── agent/ retrieval/          IR 생성 에이전트 (도구 · 예산 · 검증 · 재시도 · 문맥 압축 · Parameter KB 검색)
-│   ├── api/                       서버 — FastAPI 앱 · 메뉴별 라우터(register · inspect · run · history · admin · common) · 처리 로직(services)
+│   ├── api/                       서버 — FastAPI 앱 · 메뉴별 라우터(register · inspect · run · history · admin · common) · 처리 로직(services) · 요청 · 응답 모델(models)
 │   ├── ui/                        화면 데이터(export) · 전처리 산출물 조회(preprocessing)
 │   ├── trace.py                   LLM 호출 기록 · 예산 · 중지 조건
 │   ├── eval_stages.py             단계별 평가
 │   └── cli.py
+├── frontend/                      React 화면 (옮기는 중 — Vite · TypeScript, docs/react.md). 다 옮기면 web/ 을 대신한다
 ├── web/                           화면 (서버가 그대로 내려준다) — offline-ui.html (본체) · scenario-register.js (등록) · scenario-run.js (실행) ·
 │                                  graph-editor.js (상태 그래프) · scenario-ir-draft.js (혜정 IR 화면) · preprocessing-ui.js
 ├── data/

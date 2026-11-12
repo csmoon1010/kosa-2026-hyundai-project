@@ -27,6 +27,7 @@
 | 테스트 | **Vitest + React Testing Library + MSW**, 화면 끝까지는 **Playwright** | 단위 · 컴포넌트는 가짜 API(MSW)로, 실제 서버 흐름은 Playwright 로 |
 | 린트 · 포맷 | ESLint · Prettier | |
 | Node | 20 이상 (지금 개발 환경 24) | `package.json` 의 `engines` 로 고정 |
+| 버전 | `package.json` 에 정확한 버전으로 고정 (`^` 없음), `package-lock.json` 커밋 | `pyproject.toml` 과 같은 원칙. TypeScript 는 5.9 — 7(새 컴파일러)은 typescript-eslint · openapi-typescript 가 아직 받지 않는다 |
 
 ## 3. 전체 구조
 
@@ -41,7 +42,7 @@ web/  ── FastAPI 가 그대로 내려줌             frontend/  ── 개�
 
 ```
 frontend/
-├── package.json · vite.config.ts · tsconfig.json · .eslintrc · playwright.config.ts
+├── package.json · vite.config.ts(Vitest 설정 포함) · tsconfig.json · eslint.config.js · .prettierrc.json · playwright.config.ts(R0-4)
 ├── index.html
 └── src/
     ├── main.tsx · App.tsx            라우터 · 쿼리 클라이언트 · 공통 레이아웃(사이드 메뉴 · 머리)
@@ -50,8 +51,10 @@ frontend/
     │   ├── client.ts                 fetch 감싸기 — {"error"} 를 오류로, 동사 · JSON
     │   ├── stream.ts                 useNdjson — NDJSON 한 줄씩
     │   └── queries.ts                메뉴별 조회 · 저장 훅 (useRegisteredScenarios · useAnalyze …)
-    ├── styles/                       tokens.css (지금 :root 변수 · 다크 모드) · 공통 클래스
-    ├── components/                   공통 — Card · Pill · Badge · Stepper · Spinner · ParamTable · Modal · Toast · Table
+    ├── styles/                       tokens.css (지금 :root 변수 · 다크 모드) · base.css (글꼴 · 입력 · 버튼 공통 클래스)
+    ├── components/                   공통 — Layout · Card · Pill · Stepper · Spinner (R0). ParamTable · Modal · Toast · Table 은 처음 쓰는 단계에서
+    ├── lib/                          menus(사이드 메뉴) · storage(localStorage 감싸기) · format(필드 한글명 등, R1)
+    ├── test/                         Vitest 준비 — MSW 가짜 API(server.ts) · 그리기 도우미(render.tsx)
     └── pages/
         ├── register/                 시나리오 등록 (최종)
         ├── inspect/                  시나리오 등록(확인용) — 분석 카드 · 승인 게이트 · ir/(혜정 IR 영역)
@@ -204,7 +207,7 @@ Playwright 를 실제 LLM 없이 돌리려면 서버에 가짜 LLM 으로 띄우
 
 | 단계 | 상태 |
 |---|---|
-| R0. 준비 (FastAPI 5단계 포함) | 진행 중 — R0-1 화면 데이터 나누기 · 매칭 API ✓, R0-2 요청 · 응답 모델 ✓, R0-3 `frontend/` 뼈대 · R0-4 가짜 LLM 실행 옵션 남음 |
+| R0. 준비 (FastAPI 5단계 포함) | 진행 중 — R0-1 화면 데이터 나누기 · 매칭 API ✓, R0-2 요청 · 응답 모델 ✓, R0-3 `frontend/` 뼈대 ✓ (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트, vitest 15개), R0-4 가짜 LLM 실행 옵션 · Playwright 남음 |
 | R1. 시나리오 등록 | 대기 |
 | R2. 실행 · 이력 | 대기 |
 | R3. 확인용 | 대기 |

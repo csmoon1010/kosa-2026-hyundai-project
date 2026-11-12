@@ -1,0 +1,76 @@
+/* 디자인 토큰 — 지금 화면(web/offline-ui.html :root) 그대로. 색은 여기 변수만 쓴다 (docs/react.md 5절). */
+:root {
+  --bg: #f4f6fa;
+  --panel: #ffffff;
+  --panel-2: #f7f9fc;
+  --panel-3: #eef2f7;
+  --ink: #111827;
+  --ink-2: #374151;
+  --muted: #6b7280;
+  --hair: #d9dfe7;
+  --hair-2: #e8ecf2;
+  --accent: #2563eb;
+  --accent-soft: #eaf1fe;
+  --on-accent: #ffffff;
+  --good: #15803d;
+  --good-soft: #e7f6ec;
+  --signal: #c2570c;
+  --signal-soft: #fff1e4;
+  --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --llm: #475569;
+  --llm-soft: #eef2f7;
+  --sans: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --side-w: 212px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0e1116;
+    --panel: #161b22;
+    --panel-2: #11161c;
+    --panel-3: #1f2630;
+    --ink: #e6eaf0;
+    --ink-2: #c1c8d2;
+    --muted: #8b95a3;
+    --hair: #2a323d;
+    --hair-2: #20262f;
+    --llm: #94a3b8;
+    --llm-soft: #1c2430;
+    --accent: #6ea2ff;
+    --accent-soft: #16233a;
+    --on-accent: #07201c;
+    --good: #4ade80;
+    --good-soft: #12291a;
+    --signal: #f0a35a;
+    --signal-soft: #2e2010;
+    --danger: #f47a7a;
+    --danger-soft: #331717;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0e1116;
+  --panel: #161b22;
+  --panel-2: #11161c;
+  --panel-3: #1f2630;
+  --ink: #e6eaf0;
+  --ink-2: #c1c8d2;
+  --muted: #8b95a3;
+  --hair: #2a323d;
+  --hair-2: #20262f;
+  --llm: #94a3b8;
+  --llm-soft: #1c2430;
+  --accent: #6ea2ff;
+  --accent-soft: #16233a;
+  --on-accent: #07201c;
+  --good: #4ade80;
+  --good-soft: #12291a;
+  --signal: #f0a35a;
+  --signal-soft: #2e2010;
+  --danger: #f47a7a;
+  --danger-soft: #331717;
+}

@@ -1,0 +1,153 @@
+/* 사이드 메뉴 · 머리 — 지금 화면(.side · .navbtn · .pagehd)과 같은 모양 */
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 16px 56px;
+}
+.side {
+  background: var(--panel);
+  border: 1px solid var(--hair-2);
+  border-radius: 10px;
+  padding: 8px;
+}
+.side ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.side li + li {
+  margin-top: 2px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 22px;
+}
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+.brand b {
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.nav:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.nav:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.nav[aria-current='page'] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.nav svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.head h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.headRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 넓은 화면 — 왼쪽 끝에 붙은 고정 메뉴 */
+@media (min-width: 901px) {
+  .shell {
+    padding-left: var(--side-w);
+  }
+  .side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--side-w);
+    z-index: 20;
+    overflow-y: auto;
+    border: 0;
+    border-right: 1px solid var(--hair-2);
+    border-radius: 0;
+    padding: 22px 12px;
+  }
+  .nav[aria-current='page']::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 7px;
+    bottom: 7px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+  }
+}
+
+/* 좁은 화면 — 메뉴가 위로, 한 줄로 */
+@media (max-width: 900px) {
+  .side {
+    margin: 12px 16px 0;
+  }
+  .side ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .side li {
+    display: contents;
+  }
+  .brand,
+  .nav svg {
+    display: none;
+  }
+  .nav {
+    width: auto;
+  }
+}
