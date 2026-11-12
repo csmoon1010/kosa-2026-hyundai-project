@@ -86,10 +86,10 @@ LLM(Structured Output)이 요청을 업무 목록(TaskPlan)으로 나눈다.
    - 결과: `data/out/scenario_ir_drafts/SCN-*.json`, 생성 로그 `data/out/scenario_ir_logs/`
 3. 설계 · 예산 · 검증 상세는 [scenario-ir.md](scenario-ir.md) 와 `scenario-ir-*.md` 문서.
 
-## 등록 · 실행 — `ui/serve.py`
+## 등록 · 실행 — `api/services.py`
 
-- **등록** (`POST /api/register`): 검토 초안과 IR 이 이 분석 결과(선택 해시)로 만든 것인지 확인 → 게이트 승인 → 분석 결과 · 게이트 · 승인 · IR 을 한 파일로 고정 (`data/registered/rs-*.json`).
-- **실행** (`POST /api/registered/run`): 시나리오마다 실행 확인(승인본 · 선택 해시 · 이번 실행에서 확인한 R2 단계, 재승인 필요 여부) → IR 로 단계별 요청을 만든다 — Baseline XML 에 입력값을 덮고, 앞 단계 값은 자리표시. 하나라도 통과하지 못하면 아무것도 남기지 않는다. 결과는 `data/runs/`.
+- **등록** (`POST /api/register/scenarios`): 검토 초안과 IR 이 이 분석 결과(선택 해시)로 만든 것인지 확인 → 게이트 승인 → 분석 결과 · 게이트 · 승인 · IR 을 한 파일로 고정 (`data/registered/rs-*.json`).
+- **실행** (`POST /api/run/dry-run`): 시나리오마다 실행 확인(승인본 · 선택 해시 · 이번 실행에서 확인한 R2 단계, 재승인 필요 여부) → IR 로 단계별 요청을 만든다 — Baseline XML 에 입력값을 덮고, 앞 단계 값은 자리표시. 하나라도 통과하지 못하면 아무것도 남기지 않는다. 결과는 `data/runs/`.
 - 실제 API 호출(실행기)은 아직 연결 전이다.
 
 ## LLM 호출 관리 — `trace.py` · `data/config/llm.yaml`
@@ -101,20 +101,22 @@ LLM(Structured Output)이 요청을 업무 목록(TaskPlan)으로 나눈다.
 
 ## 서버 API
 
-| API | 하는 일 |
-|---|---|
-| `POST /api/select` | ①②③ + 게이트. `Accept: application/x-ndjson` 이면 단계 시작마다 진행 줄 |
-| `POST /api/review-draft` | 승인 전 검토 초안 |
-| `POST /api/scenario-ir-drafts` | IR 생성 (ndjson 이면 단계별 진행) |
-| `POST /api/register` · `GET /api/registered/<id>` · `POST /api/registered/delete` | 승인 · 등록 / 조회 / 삭제 |
-| `POST /api/registered/run` | 실행 확인 → 드라이런 → 실행 이력 |
-| `POST /api/approve` | 확인용 화면의 승인 — 승인 기록(`data/approved/`) + IR 생성 입력(`tdg-*.json`) |
-| `GET /api/approved-selections` · `GET /api/scenario-ir-budget` | 확인용 IR 영역 — 승인본 목록 · STEP 수 기반 예산 |
-| `GET /api/scenario-ir-log-summaries` · `GET /api/scenario-ir-logs/<파일>` | IR 생성 기록 표 · JSONL 로그 받기 |
-| `GET/POST /api/scenario-ir-reviews/…` | IR 입력 검토 (API 전용, [scenario-ir-input-review.md](scenario-ir-input-review.md)) |
-| `POST /api/graph/save` · `/api/rules` · `/api/rules/delete` · `/api/baseline` · `/api/build` | 관리자 메뉴 — 그래프 · 보정 규칙 · Baseline · 다시 빌드 |
-| `POST /api/preprocessing/refresh` · `/api/preprocessing/baseline` | 전처리 산출물 다시 읽기 · 전처리 Baseline 등록 |
-| `GET /tap-data.js` · `GET /api/health` | 화면 데이터 (요청마다 새로 만든다) · 서버 모드 확인 |
+FastAPI (`src/tap/api/`) — 경로는 메뉴 이름 기준. 요청 · 응답 상세와 작업 기준은 [fastapi.md](fastapi.md), 서버를 띄우면 `/api/docs` 에서 모두 볼 수 있다.
+
+| 메뉴 | API | 하는 일 |
+|---|---|---|
+| 시나리오 등록 | `POST /api/register/analyze` | ①②③ + 게이트. `Accept: application/x-ndjson` 이면 단계 시작마다 진행 줄 |
+| | `POST /api/register/ir` | 검토 초안(`review-*.json`)을 만들고 바로 IR 생성 (스트림 첫 줄이 검토 초안) |
+| | `GET · POST /api/register/scenarios` · `GET · DELETE /api/register/scenarios/{id}` | 등록 시나리오 목록 / 승인 · 등록 / 조회 / 삭제 |
+| 확인용 | `POST /api/inspect/approve` | 승인 — 승인 기록(`data/approved/`) + IR 생성 입력(`tdg-*.json`) |
+| | `POST /api/inspect/ir` · `GET /api/inspect/ir/approved` · `GET /api/inspect/ir/budget` | 승인본으로 IR 생성 · 승인본 목록 · STEP 수 기반 예산 |
+| | `GET /api/inspect/ir/logs` · `GET /api/inspect/ir/logs/{파일}` | IR 생성 기록 표 · JSONL 로그 받기 |
+| | `GET · POST /api/inspect/ir/reviews/…` | IR 입력 검토 (API 전용, [scenario-ir-input-review.md](scenario-ir-input-review.md)) |
+| 시나리오 실행 | `POST /api/run/dry-run` | 실행 확인 → 드라이런 → 실행 이력 |
+| 실행 이력 | `GET /api/history/runs` | 실행 이력 |
+| 관리자 | `PUT /api/admin/graphs/{id}` · `POST /api/admin/rules` · `DELETE /api/admin/rules/{id}` · `PUT /api/admin/baselines` · `POST /api/admin/build` | 그래프 · 보정 규칙 · Baseline · 다시 빌드 |
+| | `POST /api/admin/preprocessing/refresh` · `PUT /api/admin/preprocessing/baselines` | 전처리 산출물 다시 읽기 · 전처리 Baseline 등록 |
+| 공통 | `GET /api/common/health` · `GET /api/common/data` · `GET /tap-data.js` | 서버 확인 · 화면 데이터 JSON · 지금 화면용 화면 데이터 |
 
 ## 저장 파일
 

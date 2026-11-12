@@ -4880,8 +4880,8 @@ el('side').addEventListener('keydown', e => {
 });
 
 /* ============ 3단계 에이전트 — ① 의도 분석 → ② 경로 탐색 → ③ API 선택 → 권한 등급 · 승인 게이트 ============
-   POST /api/select 로 계산하고, 승인은 POST /api/approve — 승인 판단은 서버가 자기가 계산한 결과로 한다 (화면 값은 믿지 않음).
-   예전 방식(시나리오 생성 → Scenario IR)은 그대로 둔다. 3단계 결과로 Scenario IR 을 만드는 일은 혜정과 형식을 맞춘 뒤. */
+   POST /api/register/analyze 로 계산하고, 승인은 POST /api/inspect/approve — 승인 판단은 서버가 자기가 계산한 결과로 한다 (화면 값은 믿지 않음).
+   승인하면 IR 생성 입력(tdg-*.json)을 만들고 아래 혜정 IR 영역(scenario-ir-draft.js)이 IR 을 생성한다. */
 const escA = s => esc(s).replace(/"/g, '&quot;');
 const AG_SEL = { '고정':'st-ok', '선택':'st-ok', '가선택':'st-rb', '보류':'st-rb' };
 const AG_NEED = { '자동':'st-rj', '시나리오 승인':'st-ok', '단계 승인':'st-rb', '차단':'st-rb' };

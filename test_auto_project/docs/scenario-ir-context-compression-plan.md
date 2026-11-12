@@ -22,7 +22,7 @@
 | 대상 | 현재 구조 | 계획 |
 |---|---|---|
 | `src/tap/agent/config.py` | `basic / validated` 단일 선택과 숫자 예산 검증 | 독립 옵션 정규화와 요청별 정책 확정 |
-| `src/tap/ui/serve.py` | 생성·스트리밍 경로에서 `generation_mode` 전달 | 새 옵션 전달, 기존 요청 호환, UI 기본값 제공 |
+| `src/tap/api/` (당시 `ui/serve.py`) | 생성·스트리밍 경로에서 `generation_mode` 전달 | 새 옵션 전달, 기존 요청 호환, UI 기본값 제공 |
 | `web/scenario-ir-draft.js` | 모드 select와 실행 모드 표시 | 체크박스 3개, 선택 스냅샷·잠금·결과 표시 |
 | `src/tap/agent/parameter_tools.py` | 해당 API의 전체 KB 자료 반환 | 압축 1 전용 검색·상세 자료 뷰, 원본 보존 |
 | `src/tap/agent/tool_registry.py` | KB 우선 조회, 자료 확보와 출력 보완 관리 | 옵션별 KB 계약과 추가 상세 조회 관리 |

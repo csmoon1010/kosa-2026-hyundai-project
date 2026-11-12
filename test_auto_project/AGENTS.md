@@ -27,6 +27,7 @@ uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"   # 시스
 ```
 
 - Python 3.10. LLM 은 OpenAI — 키 · 모델 이름은 `.env`(`.env.example` 참고)에서 읽고 코드에 박지 않는다.
+- 서버는 FastAPI(`src/tap/api/`) — 경로 · 오류 형식 · 스트리밍 · 라우터 작성 규칙은 [docs/fastapi.md](docs/fastapi.md). API 목록은 서버의 `/api/docs`.
 - 서버는 Python 코드를 시작할 때 읽는다. Python 을 고쳤으면 서버를 다시 띄운다 (화면 파일은 새로고침만).
 
 ## 4. 코드 규칙

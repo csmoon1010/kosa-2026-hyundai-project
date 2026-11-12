@@ -1,6 +1,6 @@
 # FastAPI 전환 계획
 
-지금 서버(`src/tap/ui/serve.py` — 표준 라이브러리 `http.server`)를 FastAPI 로 옮긴다. 화면을 React 로 옮기기 전 단계다.
+예전 서버(`src/tap/ui/serve.py` — 표준 라이브러리 `http.server`)를 FastAPI 로 옮겼다 (2026-11-12, 0~4단계 완료 — 8절). 화면을 React 로 옮기기 전 단계다.
 작성: 2026-11-12. 이 문서가 전환 작업의 기준이다 — 작업하면서 바뀐 결정은 이 문서를 먼저 고친다.
 
 ## 1. 목적과 범위
@@ -219,5 +219,5 @@ src/tap/api/
 | 1. 앱 · 서비스 · 라우터 | 완료 — `src/tap/api/` (API 25개), `tap.cli serve` 는 uvicorn |
 | 2. 화면 경로 수정 | 완료 — 화면 점검 통과 (스트림: 요청 이해 0.5초 · 경로 4.2초 · API 7.0초에 각각 도착) |
 | 3. 테스트 전환 | 완료 — `tests/app_server.py` (FastAPI 앱을 실제 포트로), pytest 331 · node 통과 |
-| 4. 정리 | 대기 |
+| 4. 정리 | 완료 — `ui/serve.py` 삭제, 예전 경로 문자열 0건 (코드 · 테스트 · 문서), README · AGENTS · architecture · scenario-ir 문서 수정 |
 | 5. React 준비 | 대기 |

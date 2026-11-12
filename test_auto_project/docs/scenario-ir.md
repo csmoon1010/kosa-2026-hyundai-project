@@ -166,10 +166,10 @@ LLM 호출은 `min(40, STEP 수 × 5 + 2)`, 토큰은 `min(400000, STEP 수 × 5
 
 검토 API:
 
-- `GET /api/scenario-ir-reviews`: 저장된 검토 목록
-- `GET /api/scenario-ir-reviews/{scenario_id}`: 현재 결정·revision·미리보기
-- `POST /api/scenario-ir-reviews/{scenario_id}/decisions`: `{expected_revision, decisions:[{target_id, choice:"now"|"runtime"|"hold", value?}]}`
-- `POST /api/scenario-ir-reviews/{scenario_id}/confirm`: `{expected_revision}`
+- `GET /api/inspect/ir/reviews`: 저장된 검토 목록
+- `GET /api/inspect/ir/reviews/{scenario_id}`: 현재 결정·revision·미리보기
+- `POST /api/inspect/ir/reviews/{scenario_id}/decisions`: `{expected_revision, decisions:[{target_id, choice:"now"|"runtime"|"hold", value?}]}`
+- `POST /api/inspect/ir/reviews/{scenario_id}/confirm`: `{expected_revision}`
 
 값은 서버가 지정한 target_id로만 적용한다. now에만 타입이 맞는 value를 전달한다. 위조 status·임의 경로 같은 필드는 거부하며 버전·자료 충돌은 HTTP 409다. 승인 이벤트는 기존 실행 JSONL에도 남기되 사용자 입력값을 이벤트에 중복 기록하지 않는다.
 

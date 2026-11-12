@@ -35,7 +35,7 @@
 | 대상 | 현재 역할 | 구현 방향 |
 |---|---|---|
 | `src/tap/ir/handoff.py` | ③ 결과 → 통합 승인 JSON (승인본 · 검토 초안) | 단계 번호 · 구분값 · 출처 칸 · 행 상태값을 채워 저장 |
-| `src/tap/ui/serve.py` | `/api/approve`(승인 → `tdg-*.json`) · `/api/review-draft`(검토 초안) · `/api/scenario-ir-drafts`(생성) | 승인본 기반 IR 생성 API |
+| `src/tap/api/` (FastAPI) | `/api/inspect/approve`(확인용 승인 → `tdg-*.json`) · `/api/register/ir`(검토 초안 + 생성) · `/api/inspect/ir`(승인본으로 생성) | 승인본 기반 IR 생성 API |
 | `web/scenario-ir-draft.js` | 확인용 등록 화면의 IR 영역 — 승인 직후 생성, 승인본 골라 다시 생성 | 생성 옵션 · 진행 · STEP 상세 · 로그 |
 | `web/scenario-register.js` | 최종 등록 화면 — 분석 뒤 검토 초안으로 바로 생성, 단계별 입력값 표시 | 생성 결과를 등록 시나리오에 고정 |
 | `src/tap/ui/preprocessing.py` | API ID별 파라미터 자료 조회·정규화 | 원본 JSON 조회·API ID 정규화 로직 재사용 |
@@ -67,7 +67,7 @@
 | `reference` · `reference_sources` | 참조 조회(이름 → 코드) 행의 조회 정보 / 그 코드를 받는 쓰기 행의 출처 목록 |
 | `row_values` | 행 상태값(`rowType` · `rowFlag`) — 업무 동작으로 정한 값. `draft_build` 가 고정 입력으로 넣는다 |
 
-사용할 파일은 서버가 승인(`/api/approve`) 또는 검토 초안(`/api/review-draft`) 응답으로 돌려준 **파일 이름**으로 지정한다. 같은 선택 결과면 같은 이름으로 덮어쓴다. 폴더의 최신 파일을 임의로 선택하지 않는다.
+사용할 파일은 서버가 확인용 승인(`/api/inspect/approve`) 응답 또는 등록 메뉴 IR 생성(`/api/register/ir`)의 첫 줄(`review_draft`)로 돌려준 **파일 이름**으로 지정한다. 같은 선택 결과면 같은 이름으로 덮어쓴다. 폴더의 최신 파일을 임의로 선택하지 않는다.
 
 이미 저장된 승인본으로 다시 생성할 때는 확인용 화면의 승인본 목록에서 고른다. 목록 항목에는 파일 이름과 원본 요청을 표시하며 검토 초안은 목록에 넣지 않는다.
 
@@ -444,9 +444,9 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 
 | API | 역할 | 입력·출력 |
 |---|---|---|
-| `GET /api/approved-selections` | 저장된 승인본 목록 | 파일 이름·원본 요청·승인 상태 목록 반환 |
-| `POST /api/review-draft` | ③ 결과로 승인 전 검토 초안 저장 (최종 등록 화면) | 입력: `selection_hash`; 출력: `filename`, 단계 대응 |
-| `POST /api/scenario-ir-drafts` | 승인본 · 검토 초안으로 IR 생성 | 입력: `approved_filename`, `generation_options`(예전 `generation_mode` · `generation_config` 도 받음); 출력: `file`, `ir`, `usage`, `step_previews` |
+| `GET /api/inspect/ir/approved` | 저장된 승인본 목록 | 파일 이름·원본 요청·승인 상태 목록 반환 |
+| `POST /api/register/ir` | ③ 결과로 검토 초안을 만들고 바로 IR 생성 (최종 등록 화면) | 입력: `selection_hash`, `generation_options`; 출력: `review`(`filename`, 단계 대응) + IR 결과. 스트림은 첫 줄 `review_draft` |
+| `POST /api/inspect/ir` | 승인본으로 IR 생성 (확인용) | 입력: `approved_filename`, `generation_options`(예전 `generation_mode` · `generation_config` 도 받음); 출력: `file`, `ir`, `usage`, `step_previews` |
 
 기존 로컬 서버 방식의 단일 생성 요청을 유지한다. 기본 응답은 기존 JSON이며, 화면은 Accept: application/x-ndjson으로 실시간 진행 이벤트를 요청한다. 서버는 같은 연결에서 이벤트를 줄 단위로 즉시 전송하고 마지막 generation_complete에 기존 결과를 담는다. 별도 작업 큐나 폴링 작업 API는 도입하지 않는다.
 
@@ -454,13 +454,13 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 
 확인용 등록 화면
 1. 등록 편집 영역 아래에 **IR 생성 설정**(생성 옵션 · 예산 표시)을 둔다.
-2. 승인(`/api/approve`)이 성공하면 서버가 승인본을 저장하고 돌려준 파일 이름으로 IR 생성을 요청한다.
+2. 승인(`/api/inspect/approve`)이 성공하면 서버가 승인본을 저장하고 돌려준 파일 이름으로 IR 생성을 요청한다.
 3. 생성 중에는 진행 표와 단계별 결과를 실시간으로 표시하고 같은 생성 버튼의 중복 클릭을 막는다.
 4. 저장된 승인본 선택 목록과 **IR 다시 생성** 버튼으로 다른 승인본 또는 다른 옵션을 적용한다.
 5. 승인은 성공했지만 IR 생성이 실패하면 둘을 구분해 표시한다. 재시도는 기존 승인본으로 IR 생성만 다시 요청한다.
 
 최종 등록 화면
-1. 분석(①②③)이 끝나고 차단이 아니면 검토 초안(`/api/review-draft`)을 만들고 바로 IR 생성을 요청한다 (중지조건 · 재시도는 늘 켬, 압축 1 · 2 는 사용자가 고름).
+1. 분석(①②③)이 끝나고 차단이 아니면 `/api/register/ir` 한 번으로 검토 초안을 만들고 바로 IR 을 생성한다 (중지조건 · 재시도는 늘 켬, 압축 1 · 2 는 사용자가 고름).
 2. 단계가 끝날 때마다(`step_preview`) 그 단계의 입력값 표를 채운다.
 3. 생성이 끝나야 승인 · 등록 버튼이 켜진다. 실패하면 **다시 만들기**로 IR 생성만 다시 한다.
 
@@ -470,7 +470,7 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 
 ### 8.3 실행 예산
 
-예산(LLM 호출 · 누적 토큰 · 생성 시간 · 호출당 출력)은 화면에서 조정하지 않는다. 서버가 승인본의 STEP 수로 산정해(`agent/budget.py`, `/api/scenario-ir-budget`) 화면에 읽기 전용으로 보여 준다 — 상세는 [scenario-ir-budget-plan.md](scenario-ir-budget-plan.md).
+예산(LLM 호출 · 누적 토큰 · 생성 시간 · 호출당 출력)은 화면에서 조정하지 않는다. 서버가 승인본의 STEP 수로 산정해(`agent/budget.py`, `/api/inspect/ir/budget`) 화면에 읽기 전용으로 보여 준다 — 상세는 [scenario-ir-budget-plan.md](scenario-ir-budget-plan.md).
 비용 상한은 `data/config/llm.yaml` 의 `ir_budget.max_cost_usd` 다.
 
 - `agent/config.py` 의 DEFAULTS(숫자 설정 4개: max_turns 16 · max_tokens 150000 · max_seconds 180 · max_output_tokens 4096)는 예전 `generation_config` API 요청에만 쓴다.
@@ -510,7 +510,7 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 - 각 줄에는 run_id, sequence, recorded_at, run_elapsed_seconds가 있다. 성공 시 generation_complete, 예외 시 generation_error를 남기고 파일을 닫는다. 예산 초과·초기 설정 오류에도 이미 생성한 로그를 보존한다.
 - progress.snapshot과 같은 인증값 마스킹을 적용한 사본만 로그에 기록한다. 원본 모델 입력·IR 자체를 로그 표시 처리 때문에 변경하지 않는다.
 - `generate()`는 JSON 응답 방식과 스트리밍 방식 모두 로깅하며, 성공 응답의 log_file·log_url과 IR의 generation.log_file로 연결한다. 실패 응답/이벤트에도 로그 경로를 전달한다.
-- 화면의 로그 파일 경로와 JSONL 다운로드 링크는 시작 이벤트부터 표시하고 실패 후에도 유지한다. 다운로드는 `GET /api/scenario-ir-logs/<파일이름>`을 사용한다. 지정 로그 디렉터리의 생성 파일만 제공한다.
+- 화면의 로그 파일 경로와 JSONL 다운로드 링크는 시작 이벤트부터 표시하고 실패 후에도 유지한다. 다운로드는 `GET /api/inspect/ir/logs/<파일이름>`을 사용한다. 지정 로그 디렉터리의 생성 파일만 제공한다.
 - 상세 로그 파일 자동 삭제·보관 기간 설정은 이번 변경에 추가하지 않는다.
 
 ### 8.4 IR 미리보기: 반응형 STEP 상세
@@ -1072,7 +1072,7 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 
 ## 12. 참고 자료
 
-- 승인본 만들기: `src/tap/ir/handoff.py` · 서버 `src/tap/ui/serve.py`
+- 승인본 만들기: `src/tap/ir/handoff.py` · 서버 `src/tap/api/` (services · routers)
 - 화면: `web/scenario-ir-draft.js`(확인용) · `web/scenario-register.js`(최종 등록)
 - 자료 조회: `src/tap/ui/preprocessing.py`
 - 실제 하네스·설정·도구: `src/tap/agent/runtime.py`, `config.py`, `tool_registry.py`, `parameter_tools.py`, `prompts.py`, `progress.py`, `logging.py`

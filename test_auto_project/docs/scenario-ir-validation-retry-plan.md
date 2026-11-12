@@ -191,7 +191,7 @@ KB 기본 조회와 Baseline·Response Outputs 조건부 조회 구조는 소스
 
 | 작업 | 대상 | 완료 기준 |
 |---|---|---|
-| 모드·정책 기본값과 검증 | `agent/config.py`, `ui/serve.py` | 기본 basic, 생략 시 호환, 잘못된 값 거부, 요청별 CONFIG, 기존 숫자 4개 계약 보존 |
+| 모드·정책 기본값과 검증 | `agent/config.py`, `api/` (당시 `ui/serve.py`) | 기본 basic, 생략 시 호환, 잘못된 값 거부, 요청별 CONFIG, 기존 숫자 4개 계약 보존 |
 | 후보 단위 검사와 오류 코드 | `agent/mapping_validation.py`, `agent/parameter_tools.py`, `agent/tool_registry.py` | 5.4절의 inputs·outputs·bindings 검사만 적용하고 각 오류에 기대값·현재값·복구 행동 제공 |
 | 통신 재시도·STEP 수정 및 종료 | `agent/runtime.py`와 별도 통신 재시도 래퍼 | CONFIG 기반 추가 시도 1회, SDK 재시도 중복 없음, STEP 수정 1회와 최종 검사 간 한도 공유 |
 | 모드별 프롬프트 | `agent/prompts.py` | 기본 프롬프트 유지, 적용 모드만 6.4절 지시 추가, 같은 Structured Outputs 사용 |
@@ -238,6 +238,6 @@ KB 기본 조회와 Baseline·Response Outputs 조건부 조회 구조는 소스
 - `agent/mapping_validation.py`: 합의된 inputs·outputs·bindings 검사항목과 근거 대조. 기존 ParameterTools.validate 진입점에서 호출.
 - `agent/tool_registry.py`: 공통 자료 확보와 적용 모드 검사를 연결. 앞 STEP 출력 보완은 Binding 검사 통과 후에만 확정.
 - `ir/draft_validate.py`, `ir/draft_build.py`: inputs·outputs·bindings 최종 재검사, STEP 수정 한도 공유, 통과 후 저장.
-- `ui/serve.py`, `web/scenario-ir-draft.js`(확인용) · `web/scenario-register.js`(최종 등록): 옵션 기본값·선택·요청 전달, 검사·재시도·중단 로그 표시. 기존 STEP 상세·XML·Beautify·JSONL 유지.
+- `api/` (당시 `ui/serve.py`), `web/scenario-ir-draft.js`(확인용) · `web/scenario-register.js`(최종 등록): 옵션 기본값·선택·요청 전달, 검사·재시도·중단 로그 표시. 기존 STEP 상세·XML·Beautify·JSONL 유지.
 
 위 src 경로는 src/tap 하위이며 실제 근거 대조 함수의 값 일치 정책은 이번 변경에서 확장하지 않는다. 최종 참조 오류가 선행 출력의 매핑 오류에서 파생된 경우에는 원인 STEP의 수정 대상으로 분류하고, 독립적인 백엔드 조립 오류와 구분한다.
