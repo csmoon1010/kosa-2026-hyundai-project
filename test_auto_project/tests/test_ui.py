@@ -161,6 +161,92 @@ def test_approval_hands_off_to_ir_draft(agent_server):
     assert any(f["filename"] == h["filename"] and f["approval_status"] == "approved" for f in listed)
 
 
+def test_review_draft_before_approval(agent_server):
+    """최종 등록 화면 — 승인 전에 IR 을 만들 검토 전 초안(review-*.json). 혜정 fixed_plan 이 읽고, 확인용 승인본 목록엔 안 보인다 (2026-11-12)."""
+    from tap.ir.draft_build import fixed_plan
+    base, root = agent_server
+    r = json.loads(call(base + "/api/select", {"utterance": Q}))
+    h = json.loads(call(base + "/api/review-draft", {"selection_hash": r["gate"]["selection_hash"]}))
+    assert h["filename"].startswith("review-") and [x["step_id"] for x in h["steps"]] == ["1-1", "1-2"]
+    data = json.loads((root / h["file"]).read_text(encoding="utf-8"))
+    assert data["approval_status"] == "review" and "tdg_approval" not in data
+    assert data["tdg_review"]["selection_hash"] == r["gate"]["selection_hash"]
+    assert all(x["approval_status"] == "review" for x in data["api_selection_results"])
+    assert [s["step_id"] for s in fixed_plan(data)] == ["1-1", "1-2"]
+    listed = json.loads(call(base + "/api/approved-selections"))["files"]
+    assert all(f["filename"] != h["filename"] for f in listed)
+
+
+def test_register_after_review_ir(agent_server):
+    """최종 등록 화면 — 검토 전 초안으로 만든 IR 을 승인하며 등록한다. 다른 분석의 IR · 이름 없음은 거부 (2026-11-12)."""
+    import urllib.error
+    from tap.ui.export import ui_data
+    base, root = agent_server
+    r = json.loads(call(base + "/api/select", {"utterance": Q}))
+    h = json.loads(call(base + "/api/review-draft", {"selection_hash": r["gate"]["selection_hash"]}))
+    irs = root / "data/out/scenario_ir_drafts"
+    irs.mkdir(parents=True, exist_ok=True)
+    (irs / "SCN-test-v1.json").write_text(json.dumps({"scenario_id": "SCN-test", "tasks": [], "unresolved": [],
+                                                      "sources": {"approved": {"file": "prototype/approved/" + h["filename"]}}}), encoding="utf-8")
+    (irs / "SCN-other-v1.json").write_text(json.dumps({"sources": {"approved": {"file": "prototype/approved/tdg-x.json"}}}), encoding="utf-8")
+    body = {"selection_hash": r["gate"]["selection_hash"], "name": "배송완료 취소", "approver": "지은", "steps": [],
+            "review_file": h["filename"], "ir_file": "data/out/scenario_ir_drafts/SCN-test-v1.json"}
+    for bad, why in [({"ir_file": "data/out/scenario_ir_drafts/SCN-other-v1.json"}, "이 분석 결과로 만든 것이 아닙니다"),
+                     ({"name": " "}, "이름"), ({"approver": ""}, "승인자")]:
+        with pytest.raises(urllib.error.HTTPError) as e:
+            call(base + "/api/register", {**body, **bad})
+        assert e.value.code == 400 and why in json.loads(e.value.read().decode("utf-8"))["error"]
+    ok = json.loads(call(base + "/api/register", body))
+    sc = ok["scenario"]
+    assert sc["name"] == "배송완료 취소" and sc["domains"] == ["od"] and sc["steps"] == 2 and sc["approver"] == "지은"
+    full = json.loads(call(base + "/api/registered/" + ok["id"]))
+    assert full["approval"]["selection_hash"] == r["gate"]["selection_hash"] and full["ir"]["scenario_id"] == "SCN-test"
+    assert full["step_map"] == [{"step_id": "1-1", "source_step": "1-0"}, {"step_id": "1-2", "source_step": "1-1"}]
+    assert ok["id"] in [x["id"] for x in ui_data(root)["registered"]]                   # 실제 data 를 복사하므로 다른 등록이 있을 수 있다
+    call(base + "/api/registered/delete", {"id": ok["id"]})
+    assert ok["id"] not in [x["id"] for x in ui_data(root)["registered"]]
+
+
+def test_run_registered_dry_run(agent_server):
+    """실행 메뉴 — 등록 시나리오 드라이런. R2 단계는 실행할 때마다 확인, 명세가 바뀌면 재승인 필요, 통과하면 IR 로 이력 (2026-11-12)."""
+    import urllib.error
+    from tap.ui.export import ui_data
+    base, root = agent_server
+    r = json.loads(call(base + "/api/select", {"utterance": Q}))
+    h = json.loads(call(base + "/api/review-draft", {"selection_hash": r["gate"]["selection_hash"]}))
+    irs = root / "data/out/scenario_ir_drafts"
+    irs.mkdir(parents=True, exist_ok=True)
+    step = lambda sid, edge, inputs, binds=(): {"step_id": sid, "edge": edge, "api": {"api_id": "x:" + edge}, "inputs": inputs,
+                                                "bindings": list(binds), "baseline": {"file": "data/out/parameters/none.json"}}
+    ir = {"scenario_id": "SCN-t", "unresolved": [{"status": "open", "reason": "3건 선택 기준"}],
+          "sources": {"approved": {"file": "prototype/approved/" + h["filename"]}},
+          "tasks": [{"steps": [step("1-1", "배송완료 데이터 찾기", [{"field": "prgrGb", "source": "fixed", "value": "P3"}]),
+                               step("1-2", "배송완료취소", [{"field": "ordNo", "source": "bind", "ref": "B-1"}],
+                                    [{"binding_id": "B-1", "from": {"from_step_id": "1-1", "output_name": "ordNo"}}])]}]}
+    (irs / "SCN-t-v1.json").write_text(json.dumps(ir, ensure_ascii=False), encoding="utf-8")
+    sid = json.loads(call(base + "/api/register", {"selection_hash": r["gate"]["selection_hash"], "name": "취소", "approver": "지은",
+                                                    "review_file": h["filename"], "ir_file": "data/out/scenario_ir_drafts/SCN-t-v1.json"}))["id"]
+    run = json.loads(call(base + "/api/registered/run", {"items": [{"id": sid, "n": 2}]}))["run"]       # R1 만 — 추가 확인 없음
+    assert run["kind"] == "드라이런" and run["rows"] == [{"scenario_id": sid, "name": "취소", "count": 2, "confirmed": []}]
+    assert [(c["k"], c["step_id"], c["tier"]) for c in run["calls"]] == [(1, "1-1", "R0"), (1, "1-2", "R1"), (2, "1-1", "R0"), (2, "1-2", "R1")]
+    assert run["calls"][1]["bindings"] == [{"binding_id": "B-1", "from_step_id": "1-1", "output_name": "ordNo"}]
+    assert run["unresolved"] == ["취소 · 3건 선택 기준"] and [x["with"] for x in run["rollback"]] == ["되돌리는 화살표 있음"] * 2
+    assert ui_data(root)["runs"][0]["id"] == run["id"]
+    f = root / "data/registered" / f"{sid}.json"                                                     # R2 였다면 — 실행 때마다 확인
+    rec = json.loads(f.read_text(encoding="utf-8"))
+    rec["gate"]["confirm_steps"] = ["1-1"]
+    f.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(urllib.error.HTTPError) as e:
+        call(base + "/api/registered/run", {"items": [{"id": sid, "n": 1}]})
+    assert e.value.code == 400 and "실행할 때 확인이 필요합니다" in json.loads(e.value.read().decode("utf-8"))["error"]
+    assert len(json.loads(call(base + "/api/registered/run", {"items": [{"id": sid, "n": 1, "confirm": ["1-1"]}]}))["run"]["calls"]) == 2
+    rec["catalog_version"] = "old"                                                                   # 등록 뒤 명세가 바뀜
+    f.write_text(json.dumps(rec, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(urllib.error.HTTPError) as e:
+        call(base + "/api/registered/run", {"items": [{"id": sid, "n": 1, "confirm": ["1-1"]}]})
+    assert "재승인" in json.loads(e.value.read().decode("utf-8"))["error"]
+
+
 def test_human_value_with_instruction_is_rejected(agent_server):
     import urllib.error
     base, _ = agent_server
@@ -179,3 +265,17 @@ def test_handoff_stops_when_ir_material_missing(agent_server):
     h = ok["ir_handoff"]
     assert ok["approval"] and h["filename"] is None and h["missing"] == ["1-1 selectOshpDtlList.do: Parameter KB 없음"]
     assert not list((root / "prototype/approved").glob("tdg-*.json")) if (root / "prototype/approved").exists() else True
+
+
+def test_server_select_streams_stages(agent_server):
+    """최종 등록 화면 — Accept: application/x-ndjson 이면 단계 시작마다 한 줄, 마지막 줄이 결과 (2026-11-12)."""
+    import urllib.request
+    base, _ = agent_server
+    req = urllib.request.Request(base + "/api/select", data=json.dumps({"utterance": Q}).encode("utf-8"),
+                                 headers={"Content-Type": "application/json", "Accept": "application/x-ndjson"})
+    with urllib.request.urlopen(req) as res:
+        lines = [json.loads(x) for x in res.read().decode("utf-8").splitlines() if x.strip()]
+    assert [x.get("stage") for x in lines[:-1]] == ["intent", "paths", "apis"]
+    last = lines[-1]
+    assert last["event"] == "done" and last["result"]["gate"]["status"] == "승인 필요"
+    assert [x["selection_status"] for x in last["result"]["apis"]["api_selection_results"]] == ["선택", "선택"]

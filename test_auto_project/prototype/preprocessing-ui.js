@@ -6,7 +6,6 @@
   const code = value => `<code class="artifact-path">${esc(value == null ? '—' : String(value))}</code>`;
   const textValue = value => esc(value === undefined ? '—' : typeof value === 'string' ? value : JSON.stringify(value));
   const required = field => (field.requiredDeclared ?? field.required_declared) ? (field.required ? '필수' : '선택') : '미명시';
-  const note = 'preprocessing.ipynb에서 생성한 JSON을 사용합니다. 노트북 실행 후 상단의 전처리 산출물 갱신을 누르세요.';
   const apis = dom => Object.entries(data().canonical_schema).filter(([sid]) => !dom || TAP.metadata.some(m => m.api_id === sid && m.domain === REAL_DOM[dom]));
   const apiDomain = sid => (TAP.metadata.find(m => m.api_id === sid) || {}).domain || 'unknown';
   const domainNames = { pd: '상품', od: '주문', ds: '물류', af: '재경', cs: '상담', hm: '전시', unknown: '미분류' };
@@ -26,7 +25,7 @@
     schema(dom, filter = {}) {
       const entries = filteredApis(dom, filter);
       return { count: `API ${entries.length}개 · 필드 ${entries.reduce((n, [, a]) => n + a.parameters.length, 0)}개`,
-        body: entries.map(([sid, a]) => heading(sid, a) + `<p class="note">${esc(a.contentType || '본문 없음')} · 요청 본문 ${a.requestBodyRequired ? '필수' : '선택/미명시'}</p>` + fieldsTable(a.parameters, 'example')).join('') || empty, note };
+        body: entries.map(([sid, a]) => heading(sid, a) + `<p class="note">${esc(a.contentType || '본문 없음')} · 요청 본문 ${a.requestBodyRequired ? '필수' : '선택/미명시'}</p>` + fieldsTable(a.parameters, 'example')).join('') || empty };
     },
     baseline(dom, filter = {}) {
       const entries = filteredApis(dom, filter), count = entries.filter(([sid]) => data().baselines[sid]?.user_registered).length;
@@ -34,7 +33,7 @@
         const baseline = data().baselines[sid];
         return heading(sid, a, `<span class="tag">${baseline?.user_registered ? '사용자 등록' : '예시 초안 · 미등록'}</span>`) +
           (baseline ? fieldsTable(baseline.parameters, 'value') : empty);
-      }).join('') || empty, note: `${note} 예시 초안은 실제 호출 성공이 검증된 전문이 아닙니다. 사용자 등록은 경로·타입을 확인한 요청값입니다.` };
+      }).join('') || empty };
     },
     pkb(dom, filter = {}) {
       const entries = filteredApis(dom, filter), fields = entries.reduce((n, [sid]) => n + (data().parameter_kb[sid]?.parameters.length || 0), 0);
@@ -53,8 +52,8 @@
       const domain = ('domain' in filter ? filter.domain : REAL_DOM[dom]) || (TAP.metadata.find(m => m.api_id === filter.api) || {}).domain;
       const scopeIds = [domain, scopeNames[domain], Object.keys(REAL_DOM).find(key => REAL_DOM[key] === domain)].filter(Boolean);
       const common = data().common_knowledge.filter(k => !domain || k.application_scope.type === 'GLOBAL' || scopeIds.includes(k.application_scope.domain_id));
-      body += '<h3 class="artifact-title">승인된 공통 지식</h3><p class="note">공통 지식은 document/api_id에 종속되지 않으며 선택한 API의 업무 범위로 조회합니다.</p>' + tbl(['종류', '적용 범위', '내용'], common.map(k => `<tr><td>${esc(k.kind)}</td><td>${textValue(k.application_scope)}</td><td>${textValue(k.payload)}</td></tr>`), '해당 범위의 승인된 공통 지식이 없습니다.');
-      return { count: `기본 필드 ${fields}개`, body: body || empty, note: `${note} Canonical 기본 지식과 VERIFIED 보강 지식만 표시합니다. 공통 지식은 적용 범위를 확인한 후 사용하며 필드에 자동 병합하지 않습니다.` };
+      body += '<h3 class="artifact-title">승인된 공통 지식</h3>' + tbl(['종류', '적용 범위', '내용'], common.map(k => `<tr><td>${esc(k.kind)}</td><td>${textValue(k.application_scope)}</td><td>${textValue(k.payload)}</td></tr>`), '해당 범위의 승인된 공통 지식이 없습니다.');
+      return { count: `기본 필드 ${fields}개`, body: body || empty };
     },
     resp(dom, filter = {}) {
       const entries = filteredApis(dom, filter);
@@ -65,8 +64,7 @@
           return heading(sid, a) + `<p class="note">허용 성공 응답: ${response.responses.map(r => esc(`${r.response_key} · HTTP ${r.status_code} · ${r.content_type}`)).join(', ') || '없음'}</p>` +
             tbl(['출력', 'parameter_path', 'xmlPath / response_path', '타입', '필수여부', '성공 응답'], response.outputs.map(p => `<tr><td>${esc(p.name)}</td><td>${code(p.parameter_path)}</td><td>${code(p.xmlPath || p.response_path)}</td><td>${code(p.type)}</td><td>${required(p)}</td><td>${esc(p.response_key)}<br>${esc(p.content_type)}</td></tr>`), '사용 가능한 활성 성공응답 필드가 없습니다.') +
             `<details><summary>성공 응답 스키마</summary><pre class="code artifact-json">${esc(JSON.stringify(response.responses, null, 2))}</pre></details>`;
-        }).join('') || empty,
-        note: `${note} SUCCESS·활성·사용 설정 완료·재검토 불필요 필드만 사용합니다. 성공 응답 불일치 시 중단 정책을 포함하며 실제 판정은 향후 실행기에 연결합니다.` };
+        }).join('') || empty };
     }
   });
 
@@ -141,7 +139,7 @@
       apiSelect.value = filter.api;
       const result = REAL_DOCS[id](dom, filter);
       el('artifactFilteredCount').textContent = result.count;
-      el('artifactFilteredResults').innerHTML = result.body + `<p class="note">${esc(result.note)}</p>`;
+      el('artifactFilteredResults').innerHTML = result.body;
     }
     domainSelect.addEventListener('change', () => { filter.domain = domainSelect.value; update(); });
     documentSelect.addEventListener('change', () => { filter.document = documentSelect.value; update(); });

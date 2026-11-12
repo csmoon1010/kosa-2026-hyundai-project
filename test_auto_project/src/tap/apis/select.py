@@ -3,7 +3,13 @@
 ① 후보 찾기 — API 카탈로그: 사용 중 · 종류(쓰기/조회) · 도메인으로 대상 API 를 추리고,
    화살표 이름 · 출발/도착 상태를 API 이름 · 별칭 · 구분값 이름과 맞춘다 (매칭기 tap.graph.match — 화면 미리보기와 같은 점수)
 ② 확정 검사 — API 메타데이터: 종류 · 사용 여부 · 구분값 필드가 요청에 있는지 · 값이 구분값 목록에 있는지 · 되돌림 불가
+   그래프 없는 업무는 업무 이름 · 업무 용어로 찾는다 (2026-11-11 점수 고침: 흔한 말을 빼고 동작 낱말을 맞춘 이름 비교 ·
+   필드 한글명 뿌리 비교 — '가격수정' ↔ '상품 가격 수정 요청' · 가격 ↔ 매입가격)
 ③ 고르기 — 통과 1개 / 1순위가 확실 → 규칙, 비슷한 후보 여럿 → LLM (후보 안에서만)
+   선택 · 가선택 규칙은 그래프 유무와 상관없이 같다 (2026-11-11). 그래프 없는 단계만 다른 점 하나:
+   확정 기준(0.45) 이상 후보가 없으면 0.3 이상 후보로 LLM 에 묻는다 (보류 대신, 점수가 낮아 결과는 가선택)
+   선택 = 점수 0.75 이상 · 확정 검사 통과 · (LLM 이 골랐으면) 확인 사항 없음. LLM 이 골라도 0.75 미만이면 가선택 (2026-11-12)
+⑤ 행 상태값 — 고른 API 요청에 rowType · rowFlag 가 있으면 업무 동작으로 채운다 (신규 추가 INSERT · I / 수정 UPDATE · U / 삭제 DELETE · D)
 ④ 참조 조회 — 고른 쓰기 API 의 코드 필드(brndCd 브랜드코드)에 넣을 설정값이 이름("아디다스")이면, 이름으로 그 코드를
    찾아 주는 조회 API(요청에 브랜드명 · 응답에 brndCd)를 쓰기 앞 단계로 넣는다 → 단계 수는 고르기까지 끝나야 확정된다
 그래프는 노드 흐름만 갖는다 — 그래프 파일에 API 가 적혀 있어도 쓰지 않고 늘 여기서 고른다. 사람이 바로잡는 곳은 API Metadata(규칙 입력).
@@ -20,13 +26,14 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, create_model
 
 from tap.goal.extract import LLMParse, TaskPlan
-from tap.graph.match import _CREATE, CHECK, FOUND, Candidate, match_edge, match_lookup, sim
+from tap.graph.match import _CREATE, CHECK, FOUND, Candidate, is_row_field, match_edge, match_lookup, sim
 from tap.graph.model import NEW, StateGraph
 from tap.graph.paths import PathPlan, TaskPath
 
 SCOPE = ["pd", "od", "ds"]                      # 1차 범위 — 후보를 찾는 도메인
 MARGIN = 0.15                                   # 1순위가 2순위보다 이만큼 높으면 규칙이 고른다
 TOP = 5
+LOW = 0.3                                       # 그래프 없는 단계: 이 이상이면 후보로 보여 주고, 확정 기준(CHECK) 미만이어도 LLM 에 묻는다
 KIND_API = {"조회": "read", "상태변경": "write", "수정": "write", "생성": "write"}
 STATUS = ("선택", "가선택", "보류")
 
@@ -69,6 +76,7 @@ class StepSelection(BaseModel):
     selected_by: Literal["규칙", "LLM"] | None
     selection_reason: str
     reference: Reference | None = None          # 참조 조회 단계만
+    row_values: dict[str, str] = Field(default_factory=dict)   # 행 상태값 (rowType=INSERT · rowFlag=I) — 업무 동작으로 정함
 
     model_config = {"populate_by_name": True}
 
@@ -102,8 +110,10 @@ def check(c: Candidate, kind: str, meta: dict[str, dict[str, Any]], req: dict[st
     if not m.get("tool_enabled", True):
         return "탈락", "사용 안 함(tool_enabled=false)"
     warn = []
-    sels = {s["field"]: s for s in m.get("selectors") or []}
+    sels = {s["field"]: s for s in m.get("selectors") or [] if not is_row_field(s["field"])}   # 행 상태값은 구분값이 아니다
     for f, v in c.selector.items():
+        if is_row_field(f):
+            continue
         if f not in req.get(c.api_id, set()):
             return "탈락", f"구분값 필드 {f} 가 요청에 없음"
         if v == "?":
@@ -117,40 +127,128 @@ def check(c: Candidate, kind: str, meta: dict[str, dict[str, Any]], req: dict[st
             if s.get("complete"):
                 return "탈락", f"{f}={v} 가 구분값 목록에 없음"
             warn.append(f"{f}={v} 는 구분값 목록(일부)에 없음")
+    unset = [f for f in sels if f not in c.selector]
+    if unset:                                   # API 에 구분값이 있는데 값을 정하지 않음 (그래프 없는 단계는 구분값을 맞추지 않는다)
+        warn.append(f"구분값 {', '.join(unset)} 값을 정하지 않음 — 사람 확인")
     if m.get("irreversible") == "불가":
         warn.append("되돌릴 수 없는 API — 실행 전 사람 확인")
     return ("주의", " · ".join(warn)) if warn else ("통과", None)
 
 
+# ─── 행 상태값 — 데이터셋에 행을 넣을 때 기본으로 채우는 값 (2026-11-11) ─────────────────────────────
+# rowType: NORMAL · INSERT · UPDATE · DELETE / rowFlag: I · U · D. 메타데이터는 구분값으로 뽑지만(catalog/build) API 를
+# 고르는 값이 아니라 요청의 동작(신규 추가 · 수정 · 삭제)에 따라 정해진다 → 선택과 따로 row_values 에 적는다.
+
+ROW_VALUE = {"rowtype": {"I": "INSERT", "U": "UPDATE", "D": "DELETE"}, "rowflag": {"I": "I", "U": "U", "D": "D"}}
+_DELETE = ("삭제", "제거")
+
+
+def row_op(kind: str, action: str) -> str | None:
+    """단계 동작 → I(신규 추가) · U(수정) · D(삭제). 조회는 없음.
+
+    생성 단계는 I. 수정 · 상태변경은 업무 이름으로: 등록 · 생성 · 추가 … → I ('답변등록'은 있는 문의에 새 답변 행), 삭제 · 제거 → D, 그 밖은 U.
+    """
+    if kind == "조회":
+        return None
+    if kind == "생성":
+        return "I"
+    a = _key(action)                            # 같은 뜻 낱말을 대표 말(등록 · 수정)로
+    return "D" if any(w in a for w in _DELETE) else "I" if "등록" in a else "U"
+
+
+def row_values(api_id: str, kind: str, action: str, ops: dict[str, dict[str, Any]]) -> dict[str, str]:
+    op = row_op(kind, action)
+    if op is None:
+        return {}
+    names = dict.fromkeys(f["name"] for f in ops.get(api_id, {}).get("request_fields") or [] if is_row_field(f["name"]))
+    return {n: ROW_VALUE[n.lower()][op] for n in names}
+
+
 # ─── 단계 만들기 · ① 후보 찾기 ────────────────────────────────────────────────────────────
+
+def term_hit(term: str, f: dict[str, Any]) -> bool:
+    """업무 용어가 요청 필드 하나와 맞는가 — 비슷하거나(0.8 이상), 필드 한글명의 뿌리가 용어의 뿌리로 끝난다 (2026-11-11).
+
+    뿌리 = 끝의 코드 · 명 · 이름을 뗀 것. 한국어 합성어는 끝 낱말이 중심이라 끝으로 비교한다:
+    가격 → 매입가격 ✓ · 협력사 → 협력사코드 ✓ · 브랜드코드 → 브랜드코드 ✓ / 브랜드 → 바코드브랜드구분코드 ✗ · 가격 → 가격적용일자 ✗
+    용어가 코드면 이름 필드와, 이름이면 코드 필드와는 맞추지 않는다 (협력사코드 → AS협력사명 ✗).
+    """
+    if sim(term, f.get("label")) >= 0.8 or sim(term, f["name"]) >= 0.8:
+        return True
+    b, t = _base(term), _clean(term)
+    if t.endswith("코드") and _is_name(f) or t.endswith(("명", "이름")) and _is_code(f):
+        return False
+    return len(b) >= 2 and _base(f.get("label")).endswith(b)
+
 
 def _field_hits(names: list[str], api_id: str, ops: dict[str, dict[str, Any]]) -> list[str]:
     """업무 용어(가격 · 협력사코드 …)가 요청 필드 이름 · 한글명과 맞는 것."""
     fields = ops.get(api_id, {}).get("request_fields") or []
-    return [n for n in names if any(sim(n, f.get("label")) >= 0.8 or sim(n, f["name"]) >= 0.8 for f in fields)]
+    return [n for n in names if any(term_hit(n, f) for f in fields)]
+
+
+VERBS = {"수정": ("변경", "바꾸기", "바꿈", "업데이트", "갱신"),   # 같은 뜻 동작 낱말 — 대표 말로 맞춰 비교
+         "등록": ("생성", "만들기", "추가", "신규")}
+GENERIC = ("상품", "요청")                       # API 이름에 흔한 말 — 빼고 비교 ('상품 가격 수정 요청' → 가격수정)
+
+
+def _key(s: str | None) -> str:
+    s = re.sub(r"\([^)]*\)|\[[^\]]*\]", "", s or "")
+    s = re.sub(r"[\s·,/\-_]+", "", s)
+    for rep, words in VERBS.items():
+        for w in words:
+            s = s.replace(w, rep)
+    for w in GENERIC:
+        s = s.replace(w, "")
+    return s
+
+
+def name_score(action: str, m: dict[str, Any]) -> float:
+    """업무 이름 ↔ API 이름 · 별칭. 원래 글자 그대로와, 흔한 말을 빼고 동작 낱말을 맞춘 뒤 중 높은 쪽 (2026-11-11).
+
+    '가격수정' ↔ '상품 가격 수정 요청': 그대로 0.67 → 맞춘 뒤 가격수정 = 가격수정 1.0.
+    맞춘 뒤 한쪽이 동작 낱말만 남으면('상품 수정' → 수정) 대상이 없어 맞춘 비교는 쓰지 않는다.
+    """
+    best = 0.0
+    for name in [m["api_name"], *(m.get("aliases") or [])]:
+        s = sim(action, name)
+        a, n = _key(action), _key(name)
+        if a and n and a not in VERBS and n not in VERBS:
+            s = max(s, sim(a, n))
+        best = max(best, s)
+    return best
 
 
 def _no_graph_candidates(kind: str, action: str, names: list[str], metadata: list[dict[str, Any]],
                          ops: dict[str, dict[str, Any]]) -> list[Candidate]:
-    """그래프 없는 업무 — 업무 이름 · 업무 용어(제약 이름)로 찾는다. 명세만으로는 맞히기 어려워 결과는 늘 가선택."""
+    """그래프 없는 업무 — 업무 이름 · 업무 용어(제약 이름)로 찾는다. 선택 · 가선택은 그래프 있는 단계와 같은 규칙(점수 · 확정 검사).
+
+    수정: 이름 0.6 + 업무 용어 0.4 (생성과 같은 비중. 후보가 쓰기 API 전체라 생성의 기본 0.2 는 근거가 안 돼 두지 않는다)
+    조회: 업무 용어(찾을 조건)만 0.6 — 업무 이름은 쓰기 동작이라 조회 API 이름과 맞출 수 없다
+    """
     out = []
     for m in metadata:
         if m["kind"] != KIND_API[kind] or not m.get("tool_enabled", True) or m["domain"] not in SCOPE:
             continue
-        s = max(sim(action, m["api_name"]), *(sim(action, a) for a in m.get("aliases") or [""])) if kind == "수정" else 0.0
         hits = _field_hits(names, m["api_id"], ops)
-        score = min(1.0, max(s, 0.0) * 0.6 + (0.6 * len(hits) / len(names) if names else 0.0))
-        reasons = [f"요청 필드에 {', '.join(hits)}" if hits else f"이름 '{m['api_name']}'"]
+        ratio = len(hits) / len(names) if names else 0.0
+        if kind == "수정":
+            s = name_score(action, m)
+            score = min(1.0, 0.6 * s + 0.4 * ratio)
+        else:
+            score = min(1.0, 0.6 * ratio)
+        reasons = [f"이름 '{m['api_name']}'"] if kind == "수정" else []
+        reasons += [f"요청 필드에 {', '.join(hits)}"] if hits else []
         if kind == "수정" and m.get("action") in _CREATE:   # 새로 등록하는 API — 있는 데이터를 고치는 데는 맞지 않을 수 있다
             score *= 0.5
             reasons.append(f"새로 {m['action']}하는 API — 수정에는 맞지 않을 수 있음")
-        if score >= 0.3:
-            out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], score=round(score, 3), reasons=reasons))
+        if score >= LOW:
+            out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], score=round(score, 3), reasons=reasons or [f"이름 '{m['api_name']}'"]))
     out.sort(key=lambda c: (-c.score, c.api_id))
     return out[:TOP]
 
 
-CREATE_WORDS = ("생성", "만들기", "추가", "신규")              # 업무 이름의 '새로 만듦' 낱말 — API 이름 쪽 말(등록)로 맞춰 비교
+CREATE_WORDS = VERBS["등록"]                     # 업무 이름의 '새로 만듦' 낱말 — API 이름 쪽 말(등록)로 맞춰 비교
 
 
 def _create_candidates(action: str, names: list[str], domain: str, metadata: list[dict[str, Any]],
@@ -167,11 +265,11 @@ def _create_candidates(action: str, names: list[str], domain: str, metadata: lis
     pool = [m for m in pool if m["domain"] == domain.lower()] or pool
     out = []
     for m in pool:
-        s = max(sim(act, m["api_name"]), *(sim(act, a) for a in m.get("aliases") or [""]))
+        s = name_score(act, m)
         hits = _field_hits(names, m["api_id"], ops)
         score = min(1.0, 0.2 + 0.6 * max(s, 0.0) + (0.4 * len(hits) / len(names) if names else 0.0))
         reasons = [f"새로 {m['action']}하는 API", f"이름 '{m['api_name']}'"] + ([f"요청 필드에 {', '.join(hits)}"] if hits else [])
-        if score >= 0.3:
+        if score >= LOW:
             out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], score=round(score, 3), reasons=reasons))
     out.sort(key=lambda c: (-c.score, c.api_id))
     return out[:TOP]
@@ -187,8 +285,15 @@ def _steps_of(p: TaskPath, tp: TaskPlan, g: StateGraph | None, metadata: list[di
         find = [c.name for c in task.constraints if c.role == "대상조건"]
         put = [c.name for c in task.constraints if c.role == "설정값"]
         if task.origin == "신규":                # 찾을 데이터가 없다 — 새로 만드는 API 를 바로 고른다
-            return [{"step": 1, "kind": "생성", "edge": task.action, "from": None, "to": None,
-                     "cands": _create_candidates(task.action, put, p.domain, metadata, ops), "loose": True}]
+            if "수정" not in _key(task.action):
+                return [{"step": 1, "kind": "생성", "edge": task.action, "from": None, "to": None,
+                         "cands": _create_candidates(task.action, put, p.domain, metadata, ops), "loose": True}]
+            # 만든 뒤 고치는 업무('가격수정' — 5000원으로 만들고 8000원으로 수정, 2026-11-12): 생성 → 수정 두 단계.
+            # ① 은 같은 대상이면 업무 하나로 둔다. 생성 단계는 업무 이름이 수정이라 이름 대신 '등록'으로 찾는다
+            return [{"step": 1, "kind": "생성", "edge": f"{task.action} 전에 새로 등록", "from": None, "to": None,
+                     "cands": _create_candidates("등록", put, p.domain, metadata, ops), "loose": True},
+                    {"step": 2, "kind": "수정", "edge": task.action, "from": None, "to": None,
+                     "cands": _no_graph_candidates("수정", task.action, put, metadata, ops), "loose": True}]
         if find:
             out.append({"step": 0, "kind": "조회", "edge": f"{task.action} 대상 찾기 ({', '.join(find)})", "from": None, "to": None,
                         "cands": _no_graph_candidates("조회", task.action, find, metadata, ops), "loose": True})
@@ -222,11 +327,9 @@ def _rule_pick(st: dict[str, Any], passed: list[tuple[Candidate, str, str | None
     clear = len(passed) == 1 or top.score - passed[1][0].score >= MARGIN
     if not clear:
         return None
-    sure = top.score >= FOUND and chk == "통과" and not st["loose"]
+    sure = top.score >= FOUND and chk == "통과"  # 그래프 있는 단계 · 없는 단계 같은 규칙 (2026-11-11 — 전엔 그래프 없으면 늘 가선택)
     reason = "; ".join(top.reasons) + (f" (주의: {why})" if why else "")
-    if st["loose"]:
-        reason += " — 그래프 없는 업무라 명세만으로 고름, 사람 확인"
-    elif top.score < FOUND:
+    if top.score < FOUND:
         reason += f" — 점수 {top.score:.2f} 로 낮음, 사람 확인"
     return {"selected": Selected(api_id=top.api_id, selector=top.selector), "status": "선택" if sure else "가선택",
             "by": "규칙", "reason": reason}
@@ -241,10 +344,12 @@ def _show_fields(fields: list[dict[str, Any]], terms: list[str]) -> str:
     필드가 수백 개인 API(상품 등록 244개)는 앞에서 자르면 정작 필요한 필드(brndCd 119번째)가 빠진다.
     """
     seen: dict[str, str] = {}                   # 이름 → 표시 (데이터셋이 달라도 같은 이름은 한 번)
-    for t in terms:
-        for f in fields:
-            if f["name"] not in seen and (f["name"] == t or sim(t, f.get("label")) >= 0.8 or sim(t, f["name"]) >= 0.8):
-                seen[f["name"]] = f"{f['name']}({f.get('label') or ''}) ← {t}"
+    strong = lambda t, f: f["name"] == t or sim(t, f.get("label")) >= 0.8 or sim(t, f["name"]) >= 0.8
+    for match in (strong, term_hit):            # 거의 같은 필드 먼저, 뿌리만 맞는 필드(매입가격 ← 가격)는 그다음
+        for t in terms:
+            for f in fields:
+                if f["name"] not in seen and match(t, f):
+                    seen[f["name"]] = f"{f['name']}({f.get('label') or ''}) ← {t}"
     for f in fields:
         if len(seen) >= FIELDS_SHOWN:
             break
@@ -316,7 +421,8 @@ def _ask_llm(ask: list, rows: list[dict[str, Any]], tp: TaskPlan, ops: dict[str,
     for row in rows:
         if "_key" not in row:
             continue
-        key, passed, loose = row.pop("_key"), row.pop("_passed"), row.pop("_loose")
+        key, passed, low = row.pop("_key"), row.pop("_passed"), row.pop("_low", False)
+        row.pop("_loose", None)
         x = picks.get(key)
         i = ord(x["choice"]) - 65 if x and x["choice"] != "없음" else None
         if i is None or i >= len(passed):
@@ -325,7 +431,9 @@ def _ask_llm(ask: list, rows: list[dict[str, Any]], tp: TaskPlan, ops: dict[str,
             unresolved.append(Unresolved(path_sequence=row["path_sequence"], step=row["step"], reason=f"'{row['edge']}': {why}"))
             continue
         c, k, w = passed[i]
-        concerns = list(x["concerns"]) + ([w] if w else []) + (["그래프 없는 업무라 명세만으로 고름"] if loose else [])
+        concerns = list(x["concerns"]) + ([w] if w else []) \
+            + ([f"점수 {c.score:.2f} — 확정 기준({CHECK}) 미만 후보 중에서 고름"] if low else
+               [f"점수 {c.score:.2f} — 선택 기준({FOUND}) 미만, 사람 확인"] if c.score < FOUND else [])   # 규칙과 같은 기준 (2026-11-12)
         row.update(selected=Selected(api_id=c.api_id, selector=c.selector), selected_by="LLM",
                    selection_status="가선택" if concerns else "선택",
                    selection_reason=x["reason"] + (f" (확인: {' · '.join(concerns)})" if concerns else ""))
@@ -497,11 +605,15 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
                    "edge": st["edge"], "from": st["from"], "to": st["to"], "api_candidates": cands}
             passed = [(c, k, w) for c, k, w in judged if k != "탈락" and c.score >= CHECK]   # 점수가 '없음' 기준 미만이면 보여 주기만
             passed.sort(key=lambda x: -x[0].score)
-            r = _rule_pick(st, passed)
+            low = False
+            if not passed and st["loose"] and llm is not None:   # 그래프 없는 단계: 확정 기준 미만(LOW 이상) 후보는 보류 대신 LLM 에
+                passed = sorted([x for x in judged if x[1] != "탈락"], key=lambda x: -x[0].score)
+                low = bool(passed)
+            r = None if low else _rule_pick(st, passed)
             if r is None:
                 key = f"{p.sequence}-{st['step']}"
                 ask.append((key, st, passed[:TOP], g))
-                rows.append({**row, "_key": key, "_passed": passed[:TOP], "_loose": st["loose"]})
+                rows.append({**row, "_key": key, "_passed": passed[:TOP], "_loose": st["loose"], "_low": low})
                 continue
             rows.append({**row, "selected": r["selected"], "selection_status": r["status"], "selected_by": r["by"],
                          "selection_reason": r["reason"]})
@@ -520,6 +632,12 @@ def select_apis(tp: TaskPlan, pp: PathPlan, graphs: list[StateGraph], metadata: 
         names = row.pop("_names", None)
         if names is not None and row.get("selected") is not None:
             row["reference"].name_field, row["reference"].output_field = names[row["selected"].api_id]
+    actions = {t.sequence: t.action for t in tp.tasks}
+    for row in rows:                            # 행 상태값: 고른 API 요청에 rowType · rowFlag 가 있으면 업무 동작으로 채운다
+        sel = row.get("selected")
+        if sel is not None:
+            sel.selector = {k: v for k, v in sel.selector.items() if not is_row_field(k)}
+            row["row_values"] = row_values(sel.api_id, row["kind"], actions.get(row["path_sequence"], ""), ops)
 
     results = [StepSelection.model_validate(r) for r in rows]
     for p in pp.paths:                          # 기본 경로에 보류가 있으면 — 모든 단계에 API 가 있는 대안 경로를 안내 (바꾸지는 않음)

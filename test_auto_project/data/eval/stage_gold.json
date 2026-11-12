@@ -2,7 +2,7 @@
   "about": "단계별 정답셋 — ① 의도 ② 경로 ③ API ④ 파라미터(IR) 를 따로 채점한다 (tap.cli eval-stages). 2026-11-06 초안.",
   "decisions": [
     "2026-11-06 지은: 상품 생성은 그래프 없이 상품 등록(multiItem) 1번으로 처리 (S04 · S05 · S06)",
-    "2026-11-06 지은: 등록 가격과 수정 가격은 조건 이름으로 구분해야 맞음 (S05)",
+    "2026-11-06 지은: 등록 가격과 수정 가격은 조건 이름으로 구분해야 맞음 (S05) → 11-12 바뀜: 만든 뒤 값을 고치는 일은 업무를 나눈다 (S05 업무 2개)",
     "2026-11-06 지은: 건수를 말하지 않으면 1건 (S03 · S07)",
     "2026-11-06 지은: 출발 상태를 말하지 않으면 목표 전 아무 상태에서 시작해도 맞음 (S03)",
     "2026-11-06: 그래프 없는 쓰기(상품 등록 · 가격 수정)는 R2 — 되돌리는 방법을 모름 (승인 게이트 규칙, 상품을 지우는 API 없음)",
@@ -209,31 +209,35 @@
         "intent": {
           "tasks": [
             {"sequence": 1, "domain": "PD", "origin": "신규", "count": 1, "depends_on": [],
-             "action": {"contains_any": ["생성", "등록"]}, "conditions": {"contains": ["5000", "8000"]},
+             "action": {"contains_any": ["생성", "등록"]}, "conditions": {"contains": ["5000"]},
              "source_phrases": {"in_utterance": true},
              "constraints": [
-               {"name": {"contains": ["가격"], "contains_any": ["등록", "처음", "초기"]},
-                "value": "5000원", "role": "설정값", "source_phrase": {"in_utterance": true, "contains": ["5000"]}},
-               {"name": {"contains": ["가격"], "contains_any": ["수정", "변경"]},
-                "value": "8000원", "role": "설정값", "source_phrase": {"in_utterance": true, "contains": ["8000"]}}
+               {"name": {"contains": ["가격"]}, "value": "5000원", "role": "설정값", "source_phrase": {"in_utterance": true, "contains": ["5000"]}}
+             ]},
+            {"sequence": 2, "domain": "PD", "origin": "기존", "count": 1, "depends_on": [1],
+             "action": {"contains": ["가격"], "contains_any": ["수정", "변경"]}, "conditions": {"contains": ["8000"]},
+             "source_phrases": {"in_utterance": true},
+             "constraints": [
+               {"name": {"contains": ["가격"]}, "value": "8000원", "role": "설정값", "source_phrase": {"in_utterance": true, "contains": ["8000"]}}
              ],
-             "_note": "등록 가격과 수정 가격을 이름으로 구분해야 맞음 (11-06 지은 결정) — 둘 다 '가격'이면 ④ 가 어느 값을 어디 넣을지 모름"}
+             "_note": "만든 뒤 값을 고치는 일은 업무를 나눈다 (11-12 지은 결정) — 값이 업무마다 하나라 이름으로 구분할 필요 없음"}
           ],
           "unresolved": {"empty": true},
           "injections": {"empty": true}
         },
-        "paths": [{"sequence": 1, "domain": "PD", "graph_id": null, "status": "그래프 없음"}],
+        "paths": [{"sequence": 1, "domain": "PD", "graph_id": null, "status": "그래프 없음"},
+                  {"sequence": 2, "domain": "PD", "graph_id": null, "status": "그래프 없음"}],
         "apis": [
           {"step": "1-1", "api": "multiItem", "selector": {}, "tier": "R2"},
-          {"step": "1-2", "api": "updateItemPrcHist", "selector": {}, "tier": "R2"}
+          {"step": "2-1", "api": "updateItemPrcHist", "selector": {}, "tier": "R2"}
         ],
         "params": {
           "1-1": {"sellPrc": {"source": "fixed", "value": "5000"}, "_others": "ignore"},
-          "1-2": {"slitmCd": {"source": "bind", "from": "1-1.slitmCd"}, "sellPrc": {"source": "fixed", "value": "8000"}, "_others": "ignore"}
+          "2-1": {"slitmCd": {"source": "bind", "from": "1-1.slitmCd"}, "sellPrc": {"source": "fixed", "value": "8000"}, "_others": "ignore"}
         },
         "final": {"status": ["완료"], "gate": ["승인 필요"]}
       },
-      "_note": "같은 상품이라 업무 1개, 단계 둘(등록 → 가격 수정 — 등록 응답의 slitmCd 를 넘김). 상품 생성은 그래프 없이 등록 1번 (11-06 지은 결정). value 는 ① 스키마대로 요청 값 그대로('5000원') — 숫자로 바꾸는 건 ④"
+      "_note": "만들기(업무 1) + 가격 고치기(업무 2, depends_on 1 — 등록 응답의 slitmCd 를 넘김) (11-12 지은 결정, 전엔 업무 1개 · 단계 둘). 상품 생성은 그래프 없이 등록 1번 (11-06 지은 결정). value 는 ① 스키마대로 요청 값 그대로('5000원') — 숫자로 바꾸는 건 ④"
     },
     {
       "id": "S06",

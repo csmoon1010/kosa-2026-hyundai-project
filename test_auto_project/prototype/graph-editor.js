@@ -355,7 +355,7 @@
         return `<optgroup label="${DOMS[d]} (${d})">${l.length ? l.map(opt).join("") : `<option disabled>그래프 없음</option>`}</optgroup>`; }).join("");
       if (opts.domain && !gs.length && !S.creating){
         root.innerHTML = `<div class="gcard emptyst"><span class="st st-ext">그래프 없음</span><h2>이 도메인이 주인인 상태 그래프가 없습니다</h2>
-          <p class="note" style="max-width:62ch">이 도메인이 주인인 상태 코드 그룹을 받으면 여기서 그래프를 만들 수 있습니다. 화살표에 붙는 API 는 어느 도메인 것이든 쓸 수 있습니다.</p>
+          <p class="note" style="max-width:62ch">이 도메인이 주인인 상태 코드 그룹을 받으면 여기서 그래프를 만들 수 있습니다.</p>
           <div class="row"><button class="gbtn" id="${id("newG")}">새 그래프</button>${(opts.actions || []).map((a, i) => `<button class="gbtn" data-act="${i}">${esc(a.label())}</button>`).join("")}</div></div>`;
         el("newG").onclick = () => { S.creating = true; render(); };
         root.querySelectorAll("[data-act]").forEach(b => b.onclick = () => opts.actions[+b.dataset.act].onClick());
@@ -395,8 +395,7 @@
         </div>` : `
         <section class="gcard emptyst"><span class="st st-ext">공통코드 받기 전</span>
           <h2>${esc(g.name)} <span class="mono note">${esc(g.id)}</span></h2>
-          <p class="note" style="max-width:62ch">${esc(g.hint)}</p>
-          <p class="note" style="max-width:62ch">공통코드 테이블에서 이 코드 그룹(코드값 · 코드명 · 정렬순서 · 사용여부)을 받으면 왼쪽 팔레트에 나타나고, 캔버스에 끌어다 놓으며 시작합니다.</p></section>`}`;
+          <p class="note" style="max-width:62ch">${esc(g.hint)}</p></section>`}`;
       bindBar();
       if (S.creating) return bindCreate();
       if (!g.loaded) return;
@@ -414,7 +413,7 @@
           공통코드 테이블 export(<span class="mono">data/codes/common_codes.csv</span>)에 그룹을 추가하고 화면 데이터를 다시 만들면 여기에 나타납니다 (<span class="mono">tap.cli ui-data</span>, 서버로 열었다면 새로고침).</p>
         <button class="gbtn" id="${id("ncCancel")}">돌아가기</button></section>`;
       return `<section class="gcard form" style="max-width:640px">
-        <div class="row" style="justify-content:space-between"><h2>새 그래프</h2><span class="note">그래프 하나 = 상태 코드 그룹 하나</span></div>
+        <div class="row" style="justify-content:space-between"><h2>새 그래프</h2></div>
         <div class="fld"><label for="${id("ncg")}">공통코드 그룹 — 아직 그래프로 안 만든 것</label>
           <select id="${id("ncg")}">${free.map(c => `<option value="${esc(c.id)}" ${c.id === N.cg ? "selected" : ""}>${esc(c.id)} · ${esc(c.name)} · ${Object.keys(c.codes).length}개</option>`).join("")}</select>
           ${cg ? `<span class="hint">${(cg.order || Object.keys(cg.codes)).slice(0, 12).map(c => `${esc(c)} ${esc(cg.codes[c])}`).join(" · ")}${Object.keys(cg.codes).length > 12 ? " …" : ""}</span>` : ""}</div>
@@ -424,11 +423,9 @@
         </div>
         <div class="fld"><label for="${id("ndom")}">담당 도메인 — 상태 코드 그룹의 주인</label>
           ${opts.domain ? `<input type="text" id="${id("ndom")}" value="${esc(DOMS[opts.domain] || opts.domain)} (${esc(opts.domain)})" readonly>`
-            : `<select id="${id("ndom")}">${Object.entries(DOMS).map(([d, n]) => `<option value="${d}" ${d === N.dom ? "selected" : ""}>${n} (${d})</option>`).join("")}</select>`}
-          <span class="hint">화살표에 붙는 API 는 어느 도메인 것이든 쓸 수 있습니다.</span></div>
+            : `<select id="${id("ndom")}">${Object.entries(DOMS).map(([d, n]) => `<option value="${d}" ${d === N.dom ? "selected" : ""}>${n} (${d})</option>`).join("")}</select>`}</div>
         <div class="box"><b>조회 결과에서 상태를 읽는 필드 (자동 추정)</b>
           <p class="ev">${guess && guess.v ? `<span class="mono">${esc(guess.v)}</span> — ${esc(guess.why)}` : `못 찾았습니다 — ${esc(guess ? guess.why : "")}. 만든 뒤 '그래프 설정'에서 고르세요.`}</p></div>
-        <p class="note">만들면 빈 캔버스가 열립니다. 왼쪽 공통코드를 끌어다 놓고 화살표를 이은 뒤, 화살표마다 업무에서 부르는 이름을 적으세요.</p>
         <div class="row"><button class="gbtn pri" id="${id("ncMake")}">만들기</button><button class="gbtn ghost" id="${id("ncCancel")}">취소</button></div>
       </section>`;
     }
@@ -653,7 +650,7 @@
         <div class="row" style="justify-content:space-between"><h2>${esc(NAME(e.from))} → ${esc(NAME(e.to))}</h2>${pill(e)}</div>
         <div class="fld">
           <div class="two"><input type="text" id="${id("fn")}" value="${esc(e.name)}" placeholder="업무에서 부르는 이름 · 예: 출고완료취소" aria-label="업무에서 부르는 이름"><button class="gbtn pri" id="${id("okE")}">${e.name ? "이름 바꾸기" : "확정"}</button></div>
-          <span class="hint">화면 · 업무에서 쓰는 말 그대로 적어 주세요. 시나리오를 만들 때 이 이름으로 API 를 찾습니다.</span></div>
+          <span class="hint">화면 · 업무에서 쓰는 말 그대로 적어 주세요.</span></div>
         ${!rev ? `<div class="box"><p class="ev">되돌리는 화살표(${esc(NAME(e.to))} → ${esc(NAME(e.from))})가 없습니다. 실행 중 실패하면 이 단계는 되돌릴 수 없어요. 필요하면 캔버스에서 ${esc(NAME(e.to))} 의 ● 을 끌어 ${esc(NAME(e.from))} 에 놓으세요.</p></div>` : ""}
         <div class="row"><button class="gbtn sm dng" id="${id("delE")}">화살표 지우기</button><button class="gbtn sm ghost" id="${id("closeI")}">닫기</button></div>
       </section>`;
@@ -703,13 +700,12 @@
         const T = S.test; if (!T.target || !S.nodes[T.target]) T.target = placed()[placed().length - 1] || ""; if (!T.from || !S.nodes[T.from]) T.from = placed()[0] || "";
         const p = T.target && T.from ? search(T.from, T.target, T.must || null) : null;
         const o2 = (sel, none) => (none ? `<option value="">(없음)</option>` : "") + placed().map(c => `<option value="${c}" ${c === sel ? "selected" : ""}>${esc(sn(c))}</option>`).join("");
-        box.innerHTML = `<div class="form"><p class="note">그린 화살표만으로 출발 상태에서 목표 상태까지 어떤 순서로 가는지 봅니다. 어느 상태의 데이터를 조회로 찾을지와 화살표마다 부를 API 는 시나리오를 만들 때 정해집니다.</p>
+        box.innerHTML = `<div class="form">
           <div class="two"><div class="fld"><label for="${id("tf")}">출발 상태</label><select id="${id("tf")}">${o2(T.from)}</select></div>
             <div class="fld"><label for="${id("tt")}">목표 상태</label><select id="${id("tt")}">${o2(T.target)}</select></div></div>
           <div class="fld"><label for="${id("tm")}">그 전에 거쳐야 할 상태</label><select id="${id("tm")}">${o2(T.must, true)}</select></div>
           <div class="box path">${!T.target ? `<span class="note">상태를 먼저 캔버스에 놓으세요.</span>` : p ? `<div><span class="st st-ok">경로</span><br>${esc(sn(T.from))}${p.map(e => ` → ${esc(e.name)} → ${esc(sn(e.to))}`).join("")} <span class="note">· 화살표 ${p.length}개</span></div>`
-            : `<div><span class="st st-err">경로 없음</span><br><span style="font-family:var(--sans)">${esc(sn(T.from))} 에서 ${esc(sn(T.target))}(으)로 가는 화살표 길이 없습니다 (이름 없는 화살표는 빼고 계산).</span></div>`}</div>
-          <p class="note">예: 출발 "배송완료" → 목표 "출고" = "배송완료된 주문을 배송완료 취소해 줘".</p></div>`;
+            : `<div><span class="st st-err">경로 없음</span><br><span style="font-family:var(--sans)">${esc(sn(T.from))} 에서 ${esc(sn(T.target))}(으)로 가는 화살표 길이 없습니다 (이름 없는 화살표는 빼고 계산).</span></div>`}</div></div>`;
         el("tf").onchange = () => { T.from = el("tf").value; S.drawM(box); };
         el("tt").onchange = () => { T.target = el("tt").value; S.drawM(box); };
         el("tm").onchange = () => { T.must = el("tm").value; S.drawM(box); };
@@ -720,12 +716,12 @@
         const iss = issues(), err = iss.filter(x => x.lv === "err"), w = workEdges(), conf = w.filter(e => e.name).length;
         box.innerHTML = `<div class="form">
           <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.8">
-            <li>저장되는 화살표 <b>${conf}</b>개 (이름을 적은 것) — API 는 저장하지 않고 시나리오를 만들 때 고릅니다</li>
+            <li>저장되는 화살표 <b>${conf}</b>개 (이름을 적은 것)</li>
             ${w.length - conf ? `<li>저장 안 되는 화살표 ${w.length - conf}개 (이름 없음)</li>` : ""}
             <li>상태 필드 ${S.stateField.st === "확정" ? `<span class="mono">${esc(S.stateField.v)}</span>` : "확정 전 — 빠짐"}</li>
           </ul>
           ${err.length ? `<div class="box warn"><b>먼저 끝내야 할 것 ${err.length}개</b>${err.map(x => `<p class="ev">${esc(x.msg)}</p>`).join("")}</div>` : ""}
-          <p class="note">저장하면 승인본으로 고정됩니다. ${S.server ? `로컬 서버에 연결돼 있어 data/graphs/${esc(graph().id)}.yaml 에 씁니다. 이미 있는 파일이면 사람이 고정한 API · 조회 방법 · 진입 상태는 그대로 두고 합칩니다.` : "로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다."}</p>
+          ${S.server ? "" : `<p class="note">로컬 서버(tap.cli serve)로 열어야 파일에 저장됩니다.</p>`}
           <details><summary style="font-size:12.5px;font-weight:500">저장될 내용 보기</summary><pre class="yaml">${esc(yaml())}</pre></details>
           <div class="row"><button class="gbtn pri" id="${id("save")}" ${err.length ? "disabled" : ""}>확인 후 저장</button><button class="gbtn ghost" data-x>취소</button></div></div>`;
         el("save").onclick = async () => {
@@ -742,7 +738,7 @@
         D.ops.filter(o => o.kind === "read" && scopeDoms().includes(o.dom)).forEach(o => o.res.filter(r => /Gbcd$/.test(r[0])).forEach(r => { if (!m.has(r[0])) m.set(r[0], []); m.get(r[0]).push(o.sum); }));
         box.innerHTML = `<div class="form"><div class="fld"><label for="${id("sf")}">조회 결과에서 현재 상태를 읽는 필드</label>
           <select id="${id("sf")}">${[...m].map(([f, l]) => `<option value="${f}" ${f === S.stateField.v ? "selected" : ""}>${f} · ${esc(l.slice(0, 2).join(", "))}</option>`).join("")}</select>
-          <span class="hint">자동으로 추정한 값입니다. 조회 API 를 찾고, 마지막에 목표 상태에 도착했는지 확인할 때 씁니다.</span></div>
+          <span class="hint">자동으로 추정한 값입니다.</span></div>
           <div class="row">${S.stateField.st === "확정" ? `<span class="st st-ok">확정</span>` : `<button class="gbtn pri" id="${id("sfOk")}">확정</button>`}<button class="gbtn ghost" data-x>닫기</button></div></div>`;
         el("sf").onchange = () => { S.stateField = { v: el("sf").value, st: "추정" }; refresh(); S.drawM(box); };
         if (el("sfOk")) el("sfOk").onclick = () => { S.stateField.st = "확정"; refresh(); S.drawM(box); toast("상태 필드를 확정했습니다."); };

@@ -45,6 +45,15 @@ def _bigrams(s: str) -> set[str]:
 
 _REVERSE = ("취소", "반려", "철회", "삭제", "해제", "중지")   # 방향을 뒤집는 낱말
 _CREATE = ("등록", "생성")                                    # 새로 만드는 동작 (API Metadata action)
+_ROW_FIELD = re.compile(r"^row(Type|Flag)$", re.I)
+
+
+def is_row_field(name: str | None) -> bool:
+    """행 상태값 필드(rowType · rowFlag) — 데이터셋에 행을 넣을 때 기본으로 채우는 값이라 API 의 일을 고르는 구분값이 아니다 (2026-11-11).
+
+    API Metadata 는 구분값으로 뽑아 두지만(catalog/build) 후보를 만들 때는 빼고, 값은 ③ 이 업무 동작으로 정한다(select.row_values).
+    """
+    return bool(_ROW_FIELD.match(name or ""))
 
 
 def sim(a: str | None, b: str | None) -> float:
@@ -112,7 +121,7 @@ def match_edge(name: str | None, from_name: str, to_name: str, metadata: list[di
                                      score=max(0.85, min(1.0, s + 0.1)),
                                      reasons=[f"요청에 상태 필드 {sf} 가 있어 도착 상태 코드 {to_code} 를 넣어 바로 바꿈"]))
             continue
-        sels = m.get("selectors") or []
+        sels = [x for x in m.get("selectors") or [] if not is_row_field(x["field"])]   # 행 상태값은 구분값이 아님
         api_texts = [("API 이름", m["api_name"])] + [("API 별칭", a) for a in m.get("aliases") or []]
         bonus = 0.08 if _norm(to_name) and _norm(to_name) in _norm(m.get("search_text")) else 0.0
         if not sels:
@@ -153,7 +162,7 @@ def match_lookup(state_name: str, state_code: str, metadata: list[dict[str, Any]
     for m in metadata:
         if not _in_scope(m, "read", domains) or (state_field and state_field not in res.get(m["api_id"], set())):
             continue
-        sels = m.get("selectors") or []
+        sels = [x for x in m.get("selectors") or [] if not is_row_field(x["field"])]   # 행 상태값은 구분값이 아님
         sf = _state_filter(req.get(m["api_id"], set()), state_field)
         if sf:                                                             # 요청에 같은 필드 → 상태 코드로 바로 거른다
             out.append(Candidate(api_id=m["api_id"], api_name=m["api_name"], selector={sf: state_code},

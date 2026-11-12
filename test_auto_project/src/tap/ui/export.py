@@ -84,9 +84,22 @@ def ui_data(root: Path) -> dict[str, Any]:
                       **legacy_baselines(preprocessing)},
         "scenarios": [x for x in (_load(p) for p in sorted((root / "data/scenarios").glob("*.json"), reverse=True)) if x],
         "runs": [x for x in (_load(p) for p in sorted((root / "data/runs").glob("*.json"), reverse=True)) if x],
+        # 최종 등록 화면에서 승인 · 등록한 시나리오 (2026-11-12) — 예전 형식(scenarios)과 따로 둔다. 화면 목록엔 요약만
+        "registered": [registered_summary(x) for x in (_load(p) for p in sorted((root / "data/registered").glob("*.json"), reverse=True)) if x],
         "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
         "irs": [_load(p) for p in sorted((out / "ir").glob("*.json"))],
     }
+
+
+def registered_summary(rec: dict[str, Any]) -> dict[str, Any]:
+    """등록 시나리오 목록 한 줄 — 이름 · 요청 · 도메인 · 단계 수 · 되돌릴 수 없는 단계 수 · 등록 시각 · 카탈로그 버전."""
+    steps = (rec.get("gate") or {}).get("steps") or []
+    return {"id": rec.get("id"), "name": rec.get("name"), "utterance": rec.get("utterance"), "domains": rec.get("domains") or [],
+            "registered_at": rec.get("registered_at"), "catalog_version": rec.get("catalog_version"),
+            "approver": (rec.get("approval") or {}).get("approver"),
+            "steps": len(steps), "irreversible": sum(1 for s in steps if s.get("tier") == "R2"),
+            # 실행 메뉴 — 되돌릴 수 없는 단계는 실행할 때마다 확인 (key 는 서버 확인용, 이름은 화면용)
+            "confirm_steps": [{"key": s.get("key"), "edge": s.get("edge")} for s in steps if s.get("confirm_on_run")]}
 
 
 def write_ui_data(root: Path, dest: Path) -> Path:

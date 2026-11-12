@@ -192,11 +192,12 @@ class _NoWrap:
 
 def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir: Path | None = None,
                    rules_cfg: Path | None = None, model: str | None = None, llm=None, tasks_json: str | None = None,
-                   trace=None, trace_dir: Path | None = None, stop_retry: bool = True) -> dict:
+                   trace=None, trace_dir: Path | None = None, stop_retry: bool = True, on_stage=None) -> dict:
     """자연어 → 업무 목록 → 경로 → 단계마다 API. 1단계 산출물(Catalog · Metadata · operations)을 쓴다.
 
     트레이스(호출별 단계 · 토큰 · 지연 · 비용, 단계별 시간)는 끝나면(예산 초과로 멈춰도) trace_dir 에 남긴다.
     stop_retry: '중지조건 · 재시도' 토글 — 끄면 재시도 0회 (혜정 IR 생성의 같은 옵션과 함께 켜고 끈다, 발표 비교용).
+    on_stage: 단계를 시작할 때 부른다 — "intent" · "paths" · "apis" (화면 진행 표시용, 2026-11-12)
     """
     from tap.apis.select import select_apis
     from tap.goal.extract import GoalError
@@ -220,6 +221,8 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
         if tasks_json:
             tp, notes = TaskPlan.model_validate_json(tasks_json), []
         else:
+            if on_stage:
+                on_stage("intent")
             ri = analyze_intent(utterance, llm=wrapped, trace=_NoWrap(trace))
             tp, notes = ri["plan"], ri["notes"]
         graphs = _graphs(graph_dirs, rules_cfg, out_dir)
@@ -231,9 +234,13 @@ def analyze_select(utterance: str, graph_dirs: list[Path] | None = None, out_dir
             trace.finish("차단 (인젝션) [INJECTION_BLOCKED]")
             result.update(tasks=tp, paths=pp, apis=sel, gate=blocked_gate(sel, hits), trace=trace, notes=notes, injections=hits)
             return result
+        if on_stage:
+            on_stage("paths")
         r = analyze_paths(utterance, graph_dirs, rules_cfg=rules_cfg, llm=wrapped, trace=_NoWrap(trace),
                           tasks_json=tp.model_dump_json(), out_dir=out_dir)
         r["notes"] = notes + r["notes"]
+        if on_stage:
+            on_stage("apis")
         with trace.span("③ API 선택"):
             sel = select_apis(r["tasks"], r["paths"], graphs, meta, ops, cat, wrapped)
         gate = gate_for(sel, r["paths"], graphs, meta, perms)

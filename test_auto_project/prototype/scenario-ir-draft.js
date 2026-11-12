@@ -16,7 +16,7 @@
     <fieldset data-options><legend>생성 옵션 · 함께 선택 가능</legend>
       ${Object.entries(optionLabels).map(([key,label])=>`<label style="display:inline-block;margin:8px"><input type="checkbox" data-option-${key}> ${label}</label>`).join('')}
     </fieldset>
-    <p class="note" data-mode-status>기본 모드 · 현재 매핑 후보 분석 흐름을 사용합니다.</p>
+    <p class="note" data-mode-status></p>
     <button type="button" class="btn" data-reset>옵션 기본값 복원</button>
     <p><label>저장된 승인본 <select data-files></select></label></p><button type="button" class="btn btn-primary" data-generate>IR 다시 생성</button>
     <p data-status role="status"></p><p data-log-file></p>
@@ -434,7 +434,7 @@
     get('step-xml-panel').setAttribute('aria-labelledby',xmlView==='after'?'irDraftXMLAfter':'irDraftXMLBefore');
     if(!entry)return;
     const preview=entry.preview;
-    get('step-xml-note').textContent='{{…}}는 실행 시 결정될 응답 참조 또는 필요한 입력을 표시합니다. 원본 Baseline은 수정하지 않습니다.';
+    get('step-xml-note').textContent='{{…}}는 실행 시 결정될 응답 참조 또는 필요한 입력입니다.';
     if(!preview?.available){
       code.textContent=preview?.warnings?.join('\n')||(['대기','분석 중','초안 작성 · 비교 중'].includes(entry.status)?'STEP 생성 후 XML 미리보기를 표시합니다.':'이 결과에는 Baseline XML 미리보기 정보가 없습니다. 다시 생성해 확인하세요.');
       return;

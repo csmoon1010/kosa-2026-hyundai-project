@@ -26,7 +26,9 @@ def approved_path(root, filename):
 
 
 def fixed_plan(approved):
-    if approved.get('approval_status')!='approved': raise ValueError('전체 승인본만 생성할 수 있습니다')
+    # 검토 전 초안(review)도 받는다 (2026-11-12 지은 병합 — 최종 등록 화면은 분석 → IR → 승인 순서). 행 상태는 전체와 같아야 한다
+    status=approved.get('approval_status')
+    if status not in ('approved','review'): raise ValueError('전체 승인본 또는 검토 전 초안만 생성할 수 있습니다')
     tasks=approved.get('intent_tasks',[])
     seqs=[t['sequence'] for t in tasks]
     if not seqs or any(type(n) is not int or n<1 for n in seqs) or any(type(t.get('count')) is not int or t['count']<1 for t in tasks) or len(set(seqs))!=len(seqs): raise ValueError('업무 번호 오류')
@@ -35,10 +37,34 @@ def fixed_plan(approved):
     for row in sorted(approved['api_selection_results'],key=lambda x:(x['path_sequence'],x['step'])):
         n,k=row['path_sequence'],row['step']
         if n not in taskmap or row['domain']!=taskmap[n]['domain'] or type(k) is not int or k<1: raise ValueError('업무·단계 대응 오류')
-        if row.get('approval_status')!='approved' or not row.get('selected_api_id') or row['selected_api_id'] not in row['api_candidates']: raise ValueError('미승인 API')
+        if row.get('approval_status')!=status or not row.get('selected_api_id') or row['selected_api_id'] not in row['api_candidates']: raise ValueError('미승인 API')
         plan.append({**row,'step_id':f'{n}-{k}'})
     if len({x['step_id'] for x in plan})!=len(plan) or {x['path_sequence'] for x in plan}!=set(seqs): raise ValueError('단계 누락 또는 중복')
     return attach_dependencies(plan, tasks)
+
+
+def _fix_row_values(result, current, schema, approved):
+    """승인본 행의 row_values (2026-11-11 지은 병합) — 행 상태값(rowType=INSERT · rowFlag=I)은 ③ 이 업무 동작으로 정했다.
+
+    LLM 이 Baseline 예시값을 그대로 두지 않도록, 그 필드 입력을 고정값으로 바꾸고(없으면 더하고) 근거로 승인본 위치를 적는다.
+    """
+    values = current.get('row_values') or {}
+    if not values:
+        return
+    index = next((i for i, r in enumerate(approved.get('api_selection_results', []))
+                  if (r['path_sequence'], r['step']) == (current['path_sequence'], current['step'])), None)
+    for field, value in values.items():
+        for p in schema.get('parameters', []):
+            if p.get('name') != field:
+                continue
+            item = next((x for x in result['inputs'] if x.get('parameter_path') == p['path']), None)
+            if item is None:
+                item = {'parameter_path': p['path']}
+                result['inputs'].append(item)
+            item.update(field=field, xml_path=p.get('xmlPath'), type=p.get('type'), source='fixed', origin='schema', value=value,
+                        ref=None, reason='행 상태값 — API 선택 단계가 업무 동작(신규 추가 · 수정 · 삭제)으로 정함',
+                        evidence=[dict(source_id='approved', source_pointer=f'/api_selection_results/{index}/row_values/{field}',
+                                       quote=f'{field}={value}')])
 
 
 def _assemble(filename, approved, plan, config, tools, runtime, result_provider, on_event=None, log_file=None):
@@ -62,6 +88,7 @@ def _assemble(filename, approved, plan, config, tools, runtime, result_provider,
                               request={'selected_api_id':current['selected_api_id']},
                               result={'method':schema['method'],'endpoint':schema['endpoint'],'content_type':schema.get('contentType')}))
             result=result_provider(current,previous,task,approved['original_question'],[s for s in plan if (s['path_sequence'],s['step'])>(current['path_sequence'],current['step'])])
+            _fix_row_values(result, current, schema, approved)
             started = time.monotonic()
             baseline = tools.read('get_baseline_request', current['selected_api_id'])
             baseline_data = baseline.get('data', {})

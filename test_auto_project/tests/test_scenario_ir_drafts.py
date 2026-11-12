@@ -876,3 +876,17 @@ def test_late_output_patch_is_saved_with_final_output_and_source_target(root):
     assert ir['tasks'][1]['depends_on']==[1]
     events=[json.loads(line) for line in (root/result['log_file']).read_text().splitlines()]
     assert sum(e['event']=='backend_output_defined' for e in events)==1
+
+
+def test_review_draft_generates_before_approval(root):
+    """최종 등록 화면 — 승인 전 검토용 초안(approval_status review)으로도 IR 을 만든다. 행 상태가 섞이거나 미승인이면 거부 (2026-11-12)."""
+    data=json.loads((root/'prototype/approved'/FILENAME).read_text(encoding='utf-8-sig'))
+    data['approval_status']='review'
+    for row in data['api_selection_results']: row['approval_status']='review'
+    (root/'prototype/approved/review-test.json').write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8')
+    ir=generate(root,'review-test.json',runtime_factory=FakeRuntime)['ir']
+    assert [s['step_id'] for t in ir['tasks'] for s in t['steps']]==['1-1','2-1','2-2','2-3']
+    data['api_selection_results'][0]['approval_status']='approved'
+    with pytest.raises(ValueError, match='미승인 API'): fixed_plan(data)
+    data['approval_status']='unapproved'
+    with pytest.raises(ValueError, match='검토 전 초안'): fixed_plan(data)
