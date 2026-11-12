@@ -15,10 +15,12 @@ dependencies = [
     "openai==3.37.0",
     "python-dotenv==1.2.4",
     "chromadb==1.5.9",         # IR 생성 압축 1 — Parameter KB 벡터 검색 (data/out/parameters/parameter_vectors)
+    "fastapi==0.162.5",        # 서버 (docs/fastapi.md)
+    "uvicorn==0.54.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest==9.1.1"]
+dev = ["pytest==9.1.1", "httpx==0.28.1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

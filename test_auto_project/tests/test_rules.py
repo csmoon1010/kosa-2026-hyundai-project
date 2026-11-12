@@ -76,6 +76,18 @@ def test_server_baseline(server):  # noqa: F811
     assert e.value.code == 400 and "noSuch" in json.loads(e.value.read())["error"]
 
 
+def test_server_build(server):  # noqa: F811
+    """관리자 › 다시 빌드 — 명세 · 설정을 다시 읽는다. 응답의 '바뀜'은 카탈로그 버전이 달라졌는지와 같고, 화면 데이터도 새 버전 (2026-11-12).
+    (바뀌는지 자체는 이 컴퓨터의 화면 규칙 파일에 따라 다르다 — 단정하지 않는다)"""
+    base, root = server
+    before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))["catalog_version"]
+    r = json.loads(call(base + "/api/build", {}))
+    now = r["build"]["catalog_version"]
+    assert r["changed"] == (now != before) and r["data"]["build"]["catalog_version"] == now
+    again = json.loads(call(base + "/api/build", {}))                                  # 두 번째는 바뀐 것이 없다
+    assert again["changed"] is False and again["build"]["catalog_version"] == now
+
+
 def test_synonyms_reach_path_prompt():
     """화면에서 넣은 다른 표현(동의어)이 ② 경로 탐색 프롬프트의 상태 목록에 들어간다."""
     from pathlib import Path
