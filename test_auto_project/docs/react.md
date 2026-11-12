@@ -53,8 +53,8 @@ frontend/
     │   ├── stream.ts                 useNdjson — NDJSON 한 줄씩
     │   └── queries.ts                메뉴별 조회 · 저장 훅 (useRegisteredScenarios · useAnalyze …)
     ├── styles/                       tokens.css (지금 :root 변수 · 다크 모드) · base.css (글꼴 · 입력 · 버튼 공통 클래스)
-    ├── components/                   공통 — Layout · Card · Pill · Stepper · Spinner (R0). ParamTable · Modal · Toast · Table 은 처음 쓰는 단계에서
-    ├── lib/                          menus(사이드 메뉴) · storage(localStorage 감싸기) · format(필드 한글명 등, R1)
+    ├── components/                   공통 — Layout · Card · Pill · Stepper · Spinner (R0) · ParamTable (R1, 등록 · 실행). Modal · Toast 는 처음 쓰는 단계에서
+    ├── lib/                          menus(사이드 메뉴) · storage(localStorage 감싸기) · store(화면 밖 진행 상태) · format(도메인 이름 · API 짧은 이름)
     ├── test/                         Vitest 준비 — MSW 가짜 API(server.ts) · 그리기 도우미(render.tsx)
     └── pages/
         ├── register/                 시나리오 등록 (최종)
@@ -163,7 +163,9 @@ IR 입력 검토(승인게이트) 화면은 지금도 숨김이라 옮기지 않
 
 - **API 는 `src/api/` 를 거쳐서만 부른다.** 컴포넌트에서 `fetch` 를 직접 쓰지 않는다. 타입은 생성된 `schema.d.ts` 에서 가져온다 (손으로 응답 타입을 쓰지 않는다).
 - 오류는 서버의 `{"error"}` 문구를 그대로 사용자에게 보여 준다 (지금과 같다). 승인 거부(`refused`)는 따로 표시.
-- **진행 스트림**은 `useNdjson` 하나로 — 줄마다 상태를 바꾸고, 연결이 끊기면 마지막 상태를 유지, 화면을 떠나도 작업은 끝까지(지금처럼). 새로고침 · 창 닫기는 경고.
+- **진행 스트림**은 `api/stream.ts` 로만 받는다 — 줄마다 상태를 바꾸고, 연결이 끊기면 마지막 상태를 유지, 화면을 떠나도 작업은 끝까지(지금처럼). 새로고침 · 창 닫기는 경고.
+  - 스트림 하나면 `useNdjson`.
+  - 여러 단계를 잇는 흐름(등록: 분석 → 시나리오 생성 → 등록)은 `postStream` + 화면 밖 저장소(`lib/store.ts`)로 — 예: `pages/register/flow.ts`. 메뉴를 옮겨도 진행 · 입력이 남는다.
 - 서버 데이터는 TanStack Query 로만 들고 있는다. 저장(등록 · 삭제 · 규칙 · 빌드) 뒤에는 관련 쿼리를 다시 불러온다 — 지금의 `rerenderAll` 대신.
 - 브라우저에 기억하는 값(승인자 · 생성 옵션 · 고른 탭)은 `localStorage` 를 감싼 훅 하나로, 막혀 있어도 동작하게.
 - 컴포넌트는 한 파일 300줄 안쪽으로. 페이지 안에서만 쓰는 것은 그 페이지 폴더에, 두 페이지 이상이 쓰면 `components/` 로.
@@ -214,7 +216,7 @@ Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `ta
 | 단계 | 상태 |
 |---|---|
 | R0. 준비 (FastAPI 5단계 포함) | 완료 — R0-1 화면 데이터 나누기 · 매칭 API, R0-2 요청 · 응답 모델, R0-3 `frontend/` 뼈대 (메뉴 5개 · 서버 연결 표시 · `useNdjson` · 공통 컴포넌트), R0-4 가짜 LLM 서버 옵션 · Playwright. pytest 335 · node 4 · vitest 16 · Playwright 3 |
-| R1. 시나리오 등록 | 대기 |
+| R1. 시나리오 등록 | 완료 — 4.1 전부 (`pages/register/`). 화면 데이터 칸 설명 추가(operations · environment). 화면 점검 1 을 실제 LLM 으로 통과 (진행 표시가 프록시를 거쳐 단계마다 바뀜, 콘솔 오류 0). vitest 32 · Playwright 5 |
 | R2. 실행 · 이력 | 대기 |
 | R3. 확인용 | 대기 |
 | R4. 관리자 | 대기 |

@@ -407,6 +407,8 @@ def test_responses_match_models(agent_server, stub_ir):
                                                                           "lookups": [{"state_name": "배송완료", "state_code": "P3"}]}))
     assert m.edges[0].candidates and m.lookups[0].candidates
 
+    M.OperationsPart.model_validate(get("/api/admin/operations"))                              # 화면 데이터 — 옮긴 화면이 쓰는 부분
+    M.EnvironmentPart.model_validate(get("/api/admin/environment"))
     spec = get("/api/openapi.json")
     assert not [p for p, ops in spec["paths"].items() for op in ops.values() if "422" in op["responses"]]
     schemas = spec["components"]["schemas"]

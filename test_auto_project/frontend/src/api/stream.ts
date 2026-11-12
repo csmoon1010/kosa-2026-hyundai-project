@@ -32,6 +32,16 @@ export async function readNdjson<E>(res: Response, onEvent: (event: E) => void):
   return null;
 }
 
+/** POST 로 진행 스트림을 받는다 — 줄마다 onEvent, 진행 줄 없는 JSON 응답이면 그 JSON 을 돌려준다. 오류 응답이면 ApiError. */
+export async function postStream<E>(
+  path: string,
+  body: unknown,
+  onEvent: (event: E) => void,
+): Promise<unknown> {
+  const res = await send('POST', path, { body, stream: true });
+  return readNdjson(res, onEvent);
+}
+
 export type StreamStatus = 'idle' | 'running' | 'done' | 'error';
 
 export interface StreamState<E> {
@@ -74,8 +84,7 @@ export async function startStream(key: string, path: string, body: unknown): Pro
   if (jobOf(key).state.status === 'running') return;
   update(key, () => ({ ...IDLE, status: 'running' }));
   try {
-    const res = await send('POST', path, { body, stream: true });
-    const json = await readNdjson(res, (event) =>
+    const json = await postStream(path, body, (event) =>
       update(key, (s) => ({ ...s, events: [...s.events, event], last: event })),
     );
     update(key, (s) => ({ ...s, status: 'done', json }));

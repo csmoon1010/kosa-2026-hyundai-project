@@ -5,8 +5,8 @@ from fastapi import APIRouter, Request
 
 from tap.api import services
 from tap.api.deps import dump, state
-from tap.api.models import (BaselineRequest, GraphMatchRequest, GraphMatchResult, GraphSaveRequest, GraphSaveResult,
-                            PreprocessingBaselineRequest, RuleRequest, doc)
+from tap.api.models import (DATA_PART_MODELS, BaselineRequest, GraphMatchRequest, GraphMatchResult, GraphSaveRequest,
+                            GraphSaveResult, PreprocessingBaselineRequest, RuleRequest, doc)
 from tap.ui.export import ui_data
 
 router = APIRouter(prefix="/api/admin", tags=["관리자 메뉴"])
@@ -65,7 +65,7 @@ def _part(name: str):
 
 
 for _name in services.DATA_PARTS:
-    router.add_api_route(f"/{_name}", _part(_name), methods=["GET"])
+    router.add_api_route(f"/{_name}", _part(_name), methods=["GET"], responses=doc(DATA_PART_MODELS.get(_name)))
 
 
 @router.get("/graph-review")

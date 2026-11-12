@@ -8,7 +8,7 @@
 """
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -318,6 +318,45 @@ class MatchResult(Doc):
 class GraphMatchResult(Doc):
     edges: list[MatchResult]
     lookups: list[MatchResult]
+
+
+# 화면 데이터 (GET /api/admin/{part}) — 옮긴 화면이 쓰는 부분부터 칸을 적는다 (R1: operations · environment)
+
+FieldDigest = tuple[str, Optional[str], str]       # 필드 이름 · 한글 이름(없으면 '' 또는 null) · 예시 값
+
+
+class OperationDigest(Doc):
+    id: str = Field(description="api_id")
+    path: str
+    sum: str = Field(description="명세의 요약 (API 한글 이름)")
+    kind: Literal["read", "write"]
+    dom: str
+    req: list[FieldDigest] = Field(description="요청 필드 — 입력값 표의 '필드설명' 은 여기 한글 이름")
+    res: list[FieldDigest]
+
+
+class OperationsPart(Doc):
+    ops: list[OperationDigest]
+
+
+class BuildInfo(Doc):
+    operations: int
+    catalog_version: Optional[int] = Field(None, description="API Catalog 버전 — 등록 시나리오의 버전과 다르면 재승인 필요")
+    spec_sources: list[dict[str, Any]] = []
+    kinds: dict[str, int] = {}
+    domains: dict[str, int] = {}
+    review: int = 0
+
+
+class EnvironmentPart(Doc):
+    generated_at: str
+    build: BuildInfo
+    connections: list[dict[str, Any]]
+    tools: list[dict[str, Any]]
+    overrides_file: Any = None
+
+
+DATA_PART_MODELS: dict[str, type[BaseModel]] = {"operations": OperationsPart, "environment": EnvironmentPart}
 
 
 class RuleRequest(Body):

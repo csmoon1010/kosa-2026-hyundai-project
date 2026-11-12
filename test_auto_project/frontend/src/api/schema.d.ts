@@ -821,6 +821,44 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** BuildInfo */
+    BuildInfo: {
+      /** Operations */
+      operations: number;
+      /**
+       * Catalog Version
+       * @description API Catalog 버전 — 등록 시나리오의 버전과 다르면 재승인 필요
+       */
+      catalog_version?: number | null;
+      /**
+       * Spec Sources
+       * @default []
+       */
+      spec_sources: {
+        [key: string]: unknown;
+      }[];
+      /**
+       * Kinds
+       * @default {}
+       */
+      kinds: {
+        [key: string]: number;
+      };
+      /**
+       * Domains
+       * @default {}
+       */
+      domains: {
+        [key: string]: number;
+      };
+      /**
+       * Review
+       * @default 0
+       */
+      review: number;
+    } & {
+      [key: string]: unknown;
+    };
     /** ConfirmStep */
     ConfirmStep: {
       /** Key */
@@ -892,6 +930,24 @@ export interface components {
       to_name?: string | null;
       /** To Code */
       to_code?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** EnvironmentPart */
+    EnvironmentPart: {
+      /** Generated At */
+      generated_at: string;
+      build: components['schemas']['BuildInfo'];
+      /** Connections */
+      connections: {
+        [key: string]: unknown;
+      }[];
+      /** Tools */
+      tools: {
+        [key: string]: unknown;
+      }[];
+      /** Overrides File */
+      overrides_file?: unknown;
     } & {
       [key: string]: unknown;
     };
@@ -1140,6 +1196,44 @@ export interface components {
     Ok: {
       /** Ok */
       ok: boolean;
+    } & {
+      [key: string]: unknown;
+    };
+    /** OperationDigest */
+    OperationDigest: {
+      /**
+       * Id
+       * @description api_id
+       */
+      id: string;
+      /** Path */
+      path: string;
+      /**
+       * Sum
+       * @description 명세의 요약 (API 한글 이름)
+       */
+      sum: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: 'read' | 'write';
+      /** Dom */
+      dom: string;
+      /**
+       * Req
+       * @description 요청 필드 — 입력값 표의 '필드설명' 은 여기 한글 이름
+       */
+      req: [string, string | null, string][];
+      /** Res */
+      res: [string, string | null, string][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** OperationsPart */
+    OperationsPart: {
+      /** Ops */
+      ops: components['schemas']['OperationDigest'][];
     } & {
       [key: string]: unknown;
     };
@@ -2582,7 +2676,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['EnvironmentPart'];
         };
       };
     };
@@ -2642,7 +2736,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['OperationsPart'];
         };
       };
     };
