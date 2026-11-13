@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router';
 
 import { useHealth } from '../api/queries';
 import { MENUS } from '../lib/menus';
+import { usePreprocessingRefresh } from '../lib/usePreprocessingRefresh';
 import styles from './Layout.module.css';
 import { PageActionsSlot } from './pageActionsSlot';
 import { Pill } from './Pill';
@@ -33,6 +34,7 @@ export function Layout() {
   const { pathname } = useLocation();
   const menu = MENUS.find((m) => pathname === m.path || pathname.startsWith(m.path + '/'));
   const [actions, setActions] = useState<HTMLElement | null>(null);
+  const prep = usePreprocessingRefresh();
   return (
     <div className={styles.shell}>
       <nav className={styles.side} aria-label="메뉴">
@@ -60,9 +62,20 @@ export function Layout() {
           <h1>{menu?.label ?? '테스트 데이터 생성기'}</h1>
           <div className={styles.headRight}>
             <ServerBadge />
+            <button
+              className="btn btn-ghost btn-sm"
+              type="button"
+              disabled={prep.busy}
+              onClick={() => void prep.run()}
+            >
+              전처리 산출물 갱신
+            </button>
             <span ref={setActions} className={styles.headRight} />
           </div>
         </header>
+        <p className={styles.prepStatus} role="status" aria-live="polite" title={prep.title}>
+          {prep.text}
+        </p>
         <PageActionsSlot.Provider value={actions}>
           <Outlet />
         </PageActionsSlot.Provider>

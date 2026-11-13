@@ -407,7 +407,10 @@ def test_responses_match_models(agent_server, stub_ir):
     assert ap.ir_handoff.filename in [f.filename for f in approved.files]
     M.BudgetResult.model_validate(get("/api/inspect/ir/budget?filename=" + ap.ir_handoff.filename))
     M.IrRunList.model_validate(get("/api/inspect/ir/logs"))
-    M.GraphsPart.model_validate(get("/api/admin/graphs"))
+    for part, model in M.DATA_PART_MODELS.items():                                          # 관리자 화면 데이터 (R4)
+        model.model_validate(get("/api/admin/" + part))
+    M.PreprocessingStatus.model_validate(get("/api/admin/preprocessing/status"))
+    M.GraphReviewResult.model_validate(get("/api/admin/graph-review"))
     m = M.GraphMatchResult.model_validate(post("/api/admin/graphs/match", {"edges": [{"from_name": "배송완료", "to_name": "출고", "to_code": "PB3"}],
                                                                           "lookups": [{"state_name": "배송완료", "state_code": "P3"}]}))
     assert m.edges[0].candidates and m.lookups[0].candidates

@@ -115,6 +115,7 @@ src/tap/api/
 | `PUT /api/admin/baselines` | `POST /api/baseline` | Baseline Request 저장 (`data/baselines/`) | `{api_id, body}` → `{file, data}` |
 | `POST /api/admin/build` | `POST /api/build` | 명세 · 설정 다시 읽어 빌드 | → `{build, changed, data}` |
 | `POST /api/admin/preprocessing/refresh` | `POST /api/preprocessing/refresh` | 전처리 JSON 다시 읽기 + `web/tap-data.js` 갱신 | → `{data}` |
+| `GET /api/admin/preprocessing/status` | (React R4 에서 추가) | 머리의 전처리 상태 줄 — 개수 · 경고만 (산출물 본문은 `GET /api/admin/preprocessing`, 약 3MB) | → `{counts, warnings, loaded_at}` |
 | `PUT /api/admin/preprocessing/baselines` | `POST /api/preprocessing/baseline` | 전처리 Baseline 등록 — **값에서 지시문 검사** | `{selected_api_id, values}` → `{file, data}` |
 
 ### 3.6 공통 — `/api/common` · 정적 파일

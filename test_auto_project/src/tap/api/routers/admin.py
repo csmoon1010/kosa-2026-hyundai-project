@@ -5,8 +5,9 @@ from fastapi import APIRouter, Request
 
 from tap.api import services
 from tap.api.deps import dump, state
-from tap.api.models import (DATA_PART_MODELS, BaselineRequest, GraphMatchRequest, GraphMatchResult, GraphSaveRequest,
-                            GraphSaveResult, PreprocessingBaselineRequest, RuleRequest, doc)
+from tap.api.models import (DATA_PART_MODELS, BaselineRequest, GraphMatchRequest, GraphMatchResult, GraphReviewResult,
+                            GraphSaveRequest, GraphSaveResult, PreprocessingBaselineRequest, PreprocessingStatus, RuleRequest,
+                            doc)
 from tap.ui.export import ui_data
 
 router = APIRouter(prefix="/api/admin", tags=["관리자 메뉴"])
@@ -48,6 +49,12 @@ def refresh_preprocessing(request: Request):
     return services.refresh_preprocessing(state(request).root)
 
 
+@router.get("/preprocessing/status", responses=doc(PreprocessingStatus))
+def preprocessing_status(request: Request):
+    """머리의 전처리 상태 줄 — 개수 · 경고만 (산출물 본문은 GET /api/admin/preprocessing, 약 3MB)."""
+    return services.preprocessing_status(state(request).root)
+
+
 @router.put("/preprocessing/baselines", responses=doc(None, 400))
 def save_preprocessing(request: Request, req: PreprocessingBaselineRequest):
     """전처리 Baseline 등록 — 값에서 지시문 검사."""
@@ -68,7 +75,7 @@ for _name in services.DATA_PARTS:
     router.add_api_route(f"/{_name}", _part(_name), methods=["GET"], responses=doc(DATA_PART_MODELS.get(_name)))
 
 
-@router.get("/graph-review")
+@router.get("/graph-review", responses=doc(GraphReviewResult))
 def graph_review(request: Request):
     """전사 검수 목록의 상태 그래프 부분 — API 를 못 찾을 것 같은 화살표 · 애매한 조회."""
     return {"items": services.graph_review(state(request).root)}

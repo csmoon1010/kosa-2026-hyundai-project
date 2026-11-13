@@ -2,7 +2,15 @@
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 
-export const handlers = [http.get('/api/common/health', () => HttpResponse.json({ ok: true }))];
+export const handlers = [
+  http.get('/api/common/health', () => HttpResponse.json({ ok: true })),
+  http.get('/api/admin/preprocessing/status', () =>
+    HttpResponse.json({
+      counts: { canonical_schema: 43, parameter_kb: 43, baseline: 43, response_outputs: 43 },
+      warnings: [],
+    }),
+  ),
+];
 
 export const server = setupServer(...handlers);
 

@@ -286,7 +286,7 @@ def _serve(a: argparse.Namespace) -> None:
         runtime = {"registered", "runs", "approved", "ir_inputs", "traces", "scenario_ir_drafts", "scenario_ir_logs",
                    "scenario_ir_reviews", "graph_history"}                 # 실행 기록은 빼고 복사 (tests/test_ui.py 와 같다)
         shutil.copytree(ROOT / "data", temp / "data", ignore=lambda d, names: [n for n in names if n in runtime])
-        (temp / "web").symlink_to(ROOT / "web")
+        shutil.copytree(ROOT / "web", temp / "web")              # 바로가기가 아니라 복사 — 전처리 갱신이 web/tap-data.js 를 다시 쓴다
         root = temp
     else:
         write_ui_data(ROOT, ROOT / "web/tap-data.js")              # 서버 없이 화면을 열 때 쓰는 화면 데이터

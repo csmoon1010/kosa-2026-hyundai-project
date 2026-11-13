@@ -33,7 +33,7 @@ describe('레이아웃 · 메뉴', () => {
 
   it('관리자는 범위가 주소에 — /admin 은 전사로', () => {
     renderWithApp(<AppRoutes />, '/admin');
-    expect(screen.getByText('R4. 관리자 — 전사')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /전사/ })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('link', { name: '관리자 메뉴' })).toHaveAttribute('aria-current', 'page');
   });
 

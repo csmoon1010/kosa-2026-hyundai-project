@@ -479,23 +479,240 @@ class BuildInfo(Doc):
     review: int = 0
 
 
+class Connection(Doc):
+    """도메인별 연결 설정 (data/config/services.yaml → Tool Registry)."""
+    service: str
+    domain: str
+    base_url: str = Field(description="base URL 환경변수 이름 (.env)")
+    timeout_ms: int
+    auth_type: str
+    auth_profile: Optional[str] = None
+    allowed_environments: list[str] = []
+    source: Optional[str] = None
+
+
+class SuccessRule(Doc):
+    path: str
+    equals: str
+
+
+class ToolEntry(Doc):
+    api_id: str
+    domain: str
+    endpoint: str
+    timeout_ms: int
+    retry_count: int
+    approval_required: bool
+    auth_type: str
+    auth_profile: Optional[str] = None
+    enabled: bool
+    success_rule: Optional[SuccessRule] = None
+
+
 class EnvironmentPart(Doc):
     generated_at: str
     build: BuildInfo
-    connections: list[dict[str, Any]]
-    tools: list[dict[str, Any]]
-    overrides_file: Any = None
+    connections: list[Connection]
+    tools: list[ToolEntry]
+    overrides_file: Optional[dict[str, dict[str, Any]]] = Field(None, description="data/config/overrides.yaml — api_id → 보정 칸")
+
+
+class CatalogApi(Doc):
+    api_id: str
+    api_name: str
+    domain: str
+    kind: str
+    aliases: list[str] = []
+    tool_enabled: bool
+    description: Optional[str] = None
+
+
+class CatalogPart(Doc):
+    catalog: list[CatalogApi]
+
+
+class SelectorValue(Doc):
+    value: str
+    name: Optional[str] = None
+    aliases: list[str] = []
+    source: Optional[str] = Field(None, description="override 면 사람이 보정한 값")
+
+
+class SelectorField(Doc):
+    field: str
+    label: Optional[str] = None
+    complete: bool = True
+    values: list[SelectorValue]
+
+
+class ApiMetadata(Doc):
+    api_id: str
+    api_name: str
+    domain: str
+    kind: str
+    action: str
+    metadata_version: int
+    selectors: Optional[list[SelectorField]] = None
+    selectors_source: Optional[str] = None
+    irreversible: str
+    memo: Optional[str] = None
+    aliases: list[str] = []
+    tool_enabled: bool = True
+
+
+class MetadataPart(Doc):
+    metadata: list[ApiMetadata]
+
+
+class ReviewEntry(Doc):
+    api_id: str
+    item: str = Field(description="domain · kind · success_rule · enabled · selectors")
+    reason: str
+
+
+class ReviewPart(Doc):
+    review: list[ReviewEntry]
+
+
+class UiRule(Doc):
+    """화면 보정 규칙 (data/config/rules.ui.yaml)."""
+    id: int
+    place: str = Field(description="am 전사 · ov 도메인")
+    doc: str = Field(description="sv · pkb · cat · meta")
+    item: str
+    dom: Optional[str] = None
+    target: Optional[str] = None
+    body: Optional[str] = None
+    by: Optional[str] = None
+    at: Optional[str] = None
+
+
+class RulesPart(Doc):
+    rules: list[UiRule]
+
+
+class BaselineEntry(Doc):
+    api_id: Optional[str] = None
+    body: dict[str, Any] = {}
+    by: Optional[str] = None
+    at: Optional[str] = None
+
+
+class BaselinesPart(Doc):
+    baselines: dict[str, BaselineEntry]
+
+
+# 전처리 산출물 (혜정, data/out/parameters) — 화면이 읽는 칸
+
+class PreField(Doc):
+    name: Optional[str] = None
+    location: Optional[str] = None
+    parameter_path: Optional[str] = None
+    xmlPath: Optional[str] = None
+    type: Optional[str] = None
+    required: Optional[bool] = None
+    requiredDeclared: Optional[bool] = None
+    example: Any = None
+    value: Any = None
+    value_source: Optional[str] = None
+
+
+class PreCanonical(Doc):
+    documentId: Optional[str] = None
+    apiId: str
+    operationId: Optional[str] = None
+    summary: Optional[str] = None
+    contentType: Optional[str] = None
+    requestBodyRequired: bool = False
+    parameters: list[PreField]
+
+
+class PreBaseline(Doc):
+    user_registered: bool = False
+    validation_status: Optional[str] = None
+    parameters: list[PreField] = []
+    example_values: dict[str, Any] = {}
+
+
+class PreKb(Doc):
+    parameters: list[dict[str, Any]] = Field(description="identity · knowledge · schema")
+    api_knowledge: list[dict[str, Any]] = []
+
+
+class PreResponse(Doc):
+    responses: list[dict[str, Any]] = []
+    outputs: list[dict[str, Any]] = []
+
+
+class Preprocessing(Doc):
+    canonical_schema: dict[str, PreCanonical] = {}
+    baselines: dict[str, PreBaseline] = {}
+    parameter_kb: dict[str, PreKb] = {}
+    response_outputs: dict[str, PreResponse] = {}
+    common_knowledge: list[dict[str, Any]] = []
+    warnings: list[str] = []
+    counts: Optional[dict[str, int]] = None
+    loaded_at: Optional[str] = None
+
+
+class PreprocessingPart(Doc):
+    preprocessing: Preprocessing
+
+
+class PreprocessingStatus(Doc):
+    """머리의 전처리 상태 줄."""
+    counts: Optional[dict[str, int]] = None
+    warnings: list[str] = []
+    loaded_at: Optional[str] = None
+
+
+class GraphReviewItem(Doc):
+    graph: str
+    gid: str
+    kind: str = Field(description="화살표 · 조회")
+    item: str
+    status: str = Field(description="없음 · 확인 필요")
+    why: str
+
+
+class GraphReviewResult(Doc):
+    items: list[GraphReviewItem]
 
 
 class GraphHead(Doc):
     id: str
     name: Optional[str] = None
     domain: Optional[str] = None
+    entry_states: list[str] = []
+
+
+class CodeGroup(Doc):
+    id: str
+    name: Optional[str] = None
+    codes: dict[str, str] = Field(description="코드 → 상태 이름")
+
+
+class GraphTransition(Doc):
+    name: Optional[str] = None
+    from_: str = Field(alias="from")
+    to: str
+    api: Optional[str] = None
+    selector: Optional[dict[str, str]] = None
+    model_config = ConfigDict(extra="allow", populate_by_name=True, serialize_by_alias=True)
+
+
+class GraphLookup(Doc):
+    api: Optional[str] = None
+    selector: Optional[dict[str, str]] = None
+    states: list[str] = []
 
 
 class GraphFile(Doc):
-    """상태 그래프 YAML 한 개 — 화면은 graph(머리)부터 읽는다. 상태 · 화살표 칸은 그래프 편집기(R5)에서 적는다."""
+    """상태 그래프 YAML 한 개. 배치(layout) 등 편집기 칸은 그래프 편집기(R5)에서 적는다."""
     graph: GraphHead
+    code_group: Optional[CodeGroup] = None
+    transitions: list[GraphTransition] = []
+    lookups: Optional[list[GraphLookup]] = None
 
 
 class GraphsPart(Doc):
@@ -504,7 +721,9 @@ class GraphsPart(Doc):
 
 
 DATA_PART_MODELS: dict[str, type[BaseModel]] = {"operations": OperationsPart, "environment": EnvironmentPart,
-                                                 "graphs": GraphsPart}
+                                                 "graphs": GraphsPart, "catalog": CatalogPart, "metadata": MetadataPart,
+                                                 "review": ReviewPart, "rules": RulesPart, "baselines": BaselinesPart,
+                                                 "preprocessing": PreprocessingPart}
 
 
 class RuleRequest(Body):

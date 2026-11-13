@@ -115,7 +115,7 @@ FastAPI (`src/tap/api/`) — 경로는 메뉴 이름 기준. 요청 · 응답 �
 | 시나리오 실행 | `POST /api/run/dry-run` | 실행 확인 → 드라이런 → 실행 이력 |
 | 실행 이력 | `GET /api/history/runs` | 실행 이력 |
 | 관리자 | `PUT /api/admin/graphs/{id}` · `POST /api/admin/rules` · `DELETE /api/admin/rules/{id}` · `PUT /api/admin/baselines` · `POST /api/admin/build` | 그래프 · 보정 규칙 · Baseline · 다시 빌드 |
-| | `POST /api/admin/preprocessing/refresh` · `PUT /api/admin/preprocessing/baselines` | 전처리 산출물 다시 읽기 · 전처리 Baseline 등록 |
+| | `POST /api/admin/preprocessing/refresh` · `PUT /api/admin/preprocessing/baselines` · `GET /api/admin/preprocessing/status` | 전처리 산출물 다시 읽기 · 전처리 Baseline 등록 · 머리 상태 줄(개수 · 경고) |
 | 공통 | `GET /api/common/health` · `GET /api/common/data` · `GET /tap-data.js` | 서버 확인 · 화면 데이터 JSON · 지금 화면용 화면 데이터 |
 
 ## 저장 파일

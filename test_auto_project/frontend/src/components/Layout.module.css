@@ -92,6 +92,11 @@
   letter-spacing: -0.02em;
   margin: 0;
 }
+.prepStatus {
+  font-size: 11px;
+  color: var(--muted);
+  margin: -8px 0 12px;
+}
 .headRight {
   display: flex;
   gap: 8px;

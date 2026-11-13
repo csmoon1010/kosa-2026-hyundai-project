@@ -139,7 +139,7 @@ IR 입력 검토(승인게이트) 화면은 지금도 숨김이라 옮기지 않
 |---|---|
 | 요청 · 응답 모델 | API 마다 pydantic 모델(`tap/api/models.py`) → `/api/openapi.json` 이 칸까지 설명. 칸 이름 · 값은 바꾸지 않는다 (지금 화면 · 테스트가 쓴다). 요청 검사 실패도 400 `{"error"}` (422 를 쓰지 않음), 모델 밖의 칸은 서비스로 넘긴다. 응답 모델은 문서용 — 실행 중 다시 검사하지 않는다(예전 기록에서 서버 오류가 나지 않게). 진행 스트림 줄 모양은 스트림 경로의 `application/x-ndjson` 응답에 `oneOf` 로. 화면 데이터(`/api/admin/{part}` · `/api/common/data`) · 확인용 IR 검토 · 로그는 아직 칸 설명 없음 — 해당 화면을 옮길 때 추가 |
 | 타입 자동 생성 | `openapi-typescript` 로 `frontend/src/api/schema.d.ts`. `npm run gen:api` 로 다시 만든다 — 서버 모델을 바꾸면 같이 커밋 |
-| 화면 데이터 나누기 | 지금 `/api/common/data` 는 한 덩어리(약 3MB). React 는 필요한 것만: `GET /api/admin/catalog` · `metadata` · `operations`(필드 한글명) · `graphs` · `codes` · `rules` · `review` · `preprocessing` · `environment` — 같은 `ui_data` 를 나눠 돌려준다 |
+| 화면 데이터 나누기 | 지금 `/api/common/data` 는 한 덩어리(약 3MB). React 는 필요한 것만: `GET /api/admin/catalog` · `metadata` · `operations`(필드 한글명) · `graphs` · `codes` · `rules` · `review` · `preprocessing` · `environment` — 같은 `ui_data` 를 나눠 돌려준다. 칸마다 필요할 때만 만든다(`tap.ui.export.ui_parts`, R4) — 전처리(약 3MB)가 아닌 칸은 수 ms |
 | 그래프 매칭을 서버로 | 그래프 편집기의 API 후보 미리보기는 지금 `graph-editor.js` 가 `graph/match.py` 를 JS 로 **복사**해 계산한다 (두 벌). `POST /api/admin/graphs/match` 로 파이썬 하나만 쓰게 한다 |
 | 개발 프록시 | Vite `server.proxy['/api'] = 'http://127.0.0.1:8765'` — CORS 를 열지 않는다. 스트림이 프록시에서 모이지 않는지 확인 |
 
@@ -220,6 +220,6 @@ Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `ta
 | R1. 시나리오 등록 | 완료 — 4.1 전부 (`pages/register/`). 화면 데이터 칸 설명 추가(operations · environment). 화면 점검 1 을 실제 LLM 으로 통과 (진행 표시가 프록시를 거쳐 단계마다 바뀜, 콘솔 오류 0). vitest 32 · Playwright 5 |
 | R2. 실행 · 이력 | 완료 — 4.3 · 4.4 전부 (`pages/run/` · `pages/history/`). 등록 · 실행이 같이 쓰는 모양은 `components/scenario.module.css` 로. 등록 목록 · 실행 이력 API 가 화면 데이터 전체를 만들지 않게. 화면 점검 2 를 실제 서버로 통과 (콘솔 오류 0). vitest 41 · Playwright 6 |
 | R3. 확인용 | 완료 — 4.2 전부 (`pages/inspect/`, 혜정 IR 영역은 `pages/inspect/ir/`). IR 진행 이벤트 → 로그 행 · STEP 규칙(`irLog.ts`)은 예전 `scenario-ir-draft.js` 에 같은 실제 생성 로그(성공 · 실패)를 흘려 넣어 표 · STEP 이 칸까지 같은지 대조. 트레이스 · 승인본 목록 · 예산 · 실행 기록 응답 모델. vitest 57 · Playwright 7. 화면 점검 3 을 실제 LLM 으로 통과 (콘솔 오류 0) |
-| R4. 관리자 | 대기 |
+| R4. 관리자 | 완료 — 4.5 중 그래프 편집기를 뺀 전부 (`pages/admin/`). 데이터 조회 8종 중 Canonical Schema · Baseline · Parameter KB · Response Outputs 와 Baseline 카드는 혜정 전처리(`preprocessing-ui.js`)를 옮긴 것. 머리의 전처리 갱신 · 상태 줄(새 API `preprocessing/status`). 화면 데이터 응답 모델 전부. 저장 동작은 Playwright 로 임시 data 에서, 실제 서버에서는 읽기만 (콘솔 오류 0). vitest 65 · Playwright 8 |
 | R5. 그래프 편집기 | 대기 |
 | R6. 바꾸기 | 대기 |

@@ -102,6 +102,39 @@ export function useEnvironment() {
   });
 }
 
+// ─── 관리자 화면 데이터 ─────────────────────────────────────────────────────────────
+
+const part = <T>(name: string, staleTime = 60_000) => ({
+  queryKey: keys.part(name),
+  queryFn: ({ signal }: { signal: AbortSignal }) => get<T>('/api/admin/' + name, signal),
+  staleTime,
+});
+
+export const useCatalog = () => useQuery(part<Schemas['CatalogPart']>('catalog'));
+export const useMetadata = () => useQuery(part<Schemas['MetadataPart']>('metadata'));
+export const useReview = () => useQuery(part<Schemas['ReviewPart']>('review'));
+export const useRules = () => useQuery(part<Schemas['RulesPart']>('rules'));
+export const useBaselines = () => useQuery(part<Schemas['BaselinesPart']>('baselines'));
+/** 전처리 산출물 전체 (약 3MB) — 문서 팝업 · Baseline 카드에서만 */
+export const usePreprocessing = () =>
+  useQuery(part<Schemas['PreprocessingPart']>('preprocessing', 5 * 60_000));
+export const usePreprocessingStatus = () =>
+  useQuery(part<Schemas['PreprocessingStatus']>('preprocessing/status'));
+export const useGraphReview = () => useQuery(part<Schemas['GraphReviewResult']>('graph-review'));
+
+/** 관리자 저장(규칙 · 빌드 · Baseline · 전처리 갱신) 뒤 — 화면 데이터 · 등록 시나리오(재승인 필요 표시)를 다시 받는다 */
+export function useRefreshAdmin() {
+  const client = useQueryClient();
+  return useCallback(
+    () =>
+      Promise.all([
+        client.invalidateQueries({ queryKey: ['admin'] }),
+        client.invalidateQueries({ queryKey: keys.scenarios, exact: true }),
+      ]),
+    [client],
+  );
+}
+
 /** 상태 그래프 (머리만 쓸 때 — 이름 · 도메인). 화면에서 저장한 것(drafts)을 먼저 */
 export function useGraphs() {
   return useQuery({

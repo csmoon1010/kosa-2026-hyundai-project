@@ -534,8 +534,15 @@ DATA_PARTS = {                              # 화면이 필요한 만큼만 — 
 
 
 def data_part(root: Path, part: str) -> dict[str, Any]:
-    d = ui_data(root)
-    return {k: d[k] for k in DATA_PARTS[part]}
+    """화면 데이터 한 덩어리 — 그 칸만 만든다 (전처리 산출물 3MB 를 매번 읽지 않게)."""
+    from tap.ui.export import ui_part
+    return ui_part(root, DATA_PARTS[part])
+
+
+def preprocessing_status(root: Path) -> dict[str, Any]:
+    """머리의 전처리 상태 줄 — 개수 · 경고 · 읽은 시각만 (산출물 본문은 /api/admin/preprocessing)."""
+    p = data_part(root, "preprocessing")["preprocessing"]
+    return {"counts": p.get("counts"), "warnings": p.get("warnings") or [], "loaded_at": p.get("loaded_at")}
 
 
 def _match_inputs(root: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
@@ -566,7 +573,8 @@ def graph_review(root: Path, domains: list[str] | None = None) -> list[dict[str,
     from tap.graph.match import match_edge, match_lookup, status_of
     metadata, operations = _match_inputs(root)
     doms = domains or ["pd", "od", "ds"]
-    d = ui_data(root)
+    from tap.ui.export import ui_part
+    d = ui_part(root, ("graphs", "drafts", "codes"))
     graphs = d["graphs"] + [x for x in d["drafts"] if x and x.get("graph") and not any(g["graph"]["id"] == x["graph"]["id"] for g in d["graphs"])]
     out = []
     for g in graphs:

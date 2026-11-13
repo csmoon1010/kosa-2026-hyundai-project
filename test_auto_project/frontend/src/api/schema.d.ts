@@ -420,6 +420,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/admin/preprocessing/status': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Preprocessing Status
+     * @description 머리의 전처리 상태 줄 — 개수 · 경고만 (산출물 본문은 GET /api/admin/preprocessing, 약 3MB).
+     */
+    get: operations['preprocessing_status_api_admin_preprocessing_status_get'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/admin/preprocessing/baselines': {
     parameters: {
       query?: never;
@@ -750,6 +770,41 @@ export interface components {
        */
       check_reason: string | null;
     };
+    /** ApiMetadata */
+    ApiMetadata: {
+      /** Api Id */
+      api_id: string;
+      /** Api Name */
+      api_name: string;
+      /** Domain */
+      domain: string;
+      /** Kind */
+      kind: string;
+      /** Action */
+      action: string;
+      /** Metadata Version */
+      metadata_version: number;
+      /** Selectors */
+      selectors?: components['schemas']['SelectorField'][] | null;
+      /** Selectors Source */
+      selectors_source?: string | null;
+      /** Irreversible */
+      irreversible: string;
+      /** Memo */
+      memo?: string | null;
+      /**
+       * Aliases
+       * @default []
+       */
+      aliases: string[];
+      /**
+       * Tool Enabled
+       * @default true
+       */
+      tool_enabled: boolean;
+    } & {
+      [key: string]: unknown;
+    };
     /** ApiSelection */
     ApiSelection: {
       /** Original Question */
@@ -849,6 +904,24 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** BaselineEntry */
+    BaselineEntry: {
+      /** Api Id */
+      api_id?: string | null;
+      /**
+       * Body
+       * @default {}
+       */
+      body: {
+        [key: string]: unknown;
+      };
+      /** By */
+      by?: string | null;
+      /** At */
+      at?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
     /** BaselineRequest */
     BaselineRequest: {
       /** Api Id */
@@ -856,6 +929,15 @@ export interface components {
       /** Body */
       body: {
         [key: string]: unknown;
+      };
+    } & {
+      [key: string]: unknown;
+    };
+    /** BaselinesPart */
+    BaselinesPart: {
+      /** Baselines */
+      baselines: {
+        [key: string]: components['schemas']['BaselineEntry'];
       };
     } & {
       [key: string]: unknown;
@@ -957,12 +1039,87 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** CatalogApi */
+    CatalogApi: {
+      /** Api Id */
+      api_id: string;
+      /** Api Name */
+      api_name: string;
+      /** Domain */
+      domain: string;
+      /** Kind */
+      kind: string;
+      /**
+       * Aliases
+       * @default []
+       */
+      aliases: string[];
+      /** Tool Enabled */
+      tool_enabled: boolean;
+      /** Description */
+      description?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** CatalogPart */
+    CatalogPart: {
+      /** Catalog */
+      catalog: components['schemas']['CatalogApi'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** CodeGroup */
+    CodeGroup: {
+      /** Id */
+      id: string;
+      /** Name */
+      name?: string | null;
+      /**
+       * Codes
+       * @description 코드 → 상태 이름
+       */
+      codes: {
+        [key: string]: string;
+      };
+    } & {
+      [key: string]: unknown;
+    };
     /** ConfirmStep */
     ConfirmStep: {
       /** Key */
       key: string;
       /** Edge */
       edge?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * Connection
+     * @description 도메인별 연결 설정 (data/config/services.yaml → Tool Registry).
+     */
+    Connection: {
+      /** Service */
+      service: string;
+      /** Domain */
+      domain: string;
+      /**
+       * Base Url
+       * @description base URL 환경변수 이름 (.env)
+       */
+      base_url: string;
+      /** Timeout Ms */
+      timeout_ms: number;
+      /** Auth Type */
+      auth_type: string;
+      /** Auth Profile */
+      auth_profile?: string | null;
+      /**
+       * Allowed Environments
+       * @default []
+       */
+      allowed_environments: string[];
+      /** Source */
+      source?: string | null;
     } & {
       [key: string]: unknown;
     };
@@ -1037,15 +1194,18 @@ export interface components {
       generated_at: string;
       build: components['schemas']['BuildInfo'];
       /** Connections */
-      connections: {
-        [key: string]: unknown;
-      }[];
+      connections: components['schemas']['Connection'][];
       /** Tools */
-      tools: {
-        [key: string]: unknown;
-      }[];
-      /** Overrides File */
-      overrides_file?: unknown;
+      tools: components['schemas']['ToolEntry'][];
+      /**
+       * Overrides File
+       * @description data/config/overrides.yaml — api_id → 보정 칸
+       */
+      overrides_file?: {
+        [key: string]: {
+          [key: string]: unknown;
+        };
+      } | null;
     } & {
       [key: string]: unknown;
     };
@@ -1114,10 +1274,18 @@ export interface components {
     };
     /**
      * GraphFile
-     * @description 상태 그래프 YAML 한 개 — 화면은 graph(머리)부터 읽는다. 상태 · 화살표 칸은 그래프 편집기(R5)에서 적는다.
+     * @description 상태 그래프 YAML 한 개. 배치(layout) 등 편집기 칸은 그래프 편집기(R5)에서 적는다.
      */
     GraphFile: {
       graph: components['schemas']['GraphHead'];
+      code_group?: components['schemas']['CodeGroup'] | null;
+      /**
+       * Transitions
+       * @default []
+       */
+      transitions: components['schemas']['GraphTransition'][];
+      /** Lookups */
+      lookups?: components['schemas']['GraphLookup'][] | null;
     } & {
       [key: string]: unknown;
     };
@@ -1129,6 +1297,27 @@ export interface components {
       name?: string | null;
       /** Domain */
       domain?: string | null;
+      /**
+       * Entry States
+       * @default []
+       */
+      entry_states: string[];
+    } & {
+      [key: string]: unknown;
+    };
+    /** GraphLookup */
+    GraphLookup: {
+      /** Api */
+      api?: string | null;
+      /** Selector */
+      selector?: {
+        [key: string]: string;
+      } | null;
+      /**
+       * States
+       * @default []
+       */
+      states: string[];
     } & {
       [key: string]: unknown;
     };
@@ -1165,6 +1354,36 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** GraphReviewItem */
+    GraphReviewItem: {
+      /** Graph */
+      graph: string;
+      /** Gid */
+      gid: string;
+      /**
+       * Kind
+       * @description 화살표 · 조회
+       */
+      kind: string;
+      /** Item */
+      item: string;
+      /**
+       * Status
+       * @description 없음 · 확인 필요
+       */
+      status: string;
+      /** Why */
+      why: string;
+    } & {
+      [key: string]: unknown;
+    };
+    /** GraphReviewResult */
+    GraphReviewResult: {
+      /** Items */
+      items: components['schemas']['GraphReviewItem'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** GraphSaveRequest */
     GraphSaveRequest: {
       /** Yaml */
@@ -1180,6 +1399,23 @@ export interface components {
       kept: string[];
       /** Backup */
       backup: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** GraphTransition */
+    GraphTransition: {
+      /** Name */
+      name?: string | null;
+      /** From */
+      from: string;
+      /** To */
+      to: string;
+      /** Api */
+      api?: string | null;
+      /** Selector */
+      selector?: {
+        [key: string]: string;
+      } | null;
     } & {
       [key: string]: unknown;
     };
@@ -1413,6 +1649,13 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** MetadataPart */
+    MetadataPart: {
+      /** Metadata */
+      metadata: components['schemas']['ApiMetadata'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** Ok */
     Ok: {
       /** Ok */
@@ -1467,6 +1710,166 @@ export interface components {
       /** Unresolved */
       unresolved: string[];
     };
+    /** PreBaseline */
+    PreBaseline: {
+      /**
+       * User Registered
+       * @default false
+       */
+      user_registered: boolean;
+      /** Validation Status */
+      validation_status?: string | null;
+      /**
+       * Parameters
+       * @default []
+       */
+      parameters: components['schemas']['PreField'][];
+      /**
+       * Example Values
+       * @default {}
+       */
+      example_values: {
+        [key: string]: unknown;
+      };
+    } & {
+      [key: string]: unknown;
+    };
+    /** PreCanonical */
+    PreCanonical: {
+      /** Documentid */
+      documentId?: string | null;
+      /** Apiid */
+      apiId: string;
+      /** Operationid */
+      operationId?: string | null;
+      /** Summary */
+      summary?: string | null;
+      /** Contenttype */
+      contentType?: string | null;
+      /**
+       * Requestbodyrequired
+       * @default false
+       */
+      requestBodyRequired: boolean;
+      /** Parameters */
+      parameters: components['schemas']['PreField'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** PreField */
+    PreField: {
+      /** Name */
+      name?: string | null;
+      /** Location */
+      location?: string | null;
+      /** Parameter Path */
+      parameter_path?: string | null;
+      /** Xmlpath */
+      xmlPath?: string | null;
+      /** Type */
+      type?: string | null;
+      /** Required */
+      required?: boolean | null;
+      /** Requireddeclared */
+      requiredDeclared?: boolean | null;
+      /** Example */
+      example?: unknown;
+      /** Value */
+      value?: unknown;
+      /** Value Source */
+      value_source?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** PreKb */
+    PreKb: {
+      /**
+       * Parameters
+       * @description identity · knowledge · schema
+       */
+      parameters: {
+        [key: string]: unknown;
+      }[];
+      /**
+       * Api Knowledge
+       * @default []
+       */
+      api_knowledge: {
+        [key: string]: unknown;
+      }[];
+    } & {
+      [key: string]: unknown;
+    };
+    /** PreResponse */
+    PreResponse: {
+      /**
+       * Responses
+       * @default []
+       */
+      responses: {
+        [key: string]: unknown;
+      }[];
+      /**
+       * Outputs
+       * @default []
+       */
+      outputs: {
+        [key: string]: unknown;
+      }[];
+    } & {
+      [key: string]: unknown;
+    };
+    /** Preprocessing */
+    Preprocessing: {
+      /**
+       * Canonical Schema
+       * @default {}
+       */
+      canonical_schema: {
+        [key: string]: components['schemas']['PreCanonical'];
+      };
+      /**
+       * Baselines
+       * @default {}
+       */
+      baselines: {
+        [key: string]: components['schemas']['PreBaseline'];
+      };
+      /**
+       * Parameter Kb
+       * @default {}
+       */
+      parameter_kb: {
+        [key: string]: components['schemas']['PreKb'];
+      };
+      /**
+       * Response Outputs
+       * @default {}
+       */
+      response_outputs: {
+        [key: string]: components['schemas']['PreResponse'];
+      };
+      /**
+       * Common Knowledge
+       * @default []
+       */
+      common_knowledge: {
+        [key: string]: unknown;
+      }[];
+      /**
+       * Warnings
+       * @default []
+       */
+      warnings: string[];
+      /** Counts */
+      counts?: {
+        [key: string]: number;
+      } | null;
+      /** Loaded At */
+      loaded_at?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
     /** PreprocessingBaselineRequest */
     PreprocessingBaselineRequest: {
       /** Selected Api Id */
@@ -1475,6 +1878,31 @@ export interface components {
       values: {
         [key: string]: unknown;
       };
+    } & {
+      [key: string]: unknown;
+    };
+    /** PreprocessingPart */
+    PreprocessingPart: {
+      preprocessing: components['schemas']['Preprocessing'];
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * PreprocessingStatus
+     * @description 머리의 전처리 상태 줄.
+     */
+    PreprocessingStatus: {
+      /** Counts */
+      counts?: {
+        [key: string]: number;
+      } | null;
+      /**
+       * Warnings
+       * @default []
+       */
+      warnings: string[];
+      /** Loaded At */
+      loaded_at?: string | null;
     } & {
       [key: string]: unknown;
     };
@@ -1646,6 +2074,27 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /** ReviewEntry */
+    ReviewEntry: {
+      /** Api Id */
+      api_id: string;
+      /**
+       * Item
+       * @description domain · kind · success_rule · enabled · selectors
+       */
+      item: string;
+      /** Reason */
+      reason: string;
+    } & {
+      [key: string]: unknown;
+    };
+    /** ReviewPart */
+    ReviewPart: {
+      /** Review */
+      review: components['schemas']['ReviewEntry'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** ReviewRequest */
     ReviewRequest: {
       /** Expected Revision */
@@ -1686,6 +2135,13 @@ export interface components {
       target?: string | null;
       /** Body */
       body?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
+    /** RulesPart */
+    RulesPart: {
+      /** Rules */
+      rules: components['schemas']['UiRule'][];
     } & {
       [key: string]: unknown;
     };
@@ -1817,6 +2273,41 @@ export interface components {
         [key: string]: string;
       };
     };
+    /** SelectorField */
+    SelectorField: {
+      /** Field */
+      field: string;
+      /** Label */
+      label?: string | null;
+      /**
+       * Complete
+       * @default true
+       */
+      complete: boolean;
+      /** Values */
+      values: components['schemas']['SelectorValue'][];
+    } & {
+      [key: string]: unknown;
+    };
+    /** SelectorValue */
+    SelectorValue: {
+      /** Value */
+      value: string;
+      /** Name */
+      name?: string | null;
+      /**
+       * Aliases
+       * @default []
+       */
+      aliases: string[];
+      /**
+       * Source
+       * @description override 면 사람이 보정한 값
+       */
+      source?: string | null;
+    } & {
+      [key: string]: unknown;
+    };
     /** Step */
     Step: {
       /** Step */
@@ -1914,6 +2405,15 @@ export interface components {
         [key: string]: string;
       };
     };
+    /** SuccessRule */
+    SuccessRule: {
+      /** Path */
+      path: string;
+      /** Equals */
+      equals: string;
+    } & {
+      [key: string]: unknown;
+    };
     /** Task */
     Task: {
       /** Sequence */
@@ -1985,6 +2485,30 @@ export interface components {
       unresolved: string[];
       /** Injections */
       injections?: string[];
+    };
+    /** ToolEntry */
+    ToolEntry: {
+      /** Api Id */
+      api_id: string;
+      /** Domain */
+      domain: string;
+      /** Endpoint */
+      endpoint: string;
+      /** Timeout Ms */
+      timeout_ms: number;
+      /** Retry Count */
+      retry_count: number;
+      /** Approval Required */
+      approval_required: boolean;
+      /** Auth Type */
+      auth_type: string;
+      /** Auth Profile */
+      auth_profile?: string | null;
+      /** Enabled */
+      enabled: boolean;
+      success_rule?: components['schemas']['SuccessRule'] | null;
+    } & {
+      [key: string]: unknown;
     };
     /**
      * Trace
@@ -2071,6 +2595,38 @@ export interface components {
       llm_ms: number;
       /** Ms */
       ms: number;
+    } & {
+      [key: string]: unknown;
+    };
+    /**
+     * UiRule
+     * @description 화면 보정 규칙 (data/config/rules.ui.yaml).
+     */
+    UiRule: {
+      /** Id */
+      id: number;
+      /**
+       * Place
+       * @description am 전사 · ov 도메인
+       */
+      place: string;
+      /**
+       * Doc
+       * @description sv · pkb · cat · meta
+       */
+      doc: string;
+      /** Item */
+      item: string;
+      /** Dom */
+      dom?: string | null;
+      /** Target */
+      target?: string | null;
+      /** Body */
+      body?: string | null;
+      /** By */
+      by?: string | null;
+      /** At */
+      at?: string | null;
     } & {
       [key: string]: unknown;
     };
@@ -2817,7 +3373,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['RulesPart'];
         };
       };
     };
@@ -2892,7 +3448,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['BaselinesPart'];
         };
       };
     };
@@ -2970,6 +3526,26 @@ export interface operations {
       };
     };
   };
+  preprocessing_status_api_admin_preprocessing_status_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['PreprocessingStatus'];
+        };
+      };
+    };
+  };
   save_preprocessing_api_admin_preprocessing_baselines_put: {
     parameters: {
       query?: never;
@@ -3038,7 +3614,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['CatalogPart'];
         };
       };
     };
@@ -3058,7 +3634,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['MetadataPart'];
         };
       };
     };
@@ -3098,7 +3674,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['ReviewPart'];
         };
       };
     };
@@ -3158,7 +3734,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['PreprocessingPart'];
         };
       };
     };
@@ -3178,7 +3754,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['GraphReviewResult'];
         };
       };
     };

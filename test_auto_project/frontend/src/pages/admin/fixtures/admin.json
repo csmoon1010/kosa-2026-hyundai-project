@@ -1,0 +1,4084 @@
+{
+  "environment": {
+    "generated_at": "2026-11-13T09:14:35+09:00",
+    "build": {
+      "operations": 43,
+      "catalog_version": 3,
+      "spec_sources": [
+        {
+          "service": "hshop-openapi",
+          "document_id": "hmall-openapi.json",
+          "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+        }
+      ],
+      "kinds": {
+        "read": 25,
+        "write": 18
+      },
+      "domains": {
+        "pd": 26,
+        "af": 3,
+        "hm": 2,
+        "om": 1,
+        "cs": 1,
+        "ds": 10
+      },
+      "review": 16
+    },
+    "connections": [
+      {
+        "service": "hshop-openapi",
+        "domain": "pd",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "domain"
+      },
+      {
+        "service": "hshop-openapi",
+        "domain": "af",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "service"
+      },
+      {
+        "service": "hshop-openapi",
+        "domain": "hm",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "service"
+      },
+      {
+        "service": "hshop-openapi",
+        "domain": "om",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "service"
+      },
+      {
+        "service": "hshop-openapi",
+        "domain": "cs",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "domain"
+      },
+      {
+        "service": "hshop-openapi",
+        "domain": "ds",
+        "base_url": "HMALL_API_BASE_URL",
+        "base_url_default": "http://openapi.hmall.com/front",
+        "timeout_ms": 5000,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "auth_headers": ["oauserId", "oauseKey"],
+        "default_headers": {},
+        "allowed_environments": ["DEV"],
+        "source": "service"
+      }
+    ],
+    "tools": [
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/selectVenSellItemQryList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/selectItem.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/selectUnitStocks.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/insertSellUitmDtl.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/updateUnitStockByExcel.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/insertItnDispModReqList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdc/updateVenSellItemList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pda/selectItemCsfCdList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pda/selectItemCsfUnitList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/selectInfNotfBsicDtlList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/updateItemPrcHist.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectMkcoList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectBrndList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectMdList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectUseTermList.do",
+        "body_format": "xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectDptsPchList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdh/selectCopnList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pda/selectCnryCodeList.do",
+        "body_format": "xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+        "domain": "af",
+        "method": "POST",
+        "endpoint": "/vd/vda/selectVenAdrList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
+        "domain": "af",
+        "method": "POST",
+        "endpoint": "/vd/vda/updateVenAdrMng.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+        "domain": "af",
+        "method": "POST",
+        "endpoint": "/vd/vda/insertVenAdrMng.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "domain": "hm",
+        "method": "POST",
+        "endpoint": "/hmgb/getSdlvcVenMngDtlList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+        "domain": "hm",
+        "method": "POST",
+        "endpoint": "/hmgb/multiVenSdlvcMngInf.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/uploadItemImgUrl.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/multiItemImg.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdd/selectItemQnaQstnList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdd/selectItemQnaAnswList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdd/multiItemQnaAnsw.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+        "domain": "om",
+        "method": "POST",
+        "endpoint": "/om/oma/selectSectMstList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
+        "domain": "cs",
+        "method": "POST",
+        "endpoint": "/cs/csh/selectItemArltList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/multiItem.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
+        "domain": "pd",
+        "method": "POST",
+        "endpoint": "/pd/pdb/updateItemByVen.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/code",
+          "equals": "0000"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/selectWtdwDtlList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/result",
+          "equals": "Request Success"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/multiOshpBackProcess.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/result",
+          "equals": "Request Success"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/multiWtdwProcess.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": {
+          "path": "result/result",
+          "equals": "Request Success"
+        }
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/selectCnclList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/selectTcktOshpList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/multiTcktOrdProcess.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/selectTcktWtdwList.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 2,
+        "approval_required": false,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "domain": "ds",
+        "method": "POST",
+        "endpoint": "/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "body_format": "nexacro-xml",
+        "base_url": "HMALL_API_BASE_URL",
+        "timeout_ms": 5000,
+        "retry_count": 0,
+        "approval_required": true,
+        "auth_type": "API_KEY_HEADER",
+        "auth_profile": "hmall-openapi-key",
+        "enabled": true,
+        "success_rule": null
+      }
+    ],
+    "overrides_file": {
+      "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do": {
+        "selectors": [
+          {
+            "field": "procGb",
+            "values": [
+              {
+                "value": "P1",
+                "name": "출고진행"
+              },
+              {
+                "value": "P2",
+                "name": "출고완료"
+              },
+              {
+                "value": "P3",
+                "name": "배송완료"
+              }
+            ]
+          }
+        ]
+      },
+      "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do": {
+        "selectors": [
+          {
+            "field": "procGb",
+            "values": [
+              {
+                "value": "PB1",
+                "name": "출고취소"
+              },
+              {
+                "value": "PB2",
+                "name": "출고완료취소"
+              },
+              {
+                "value": "PB3",
+                "name": "배송완료취소"
+              }
+            ]
+          }
+        ]
+      },
+      "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do": {
+        "selectors": [
+          {
+            "field": "prgrGb",
+            "values": [
+              {
+                "value": "P0",
+                "name": "출고대기(25)만"
+              },
+              {
+                "value": "P1",
+                "name": "출고진행(30)만"
+              },
+              {
+                "value": "P2",
+                "name": "출고(45)만"
+              },
+              {
+                "value": "P3",
+                "name": "배송완료(50)만"
+              }
+            ]
+          }
+        ]
+      },
+      "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do": {
+        "selectors": [
+          {
+            "field": "prgrGb",
+            "values": [
+              {
+                "value": "P0",
+                "name": "회수요청(55 · 56)만"
+              },
+              {
+                "value": "P1",
+                "name": "회수집하 · 회수확인(57 · 60)만"
+              },
+              {
+                "value": "P2",
+                "name": "회수완료(63)만"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "catalog": {
+    "catalog": [
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do",
+        "operation_id": "selectVenSellItemQryList",
+        "api_name": "판매상품조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+        "operation_id": "selectItem",
+        "api_name": "상품 상세 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
+        "operation_id": "selectUnitStocks",
+        "api_name": "[상품 속성별 재고관리] 상품코드 점검",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+        "operation_id": "insertSellUitmDtl",
+        "api_name": "[상품 속성별 재고관리] 속성 등록",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
+        "operation_id": "updateUnitStockByExcel",
+        "api_name": "[상품 속성별 재고관리] 속성별 재입고요청 저장",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
+        "operation_id": "insertItnDispModReqList",
+        "api_name": "상품 전시상태 수정 요청",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+        "operation_id": "updateVenSellItemList",
+        "api_name": "상품 판매구분 변경 요청",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
+        "operation_id": "selectItemCsfCdList",
+        "api_name": "상품 분류 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
+        "operation_id": "selectItemCsfUnitList",
+        "api_name": "상품 분류 단위 목록 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
+        "operation_id": "selectInfNotfBsicDtlList",
+        "api_name": "상품필수정보 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
+        "operation_id": "updateItemPrcHist",
+        "api_name": "상품 가격 수정 요청",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+        "operation_id": "selectItemInfNotfBsicDtlAllList",
+        "api_name": "상품분류별 필수입력항목 전체 리스트",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
+        "operation_id": "selectMkcoList",
+        "api_name": "제조사 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+        "operation_id": "selectBrndList",
+        "api_name": "브랜드 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+        "operation_id": "selectMdList",
+        "api_name": "MD 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
+        "operation_id": "selectUseTermList",
+        "api_name": "소비기한 템플릿 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+        "operation_id": "selectDptsPchList",
+        "api_name": "백화점 펀칭코드 조회",
+        "description": "백화점 상품의 펀칭코드 조회",
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+        "operation_id": "selectCopnList",
+        "api_name": "쿠폰 목록 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+        "operation_id": "selectCnryCodeList",
+        "api_name": "제조국 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+        "operation_id": "selectVenAdrList",
+        "api_name": "협력사 주소지 조회",
+        "description": null,
+        "domain": "af",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
+        "operation_id": "updateVenAdrMng",
+        "api_name": "협력사 주소지 수정",
+        "description": null,
+        "domain": "af",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+        "operation_id": "insertVenAdrMng",
+        "api_name": "협력사 주소지 등록",
+        "description": null,
+        "domain": "af",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "operation_id": "getSdlvcVenMngDtlList",
+        "api_name": "협력사 소액장바구니 조회",
+        "description": null,
+        "domain": "hm",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+        "operation_id": "multiVenSdlvcMngInf",
+        "api_name": "협력사 소액장바구니 등록/수정",
+        "description": null,
+        "domain": "hm",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+        "operation_id": "uploadItemImgUrl",
+        "api_name": "상품 이미지 수정(이미지URL)",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+        "operation_id": "multiItemImg",
+        "api_name": "상품 이미지 수정(DB)",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
+        "operation_id": "selectItemQnaQstnList",
+        "api_name": "상품qna 질문 목록 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
+        "operation_id": "selectItemQnaAnswList",
+        "api_name": "상품qna 답변 목록 조회",
+        "description": null,
+        "domain": "pd",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+        "operation_id": "multiItemQnaAnsw",
+        "api_name": "상품문의 답변 등록,수정",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+        "operation_id": "selectSectMstList",
+        "api_name": "매장 정보 조회",
+        "description": null,
+        "domain": "om",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
+        "operation_id": "selectItemArltList",
+        "api_name": "상품별 실적 조회",
+        "description": null,
+        "domain": "cs",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+        "operation_id": "multiItem",
+        "api_name": "상품 등록",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
+        "operation_id": "updateItemByVen",
+        "api_name": "상품 수정",
+        "description": null,
+        "domain": "pd",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "operation_id": "selectOshpDtlList",
+        "api_name": "출고조회",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-출고조회",
+        "domain": "ds",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+        "operation_id": "selectWtdwDtlList",
+        "api_name": "회수조회",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-회수조회",
+        "domain": "ds",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "operation_id": "multiOshpProcess",
+        "api_name": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+        "domain": "ds",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "operation_id": "multiOshpBackProcess",
+        "api_name": "출고취소처리",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-출고취소처리",
+        "domain": "ds",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+        "operation_id": "multiWtdwProcess",
+        "api_name": "회수처리",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-회수처리",
+        "domain": "ds",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+        "operation_id": "selectCnclList",
+        "api_name": "취소조회",
+        "description": "홈쇼핑/Hmall 협력사 물류처리-취소조회",
+        "domain": "ds",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "operation_id": "selectTcktOshpList",
+        "api_name": "주문조회",
+        "description": "홈쇼핑/Hmall 티켓 물류처리-주문조회",
+        "domain": "ds",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "operation_id": "multiTcktOrdProcess",
+        "api_name": "주문처리",
+        "description": "홈쇼핑/Hmall 티켓 물류처리-주문처리",
+        "domain": "ds",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "operation_id": "selectTcktWtdwList",
+        "api_name": "회수조회",
+        "description": "홈쇼핑/Hmall 티켓 물류처리-회수조회",
+        "domain": "ds",
+        "kind": "read",
+        "aliases": [],
+        "tool_enabled": true
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "operation_id": "multiTcktWtdwProcess",
+        "api_name": "회수처리",
+        "description": "홈쇼핑/Hmall 티켓 물류처리-회수처리",
+        "domain": "ds",
+        "kind": "write",
+        "aliases": [],
+        "tool_enabled": true
+      }
+    ]
+  },
+  "metadata": {
+    "metadata": [
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectVenSellItemQryList.do",
+        "api_name": "판매상품조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectVenSellItemQryList 판매상품조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectVenSellItemQryList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+        "api_name": "상품 상세 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItem 상품 상세 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItem",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/selectUnitStocks.do",
+        "api_name": "[상품 속성별 재고관리] 상품코드 점검",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectUnitStocks [상품 속성별 재고관리] 상품코드 점검",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectUnitStocks",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertSellUitmDtl.do",
+        "api_name": "[상품 속성별 재고관리] 속성 등록",
+        "domain": "pd",
+        "kind": "write",
+        "action": "등록",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "insertSellUitmDtl [상품 속성별 재고관리] 속성 등록",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertSellUitmDtl",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateUnitStockByExcel.do",
+        "api_name": "[상품 속성별 재고관리] 속성별 재입고요청 저장",
+        "domain": "pd",
+        "kind": "write",
+        "action": "요청",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "updateUnitStockByExcel [상품 속성별 재고관리] 속성별 재입고요청 저장",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateUnitStockByExcel",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/insertItnDispModReqList.do",
+        "api_name": "상품 전시상태 수정 요청",
+        "domain": "pd",
+        "kind": "write",
+        "action": "요청",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "insertItnDispModReqList 상품 전시상태 수정 요청",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertItnDispModReqList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdc/updateVenSellItemList.do",
+        "api_name": "상품 판매구분 변경 요청",
+        "domain": "pd",
+        "kind": "write",
+        "action": "요청",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "updateVenSellItemList 상품 판매구분 변경 요청",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateVenSellItemList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfCdList.do",
+        "api_name": "상품 분류 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemCsfCdList 상품 분류 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemCsfCdList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectItemCsfUnitList.do",
+        "api_name": "상품 분류 단위 목록 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemCsfUnitList 상품 분류 단위 목록 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemCsfUnitList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/selectInfNotfBsicDtlList.do",
+        "api_name": "상품필수정보 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectInfNotfBsicDtlList 상품필수정보 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectInfNotfBsicDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/updateItemPrcHist.do",
+        "api_name": "상품 가격 수정 요청",
+        "domain": "pd",
+        "kind": "write",
+        "action": "요청",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "updateItemPrcHist 상품 가격 수정 요청",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateItemPrcHist",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectItemInfNotfBsicDtlAllList.do",
+        "api_name": "상품분류별 필수입력항목 전체 리스트",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemInfNotfBsicDtlAllList 상품분류별 필수입력항목 전체 리스트",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemInfNotfBsicDtlAllList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMkcoList.do",
+        "api_name": "제조사 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectMkcoList 제조사 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectMkcoList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectBrndList.do",
+        "api_name": "브랜드 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectBrndList 브랜드 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectBrndList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectMdList.do",
+        "api_name": "MD 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectMdList MD 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectMdList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectUseTermList.do",
+        "api_name": "소비기한 템플릿 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectUseTermList 소비기한 템플릿 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectUseTermList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectDptsPchList.do",
+        "api_name": "백화점 펀칭코드 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "백화점 상품의 펀칭코드 조회",
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectDptsPchList 백화점 펀칭코드 조회 백화점 상품의 펀칭코드 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectDptsPchList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdh/selectCopnList.do",
+        "api_name": "쿠폰 목록 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectCopnList 쿠폰 목록 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCopnList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pda/selectCnryCodeList.do",
+        "api_name": "제조국 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectCnryCodeList 제조국 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCnryCodeList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/selectVenAdrList.do",
+        "api_name": "협력사 주소지 조회",
+        "domain": "af",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectVenAdrList 협력사 주소지 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectVenAdrList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/updateVenAdrMng.do",
+        "api_name": "협력사 주소지 수정",
+        "domain": "af",
+        "kind": "write",
+        "action": "수정",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "updateVenAdrMng 협력사 주소지 수정",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateVenAdrMng",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+        "api_name": "협력사 주소지 등록",
+        "domain": "af",
+        "kind": "write",
+        "action": "등록",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "insertVenAdrMng 협력사 주소지 등록",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "insertVenAdrMng",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/getSdlvcVenMngDtlList.do",
+        "api_name": "협력사 소액장바구니 조회",
+        "domain": "hm",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "getSdlvcVenMngDtlList 협력사 소액장바구니 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "getSdlvcVenMngDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+        "api_name": "협력사 소액장바구니 등록/수정",
+        "domain": "hm",
+        "kind": "write",
+        "action": "등록",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "rowFlag",
+            "label": "rowFlag",
+            "complete": false,
+            "values": [
+              {
+                "value": "I",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiVenSdlvcMngInf 협력사 소액장바구니 등록/수정",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiVenSdlvcMngInf",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/uploadItemImgUrl.do",
+        "api_name": "상품 이미지 수정(이미지URL)",
+        "domain": "pd",
+        "kind": "write",
+        "action": "수정",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "uploadItemImgUrl 상품 이미지 수정(이미지URL)",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "uploadItemImgUrl",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+        "api_name": "상품 이미지 수정(DB)",
+        "domain": "pd",
+        "kind": "write",
+        "action": "수정",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "rowType",
+            "label": "rowType",
+            "complete": false,
+            "values": [
+              {
+                "value": "INSERT",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiItemImg 상품 이미지 수정(DB)",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItemImg",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaQstnList.do",
+        "api_name": "상품qna 질문 목록 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemQnaQstnList 상품qna 질문 목록 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemQnaQstnList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/selectItemQnaAnswList.do",
+        "api_name": "상품qna 답변 목록 조회",
+        "domain": "pd",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemQnaAnswList 상품qna 답변 목록 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemQnaAnswList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+        "api_name": "상품문의 답변 등록,수정",
+        "domain": "pd",
+        "kind": "write",
+        "action": "등록·수정",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "rowFlag",
+            "label": "rowFlag",
+            "complete": false,
+            "values": [
+              {
+                "value": "I",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiItemQnaAnsw 상품문의 답변 등록,수정",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItemQnaAnsw",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/om/oma/selectSectMstList.do",
+        "api_name": "매장 정보 조회",
+        "domain": "om",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 1,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectSectMstList 매장 정보 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectSectMstList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/cs/csh/selectItemArltList.do",
+        "api_name": "상품별 실적 조회",
+        "domain": "cs",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectItemArltList 상품별 실적 조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectItemArltList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+        "api_name": "상품 등록",
+        "domain": "pd",
+        "kind": "write",
+        "action": "등록",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "rowType",
+            "label": "rowType",
+            "complete": false,
+            "values": [
+              {
+                "value": "INSERT",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiItem 상품 등록",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiItem",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/updateItemByVen.do",
+        "api_name": "상품 수정",
+        "domain": "pd",
+        "kind": "write",
+        "action": "수정",
+        "metadata_version": 4,
+        "description": null,
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "updateItemByVen 상품 수정",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "updateItemByVen",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "api_name": "출고조회",
+        "domain": "ds",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-출고조회",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "prgrGb",
+            "label": "진행구분코드",
+            "complete": true,
+            "values": [
+              {
+                "value": "P0",
+                "name": "출고대기(25)만",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "P1",
+                "name": "출고진행(30)만",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "P2",
+                "name": "출고(45)만",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "P3",
+                "name": "배송완료(50)만",
+                "aliases": [],
+                "source": "override"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "override",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectOshpDtlList 출고조회 홈쇼핑/Hmall 협력사 물류처리-출고조회 출고대기(25)만 출고진행(30)만 출고(45)만 배송완료(50)만",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectOshpDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+        "api_name": "회수조회",
+        "domain": "ds",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-회수조회",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "prgrGb",
+            "label": "진행구분코드",
+            "complete": true,
+            "values": [
+              {
+                "value": "P0",
+                "name": "회수요청(55 · 56)만",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "P1",
+                "name": "회수집하 · 회수확인(57 · 60)만",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "P2",
+                "name": "회수완료(63)만",
+                "aliases": [],
+                "source": "override"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "override",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectWtdwDtlList 회수조회 홈쇼핑/Hmall 협력사 물류처리-회수조회 회수요청(55 · 56)만 회수집하 · 회수확인(57 · 60)만 회수완료(63)만",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectWtdwDtlList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "api_name": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+        "domain": "ds",
+        "kind": "write",
+        "action": "처리",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": true,
+            "values": [
+              {
+                "value": "P1",
+                "name": "출고진행",
+                "aliases": ["주문확인"],
+                "source": "override"
+              },
+              {
+                "value": "P2",
+                "name": "출고완료",
+                "aliases": [],
+                "source": "spec"
+              },
+              {
+                "value": "P3",
+                "name": "배송완료",
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "override",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiOshpProcess 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 출고진행 주문확인 출고완료 배송완료",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiOshpProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "api_name": "출고취소처리",
+        "domain": "ds",
+        "kind": "write",
+        "action": "처리",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-출고취소처리",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": true,
+            "values": [
+              {
+                "value": "PB1",
+                "name": "출고취소",
+                "aliases": ["출고취소처리"],
+                "source": "override"
+              },
+              {
+                "value": "PB2",
+                "name": "출고완료취소",
+                "aliases": [],
+                "source": "override"
+              },
+              {
+                "value": "PB3",
+                "name": "배송완료취소",
+                "aliases": [],
+                "source": "override"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "override",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiOshpBackProcess 출고취소처리 홈쇼핑/Hmall 협력사 물류처리-출고취소처리 출고취소 출고취소처리 출고완료취소 배송완료취소",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiOshpBackProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+        "api_name": "회수처리",
+        "domain": "ds",
+        "kind": "write",
+        "action": "처리",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-회수처리",
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiWtdwProcess 회수처리 홈쇼핑/Hmall 협력사 물류처리-회수처리",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiWtdwProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+        "api_name": "취소조회",
+        "domain": "ds",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 협력사 물류처리-취소조회",
+        "aliases": [],
+        "selectors": [],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectCnclList 취소조회 홈쇼핑/Hmall 협력사 물류처리-취소조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectCnclList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "api_name": "주문조회",
+        "domain": "ds",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 티켓 물류처리-주문조회",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": false,
+            "values": [
+              {
+                "value": "P1",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectTcktOshpList 주문조회 홈쇼핑/Hmall 티켓 물류처리-주문조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectTcktOshpList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "api_name": "주문처리",
+        "domain": "ds",
+        "kind": "write",
+        "action": "처리",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 티켓 물류처리-주문처리",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": false,
+            "values": [
+              {
+                "value": "P1",
+                "name": "주문처리",
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiTcktOrdProcess 주문처리 홈쇼핑/Hmall 티켓 물류처리-주문처리 주문처리",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiTcktOrdProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "api_name": "회수조회",
+        "domain": "ds",
+        "kind": "read",
+        "action": "조회",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 티켓 물류처리-회수조회",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": false,
+            "values": [
+              {
+                "value": "P0",
+                "name": null,
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "가능",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "selectTcktWtdwList 회수조회 홈쇼핑/Hmall 티켓 물류처리-회수조회",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "selectTcktWtdwList",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "api_name": "회수처리",
+        "domain": "ds",
+        "kind": "write",
+        "action": "처리",
+        "metadata_version": 4,
+        "description": "홈쇼핑/Hmall 티켓 물류처리-회수처리",
+        "aliases": [],
+        "selectors": [
+          {
+            "field": "procGb",
+            "label": "진행구분코드",
+            "complete": false,
+            "values": [
+              {
+                "value": "P0",
+                "name": "회수처리",
+                "aliases": [],
+                "source": "spec"
+              }
+            ]
+          }
+        ],
+        "selectors_source": "auto",
+        "input_concepts": [],
+        "output_concepts": [],
+        "irreversible": "미확인",
+        "memo": null,
+        "tool_enabled": true,
+        "search_text": "multiTcktWtdwProcess 회수처리 홈쇼핑/Hmall 티켓 물류처리-회수처리 회수처리",
+        "source_type": "SWAGGER",
+        "document_id": "hmall-openapi.json",
+        "operation_id": "multiTcktWtdwProcess",
+        "spec_hash": "sha256:2bcd9e45d8df4559e9e9ee8501b924d26fee7504c09eeed3e0cae3d21ff06072"
+      }
+    ]
+  },
+  "operations": {
+    "ops": [
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "path": "/sc/scb/scbd/selectOshpDtlList.do",
+        "sum": "출고조회",
+        "kind": "read",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "003766"],
+          ["ven2Cd", "2차협력사코드", "010539"],
+          ["fromDate", "시작일시", "20230501"],
+          ["toDate", "종료일시", "20230515"],
+          ["mdaGb", "매입처", "20"],
+          ["prgrGb", "진행구분코드", "P0"],
+          ["dlvFormGbcd", "배송형태구분코드", "40"],
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["drctBuyYn", "직접구매여부", "Y"]
+        ],
+        "res": [
+          ["dlvstNo", "", "20240105333623"],
+          ["dlvstPtcSeq", "", "1"],
+          ["ordNo", "", "20231221000030"],
+          ["ordPtcSeq", "", "2"],
+          ["befAcptOrdPtcSeq", "", "2"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+        "path": "/sc/scb/scbd/selectWtdwDtlList.do",
+        "sum": "회수조회",
+        "kind": "read",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "003766"],
+          ["ven2Cd", "2차협력사코드", "010539"],
+          ["fromDate", "시작일시", "20230501"],
+          ["toDate", "종료일시", "20230515"],
+          ["prgrGb", "진행구분코드", "P0"]
+        ],
+        "res": [
+          ["dlvstNo", "", "20240307337209"],
+          ["dlvstPtcSeq", "", "1"],
+          ["ordNo", "", "20240227000066"],
+          ["ordPtcSeq", "", "2"],
+          ["befAcptOrdPtcSeq", "", "2"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+        "path": "/sc/scb/scbd/multiOshpProcess.do",
+        "sum": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+        "kind": "write",
+        "dom": "ds",
+        "req": [
+          ["chk", "체크", "1"],
+          ["venCd", "협력사코드", "003766"],
+          ["ven2Cd", "2차협력사코드", "010539"],
+          ["dlvstNo", null, "20160118617141"],
+          ["dlvstPtcSeq", "배송지시상세순번", "1"],
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["procGb", "진행구분코드", "P1"],
+          ["invcNo", "송장번호", "202305230101"],
+          ["dsrvDlvcoCd", "택배배송사코드", "81"],
+          ["rgstId", "등록ID", "test"],
+          ["rgstIp", "등록IP", "127.0.0.1"]
+        ],
+        "res": [["result", "성공", "Request Success"]]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpBackProcess.do",
+        "path": "/sc/scb/scbd/multiOshpBackProcess.do",
+        "sum": "출고취소처리",
+        "kind": "write",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "003766"],
+          ["chk", "확인", "1"],
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["dlvstNo", "배송지시번호", "20160118617141"],
+          ["dlvstPtcSeq", "배송지시상세순번", "1"],
+          ["procGb", "진행구분코드", "PB1"],
+          ["rgstId", "등록ID", "test"],
+          ["rgstIp", "등록IP", "127.0.0.1"]
+        ],
+        "res": [["result", "성공", "Request Success"]]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/multiWtdwProcess.do",
+        "path": "/sc/scb/scbd/multiWtdwProcess.do",
+        "sum": "회수처리",
+        "kind": "write",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "009362"],
+          ["chk", "확인", "1"],
+          ["ordNo", "주문번호", "20160118166352"],
+          ["ordPtcSeq", "주문상세순번", "3"],
+          ["dlvstNo", "배송지시번호", "20160123250231"],
+          ["dlvstPtcSeq", "배송지시상세순번", "1"],
+          ["invcNo", "송장번호", "202305230101"],
+          ["dsrvDlvcoCd", "택배배송사코드", "81"],
+          ["rgstId", "주문ID", "test"],
+          ["rgstIp", "등록IP", "127.0.0.1"]
+        ],
+        "res": [["result", "성공", "Request Success"]]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+        "path": "/sc/scb/scbd/selectCnclList.do",
+        "sum": "취소조회",
+        "kind": "read",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "003766"],
+          ["fromDate", "시작일시", "20230501"],
+          ["toDate", "종료일시", "20230515"]
+        ],
+        "res": [
+          ["dlvstNo", "", "20260723027641"],
+          ["dlvstPtcSeq", "", "1"],
+          ["befDlvstNo", "", "20260715266367"],
+          ["disOrdNo", "", "20260715067801420"],
+          ["ordNo", "", "20260715067801"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "path": "/sc/scb/scbd/selectTcktOshpList.do",
+        "sum": "주문조회",
+        "kind": "read",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "009362"],
+          ["ven2Cd", "2차협력사코드", "010539"],
+          ["fromDate", "시작일시", "20230501"],
+          ["toDate", "종료일시", "20230515"],
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["procGb", "진행구분코드", "P1"]
+        ],
+        "res": [
+          ["sellMdaGbcd", "", "11"],
+          ["slitmCd", "", "2025206882"],
+          ["slitmNm", "", "티켓 테스트"],
+          ["uitmCd", "", "00001"],
+          ["uitmTotNm", "", "없음"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "path": "/sc/scb/scbd/multiTcktOrdProcess.do",
+        "sum": "주문처리",
+        "kind": "write",
+        "dom": "ds",
+        "req": [
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["procGb", "진행구분코드", "P1"]
+        ],
+        "res": [
+          ["request", "요청", "예: 100"],
+          ["success", "성공", "예: 80"],
+          ["failure", "실패", "예: 20"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "path": "/sc/scb/scbd/selectTcktWtdwList.do",
+        "sum": "회수조회",
+        "kind": "read",
+        "dom": "ds",
+        "req": [
+          ["venCd", "협력사코드", "009362"],
+          ["ven2Cd", "2차협력사코드", "010539"],
+          ["fromDate", "시작일시", "20230501"],
+          ["toDate", "종료일시", "20230515"],
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["procGb", "진행구분코드", "P0"]
+        ],
+        "res": [
+          ["sellMdaGbcd", "", "01"],
+          ["slitmCd", "", "2100004084"],
+          ["slitmNm", "", "티켓상품 테스"],
+          ["uitmCd", "", "00001"],
+          ["uitmTotNm", "", "000"]
+        ]
+      },
+      {
+        "id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "path": "/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "sum": "회수처리",
+        "kind": "write",
+        "dom": "ds",
+        "req": [
+          ["ordNo", "주문번호", "20160118110258"],
+          ["ordPtcSeq", "주문상세순번", "1"],
+          ["procGb", "진행구분코드", "P0"]
+        ],
+        "res": [
+          ["request", "요청", "예: 100"],
+          ["success", "성공", "예: 80"],
+          ["failure", "실패", "예: 20"]
+        ]
+      }
+    ]
+  },
+  "review": {
+    "review": [
+      {
+        "api_id": "hshop-openapi:POST:/hmgb/multiVenSdlvcMngInf.do",
+        "item": "selectors",
+        "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItemImg.do",
+        "item": "selectors",
+        "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdd/multiItemQnaAnsw.do",
+        "item": "selectors",
+        "reason": "구분값 rowFlag 의 값 목록이 전부인지 모름 (아는 값: I) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/pd/pdb/multiItem.do",
+        "item": "selectors",
+        "reason": "구분값 rowType 의 값 목록이 전부인지 모름 (아는 값: INSERT) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "item": "selectors",
+        "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "item": "selectors",
+        "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P1) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "item": "selectors",
+        "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "item": "selectors",
+        "reason": "구분값 procGb 의 값 목록이 전부인지 모름 (아는 값: P0) — overrides.yaml 에 나머지 값"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/vd/vda/insertVenAdrMng.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectWtdwDtlList.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectCnclList.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktOshpList.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktOrdProcess.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/selectTcktWtdwList.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      },
+      {
+        "api_id": "hshop-openapi:POST:/sc/scb/scbd/multiTcktWtdwProcess.do",
+        "item": "success_rule",
+        "reason": "성공 응답 구조에서 규칙을 찾지 못함"
+      }
+    ]
+  },
+  "rules": {
+    "rules": [
+      {
+        "id": 1,
+        "place": "ov",
+        "doc": "cat",
+        "item": "desc",
+        "dom": "goods",
+        "target": "hshop-openapi:POST:/pd/pdb/selectItem.do",
+        "body": "판매상품 단건 조회",
+        "by": "화면",
+        "at": "10-29 18:36"
+      }
+    ]
+  },
+  "graphs": {
+    "graphs": [
+      {
+        "graph": {
+          "id": "ITEM_ATHZ_GBCD",
+          "name": "상품가격승인",
+          "domain": "pd",
+          "entity": "판매상품",
+          "state_field": "itemAthzGbcd",
+          "entry_states": [],
+          "verify_key_fields": ["slitmCd"]
+        },
+        "code_group": {
+          "id": "ITEM_ATHZ_GBCD",
+          "name": "상품가격승인구분코드",
+          "codes": {
+            "0": "등록(MD승인대기)",
+            "11": "팀장승인대기",
+            "21": "보류",
+            "31": "반송",
+            "41": "취소",
+            "80": "승인완료",
+            "99": "예외"
+          }
+        },
+        "transitions": [],
+        "lookups": []
+      },
+      {
+        "graph": {
+          "id": "ORD_STAT_GBCD",
+          "name": "주문상태",
+          "domain": "od",
+          "entity": "주문",
+          "state_field": "lastDlvstPrgrGbcd",
+          "entry_states": ["25"],
+          "verify_key_fields": ["ordNo", "ordPtcSeq"]
+        },
+        "code_group": {
+          "id": "ORD_STAT_GBCD",
+          "name": "주문상태구분코드",
+          "codes": {
+            "10": "접수",
+            "20": "결제완료",
+            "25": "출고대기",
+            "26": "매장승인",
+            "27": "매장출발",
+            "30": "출고진행",
+            "45": "출고",
+            "50": "배송완료",
+            "55": "회수요청",
+            "57": "회수집하",
+            "60": "회수확인",
+            "63": "회수완료",
+            "70": "취소회수요청",
+            "73": "취소회수집하",
+            "75": "취소회수완료",
+            "77": "취소출고",
+            "79": "취소출고배송완료",
+            "80": "완료",
+            "81": "취소완료",
+            "82": "수선완료",
+            "91": "A/S취소",
+            "92": "반품전환",
+            "93": "교환전환"
+          }
+        },
+        "transitions": [
+          {
+            "name": "출고진행",
+            "from": "25",
+            "to": "30"
+          },
+          {
+            "name": "출고완료",
+            "from": "30",
+            "to": "45"
+          },
+          {
+            "name": "배송완료",
+            "from": "45",
+            "to": "50"
+          },
+          {
+            "name": "출고취소",
+            "from": "30",
+            "to": "25"
+          },
+          {
+            "name": "출고완료취소",
+            "from": "45",
+            "to": "30"
+          },
+          {
+            "name": "배송완료취소",
+            "from": "50",
+            "to": "45"
+          }
+        ]
+      },
+      {
+        "graph": {
+          "id": "SLITM_APRVL_GBCD",
+          "name": "판매상품승인",
+          "domain": "pd",
+          "entity": "판매상품",
+          "state_field": "slitmAprvlGbcd",
+          "entry_states": [],
+          "verify_key_fields": ["slitmCd"]
+        },
+        "code_group": {
+          "id": "SLITM_APRVL_GBCD",
+          "name": "판매상품승인구분코드",
+          "codes": {
+            "0": "임시저장",
+            "1": "팀장승인대기",
+            "2": "승인완료",
+            "3": "취소",
+            "4": "시스템처리중",
+            "5": "반송",
+            "6": "MD대기",
+            "7": "시스템 처리 대기",
+            "9": "실패"
+          }
+        },
+        "transitions": [],
+        "lookups": []
+      }
+    ],
+    "drafts": []
+  },
+  "baselines": {
+    "baselines": {}
+  },
+  "preprocessing": {
+    "preprocessing": {
+      "counts": {
+        "canonical_schema": 43,
+        "baseline": 43,
+        "parameter_kb": 43,
+        "response_outputs": 43
+      },
+      "warnings": [],
+      "loaded_at": "2026-11-13T09:00:00+09:00",
+      "common_knowledge": [
+        {
+          "api_ids": null,
+          "application_scope": {
+            "domain_id": "product",
+            "edge_id": null,
+            "type": "DOMAIN"
+          },
+          "canonical_document_id": null,
+          "concept_refs": [
+            {
+              "context": null,
+              "ref_id": "subject",
+              "role": "SUBJECT",
+              "term": "판매상품코드",
+              "terms": []
+            }
+          ],
+          "confidence": null,
+          "entry_method": "MANUAL",
+          "evidence": [
+            {
+              "author": "작성자 이름",
+              "created_at": "2026-10-25T13:27:23.477428+00:00",
+              "evidence_id": "6e44e2d0d0d4dfa653971c0e53fd77021dd3f0a55313e0cb0520e38b1e49032a",
+              "evidence_type": "USER_STATEMENT",
+              "reason": "업무 근거 또는 확인 사유",
+              "statement": {
+                "kind": "ALIAS",
+                "payload": {
+                  "alias_type": "NATURAL_LANGUAGE",
+                  "value": "상품번호"
+                }
+              }
+            }
+          ],
+          "kb_scope": "COMMON",
+          "kind": "ALIAS",
+          "kind_origin": "USER_SELECTED",
+          "knowledge_id": "6c219aaeebedc59da42ef6e8f853d1d4ecd16b5f07c567d02baa7ebe05b737ec",
+          "payload": {
+            "alias_type": "NATURAL_LANGUAGE",
+            "meaning": null,
+            "value": "상품번호"
+          },
+          "search_text": "판매상품코드  {\"alias_type\":\"NATURAL_LANGUAGE\",\"meaning\":null,\"value\":\"상품번호\"}",
+          "source": "USER_DEFINED",
+          "status": "VERIFIED",
+          "supersedes_id": null,
+          "targets": [],
+          "validation": {
+            "errors": [],
+            "required_refs": ["subject"],
+            "status": "CANDIDATE",
+            "unresolved": [],
+            "unresolved_refs": []
+          },
+          "evidence_count": 1
+        }
+      ],
+      "canonical_schema": {
+        "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do": {
+          "documentId": "hshop-openapi",
+          "documentTitle": "HSHOP OPEN API Swagger",
+          "apiId": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "operationId": "selectOshpDtlList",
+          "method": "POST",
+          "endpoint": "/sc/scb/scbd/selectOshpDtlList.do",
+          "summary": "출고조회",
+          "description": "홈쇼핑/Hmall 협력사 물류처리-출고조회",
+          "tags": ["홈쇼핑/Hmall 협력사 물류 처리"],
+          "contentType": "application/xml",
+          "requestBodyRequired": true,
+          "parameters": [
+            {
+              "path": "$.headers.oauserId",
+              "location": "header",
+              "name": "oauserId",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": null,
+              "sourceRef": null,
+              "xmlName": "oauserId",
+              "xmlPath": null,
+              "xmlAttribute": false,
+              "parameter_path": "$.headers.oauserId"
+            },
+            {
+              "path": "$.headers.oauseKey",
+              "location": "header",
+              "name": "oauseKey",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": null,
+              "sourceRef": null,
+              "xmlName": "oauseKey",
+              "xmlPath": null,
+              "xmlAttribute": false,
+              "parameter_path": "$.headers.oauseKey"
+            },
+            {
+              "path": "$.body.data1.id",
+              "location": "body",
+              "name": "id",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": "dsInput",
+              "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+              "xmlName": "id",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+              "xmlAttribute": true,
+              "parameter_path": "$.body.data1.id"
+            },
+            {
+              "path": "$.body.data1.data2.data3.venCd",
+              "location": "body",
+              "name": "venCd",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "description": "협력사코드",
+              "format": null,
+              "enum": null,
+              "example": "협력사코드(타입:string, 예:003766)",
+              "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+              "xmlName": "venCd",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "xmlAttribute": false,
+              "parameter_path": "$.body.data1.data2.data3.venCd"
+            }
+          ],
+          "source": {
+            "documentUrl": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+            "openapiVersion": "3.0.1",
+            "documentVersion": "v1"
+          },
+          "warnings": [],
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do"
+        },
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do": {
+          "documentId": "hshop-openapi",
+          "documentTitle": "HSHOP OPEN API Swagger",
+          "apiId": "POST:/sc/scb/scbd/multiOshpProcess.do",
+          "operationId": "multiOshpProcess",
+          "method": "POST",
+          "endpoint": "/sc/scb/scbd/multiOshpProcess.do",
+          "summary": "주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+          "description": "홈쇼핑/Hmall 협력사 물류처리-주문확인(P1)/출고완료(P2)/배송완료(P3) 처리",
+          "tags": ["홈쇼핑/Hmall 협력사 물류 처리"],
+          "contentType": "application/xml",
+          "requestBodyRequired": true,
+          "parameters": [
+            {
+              "path": "$.headers.oauserId",
+              "location": "header",
+              "name": "oauserId",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": null,
+              "sourceRef": null,
+              "xmlName": "oauserId",
+              "xmlPath": null,
+              "xmlAttribute": false,
+              "parameter_path": "$.headers.oauserId"
+            },
+            {
+              "path": "$.headers.oauseKey",
+              "location": "header",
+              "name": "oauseKey",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": null,
+              "sourceRef": null,
+              "xmlName": "oauseKey",
+              "xmlPath": null,
+              "xmlAttribute": false,
+              "parameter_path": "$.headers.oauseKey"
+            },
+            {
+              "path": "$.body.data1.id",
+              "location": "body",
+              "name": "id",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "description": null,
+              "format": null,
+              "enum": null,
+              "example": "dsInput",
+              "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+              "xmlName": "id",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+              "xmlAttribute": true,
+              "parameter_path": "$.body.data1.id"
+            },
+            {
+              "path": "$.body.data1.data2.data3.chk",
+              "location": "body",
+              "name": "chk",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "description": "체크",
+              "format": null,
+              "enum": null,
+              "example": "체크(타입:string, 예:1)",
+              "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+              "xmlName": "chk",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/chk",
+              "xmlAttribute": false,
+              "parameter_path": "$.body.data1.data2.data3.chk"
+            }
+          ],
+          "source": {
+            "documentUrl": "https://developers.hmall.com/main/swagger/5f205b21-baa0-44a6-a1ac-39c4d9395d38/1093902c-01a2-4167-8103-d0615749bdef?product_api_name=OPENAPI",
+            "openapiVersion": "3.0.1",
+            "documentVersion": "v1"
+          },
+          "warnings": [],
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+        }
+      },
+      "baselines": {
+        "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "content_type": "application/xml",
+          "source": "EXAMPLE",
+          "user_registered": false,
+          "validation_status": "EXAMPLE_ONLY",
+          "parameters": [
+            {
+              "parameter_path": "$.headers.oauserId",
+              "xmlPath": null,
+              "name": "oauserId",
+              "location": "header",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "xmlAttribute": false,
+              "value": null,
+              "value_source": "UNRESOLVED"
+            },
+            {
+              "parameter_path": "$.headers.oauseKey",
+              "xmlPath": null,
+              "name": "oauseKey",
+              "location": "header",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "xmlAttribute": false,
+              "value": null,
+              "value_source": "UNRESOLVED"
+            },
+            {
+              "parameter_path": "$.body.data1.id",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+              "name": "id",
+              "location": "body",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "xmlAttribute": true,
+              "value": "dsInput",
+              "value_source": "EXAMPLE"
+            },
+            {
+              "parameter_path": "$.body.data1.data2.data3.venCd",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/venCd",
+              "name": "venCd",
+              "location": "body",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "xmlAttribute": false,
+              "value": "003766",
+              "value_source": "EXAMPLE"
+            }
+          ],
+          "example_values": {
+            "$.headers.oauserId": null,
+            "$.headers.oauseKey": null,
+            "$.body.data1.id": "dsInput",
+            "$.body.data1.data2.data3.venCd": "003766",
+            "$.body.data1.data2.data3.ven2Cd": "010539",
+            "$.body.data1.data2.data3.fromDate": "20230501",
+            "$.body.data1.data2.data3.toDate": "20230515",
+            "$.body.data1.data2.data3.mdaGb": "20",
+            "$.body.data1.data2.data3.prgrGb": "P0",
+            "$.body.data1.data2.data3.dlvFormGbcd": "40",
+            "$.body.data1.data2.data3.ordNo": "20160118110258",
+            "$.body.data1.data2.data3.ordPtcSeq": "1",
+            "$.body.data1.data2.data3.drctBuyYn": "Y"
+          }
+        },
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "content_type": "application/xml",
+          "source": "EXAMPLE",
+          "user_registered": false,
+          "validation_status": "EXAMPLE_ONLY",
+          "parameters": [
+            {
+              "parameter_path": "$.headers.oauserId",
+              "xmlPath": null,
+              "name": "oauserId",
+              "location": "header",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "xmlAttribute": false,
+              "value": null,
+              "value_source": "UNRESOLVED"
+            },
+            {
+              "parameter_path": "$.headers.oauseKey",
+              "xmlPath": null,
+              "name": "oauseKey",
+              "location": "header",
+              "type": "string",
+              "required": true,
+              "requiredDeclared": true,
+              "xmlAttribute": false,
+              "value": null,
+              "value_source": "UNRESOLVED"
+            },
+            {
+              "parameter_path": "$.body.data1.id",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/@id",
+              "name": "id",
+              "location": "body",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "xmlAttribute": true,
+              "value": "dsInput",
+              "value_source": "EXAMPLE"
+            },
+            {
+              "parameter_path": "$.body.data1.data2.data3.chk",
+              "xmlPath": "/Root/Dataset[@id=\"dsInput\"]/rows/row/chk",
+              "name": "chk",
+              "location": "body",
+              "type": "string",
+              "required": false,
+              "requiredDeclared": false,
+              "xmlAttribute": false,
+              "value": "1",
+              "value_source": "EXAMPLE"
+            }
+          ],
+          "example_values": {
+            "$.headers.oauserId": null,
+            "$.headers.oauseKey": null,
+            "$.body.data1.id": "dsInput",
+            "$.body.data1.data2.data3.chk": "1",
+            "$.body.data1.data2.data3.venCd": "003766",
+            "$.body.data1.data2.data3.ven2Cd": "010539",
+            "$.body.data1.data2.data3.dlvstNo": "20160118617141",
+            "$.body.data1.data2.data3.dlvstPtcSeq": "1",
+            "$.body.data1.data2.data3.ordNo": "20160118110258",
+            "$.body.data1.data2.data3.ordPtcSeq": "1",
+            "$.body.data1.data2.data3.procGb": "P1",
+            "$.body.data1.data2.data3.invcNo": "202305230101",
+            "$.body.data1.data2.data3.dsrvDlvcoCd": "81",
+            "$.body.data1.data2.data3.rgstId": "test",
+            "$.body.data1.data2.data3.rgstIp": "127.0.0.1"
+          }
+        }
+      },
+      "parameter_kb": {
+        "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "parameters": [
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "dlvFormGbcd",
+                "parameter_path": "$.body.data1.data2.data3.dlvFormGbcd"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "배송형태구분코드",
+                "display_name": "dlvFormGbcd",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "d9577faae201391664aad42b4a9c0d0c2c6c91b3f2c77bba3609799b7585c4c4",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "배송형태구분코드(타입:string, 예:40)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "dlvFormGbcd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvFormGbcd"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/selectOshpDtlList.do 출고조회 $.body.data1.data2.data3.dlvFormGbcd dlvFormGbcd 배송형태구분코드"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "drctBuyYn",
+                "parameter_path": "$.body.data1.data2.data3.drctBuyYn"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "직접구매여부",
+                "display_name": "drctBuyYn",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "23bc429294825168f8afdd0d0df1d47689109e743ff7be63495ffc1a9e8b8e43",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "직접구매여부(타입:string, 예:Y)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "drctBuyYn",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/drctBuyYn"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/selectOshpDtlList.do 출고조회 $.body.data1.data2.data3.drctBuyYn drctBuyYn 직접구매여부"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "fromDate",
+                "parameter_path": "$.body.data1.data2.data3.fromDate"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "시작일시",
+                "display_name": "fromDate",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "1870ded20da676f0b4ff38e235149110b60fb5d062a19e6947e8937159fc6510",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "시작일시(타입:string, 예:20230501)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "fromDate",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/fromDate"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/selectOshpDtlList.do 출고조회 $.body.data1.data2.data3.fromDate fromDate 시작일시"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "mdaGb",
+                "parameter_path": "$.body.data1.data2.data3.mdaGb"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "매입처",
+                "display_name": "mdaGb",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "9c958b5600de1f81447b720efabf81163396890209b3a057bbd7542051a77900",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/selectOshpDtlListRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "매입처(타입:string, 예:20)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "mdaGb",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/mdaGb"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/selectOshpDtlList.do 출고조회 $.body.data1.data2.data3.mdaGb mdaGb 매입처"
+              }
+            }
+          ],
+          "api_knowledge": [],
+          "common_candidates": [],
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do"
+        },
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+          "parameters": [
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "chk",
+                "parameter_path": "$.body.data1.data2.data3.chk"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "체크",
+                "display_name": "chk",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "bf728690e91aeb0be5506c2dbc28f9a009ee82d3fcd6b28fdb0b464e3a4e5571",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "체크(타입:string, 예:1)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "chk",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/chk"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/multiOshpProcess.do 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 $.body.data1.data2.data3.chk chk 체크"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "dlvstNo",
+                "parameter_path": "$.body.data1.data2.data3.dlvstNo"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "20160118617141",
+                "display_name": "dlvstNo",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "d447cedb5ce64adee49e4bad51b9c408fdaa5ba30b6dee48330ead2392268ce3",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "20160118617141(타입:string, 예:20160118617141)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "dlvstNo",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstNo"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/multiOshpProcess.do 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 $.body.data1.data2.data3.dlvstNo dlvstNo 20160118617141"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "dlvstPtcSeq",
+                "parameter_path": "$.body.data1.data2.data3.dlvstPtcSeq"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "배송지시상세순번",
+                "display_name": "dlvstPtcSeq",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "715c85f99ab0d4a93a9a8ffb46eb121db0f52a41496c8dc7ab821ee5e94b9587",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "배송지시상세순번(타입:string, 예:1)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "dlvstPtcSeq",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dlvstPtcSeq"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/multiOshpProcess.do 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 $.body.data1.data2.data3.dlvstPtcSeq dlvstPtcSeq 배송지시상세순번"
+              }
+            },
+            {
+              "identity": {
+                "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+                "document_id": "hshop-openapi",
+                "location": "body",
+                "parameter_name": "dsrvDlvcoCd",
+                "parameter_path": "$.body.data1.data2.data3.dsrvDlvcoCd"
+              },
+              "knowledge": {
+                "aliases": [],
+                "defaults": [],
+                "dependencies": [],
+                "description": "택배배송사코드",
+                "display_name": "dsrvDlvcoCd",
+                "rules": [],
+                "value_mappings": []
+              },
+              "provenance": {
+                "canonical_hash": "86cf1b52d446a08e7f510aedbdcdd6de8f0773c4926670067195f9ccd0c26b53",
+                "document_id": "hshop-openapi",
+                "meaning_verified": false,
+                "source": "CANONICAL_DERIVED",
+                "sourceRef": "#/components/schemas/multiOshpProcessRequest",
+                "warnings": []
+              },
+              "requestBodyRequired": true,
+              "schema": {
+                "enum": null,
+                "example": "택배배송사코드(타입:string, 예:81)",
+                "format": null,
+                "required": false,
+                "required_declared": false,
+                "required_state": "UNSPECIFIED",
+                "type": "string",
+                "xml_attribute": false,
+                "xml_name": "dsrvDlvcoCd",
+                "xml_path": "/Root/Dataset[@id=\"dsInput\"]/rows/row/dsrvDlvcoCd"
+              },
+              "search": {
+                "embedding_version": null,
+                "search_text": "POST:/sc/scb/scbd/multiOshpProcess.do 주문확인(P1)/출고완료(P2)/배송완료(P3) 처리 $.body.data1.data2.data3.dsrvDlvcoCd dsrvDlvcoCd 택배배송사코드"
+              }
+            }
+          ],
+          "api_knowledge": [],
+          "common_candidates": [],
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do"
+        }
+      },
+      "response_outputs": {
+        "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/selectOshpDtlList.do",
+          "responses": [
+            {
+              "response_key": "200",
+              "status_code": "200",
+              "content_type": "application/xml"
+            }
+          ],
+          "outputs": [
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.data1.data2.data3.addCmpsItemNm",
+              "generated_name": "addCmpsItemNm",
+              "name_override": null,
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/addCmpsItemNm",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": "추가구성상품명",
+              "enabled": true,
+              "definition_hash": "bb0deff756d0fb6627a6f42c8d9b8cfdd8bbf990fbed877c802f141a2a8aa7b6",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.079638+00:00",
+              "updated_at": "2026-10-31T07:42:44.999567+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "addCmpsItemNm",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "addCmpsItemNm(예:)",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/selectOshpDtlListResponse/properties/data1/properties/data2/properties/data3/properties/addCmpsItemNm",
+                "source_ref": "#/components/schemas/selectOshpDtlListResponse",
+                "xml": {}
+              },
+              "parameter_path": "$.data1.data2.data3.addCmpsItemNm",
+              "xmlPath": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/addCmpsItemNm",
+              "required": false,
+              "requiredDeclared": false
+            },
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.data1.data2.data3.afcrItemCd",
+              "generated_name": "afcrItemCd",
+              "name_override": null,
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/afcrItemCd",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": "제휴사상품코드",
+              "enabled": true,
+              "definition_hash": "32fc69761fe97326819d1f5fcab26563e74994ab18e038aa18269d49d6bbfc71",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.079638+00:00",
+              "updated_at": "2026-10-31T07:42:44.999567+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "afcrItemCd",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "afcrItemCd(예:)",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/selectOshpDtlListResponse/properties/data1/properties/data2/properties/data3/properties/afcrItemCd",
+                "source_ref": "#/components/schemas/selectOshpDtlListResponse",
+                "xml": {}
+              },
+              "parameter_path": "$.data1.data2.data3.afcrItemCd",
+              "xmlPath": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/afcrItemCd",
+              "required": false,
+              "requiredDeclared": false
+            },
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.data1.data2.data3.almlBasktNo",
+              "generated_name": "almlBasktNo",
+              "name_override": null,
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/almlBasktNo",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": "제휴장바구니번호",
+              "enabled": true,
+              "definition_hash": "6081a45e59f82344bd9d6d6e4a34b2cb368194f16433af1f21c2231eb945eece",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.079638+00:00",
+              "updated_at": "2026-10-31T07:42:44.999567+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "almlBasktNo",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "almlBasktNo(예:)",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/selectOshpDtlListResponse/properties/data1/properties/data2/properties/data3/properties/almlBasktNo",
+                "source_ref": "#/components/schemas/selectOshpDtlListResponse",
+                "xml": {}
+              },
+              "parameter_path": "$.data1.data2.data3.almlBasktNo",
+              "xmlPath": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/almlBasktNo",
+              "required": false,
+              "requiredDeclared": false
+            },
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/selectOshpDtlList.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.data1.data2.data3.almlNm",
+              "generated_name": "almlNm",
+              "name_override": null,
+              "response_path": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/almlNm",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": "제휴구분(제휴몰명)",
+              "enabled": true,
+              "definition_hash": "cda5668b369c9cf9c8f9cae91600f715915280cc8a2b3125627706c1531b07ec",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.079638+00:00",
+              "updated_at": "2026-10-31T07:42:44.999567+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "almlNm",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "almlNm(예:)",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/selectOshpDtlListResponse/properties/data1/properties/data2/properties/data3/properties/almlNm",
+                "source_ref": "#/components/schemas/selectOshpDtlListResponse",
+                "xml": {}
+              },
+              "parameter_path": "$.data1.data2.data3.almlNm",
+              "xmlPath": "/Response2XML/Dataset[@id=\"dsOutput\"]/rows/row/almlNm",
+              "required": false,
+              "requiredDeclared": false
+            }
+          ],
+          "on_unmatched_response": "stop"
+        },
+        "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do": {
+          "document_id": "hshop-openapi",
+          "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+          "selected_api_id": "hshop-openapi:POST:/sc/scb/scbd/multiOshpProcess.do",
+          "responses": [
+            {
+              "response_key": "200",
+              "status_code": "200",
+              "content_type": "application/xml"
+            }
+          ],
+          "outputs": [
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.data2.data6.result",
+              "generated_name": "result",
+              "name_override": null,
+              "response_path": "/Dataset[@id=\"result\"]/rows/row/result",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": "성공",
+              "enabled": true,
+              "definition_hash": "ed48cbf2c887be734c4d93afe0eb891459c9eb26560e98b0251ced87354a0799",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.042710+00:00",
+              "updated_at": "2026-10-31T07:42:44.918107+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "result",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "Request Success",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/dsCommSuccessResponse/properties/data2/properties/data6/properties/result",
+                "source_ref": "#/components/schemas/dsCommSuccessResponse",
+                "xml": {}
+              },
+              "parameter_path": "$.data2.data6.result",
+              "xmlPath": "/Dataset[@id=\"result\"]/rows/row/result",
+              "required": false,
+              "requiredDeclared": false
+            },
+            {
+              "document_id": "hshop-openapi",
+              "api_id": "POST:/sc/scb/scbd/multiOshpProcess.do",
+              "response_key": "200",
+              "content_type": "application/xml",
+              "schema_path": "$.id",
+              "generated_name": "id",
+              "name_override": null,
+              "response_path": "/Dataset[@id=\"result\"]/@id",
+              "path_type": "XPATH",
+              "type": "string",
+              "format": null,
+              "description": null,
+              "enabled": true,
+              "definition_hash": "3f0ac11abbd1e976ac3005cbf7728807ea43230e4e04f0bb84164d153699590e",
+              "review_required": false,
+              "is_active": true,
+              "created_at": "2026-10-31T07:25:38.042710+00:00",
+              "updated_at": "2026-10-31T07:42:44.918107+00:00",
+              "status_code": "200",
+              "response_kind": "SUCCESS",
+              "source_type": "SWAGGER",
+              "source_hash": "9665d7bc4af5f99dccd66dfa808fd56e0f3fece5c3b132562a45ddf9a193e7b6",
+              "response_is_active": true,
+              "extraction_status": "COMPLETE",
+              "name": "id",
+              "metadata": {
+                "cardinality": "UNKNOWN",
+                "constraints": {},
+                "enum": null,
+                "example": "result",
+                "extraction_review_required": false,
+                "namespaces": {},
+                "nullable": false,
+                "raw_type": "string",
+                "required": false,
+                "required_declared": false,
+                "source_pointer": "#/components/schemas/dsCommSuccessResponse/properties/id",
+                "source_ref": "#/components/schemas/dsCommSuccessResponse",
+                "xml": {
+                  "attribute": true
+                }
+              },
+              "parameter_path": "$.id",
+              "xmlPath": "/Dataset[@id=\"result\"]/@id",
+              "required": false,
+              "requiredDeclared": false
+            }
+          ],
+          "on_unmatched_response": "stop"
+        }
+      }
+    }
+  },
+  "graph-review": {
+    "items": []
+  }
+}

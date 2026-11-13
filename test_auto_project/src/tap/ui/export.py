@@ -9,7 +9,8 @@ import csv
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from functools import cache
+from typing import Any, Callable, Iterable
 
 import yaml
 
@@ -48,45 +49,63 @@ def _code_groups(path: Path) -> list[dict[str, Any]]:
     return out
 
 
-def ui_data(root: Path) -> dict[str, Any]:
+def ui_parts(root: Path) -> dict[str, Callable[[], Any]]:
+    """화면 데이터의 칸마다 만드는 함수 — 필요한 칸만 만든다 (관리자 화면이 칸을 나눠 받는다, docs/react.md 6절).
+    같은 파일은 한 번만 읽는다. 모든 칸을 만든 결과가 ui_data()."""
     out = root / "data/out"
-    meta = _load(out / "api_metadata.json", [])
-    ops = _load(out / "api_operations.json", [])
-    reg = _load(out / "tool_registry.json", {"connections": [], "tools": []})
-    cat = _load(out / "api_catalog.json", {})
-    review = _load(out / "review_queue.json", [])
-    by = {m["api_id"]: m for m in meta}
-    graphs = [yaml.safe_load(p.read_text(encoding="utf-8")) for p in sorted((root / "data/graphs").glob("*.yaml"))]
-    preprocessing = load_preprocessing(root)
-    kinds, doms = {}, {}
-    for m in meta:
-        kinds[m["kind"]] = kinds.get(m["kind"], 0) + 1
-        doms[m["domain"]] = doms.get(m["domain"], 0) + 1
+    meta = cache(lambda: _load(out / "api_metadata.json", []))
+    ops = cache(lambda: _load(out / "api_operations.json", []))
+    reg = cache(lambda: _load(out / "tool_registry.json", {"connections": [], "tools": []}))
+    cat = cache(lambda: _load(out / "api_catalog.json", {}))
+    review = cache(lambda: _load(out / "review_queue.json", []))
+    graphs = cache(lambda: [yaml.safe_load(p.read_text(encoding="utf-8")) for p in sorted((root / "data/graphs").glob("*.yaml"))])
+    preprocessing = cache(lambda: load_preprocessing(root))
+
+    def build() -> dict[str, Any]:
+        kinds, doms = {}, {}
+        for m in meta():
+            kinds[m["kind"]] = kinds.get(m["kind"], 0) + 1
+            doms[m["domain"]] = doms.get(m["domain"], 0) + 1
+        return {"operations": len(ops()), "catalog_version": cat().get("catalog_version"),
+                "spec_sources": cat().get("spec_sources") or [], "kinds": kinds, "domains": doms, "review": len(review())}
+
+    def digests() -> list[dict[str, Any]]:
+        by = {m["api_id"]: m for m in meta()}
+        return [_digest(o, by[o["api_id"]]) for o in ops() if o["api_id"] in by]
+
     tool_keys = ("api_id", "domain", "method", "endpoint", "body_format", "base_url", "timeout_ms", "retry_count",
                  "approval_required", "auth_type", "auth_profile", "enabled", "success_rule")
     return {
-        "generated_at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
-        "build": {"operations": len(ops), "catalog_version": cat.get("catalog_version"),
-                  "spec_sources": cat.get("spec_sources") or [], "kinds": kinds, "domains": doms,
-                  "review": len(review)},
-        "catalog": cat.get("apis") or [],
+        "generated_at": lambda: datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
+        "build": build,
+        "catalog": lambda: cat().get("apis") or [],
         "metadata": meta,
-        "ops": [_digest(o, by[o["api_id"]]) for o in ops if o["api_id"] in by],
-        "tools": [{k: t.get(k) for k in tool_keys} for t in reg["tools"]],
-        "connections": reg["connections"],
+        "ops": digests,
+        "tools": lambda: [{k: t.get(k) for k in tool_keys} for t in reg()["tools"]],
+        "connections": lambda: reg()["connections"],
         "review": review,
         "graphs": graphs,
-        "codes": _code_groups(root / "data/codes/common_codes.csv"),
-        "rules": load_rules(root / "data/config/rules.ui.yaml"),
-        "overrides_file": load_overrides(root / "data/config/overrides.yaml"),
+        "codes": lambda: _code_groups(root / "data/codes/common_codes.csv"),
+        "rules": lambda: load_rules(root / "data/config/rules.ui.yaml"),
+        "overrides_file": lambda: load_overrides(root / "data/config/overrides.yaml"),
         "preprocessing": preprocessing,
-        "baselines": {**{b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
-                      **legacy_baselines(preprocessing)},
-        "runs": runs_list(root),
+        "baselines": lambda: {**{b["api_id"]: b for b in (_load(p) for p in sorted((root / "data/baselines").glob("*.json"))) if b},
+                              **legacy_baselines(preprocessing())},
+        "runs": lambda: runs_list(root),
         # 최종 등록 화면에서 승인 · 등록한 시나리오 (2026-11-12) — 예전 형식(scenarios)과 따로 둔다. 화면 목록엔 요약만
-        "registered": registered_list(root),
-        "drafts": [g for g in graphs if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
+        "registered": lambda: registered_list(root),
+        "drafts": lambda: [g for g in graphs() if "layout" in g],     # 화면에서 한 번이라도 저장한 그래프 (배치 · 승인본 번호가 있음)
     }
+
+
+def ui_part(root: Path, keys: Iterable[str]) -> dict[str, Any]:
+    """화면 데이터 중 keys 칸만."""
+    parts = ui_parts(root)
+    return {k: parts[k]() for k in keys}
+
+
+def ui_data(root: Path) -> dict[str, Any]:
+    return {k: make() for k, make in ui_parts(root).items()}
 
 
 def runs_list(root: Path) -> list[dict[str, Any]]:
