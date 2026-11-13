@@ -1,10 +1,13 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
 
 import { clearStreams } from '../api/stream';
 import { server } from './server';
+
+// findBy · waitFor 기본 대기 1초 → 4초. 테스트 파일을 한꺼번에 돌리면 CPU 가 바빠 화면이 늦게 뜬다 (R6, 2026-11-13)
+configure({ asyncUtilTimeout: 4000 });
 
 // jsdom 은 상대 주소 fetch 를 모른다 — 화면처럼 같은 서버 기준으로
 const origin = 'http://localhost';

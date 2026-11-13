@@ -4,7 +4,7 @@ import styles from './Card.module.css';
 
 interface Props {
   title?: ReactNode;
-  /** 제목 위 작은 글씨 (지금 화면의 .eyebrow) */
+  /** 제목 위 작은 글씨 (예전 화면의 .eyebrow) */
   eyebrow?: ReactNode;
   /** 제목 줄 오른쪽 (버튼 등) */
   actions?: ReactNode;

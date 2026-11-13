@@ -22,16 +22,17 @@
 
 ```bash
 uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"   # 시스템에 python3-venv 가 없어 uv 를 쓴다
+(cd frontend && npm ci && npm run build) # 화면 빌드 → frontend/dist (서버가 내려준다)
 .venv/bin/python -m tap.cli serve      # 화면 → http://127.0.0.1:8765/
-.venv/bin/python -m pytest -q && node --test tests/*.cjs   # 전부 통과해야 커밋
-cd frontend && npm ci && npm run typecheck && npm run lint && npm test   # React 화면(옮기는 중) — 고쳤으면 이것도 통과해야 커밋
+.venv/bin/python -m pytest -q          # 전부 통과해야 커밋
+cd frontend && npm run typecheck && npm run lint && npm run format:check && npm test   # 화면을 고쳤으면 이것도 통과해야 커밋
 cd frontend && npm run test:e2e          # 화면 끝까지 (Playwright, 가짜 LLM 서버를 직접 띄움 — 비용 없음)
 ```
 
 - Python 3.10. LLM 은 OpenAI — 키 · 모델 이름은 `.env`(`.env.example` 참고)에서 읽고 코드에 박지 않는다.
 - 서버는 FastAPI(`src/tap/api/`) — 경로 · 오류 형식 · 스트리밍 · 라우터 작성 규칙은 [docs/fastapi.md](docs/fastapi.md). API 목록은 서버의 `/api/docs`.
-- 서버는 Python 코드를 시작할 때 읽는다. Python 을 고쳤으면 서버를 다시 띄운다 (화면 파일은 새로고침만).
-- 화면을 React(`frontend/`)로 옮기는 중 — 기준 문서는 [docs/react.md](docs/react.md). 개발은 `npm run dev`(5173, `/api` 는 8765 로). 서버 요청 · 응답 모델(`src/tap/api/models.py`)을 바꾸면 `npm run gen:api` 로 `src/api/schema.d.ts` 를 다시 만들어 같은 커밋에.
+- 서버는 Python 코드를 시작할 때 읽는다. Python 을 고쳤으면 서버를 다시 띄운다. 화면을 고쳤으면 `npm run build` 뒤 새로고침 (개발 중에는 `npm run dev` 가 바로 반영).
+- 화면은 React(`frontend/`) — 기준 문서는 [docs/react.md](docs/react.md). 개발은 `npm run dev`(5173, `/api` 는 8765 로). 서버 요청 · 응답 모델(`src/tap/api/models.py`)을 바꾸면 `npm run gen:api` 로 `src/api/schema.d.ts` 를 다시 만들어 같은 커밋에.
 
 ## 4. 코드 규칙
 
@@ -70,5 +71,4 @@ cd frontend && npm run test:e2e          # 화면 끝까지 (Playwright, 가짜 
 
 - 실행기(실제 API 호출)와 개발 서버 인증 연결.
 - 내부 명세 · 도메인 문서 반영 — 정답셋의 판단 보류 항목 확인.
-- `web/offline-ui.html` 의 시연 데이터 모드(서버 없이 보는 가짜 데이터) 정리 — 확인용 · 관리자 화면이 같은 함수를 써서 따로 다룬다.
 - 그래프 없는 대상 조회의 점수 개선 ([api-selection-rule.md](docs/api-selection-rule.md#5-기준값과-근거)).

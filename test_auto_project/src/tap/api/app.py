@@ -1,5 +1,6 @@
-"""FastAPI 앱 — 화면(web/)과 API 를 한 서버가 내려준다 (docs/fastapi.md).
+"""FastAPI 앱 — React 화면(frontend/dist)과 API 를 한 서버가 내려준다 (docs/fastapi.md · docs/react.md).
 
+    (cd frontend && npm ci && npm run build)   # 화면을 고쳤을 때 한 번
     .venv/bin/python -m tap.cli serve        → http://127.0.0.1:8765/
 
 경로는 메뉴 이름 기준 — /api/register(시나리오 등록) · /api/inspect(확인용) · /api/run(실행) · /api/history(실행 이력) ·
@@ -16,12 +17,10 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import FileResponse, JSONResponse, Response
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 
 from tap.api import models, services
 from tap.api.routers import admin, common, history, inspect, register, run
-from tap.ui.export import ui_data
 
 
 class JSON(JSONResponse):
@@ -72,9 +71,11 @@ def _openapi(app: FastAPI) -> dict[str, Any]:
     return spec
 
 
-def create_app(root: Path, llm=None, ir_runtime=None) -> FastAPI:
-    """llm · ir_runtime: 가짜 LLM(분석) · 가짜 IR 생성 런타임을 끼울 때 (테스트 · tap.api.fake). 없으면 .env 의 OpenAI."""
+def create_app(root: Path, llm=None, ir_runtime=None, dist: Path | None = None) -> FastAPI:
+    """llm · ir_runtime: 가짜 LLM(분석) · 가짜 IR 생성 런타임을 끼울 때 (테스트 · tap.api.fake). 없으면 .env 의 OpenAI.
+    dist: 빌드한 React 화면 폴더 — 없으면 root/frontend/dist (임시 데이터로 띄울 때는 저장소의 것을 넘긴다)."""
     root = Path(root)
+    dist = Path(dist) if dist else root / "frontend/dist"
     app = FastAPI(title="테스트 데이터 생성기", default_response_class=JSON,
                   docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None)
     app.state.root = root
@@ -109,16 +110,27 @@ def create_app(root: Path, llm=None, ir_runtime=None) -> FastAPI:
     def _unknown(rest: str) -> JSON:
         return JSON({"error": "없는 경로"}, status_code=404)
 
-    @app.get("/tap-data.js", include_in_schema=False)
-    def tap_data() -> Response:
-        """지금 화면용 화면 데이터 — 요청마다 새로 만든다. React 로 다 옮기면 지운다 (JSON 은 /api/common/data)."""
-        raw = "window.TAP_DATA = " + json.dumps(ui_data(root), ensure_ascii=False) + ";\n"
-        return Response(raw, media_type="application/javascript; charset=utf-8", headers={"Cache-Control": "no-store"})
-
-    @app.get("/", include_in_schema=False)
-    def index() -> FileResponse:
-        return FileResponse(root / "web/offline-ui.html")
+    @app.get("/{path:path}", include_in_schema=False)
+    def screen(path: str) -> Response:
+        """React 화면 — 빌드 결과에 있는 파일은 그대로, 나머지 주소(/run · /admin/order …)는 index.html 이 받아 화면이 고른다.
+        assets/ 는 파일 이름에 내용 해시가 붙어 오래 캐시한다. 빌드가 없어도 API 는 뜬다 (테스트)."""
+        index = dist / "index.html"
+        if not index.is_file():
+            return HTMLResponse(NO_BUILD, status_code=503)
+        file = (dist / path).resolve()
+        if path and file.is_file() and file.is_relative_to(dist.resolve()):
+            cache = "public, max-age=31536000, immutable" if path.startswith("assets/") else "no-cache"
+            return FileResponse(file, headers={"Cache-Control": cache})
+        if path.startswith("assets/"):
+            return Response("없는 파일", status_code=404, media_type="text/plain; charset=utf-8")
+        return FileResponse(index, headers={"Cache-Control": "no-cache"})
 
     app.openapi = lambda: _openapi(app)
-    app.mount("/", StaticFiles(directory=root / "web", check_dir=False), name="web")   # 화면 폴더가 없어도 API 는 뜬다 (테스트 · 예전과 같다)
     return app
+
+
+NO_BUILD = """<!doctype html><meta charset="utf-8"><title>테스트 데이터 생성기</title>
+<p>화면이 아직 빌드되지 않았습니다. 저장소에서 한 번 실행하세요:</p>
+<pre>cd frontend &amp;&amp; npm ci &amp;&amp; npm run build</pre>
+<p>API 는 그대로 쓸 수 있습니다 — <a href="/api/docs">/api/docs</a></p>
+"""

@@ -1,6 +1,7 @@
 # React 전환 계획
 
-지금 화면(`web/` — HTML · CSS · 순수 JavaScript 7,100줄)을 React 로 **전부** 옮긴다. 서버는 FastAPI 로 이미 옮겼다 ([fastapi.md](fastapi.md)).
+예전 화면(`web/` — HTML · CSS · 순수 JavaScript 7,100줄)을 React 로 **전부** 옮긴다. 서버는 FastAPI 로 이미 옮겼다 ([fastapi.md](fastapi.md)).
+**2026-11-13 R6 으로 전환을 마쳤다** — `web/` 은 지웠고 서버가 `frontend/dist` 를 내려준다. 아래 '지금'은 전환 전 화면을 말한다.
 작성: 2026-11-12. 이 문서가 전환 작업의 기준이다 — 작업하면서 바뀐 결정은 이 문서를 먼저 고친다.
 
 ## 1. 목적과 범위
@@ -223,4 +224,4 @@ Playwright 는 실제 LLM 없이 돈다 — `npm run test:e2e` 가 서버를 `ta
 | R3. 확인용 | 완료 — 4.2 전부 (`pages/inspect/`, 혜정 IR 영역은 `pages/inspect/ir/`). IR 진행 이벤트 → 로그 행 · STEP 규칙(`irLog.ts`)은 예전 `scenario-ir-draft.js` 에 같은 실제 생성 로그(성공 · 실패)를 흘려 넣어 표 · STEP 이 칸까지 같은지 대조. 트레이스 · 승인본 목록 · 예산 · 실행 기록 응답 모델. vitest 57 · Playwright 7. 화면 점검 3 을 실제 LLM 으로 통과 (콘솔 오류 0) |
 | R4. 관리자 | 완료 — 4.5 중 그래프 편집기를 뺀 전부 (`pages/admin/`). 데이터 조회 8종 중 Canonical Schema · Baseline · Parameter KB · Response Outputs 와 Baseline 카드는 혜정 전처리(`preprocessing-ui.js`)를 옮긴 것. 머리의 전처리 갱신 · 상태 줄(새 API `preprocessing/status`). 화면 데이터 응답 모델 전부. 저장 동작은 Playwright 로 임시 data 에서, 실제 서버에서는 읽기만 (콘솔 오류 0). vitest 65 · Playwright 8 |
 | R5. 그래프 편집기 | 완료 — `pages/admin/graph/` (React Flow). 지금 편집기처럼 상태 · 화살표 · 업무 이름만(노드 흐름) — API 후보 미리보기는 지금 편집기에도 없다(검수 목록은 서버 `graph-review`). 편집 규칙(`editorModel.ts`)은 예전 `graph-editor.js` 와 같은 그래프 3개 · 저장본에서 저장 YAML 과 할 일이 글자까지 같은지 대조. 끌어다 놓기 · 잇기 · 이름 · 저장 · 새로고침 뒤 저장본은 Playwright 로. vitest 77 · Playwright 9 |
-| R6. 바꾸기 | 대기 |
+| R6. 바꾸기 | 완료 (2026-11-13) — FastAPI 가 `frontend/dist` 를 내려준다 (`assets/` 는 오래 캐시, 모르는 주소는 `index.html`, 빌드가 없으면 빌드 명령 안내 · API 는 그대로). `web/` · `/tap-data.js` · `/api/common/data` · `tap.cli ui-data` 삭제. 관리자 쓰기 응답(규칙 · Baseline · 다시 빌드 · 전처리 갱신 · 전처리 Baseline)에서 화면 데이터 `data` 를 뺐다 — 화면은 조각을 다시 읽는다 (전처리 갱신은 상태 줄과 같은 개수 · 경고). node 테스트 4개(전처리 화면)는 `pages/admin/docs/preprocessingDocs.test.tsx` 로, 예전 화면 소스를 읽던 pytest 2개(`test_input_review_ui` · `test_scenario_ir_ui`)는 지움 (같은 규칙은 `test_input_review` · `irLog.test.ts`). 테스트 기본 대기 4초(한꺼번에 돌릴 때 느려서). 5개 메뉴 · 관리자 범위 4개 · 그래프 편집기 · 데이터 조회를 실제 서버(빌드본)로 확인 (콘솔 오류 0). pytest 332 · vitest 81 · Playwright 9 |

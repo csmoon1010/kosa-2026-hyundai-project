@@ -411,6 +411,19 @@ class GraphSaveResult(Doc):
     backup: str | None
 
 
+class RebuildResult(Doc):
+    """화면 규칙 저장 · 삭제 — 다시 빌드한 결과만. 화면 데이터는 GET /api/admin/{part} 로 다시 읽는다."""
+    build: dict[str, Any] = Field(description="빌드 결과 — catalog_version · 개수 …")
+
+
+class BuildAgainResult(RebuildResult):
+    changed: bool = Field(description="카탈로그 버전이 바뀌었는가")
+
+
+class SavedFile(Doc):
+    file: str = Field(description="저장한 파일 — 저장소 기준 경로")
+
+
 class EdgeQuery(Body):
     name: str | None = None
     from_name: str | None = None

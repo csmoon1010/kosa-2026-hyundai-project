@@ -2,7 +2,7 @@ import { useRef, type KeyboardEvent } from 'react';
 
 import styles from './ir.module.css';
 
-/** 두 칸 탭 — 화살표 · Home · End 로 옮긴다 (지금 화면과 같다) */
+/** 두 칸 탭 — 화살표 · Home · End 로 옮긴다 (예전 화면과 같다) */
 export function Tabs<K extends string>({
   label,
   tabs,

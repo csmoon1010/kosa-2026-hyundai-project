@@ -412,7 +412,10 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Refresh Preprocessing */
+    /**
+     * Refresh Preprocessing
+     * @description 전처리 산출물 다시 읽기 (혜정) — 노트북은 실행하지 않는다. 응답은 상태 줄과 같은 개수 · 경고.
+     */
     post: operations['refresh_preprocessing_api_admin_preprocessing_refresh_post'];
     delete?: never;
     options?: never;
@@ -672,26 +675,6 @@ export interface paths {
      * @description fake_llm: 가짜 LLM 으로 띄운 서버 (tap.cli serve --fake-llm) — 화면이 표시한다.
      */
     get: operations['health_api_common_health_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/common/data': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Data
-     * @description 화면 데이터 JSON (React 용). 지금 화면은 /tap-data.js.
-     */
-    get: operations['data_api_common_data_get'];
     put?: never;
     post?: never;
     delete?: never;
@@ -998,6 +981,23 @@ export interface components {
        * @default 0
        */
       time_reserve_used: number;
+    } & {
+      [key: string]: unknown;
+    };
+    /** BuildAgainResult */
+    BuildAgainResult: {
+      /**
+       * Build
+       * @description 빌드 결과 — catalog_version · 개수 …
+       */
+      build: {
+        [key: string]: unknown;
+      };
+      /**
+       * Changed
+       * @description 카탈로그 버전이 바뀌었는가
+       */
+      changed: boolean;
     } & {
       [key: string]: unknown;
     };
@@ -1969,6 +1969,21 @@ export interface components {
       [key: string]: unknown;
     };
     /**
+     * RebuildResult
+     * @description 화면 규칙 저장 · 삭제 — 다시 빌드한 결과만. 화면 데이터는 GET /api/admin/{part} 로 다시 읽는다.
+     */
+    RebuildResult: {
+      /**
+       * Build
+       * @description 빌드 결과 — catalog_version · 개수 …
+       */
+      build: {
+        [key: string]: unknown;
+      };
+    } & {
+      [key: string]: unknown;
+    };
+    /**
      * Reference
      * @description 참조 조회 단계 — 쓰기 단계에 넣을 코드를 이름으로 찾는다 (2026-11-11).
      */
@@ -2316,6 +2331,16 @@ export interface components {
        * @default []
        */
       confirmed: string[];
+    } & {
+      [key: string]: unknown;
+    };
+    /** SavedFile */
+    SavedFile: {
+      /**
+       * File
+       * @description 저장한 파일 — 저장소 기준 경로
+       */
+      file: string;
     } & {
       [key: string]: unknown;
     };
@@ -3459,7 +3484,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['RebuildResult'];
         };
       };
       /** @description Bad Request */
@@ -3490,7 +3515,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['RebuildResult'];
         };
       };
     };
@@ -3534,7 +3559,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['SavedFile'];
         };
       };
       /** @description Bad Request */
@@ -3563,7 +3588,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['BuildAgainResult'];
         };
       };
     };
@@ -3583,7 +3608,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['PreprocessingStatus'];
         };
       };
     };
@@ -3627,7 +3652,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['SavedFile'];
         };
       };
       /** @description Bad Request */
@@ -3870,26 +3895,6 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['Health'];
-        };
-      };
-    };
-  };
-  data_api_common_data_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
         };
       };
     };

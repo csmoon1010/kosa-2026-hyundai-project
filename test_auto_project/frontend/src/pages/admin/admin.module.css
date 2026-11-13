@@ -1,4 +1,4 @@
-/* 관리자 메뉴 — 지금 화면(.scopebar · .admin-grid · .doctile · .rrow · .cf3 · .checks …)과 같은 모양 */
+/* 관리자 메뉴 — 예전 화면(.scopebar · .admin-grid · .doctile · .rrow · .cf3 · .checks …)과 같은 모양 */
 .scopebar {
   display: flex;
   flex-wrap: wrap;

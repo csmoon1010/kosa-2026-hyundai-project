@@ -6,7 +6,7 @@ from tap.graph.build import load_graphs, merge_saved
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# 상태 그래프 만들기 화면이 저장하는 형식 (web/graph-editor.js yaml())
+# 상태 그래프 만들기 화면이 저장하는 형식 (frontend/src/pages/admin/graph/editorModel.ts toYaml())
 DRAFT = '''# 상품판매 그래프 — 화면에서 저장 (승인본 v1)
 version: 1
 graph:

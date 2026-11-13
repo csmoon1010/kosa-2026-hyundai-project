@@ -15,7 +15,6 @@ from typing import Any, Callable
 import yaml
 
 from tap.ir.draft_build import IR_INPUTS
-from tap.ui.export import ui_data, write_ui_data
 from tap.ui.preprocessing import save_preprocessing_baseline
 
 Emit = Callable[[dict[str, Any]], None]
@@ -508,19 +507,19 @@ def ir_log_file(root: Path, name: str) -> Path | None:
 def build_again(root: Path) -> dict[str, Any]:
     before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))
     r = rebuild(root)
-    return {"build": r, "changed": r["catalog_version"] != before.get("catalog_version"), "data": ui_data(root)}
+    return {"build": r, "changed": r["catalog_version"] != before.get("catalog_version")}
 
 
 def refresh_preprocessing(root: Path) -> dict[str, Any]:
-    """노트북은 실행하지 않고 이미 생성된 JSON 을 다시 읽어 정적 화면 데이터에도 반영한다."""
-    write_ui_data(root, root / "web/tap-data.js")
-    return {"data": ui_data(root)}
+    """노트북은 실행하지 않고 이미 생성된 JSON 을 다시 읽는다 — 서버는 요청마다 파일을 읽으므로 따로 둘 것이 없다.
+    응답은 머리 상태 줄과 같은 개수 · 경고 (화면은 전처리 조각을 다시 읽는다)."""
+    return preprocessing_status(root)
 
 
 def save_preprocessing(root: Path, body: dict[str, Any]) -> dict[str, Any]:
     guard_human_values(root, body.get("values"))
     dest = save_preprocessing_baseline(root, body["selected_api_id"], body["values"])
-    return {"file": str(dest.relative_to(root)), "data": ui_data(root)}
+    return {"file": str(dest.relative_to(root))}
 
 
 # ─── 화면 데이터 나누기 · 그래프 매칭 (React 전환 R0, docs/react.md 6절) ─────────────────────

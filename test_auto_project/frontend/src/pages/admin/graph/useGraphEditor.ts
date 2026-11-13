@@ -1,4 +1,4 @@
-// 상태 그래프 편집기 — 데이터 · 저장소를 묶어 동작을 준다 (web/graph-editor.js 의 addNode · addEdge · removeNode · next · 저장 …)
+// 상태 그래프 편집기 — 데이터 · 저장소를 묶어 동작을 준다 (예전 web/graph-editor.js 의 addNode · addEdge · removeNode · next · 저장 …)
 import { useEffect } from 'react';
 
 import { put } from '../../../api/client';

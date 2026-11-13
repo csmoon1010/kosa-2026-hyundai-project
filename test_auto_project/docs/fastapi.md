@@ -1,6 +1,7 @@
 # FastAPI 전환 계획
 
 예전 서버(`src/tap/ui/serve.py` — 표준 라이브러리 `http.server`)를 FastAPI 로 옮겼다 (2026-11-12, 0~4단계 완료 — 8절). 화면을 React 로 옮기기 전 단계다.
+화면은 그 뒤 React 로 옮겼다 ([react.md](react.md), 2026-11-13) — 지금 서버는 `web/` 대신 `frontend/dist` 를 내려준다 (3.6). 아래 '지금 경로' · `web/` 은 전환 당시 기준이다.
 작성: 2026-11-12. 이 문서가 전환 작업의 기준이다 — 작업하면서 바뀐 결정은 이 문서를 먼저 고친다.
 
 ## 1. 목적과 범위
@@ -110,22 +111,23 @@ src/tap/api/
 | 동사 · 경로 | 지금 경로 | 하는 일 | 요청 → 응답 |
 |---|---|---|---|
 | `PUT /api/admin/graphs/{graph_id}` | `POST /api/graph/save` | 상태 그래프 저장 — 노드 흐름만, 기존 파일 위에 합침, 이전 파일은 `data/out/graph_history/` | `{yaml}` → `{file, kept, backup}` |
-| `POST /api/admin/rules` | `POST /api/rules` | 화면 보정 규칙 추가 → `rules.ui.yaml` + 다시 빌드 | `{place, doc, item, dom, target, body}` → `{build, data}` |
-| `DELETE /api/admin/rules/{id}` | `POST /api/rules/delete` | 화면 규칙 삭제 + 다시 빌드 | → `{build, data}` |
-| `PUT /api/admin/baselines` | `POST /api/baseline` | Baseline Request 저장 (`data/baselines/`) | `{api_id, body}` → `{file, data}` |
-| `POST /api/admin/build` | `POST /api/build` | 명세 · 설정 다시 읽어 빌드 | → `{build, changed, data}` |
-| `POST /api/admin/preprocessing/refresh` | `POST /api/preprocessing/refresh` | 전처리 JSON 다시 읽기 + `web/tap-data.js` 갱신 | → `{data}` |
+| `POST /api/admin/rules` | `POST /api/rules` | 화면 보정 규칙 추가 → `rules.ui.yaml` + 다시 빌드 | `{place, doc, item, dom, target, body}` → `{build}` |
+| `DELETE /api/admin/rules/{id}` | `POST /api/rules/delete` | 화면 규칙 삭제 + 다시 빌드 | → `{build}` |
+| `PUT /api/admin/baselines` | `POST /api/baseline` | Baseline Request 저장 (`data/baselines/`) | `{api_id, body}` → `{file}` |
+| `POST /api/admin/build` | `POST /api/build` | 명세 · 설정 다시 읽어 빌드 | → `{build, changed}` |
+| `POST /api/admin/preprocessing/refresh` | `POST /api/preprocessing/refresh` | 전처리 JSON 다시 읽기 (노트북은 실행하지 않음) | → `{counts, warnings, loaded_at}` |
 | `GET /api/admin/preprocessing/status` | (React R4 에서 추가) | 머리의 전처리 상태 줄 — 개수 · 경고만 (산출물 본문은 `GET /api/admin/preprocessing`, 약 3MB) | → `{counts, warnings, loaded_at}` |
-| `PUT /api/admin/preprocessing/baselines` | `POST /api/preprocessing/baseline` | 전처리 Baseline 등록 — **값에서 지시문 검사** | `{selected_api_id, values}` → `{file, data}` |
+| `PUT /api/admin/preprocessing/baselines` | `POST /api/preprocessing/baseline` | 전처리 Baseline 등록 — **값에서 지시문 검사** | `{selected_api_id, values}` → `{file}` |
 
 ### 3.6 공통 — `/api/common` · 정적 파일
 
+관리자 쓰기 응답(3.5)에 붙던 화면 데이터 전체(`data`)는 React R6 에서 뺐다 — 화면은 바뀐 조각을 `GET /api/admin/{조각}` 으로 다시 읽는다.
+
 | 동사 · 경로 | 지금 경로 | 하는 일 |
 |---|---|---|
-| `GET /api/common/health` | `GET /api/health` | 서버 모드 확인 → `{ok:true}` |
-| `GET /api/common/data` | (새로 — React 용) | 화면 데이터 JSON (`ui_data` 그대로) |
-| `GET /tap-data.js` | 같음 | 지금 화면용 — `window.TAP_DATA = …` 를 요청마다 만든다. **React 로 다 옮기면 지운다** |
-| `GET /` · `GET /<파일>` | 같음 | `web/` 정적 파일. `/` 는 `offline-ui.html` |
+| `GET /api/common/health` | `GET /api/health` | 서버 모드 확인 → `{ok:true, fake_llm}` |
+| `GET /<주소>` (`/api` 밖) | (React R6) | 화면 — `frontend/dist` 에 있는 파일은 그대로, 나머지(`/run` · `/admin/order` …)는 `index.html`. 빌드가 없으면 503 + 빌드 명령 안내 |
+| ~~`GET /api/common/data`~~ · ~~`GET /tap-data.js`~~ | | 예전 화면용 화면 데이터 — React R6 에서 지웠다 (조각 API 로 대체) |
 
 ## 4. 공통 규칙
 
@@ -134,7 +136,7 @@ src/tap/api/
   - IR 생성 오류는 `log_file` · `log_url` 을 같이 돌려준다. 승인 거부는 `refused: true` 를 붙인다.
 - **진행 스트림(NDJSON)**: `Accept: application/x-ndjson` 일 때만. 한 줄에 JSON 하나, 이벤트가 생길 때마다 바로 보낸다 (모아서 보내지 않는다).
   헤더 `Content-Type: application/x-ndjson; charset=utf-8` · `Cache-Control: no-store` · `X-Accel-Buffering: no`. 화면이 연결을 끊어도 서버 작업은 조용히 끝낸다.
-- **화면 파일 캐시**: `web/` 파일 응답에 `Cache-Control: no-cache` (지금과 같다 — 고친 화면이 새로고침으로 바로 보이게).
+- **화면 파일 캐시**: `index.html` 등은 `Cache-Control: no-cache` (새로 빌드한 화면이 새로고침으로 바로 보이게), 이름에 내용 해시가 붙은 `assets/` 는 `public, max-age=31536000, immutable`.
 - **인증 없음 · 로컬 전용**: 기본 `127.0.0.1`. CORS 는 열지 않는다 — React 개발 서버는 다음 단계에서 프록시로 붙인다.
 - **경로 이름**: 메뉴 영문 이름(`register` · `inspect` · `run` · `history` · `admin` · `common`) 아래, 자원은 복수형 명사(`scenarios` · `rules` · `graphs` …), 동작은 동사(`analyze` · `approve` · `dry-run` · `build` · `refresh`). 단어 구분은 하이픈.
 - **여러 메뉴가 같이 쓰는 API 는 주로 쓰는 메뉴 아래 하나만** 둔다 (분석 · 등록 시나리오 목록 → `register`).
@@ -221,4 +223,4 @@ src/tap/api/
 | 2. 화면 경로 수정 | 완료 — 화면 점검 통과 (스트림: 요청 이해 0.5초 · 경로 4.2초 · API 7.0초에 각각 도착) |
 | 3. 테스트 전환 | 완료 — `tests/app_server.py` (FastAPI 앱을 실제 포트로), pytest 331 · node 통과 |
 | 4. 정리 | 완료 — `ui/serve.py` 삭제, 예전 경로 문자열 0건 (코드 · 테스트 · 문서), README · AGENTS · architecture · scenario-ir 문서 수정 |
-| 5. React 준비 | 대기 |
+| 5. React 준비 | 완료 — React 전환 R0 에서 ([react.md](react.md) 10절). R6 에서 화면 데이터 API 정리 (3.6) |

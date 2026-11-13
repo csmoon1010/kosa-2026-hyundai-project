@@ -1,4 +1,4 @@
-/* 상태 그래프 만들기 — 지금 편집기(web/graph-editor.js 의 .ge …)와 같은 모양 */
+/* 상태 그래프 만들기 — 예전 편집기(web/graph-editor.js 의 .ge …)와 같은 모양 */
 .ge {
   display: grid;
   gap: 12px;

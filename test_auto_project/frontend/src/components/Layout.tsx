@@ -8,7 +8,7 @@ import styles from './Layout.module.css';
 import { PageActionsSlot } from './pageActionsSlot';
 import { Pill } from './Pill';
 
-/** 지금 화면의 머리 오른쪽 배지 — 서버(FastAPI)와 연결됐는지, 가짜 LLM 으로 띄운 서버인지 */
+/** 예전 화면의 머리 오른쪽 배지 — 서버(FastAPI)와 연결됐는지, 가짜 LLM 으로 띄운 서버인지 */
 function ServerBadge() {
   const health = useHealth();
   if (health.isPending) return null;

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components -- 문서 본문을 만드는 함수 모듈 — 화면 컴포넌트를 내보내지 않는다 (안의 작은 부품은 이 파일에서만 쓴다) */
-// 데이터 조회 — 전처리 산출물 4종 (혜정, web/preprocessing-ui.js 의 REAL_DOCS · 필터를 그대로)
+// 데이터 조회 — 전처리 산출물 4종 (혜정, 예전 web/preprocessing-ui.js 의 REAL_DOCS · 필터를 그대로)
 // Canonical Schema · Baseline Request · Parameter KB · Response Outputs — 경로 · 타입 · 승인 상태를 유지한 조회.
 import { Fragment, type ReactNode } from 'react';
 

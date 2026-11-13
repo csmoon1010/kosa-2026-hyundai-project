@@ -1,4 +1,4 @@
-// 시나리오 등록 — 화면이 보여 줄 것을 계산하는 순수 함수 (지금 web/scenario-register.js 와 같은 규칙).
+// 시나리오 등록 — 화면이 보여 줄 것을 계산하는 순수 함수 (예전 web/scenario-register.js 와 같은 규칙).
 import type { Schemas } from '../../api/client';
 import { irStepsById, type Ir, type IrStep } from '../../api/ir';
 import type { StepState } from '../../components/Stepper';

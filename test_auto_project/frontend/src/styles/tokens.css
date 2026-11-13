@@ -1,4 +1,4 @@
-/* 디자인 토큰 — 지금 화면(web/offline-ui.html :root) 그대로. 색은 여기 변수만 쓴다 (docs/react.md 5절). */
+/* 디자인 토큰 — 예전 화면(web/offline-ui.html :root) 그대로. 색은 여기 변수만 쓴다 (docs/react.md 5절). */
 :root {
   --bg: #f4f6fa;
   --panel: #ffffff;

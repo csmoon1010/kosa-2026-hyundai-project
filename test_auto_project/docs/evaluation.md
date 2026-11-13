@@ -66,10 +66,10 @@
 
 ```bash
 .venv/bin/python -m pytest -q        # Python — LLM · 네트워크 없이 (LLM 은 고정 응답)
-node --test tests/*.cjs              # 화면 스크립트
+cd frontend && npm test              # 화면 (Vitest) · npm run test:e2e (Playwright, 가짜 LLM 서버)
 ```
 
 - 단계별: ①(`test_intent`) · ②(`test_paths` · `test_graph_plan`) · ③(`test_select` · `test_match` · `test_selectors`) · 게이트(`test_gate`)
 - IR 생성: `test_scenario_ir_*` · `test_ir_dependencies` · `test_context_compression` · `test_stop_conditions` · `test_input_review`
-- 서버 · 화면: `test_ui` (등록 · 실행 흐름 포함) · `test_rules` · `*.test.cjs`
+- 서버: `test_ui` (등록 · 실행 흐름 · 화면 내려주기 포함) · `test_rules` — 화면: `frontend/src/**/*.test.ts(x)` · `frontend/e2e/`
 - 평가: `test_eval_stages`

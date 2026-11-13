@@ -27,7 +27,7 @@
 
 ## 화면
 
-`tap.cli serve` 로 띄운 로컬 서버에서 씁니다.
+`tap.cli serve` 로 띄운 로컬 서버에서 씁니다. 화면은 React(`frontend/`)로 만들어 빌드한 것을 서버가 내려줍니다.
 
 | 메뉴 | 하는 일 |
 |---|---|
@@ -44,10 +44,11 @@ Python 3.10, [uv](https://docs.astral.sh/uv/) 를 씁니다.
 ```bash
 uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"
 cp .env.example .env            # OPENAI_API_KEY · OPENAI_DEFAULT_MODEL · OPENAI_EMBEDDING_MODEL 을 채운다
+(cd frontend && npm ci && npm run build)   # 화면 빌드 → frontend/dist (Node 20 이상, 화면을 고쳤을 때마다)
 .venv/bin/python -m tap.cli serve      # → http://127.0.0.1:8765/
 ```
 
-WSL 밖 브라우저에서 열리지 않으면 `--host 0.0.0.0` 을 붙입니다. 명세를 바꿨거나 `data/out/` 이 없으면 먼저 `tap.cli build` 를 실행합니다.
+화면을 빌드하지 않고 띄우면 첫 화면에 빌드 명령을 안내합니다 (API 는 그대로). WSL 밖 브라우저에서 열리지 않으면 `--host 0.0.0.0` 을 붙입니다. 명세를 바꿨거나 `data/out/` 이 없으면 먼저 `tap.cli build` 를 실행합니다.
 
 ### 명령
 
@@ -59,8 +60,9 @@ WSL 밖 브라우저에서 열리지 않으면 `--host 0.0.0.0` 을 붙입니다
 .venv/bin/python -m tap.cli run    "…" --approve [--steps 1-0] [--confirm 1-1]   # 승인 → 실행 확인 → 드라이런
 .venv/bin/python -m tap.cli eval-stages --runs 3   # 단계별 평가 (docs/evaluation.md)
 .venv/bin/python -m tap.cli serve        # 화면 + 실제 계산 (FastAPI · API 목록 http://127.0.0.1:8765/api/docs)
-.venv/bin/python -m pytest -q && node --test tests/*.cjs           # 테스트 (LLM · 네트워크 없이)
-cd frontend && npm ci && npm run dev     # React 화면(옮기는 중, docs/react.md) → http://127.0.0.1:5173/ (/api 는 8765 서버로)
+.venv/bin/python -m pytest -q          # 서버 테스트 (LLM · 네트워크 없이)
+cd frontend && npm test                  # 화면 테스트 (Vitest) · npm run test:e2e (Playwright, 가짜 LLM 서버)
+cd frontend && npm run dev               # 화면 개발 (docs/react.md) → http://127.0.0.1:5173/ (/api 는 8765 서버로)
 ```
 
 ## 폴더
@@ -78,9 +80,10 @@ cd frontend && npm ci && npm run dev     # React 화면(옮기는 중, docs/reac
 │   ├── trace.py                   LLM 호출 기록 · 예산 · 중지 조건
 │   ├── eval_stages.py             단계별 평가
 │   └── cli.py
-├── frontend/                      React 화면 (옮기는 중 — Vite · TypeScript, docs/react.md). 다 옮기면 web/ 을 대신한다
-├── web/                           화면 (서버가 그대로 내려준다) — offline-ui.html (본체) · scenario-register.js (등록) · scenario-run.js (실행) ·
-│                                  graph-editor.js (상태 그래프) · scenario-ir-draft.js (혜정 IR 화면) · preprocessing-ui.js
+├── frontend/                      화면 — React · Vite · TypeScript (docs/react.md). 빌드 결과 frontend/dist 를 서버가 내려준다
+│   ├── src/pages/                 메뉴별 화면 — register · inspect(+ 혜정 IR 영역) · run · history · admin(+ 상태 그래프 편집기 · 전처리 산출물)
+│   ├── src/api/                   서버 호출 · 진행 스트림 · 타입(schema.d.ts — /api/openapi.json 에서 생성)
+│   └── e2e/                       Playwright (가짜 LLM 서버를 직접 띄운다)
 ├── data/
 │   ├── specs/                     입력 명세 (HSHOP OPEN API, 공개 OpenAPI 3.0.1 — 내부 명세로 바뀔 예정)
 │   ├── config/                    사람이 고치는 설정 — 도메인 · 연결 · 보정(overrides) · 권한 등급 · LLM 예산
@@ -91,12 +94,12 @@ cd frontend && npm ci && npm run dev     # React 화면(옮기는 중, docs/reac
 │   └── out/                       산출물 — API 문서 · parameters/(Parameter KB · Baseline · 스키마 · 응답 출력 · 벡터 인덱스)
 ├── docs/                          구조 · 선택 규칙 · 평가 · scenario-ir*(IR 생성 설계 · 검증)
 ├── scripts/                       IR 생성 압축 평가 스크립트 (실제 API 호출 — 비용 있음)
-├── tests/                         pytest · node 테스트, fixtures/(IR 입력 기준 예제)
+├── tests/                         pytest, fixtures/(IR 입력 기준 예제) — 화면 테스트는 frontend/ 안 (Vitest · Playwright)
 └── pyproject.toml                 패키지 · 의존성(버전 고정) · pytest 설정
 ```
 
 실행할 때 생기는 파일은 저장소에 넣지 않습니다 — `data/registered/`(등록) · `data/runs/`(실행 이력) · `data/approved/`(확인용 승인 기록) ·
-`data/ir_inputs/`(IR 입력 승인본 · 검토 초안) · `data/out/traces/` · IR 초안 · 로그 · `web/tap-data.js`(화면 데이터, 서버가 매번 만든다).
+`data/ir_inputs/`(IR 입력 승인본 · 검토 초안) · `data/out/traces/` · IR 초안 · 로그 · `frontend/dist`(화면 빌드 결과).
 
 ## 한계
 

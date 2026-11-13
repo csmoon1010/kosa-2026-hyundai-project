@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components -- 문서 본문을 만드는 함수 모듈 — 화면 컴포넌트를 내보내지 않는다 (안의 작은 부품은 이 파일에서만 쓴다) */
-// 데이터 조회 — API Catalog · API MetaData · Tool Registry · State Vocabulary (지금 화면의 REAL_DOCS 4종)
+// 데이터 조회 — API Catalog · API MetaData · Tool Registry · State Vocabulary (예전 화면의 REAL_DOCS 4종)
 import type { ReactNode } from 'react';
 
 import { domName, shortApi } from '../../../lib/format';

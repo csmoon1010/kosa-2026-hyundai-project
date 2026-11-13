@@ -1,4 +1,4 @@
-// 혜정 IR 영역 — 생성 진행 이벤트를 로그 행 · STEP 상태로 쌓는 규칙 (web/scenario-ir-draft.js 의 logEvent · updateSteps ·
+// 혜정 IR 영역 — 생성 진행 이벤트를 로그 행 · STEP 상태로 쌓는 규칙 (예전 web/scenario-ir-draft.js 의 logEvent · updateSteps ·
 // ensureStep · progress · renderRow 를 그대로). 화면 그리기와 나눠 순수 함수로 — 같은 이벤트면 같은 결과.
 import type { Schemas } from '../../../api/client';
 

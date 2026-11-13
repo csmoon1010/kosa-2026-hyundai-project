@@ -1,4 +1,4 @@
-// 규칙 입력 — 저장 대상 · 항목 · 대상 · 검증 (지금 화면의 RULE_ITEMS · ALLOWED · targetsFor · validateRuleX, 실제 데이터 모드 값)
+// 규칙 입력 — 저장 대상 · 항목 · 대상 · 검증 (예전 화면의 RULE_ITEMS · ALLOWED · targetsFor · validateRuleX, 실제 데이터 모드 값)
 import type { AdminData, Rule } from '../adminData';
 import { apiLabel } from '../adminData';
 import type { Check } from '../parts';

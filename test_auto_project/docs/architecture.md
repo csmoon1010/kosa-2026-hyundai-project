@@ -102,6 +102,7 @@ LLM(Structured Output)이 요청을 업무 목록(TaskPlan)으로 나눈다.
 ## 서버 API
 
 FastAPI (`src/tap/api/`) — 경로는 메뉴 이름 기준. 요청 · 응답 상세와 작업 기준은 [fastapi.md](fastapi.md), 서버를 띄우면 `/api/docs` 에서 모두 볼 수 있다.
+화면은 React(`frontend/`, [react.md](react.md)) — 서버가 빌드 결과 `frontend/dist` 를 내려주고, `/api` 밖의 모르는 주소(`/run` · `/admin/order` …)는 `index.html` 이 받는다.
 
 | 메뉴 | API | 하는 일 |
 |---|---|---|
@@ -114,9 +115,10 @@ FastAPI (`src/tap/api/`) — 경로는 메뉴 이름 기준. 요청 · 응답 �
 | | `GET · POST /api/inspect/ir/reviews/…` | IR 입력 검토 (API 전용, [scenario-ir-input-review.md](scenario-ir-input-review.md)) |
 | 시나리오 실행 | `POST /api/run/dry-run` | 실행 확인 → 드라이런 → 실행 이력 |
 | 실행 이력 | `GET /api/history/runs` | 실행 이력 |
-| 관리자 | `PUT /api/admin/graphs/{id}` · `POST /api/admin/rules` · `DELETE /api/admin/rules/{id}` · `PUT /api/admin/baselines` · `POST /api/admin/build` | 그래프 · 보정 규칙 · Baseline · 다시 빌드 |
+| 관리자 | `GET /api/admin/{조각}` (catalog · metadata · operations · graphs · codes · rules · baselines · review · environment · preprocessing) · `GET /api/admin/graph-review` · `POST /api/admin/graphs/match` | 화면 데이터를 조각으로 · 검수 목록의 그래프 부분 · 그래프 화살표의 API 후보 |
+| | `PUT /api/admin/graphs/{id}` · `POST /api/admin/rules` · `DELETE /api/admin/rules/{id}` · `PUT /api/admin/baselines` · `POST /api/admin/build` | 그래프 · 보정 규칙 · Baseline · 다시 빌드 (응답은 결과만 — 화면은 바뀐 조각을 다시 읽는다) |
 | | `POST /api/admin/preprocessing/refresh` · `PUT /api/admin/preprocessing/baselines` · `GET /api/admin/preprocessing/status` | 전처리 산출물 다시 읽기 · 전처리 Baseline 등록 · 머리 상태 줄(개수 · 경고) |
-| 공통 | `GET /api/common/health` · `GET /api/common/data` · `GET /tap-data.js` | 서버 확인 · 화면 데이터 JSON · 지금 화면용 화면 데이터 |
+| 공통 | `GET /api/common/health` | 서버 확인 (`fake_llm` — 가짜 LLM 으로 띄운 서버인지) |
 
 ## 저장 파일
 
@@ -126,6 +128,6 @@ FastAPI (`src/tap/api/`) — 경로는 메뉴 이름 기준. 요청 · 응답 �
 | `data/runs/` | 실행 이력 | 넣지 않음 |
 | `data/approved/` | 확인용 화면 승인 기록 | 넣지 않음 |
 | `data/ir_inputs/` | IR 생성 입력 — 승인본 `tdg-*.json` · 검토 초안 `review-*.json` | 넣지 않음 |
-| `web/tap-data.js` | 화면 데이터 (서버가 요청마다 만든다. 서버 없이 열 때는 `tap.cli ui-data`) | 넣지 않음 |
+| `frontend/dist/` | 화면 빌드 결과 (`npm run build`) | 넣지 않음 |
 | `data/out/traces/` · `scenario_ir_drafts/` · `scenario_ir_logs/` | 트레이스 · IR · 생성 로그 | 넣지 않음 |
 | `data/config/rules.ui.yaml` | 화면에서 넣은 보정 규칙 | 환경마다 다름 |

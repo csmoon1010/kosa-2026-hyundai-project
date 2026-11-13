@@ -13,7 +13,7 @@ import { RunHistory } from './RunHistory';
 import { irRunsKey } from './runs';
 import { StepSection } from './StepSection';
 
-/** 혜정 IR 영역 — 저장된 승인본으로 IR 초안 생성 · 진행 로그 · STEP 상세 · 누적 실행 기록 (web/scenario-ir-draft.js) */
+/** 혜정 IR 영역 — 저장된 승인본으로 IR 초안 생성 · 진행 로그 · STEP 상세 · 누적 실행 기록 (예전 web/scenario-ir-draft.js) */
 export function IrArea() {
   const s = useStore(irStore);
   const now = useNow(s.busy);

@@ -1,7 +1,7 @@
 // 확인용 화면의 상태 알약 색 · 시간 표시 — 분석 카드 · 승인 게이트 공통
 import { Pill, type Tone } from '../../components/Pill';
 
-// 상태 알약 색 — 지금 화면의 AG_SEL · AG_FINAL (st-ok → good, st-rb → signal, st-rj → muted)
+// 상태 알약 색 — 예전 화면의 AG_SEL · AG_FINAL (st-ok → good, st-rb → signal, st-rj → muted)
 export const SEL_TONE: Record<string, Tone> = {
   고정: 'good',
   선택: 'good',

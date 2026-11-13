@@ -49,14 +49,18 @@ def meta_of(data, api):
 
 def test_server_rule_saves_rebuilds_and_deletes(server):  # noqa: F811
     base, root = server
+    # 쓰기 응답은 빌드 결과만 — 화면은 메타데이터 · 규칙 조각을 다시 읽는다 (R6)
+    read = lambda part: json.loads(call(base + "/api/admin/" + part))
     r = json.loads(call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "memo", "dom": "goods", "target": ITEM, "body": "단건 등록 전용"}))
-    assert meta_of(r["data"], ITEM)["memo"] == "단건 등록 전용" and r["data"]["rules"][0]["by"] == "화면"
+    assert sorted(r) == ["build"] and r["build"]["catalog_version"]
+    assert meta_of(read("metadata"), ITEM)["memo"] == "단건 등록 전용" and read("rules")["rules"][0]["by"] == "화면"
     assert "단건 등록 전용" in (root / "data/config/rules.ui.yaml").read_text(encoding="utf-8")
-    r = json.loads(call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "procGb: PB4 테스트취소"}))
-    assert [v["value"] for v in meta_of(r["data"], BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3", "PB4"]
-    rid = r["data"]["rules"][-1]["id"]
+    call(base + "/api/admin/rules", {"place": "ov", "doc": "meta", "item": "sel", "dom": "order", "target": BACK, "body": "procGb: PB4 테스트취소"})
+    assert [v["value"] for v in meta_of(read("metadata"), BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3", "PB4"]
+    rid = read("rules")["rules"][-1]["id"]
     r = json.loads(call(base + f"/api/admin/rules/{rid}", method="DELETE"))
-    assert [v["value"] for v in meta_of(r["data"], BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3"]
+    assert sorted(r) == ["build"]
+    assert [v["value"] for v in meta_of(read("metadata"), BACK)["selectors"][0]["values"]] == ["PB1", "PB2", "PB3"]
 
 
 def test_server_rejects_bad_rule_and_keeps_file(server):  # noqa: F811
@@ -70,7 +74,8 @@ def test_server_rejects_bad_rule_and_keeps_file(server):  # noqa: F811
 def test_server_baseline(server):  # noqa: F811
     base, root = server
     r = json.loads(call(base + "/api/admin/baselines", {"api_id": BACK, "body": {"procGb": "PB1", "ordNo": "20240101000001"}}, "PUT"))
-    assert r["data"]["baselines"][BACK]["body"]["procGb"] == "PB1" and (root / r["file"]).exists()
+    assert sorted(r) == ["file"] and (root / r["file"]).exists()
+    assert json.loads(call(base + "/api/admin/baselines"))["baselines"][BACK]["body"]["procGb"] == "PB1"
     with pytest.raises(urllib.error.HTTPError) as e:
         call(base + "/api/admin/baselines", {"api_id": BACK, "body": {"noSuch": "1"}}, "PUT")
     assert e.value.code == 400 and "noSuch" in json.loads(e.value.read())["error"]
@@ -83,7 +88,7 @@ def test_server_build(server):  # noqa: F811
     before = json.loads((root / "data/out/api_catalog.json").read_text(encoding="utf-8"))["catalog_version"]
     r = json.loads(call(base + "/api/admin/build", {}))
     now = r["build"]["catalog_version"]
-    assert r["changed"] == (now != before) and r["data"]["build"]["catalog_version"] == now
+    assert r["changed"] == (now != before) and json.loads(call(base + "/api/admin/environment"))["build"]["catalog_version"] == now
     again = json.loads(call(base + "/api/admin/build", {}))                                  # 두 번째는 바뀐 것이 없다
     assert again["changed"] is False and again["build"]["catalog_version"] == now
 

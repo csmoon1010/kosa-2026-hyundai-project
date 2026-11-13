@@ -43,7 +43,7 @@ export function RuleCard({ a, place, dom }: { a: AdminData; place: Place; dom: s
   const [busy, setBusy] = useState(false);
   const [history, setHistory] = useState(false);
 
-  // 고른 값이 목록에 없으면 첫 항목 (지금 화면처럼)
+  // 고른 값이 목록에 없으면 첫 항목 (예전 화면처럼)
   const items = RULE_ITEMS[doc];
   const item = items.some((x) => x[0] === itemPick) ? itemPick : items[0]![0];
   const targets = targetsFor(a, place, dom, doc, item);

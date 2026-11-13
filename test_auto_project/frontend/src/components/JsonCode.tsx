@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import styles from './JsonCode.module.css';
 
-/** 값을 JSON 2칸 들여쓰기로 — 키 · 문자열 · true/false/null 에 색 (지금 화면의 beautify). 문자열로 온 JSON 은 풀어서 */
+/** 값을 JSON 2칸 들여쓰기로 — 키 · 문자열 · true/false/null 에 색 (예전 화면의 beautify). 문자열로 온 JSON 은 풀어서 */
 export function JsonCode({ value }: { value: unknown }) {
   let shown = value;
   if (typeof value === 'string') {

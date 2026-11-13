@@ -41,9 +41,8 @@ JSON 내부의 `document_id`(Canonical은 `documentId`)와 `api_id`(`apiId`)를 
   등록 검증은 경로·타입·enum을 확인하며 실제 API 호출 성공을 검증하지 않는다.
 
 노트북에서 산출물을 생성한 뒤, 서버 화면 상단의 **전처리 산출물 갱신**을 누른다.
-갱신은 JSON을 다시 읽고 `web/tap-data.js`도 갱신한다. 서버 소스 변경을 반영하려면
-실행 중인 `tap.cli serve`를 재시작한다. 정적 화면의 번들만 갱신할 때는
-`.venv/bin/python -m tap.cli ui-data`를 실행한다.
+갱신은 JSON을 다시 읽어 화면의 전처리 조각(`GET /api/admin/preprocessing`)과 상태 줄을 새로 받는다.
+서버 소스 변경을 반영하려면 실행 중인 `tap.cli serve`를 재시작한다.
 
 ## Scenario IR 초안 생성
 

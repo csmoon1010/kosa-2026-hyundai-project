@@ -1,4 +1,4 @@
-// 관리자 화면이 같이 쓰는 데이터와 도우미 — 지금 화면의 realMeta · realGraphs · graphsOf · opsOf · apiLabel
+// 관리자 화면이 같이 쓰는 데이터와 도우미 — 예전 화면의 realMeta · realGraphs · graphsOf · opsOf · apiLabel
 import type { Schemas } from '../../api/client';
 import {
   useBaselines,

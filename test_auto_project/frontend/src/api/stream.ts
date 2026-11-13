@@ -1,6 +1,6 @@
 // 진행 스트림(NDJSON) — 서버가 한 줄씩 보내는 진행 이벤트를 받는다 (docs/react.md 8.1, 서버는 tap/api/streaming.py).
 //
-// - 작업 상태는 화면(컴포넌트) 밖에 이름(key)별로 둔다 → 다른 메뉴로 갔다 와도 진행이 이어진다 (지금 화면과 같다).
+// - 작업 상태는 화면(컴포넌트) 밖에 이름(key)별로 둔다 → 다른 메뉴로 갔다 와도 진행이 이어진다 (예전 화면과 같다).
 // - 연결이 끊기면 받은 데까지의 줄은 그대로 두고 status 'error'.
 // - 진행 중에는 새로고침 · 창 닫기를 경고한다.
 import { useCallback, useEffect, useSyncExternalStore } from 'react';

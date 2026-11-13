@@ -5,10 +5,9 @@ from fastapi import APIRouter, Request
 
 from tap.api import services
 from tap.api.deps import dump, state
-from tap.api.models import (DATA_PART_MODELS, BaselineRequest, GraphMatchRequest, GraphMatchResult, GraphReviewResult,
-                            GraphSaveRequest, GraphSaveResult, PreprocessingBaselineRequest, PreprocessingStatus, RuleRequest,
-                            doc)
-from tap.ui.export import ui_data
+from tap.api.models import (DATA_PART_MODELS, BaselineRequest, BuildAgainResult, GraphMatchRequest, GraphMatchResult,
+                            GraphReviewResult, GraphSaveRequest, GraphSaveResult, PreprocessingBaselineRequest,
+                            PreprocessingStatus, RebuildResult, RuleRequest, SavedFile, doc)
 
 router = APIRouter(prefix="/api/admin", tags=["관리자 메뉴"])
 
@@ -19,33 +18,34 @@ def save_graph(request: Request, graph_id: str, req: GraphSaveRequest):
     return services.save_graph(state(request).root, graph_id, req.yaml)
 
 
-@router.post("/rules", responses=doc(None, 400))
+# 쓰기 응답에는 화면 데이터를 싣지 않는다 — 화면은 바뀐 조각을 GET /api/admin/{part} 로 다시 읽는다 (2026-11-13, R6)
+
+@router.post("/rules", responses=doc(RebuildResult, 400))
 def add_rule(request: Request, req: RuleRequest | None = None):
     """화면 보정 규칙 → data/config/rules.ui.yaml + 다시 빌드. 잘못된 규칙이면 400 (파일은 되돌림)."""
-    root = state(request).root
-    return {"build": services.save_rule(root, dump(req)), "data": ui_data(root)}
+    return {"build": services.save_rule(state(request).root, dump(req))}
 
 
-@router.delete("/rules/{rule_id}")
+@router.delete("/rules/{rule_id}", responses=doc(RebuildResult))
 def delete_rule(request: Request, rule_id: int):
-    root = state(request).root
-    return {"build": services.delete_rule(root, rule_id), "data": ui_data(root)}
+    return {"build": services.delete_rule(state(request).root, rule_id)}
 
 
-@router.put("/baselines", responses=doc(None, 400))
+@router.put("/baselines", responses=doc(SavedFile, 400))
 def save_baseline(request: Request, req: BaselineRequest):
     root = state(request).root
     dest = services.save_baseline(root, req.api_id, req.body)
-    return {"file": str(dest.relative_to(root)), "data": ui_data(root)}
+    return {"file": str(dest.relative_to(root))}
 
 
-@router.post("/build")
+@router.post("/build", responses=doc(BuildAgainResult))
 def build(request: Request):
     return services.build_again(state(request).root)
 
 
-@router.post("/preprocessing/refresh")
+@router.post("/preprocessing/refresh", responses=doc(PreprocessingStatus))
 def refresh_preprocessing(request: Request):
+    """전처리 산출물 다시 읽기 (혜정) — 노트북은 실행하지 않는다. 응답은 상태 줄과 같은 개수 · 경고."""
     return services.refresh_preprocessing(state(request).root)
 
 
@@ -55,7 +55,7 @@ def preprocessing_status(request: Request):
     return services.preprocessing_status(state(request).root)
 
 
-@router.put("/preprocessing/baselines", responses=doc(None, 400))
+@router.put("/preprocessing/baselines", responses=doc(SavedFile, 400))
 def save_preprocessing(request: Request, req: PreprocessingBaselineRequest):
     """전처리 Baseline 등록 — 값에서 지시문 검사."""
     return services.save_preprocessing(state(request).root, dump(req))

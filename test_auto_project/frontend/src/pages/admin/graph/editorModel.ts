@@ -1,4 +1,4 @@
-// 상태 그래프 만들기 — 편집 규칙 (web/graph-editor.js 의 guessField · initial · CODES · issues · search · yaml … 를 그대로).
+// 상태 그래프 만들기 — 편집 규칙 (예전 web/graph-editor.js 의 guessField · initial · CODES · issues · search · yaml … 를 그대로).
 // 업무 담당자는 상태 · 화살표 · 업무 이름만 정한다 (노드 흐름). API 와 '조회로 찾을 수 있는 상태'는 이 화면에서 다루지 않는다 —
 // 시나리오를 만들 때 ② 경로 탐색 · ③ API 선택이 API Metadata 에서 정하고 승인본에 고정한다.
 import type { Schemas } from '../../../api/client';

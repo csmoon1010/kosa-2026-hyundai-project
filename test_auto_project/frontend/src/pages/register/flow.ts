@@ -1,5 +1,5 @@
 // 시나리오 등록 진행 — 자연어 요청 → ①②③ 분석 → 시나리오 생성(혜정 IR) → 승인 · 등록.
-// 상태는 화면 밖(store)에 둔다: 다른 메뉴로 갔다 와도 진행이 이어진다. 새로고침 · 창 닫기만 경고한다 (지금 화면과 같다).
+// 상태는 화면 밖(store)에 둔다: 다른 메뉴로 갔다 와도 진행이 이어진다. 새로고침 · 창 닫기만 경고한다 (예전 화면과 같다).
 // 서버: POST /api/register/analyze (스트림) · POST /api/register/ir (스트림) · POST /api/register/scenarios
 import { ApiError, post, type Schemas } from '../../api/client';
 import { irStepsById, type Ir, type IrEvent, type IrStep } from '../../api/ir';

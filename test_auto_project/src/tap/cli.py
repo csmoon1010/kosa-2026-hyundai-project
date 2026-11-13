@@ -1,4 +1,4 @@
-"""명령 실행기 — build · intent · path · select · run · eval-stages · ui-data · serve.
+"""명령 실행기 — build · intent · path · select · run · eval-stages · serve.
 
     .venv/bin/python -m tap.cli serve                       화면 + 실제 계산 (http://127.0.0.1:8765/)
     .venv/bin/python -m tap.cli serve --fake-llm --temp-data  테스트 전용 — 가짜 LLM · 임시 data (Playwright, tap/api/fake.py)
@@ -277,7 +277,6 @@ def _serve(a: argparse.Namespace) -> None:
     import tempfile
     import uvicorn
     from tap.api.app import create_app
-    from tap.ui.export import write_ui_data
     root, temp = ROOT, None
     if a.temp_data:
         temp = Path(tempfile.gettempdir()) / f"tap-serve-{a.port}"     # 포트마다 한 폴더 — 강제 종료로 남아도 다음에 비우고 다시 쓴다
@@ -286,14 +285,11 @@ def _serve(a: argparse.Namespace) -> None:
         runtime = {"registered", "runs", "approved", "ir_inputs", "traces", "scenario_ir_drafts", "scenario_ir_logs",
                    "scenario_ir_reviews", "graph_history"}                 # 실행 기록은 빼고 복사 (tests/test_ui.py 와 같다)
         shutil.copytree(ROOT / "data", temp / "data", ignore=lambda d, names: [n for n in names if n in runtime])
-        shutil.copytree(ROOT / "web", temp / "web")              # 바로가기가 아니라 복사 — 전처리 갱신이 web/tap-data.js 를 다시 쓴다
         root = temp
-    else:
-        write_ui_data(ROOT, ROOT / "web/tap-data.js")              # 서버 없이 화면을 열 때 쓰는 화면 데이터
-    kw = {}
+    kw = {"dist": ROOT / "frontend/dist"}                          # 화면은 저장소에서 빌드한 것 (임시 data 여도)
     if a.fake_llm:
         from tap.api.fake import FakeRuntime, fake_llm
-        kw = {"llm": fake_llm, "ir_runtime": FakeRuntime}
+        kw |= {"llm": fake_llm, "ir_runtime": FakeRuntime}
     note = " · 가짜 LLM" * a.fake_llm + f" · 임시 data {root}" * a.temp_data
     print(f"화면 → http://{a.host}:{a.port}/  (API 목록 /api/docs{note}, 끝내려면 Ctrl+C)", flush=True)
     try:
@@ -343,17 +339,12 @@ def main() -> None:
     se.add_argument("--tasks", default=None, help="업무 목록 JSON 을 직접 주면 업무 의도 분석(LLM)을 건너뜀")
     se.add_argument("--model", default=None)
     se.add_argument("--no-stop-retry", dest="stop_retry", action="store_false", help="중지조건 · 재시도 끄기 (재시도 0회 — 발표 비교용)")
-    sub.add_parser("ui-data", help="실제 산출물 → web/tap-data.js (서버 없이 화면을 열 때 읽는다)")
-    sv = sub.add_parser("serve", help="오프라인 UI 로컬 서버 — 시나리오 생성 · 그래프 저장을 실제로 실행")
+    sv = sub.add_parser("serve", help="화면(frontend/dist) · API 서버 — 화면을 고쳤으면 먼저 cd frontend && npm run build")
     sv.add_argument("--port", type=int, default=8765)
     sv.add_argument("--host", default="127.0.0.1", help="WSL 밖 브라우저에서 안 열리면 0.0.0.0")
     sv.add_argument("--fake-llm", action="store_true", help="테스트 전용 — 가짜 LLM (분석 · IR 생성, 비용 없음, tap.api.fake)")
     sv.add_argument("--temp-data", action="store_true", help="테스트 전용 — data/ 를 임시 폴더(tap-serve-<포트>)에 복사해 쓴다 (실행 기록이 저장소에 남지 않게, 끝나면 지움)")
     a = ap.parse_args()
-    if a.cmd == "ui-data":
-        from tap.ui.export import write_ui_data
-        print(write_ui_data(ROOT, ROOT / "web/tap-data.js"))
-        return
     if a.cmd == "serve":
         _serve(a)
         return

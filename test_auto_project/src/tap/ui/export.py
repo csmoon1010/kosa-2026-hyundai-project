@@ -1,7 +1,7 @@
-"""화면 데이터 — data/out · data/graphs · data/registered · data/runs 를 window.TAP_DATA 한 덩어리로 (GET /tap-data.js).
+"""화면 데이터 — data/out · data/graphs · data/registered · data/runs 를 화면이 읽는 조각으로 (GET /api/admin/{part}).
 
-화면은 이 값으로 API 문서 · 상태 그래프 · 검수 목록 · 보정 규칙 · Baseline · 전처리 산출물(data/out/parameters) ·
-등록 시나리오 목록(요약) · 실행 이력을 그린다. 값이 없으면(서버 없이 HTML 만 열면) 시연 데이터를 쓴다.
+React 화면은 이 조각으로 API 문서 · 상태 그래프 · 검수 목록 · 보정 규칙 · Baseline · 전처리 산출물(data/out/parameters)을 그린다.
+등록 시나리오 목록 · 실행 이력은 따로 (registered_list · runs_list). 예전에는 한 덩어리(window.TAP_DATA, /tap-data.js)였다.
 """
 from __future__ import annotations
 
@@ -127,9 +127,3 @@ def registered_summary(rec: dict[str, Any]) -> dict[str, Any]:
             "steps": len(steps), "irreversible": sum(1 for s in steps if s.get("tier") == "R2"),
             # 실행 메뉴 — 되돌릴 수 없는 단계는 실행할 때마다 확인 (key 는 서버 확인용, 이름은 화면용)
             "confirm_steps": [{"key": s.get("key"), "edge": s.get("edge")} for s in steps if s.get("confirm_on_run")]}
-
-
-def write_ui_data(root: Path, dest: Path) -> Path:
-    dest.write_text("/* tap.cli ui-data 로 생성 — 손으로 고치지 않는다 */\nwindow.TAP_DATA = "
-                    + json.dumps(ui_data(root), ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
-    return dest

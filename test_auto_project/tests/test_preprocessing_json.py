@@ -90,8 +90,7 @@ class PreprocessingJsonTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'parameter_path'):
             save_preprocessing_baseline(self.root, self.sid, {'venCd': '001442'})
 
-    def test_refresh_and_registration_endpoints_use_json_and_update_static_snapshot(self):
-        (self.root / 'web').mkdir(parents=True)
+    def test_refresh_and_registration_endpoints_use_json(self):
         server = AppServer(create_app(self.root))
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()
@@ -101,17 +100,19 @@ class PreprocessingJsonTests(unittest.TestCase):
                                   data=json.dumps(body).encode(), headers={'Content-Type': 'application/json'}, method=method)
                 with urlopen(request) as response:
                     return json.load(response)
+            def get(path):
+                with urlopen(f'http://127.0.0.1:{server.server_port}{path}') as response:
+                    return json.load(response)
+            # 갱신 · 등록 응답은 상태 · 파일만 — 화면은 산출물을 GET /api/admin/preprocessing 으로 다시 읽는다 (R6, 2026-11-13)
             refreshed = post('/api/admin/preprocessing/refresh', {})
-            self.assertIn(self.sid, refreshed['data']['preprocessing']['canonical_schema'])
-            snapshot = self.root / 'web/tap-data.js'
-            self.assertTrue(snapshot.is_file())
+            self.assertEqual(refreshed['counts']['canonical_schema'], 1)
+            self.assertIn(self.sid, get('/api/admin/preprocessing')['preprocessing']['canonical_schema'])
             registered = post('/api/admin/preprocessing/baselines', {
                 'selected_api_id': self.sid, 'values': {self.path: '000009'}}, 'PUT')
             self.assertTrue((self.root / registered['file']).is_file())
-            self.assertTrue(registered['data']['preprocessing']['baselines'][self.sid]['user_registered'])
-            post('/api/admin/preprocessing/refresh', {})
-            saved = json.loads(snapshot.read_text().split('window.TAP_DATA = ', 1)[1].strip().removesuffix(';'))
-            self.assertEqual(saved['preprocessing']['baselines'][self.sid]['parameters'][0]['value'], '000009')
+            saved = get('/api/admin/preprocessing')['preprocessing']['baselines'][self.sid]
+            self.assertTrue(saved['user_registered'])
+            self.assertEqual(saved['parameters'][0]['value'], '000009')
         finally:
             server.shutdown()
             server.server_close()

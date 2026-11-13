@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import styles from './admin.module.css';
 
-/** 표 — 행이 없으면 안내 한 줄 (지금 화면의 tbl) */
+/** 표 — 행이 없으면 안내 한 줄 (예전 화면의 tbl) */
 export function Tbl({ head, rows, empty }: { head: string[]; rows: ReactNode[]; empty: string }) {
   if (!rows.length) return <p className="nodata">{empty}</p>;
   return (
@@ -23,7 +23,7 @@ export function Tbl({ head, rows, empty }: { head: string[]; rows: ReactNode[]; 
 
 export const Muted = () => <span className={styles.muted}>—</span>;
 
-/** 이름 · 값 목록 (지금 화면의 .kv) */
+/** 이름 · 값 목록 (예전 화면의 .kv) */
 export function Kv({ items }: { items: [string, ReactNode][] }) {
   return (
     <ul className={styles.kv}>

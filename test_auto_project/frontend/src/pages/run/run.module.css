@@ -1,4 +1,4 @@
-/* 시나리오 실행 — 지금 화면(.list-top · .slist · 담은 시나리오 표)과 같은 모양 */
+/* 시나리오 실행 — 예전 화면(.list-top · .slist · 담은 시나리오 표)과 같은 모양 */
 .search {
   display: flex;
   gap: 8px;

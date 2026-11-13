@@ -1,4 +1,4 @@
-// 상태 그래프 편집기 — 그래프마다 그리던 내용 (그래프를 바꾸거나 다른 메뉴로 가도 유지, 새로고침 전까지 — 지금 화면의 MEM)
+// 상태 그래프 편집기 — 그래프마다 그리던 내용 (그래프를 바꾸거나 다른 메뉴로 가도 유지, 새로고침 전까지 — 예전 화면의 MEM)
 import { createStore } from '../../../lib/store';
 import type { GraphEntry, GState, Sel } from './editorModel';
 

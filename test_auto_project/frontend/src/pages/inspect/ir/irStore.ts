@@ -1,4 +1,4 @@
-// 혜정 IR 영역 — 승인본 고르기 · 생성 옵션 · 예산 · IR 생성 진행 (web/scenario-ir-draft.js 의 refresh · loadBudget · generate).
+// 혜정 IR 영역 — 승인본 고르기 · 생성 옵션 · 예산 · IR 생성 진행 (예전 web/scenario-ir-draft.js 의 refresh · loadBudget · generate).
 // 승인본 목록 · 예산은 생성을 시작할 때 다시 읽는 순서에 묶여 있어 진행 상태와 같은 저장소에 둔다 (누적 실행 기록은 TanStack Query).
 // 화면 밖 저장소라 다른 메뉴로 갔다 와도 생성이 이어진다.
 import { ApiError, get, type Schemas } from '../../../api/client';

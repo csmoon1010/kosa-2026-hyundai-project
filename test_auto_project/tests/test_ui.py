@@ -1,4 +1,4 @@
-"""오프라인 UI 에 입히는 실제 산출물 · 로컬 서버."""
+"""화면 데이터 · 로컬 서버 (React 화면 frontend/dist + API)."""
 import json
 import shutil
 import threading
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tap.ui.export import ui_data, write_ui_data
+from tap.ui.export import ui_data
 from tap.api.app import create_app
 from app_server import AppServer
 
@@ -31,19 +31,16 @@ def test_ui_data_has_implemented_areas():
     assert [v["value"] for v in back["selectors"][0]["values"]] == ["PB1", "PB2", "PB3"]
 
 
-def test_write_ui_data(tmp_path):
-    p = write_ui_data(ROOT, tmp_path / "tap-data.js")
-    s = p.read_text(encoding="utf-8")
-    assert s.splitlines()[1].startswith("window.TAP_DATA = ") and json.loads(s.split("= ", 1)[1].rstrip().rstrip(";"))["graphs"]
-
-
 @pytest.fixture()
 def server(tmp_path):
     root = tmp_path / "root"
     shutil.copytree(ROOT / "data", root / "data", **COPY_DATA)
-    (root / "web").mkdir()
-    (root / "web" / "offline-ui.html").write_text("<p>ui</p>", encoding="utf-8")
-    httpd = AppServer(create_app(root))
+    dist = tmp_path / "dist"                                                              # 빌드한 React 화면 흉내
+    (dist / "assets").mkdir(parents=True)
+    (dist / "index.html").write_text("<p>ui</p>", encoding="utf-8")
+    (dist / "assets" / "index-abc.js").write_text("ok", encoding="utf-8")
+    (dist / "favicon.svg").write_text("<svg/>", encoding="utf-8")
+    httpd = AppServer(create_app(root, dist=dist))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", root
     httpd.shutdown()
@@ -56,11 +53,43 @@ def call(url, body=None, method=None):
         return r.read().decode("utf-8")
 
 
-def test_server_health_static_and_data(server):
+def _get(url):
+    """(코드, 본문, Cache-Control) — 오류 응답도."""
+    import urllib.error
+    try:
+        with urllib.request.urlopen(url) as r:
+            return r.status, r.read().decode("utf-8"), r.headers.get("Cache-Control")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8"), e.headers.get("Cache-Control")
+
+
+def test_server_health_and_screen(server):
+    """React R6 — 화면은 frontend/dist. 화면 주소(/run · /admin/order …)는 index.html 이 받고, API 는 따로 (2026-11-13)."""
     base, _ = server
     assert json.loads(call(base + "/api/common/health")) == {"ok": True, "fake_llm": False}
-    assert call(base + "/") == "<p>ui</p>"
-    assert call(base + "/tap-data.js").startswith("window.TAP_DATA = ")
+    for path in ("/", "/run", "/admin/order", "/inspect/ir"):
+        assert _get(base + path) == (200, "<p>ui</p>", "no-cache"), path
+    assert _get(base + "/assets/index-abc.js") == (200, "ok", "public, max-age=31536000, immutable")   # 해시가 붙은 파일은 오래
+    assert _get(base + "/favicon.svg")[:2] == (200, "<svg/>")
+    assert _get(base + "/assets/none.js")[0] == 404                                      # 없는 파일에 화면을 주지 않는다
+    for gone in ("/api/common/data", "/api/nope"):                                       # 예전 화면 데이터 API 는 지웠다
+        assert _get(base + gone)[0] == 404 and json.loads(_get(base + gone)[1]) == {"error": "없는 경로"}, gone
+    assert _get(base + "/tap-data.js")[1] == "<p>ui</p>"                                  # 예전 파일 주소도 이제는 화면
+
+
+def test_server_without_build_explains(tmp_path):
+    """빌드한 화면이 없으면 만드는 법을 알려 준다 — API 는 그대로."""
+    root = tmp_path / "root"
+    (root / "data").mkdir(parents=True)
+    httpd = AppServer(create_app(root, dist=tmp_path / "none"))
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{httpd.server_address[1]}"
+    try:
+        code, body, _ = _get(base + "/admin")
+        assert code == 503 and "npm run build" in body
+        assert json.loads(call(base + "/api/common/health"))["ok"] is True
+    finally:
+        httpd.shutdown()
 
 
 def test_server_graph_save_merges_into_data_graphs(server):
@@ -87,7 +116,7 @@ def test_server_graph_save_merges_into_data_graphs(server):
     assert r2["backup"] is None and r2["file"] == "data/graphs/ITEM_SELL_GBCD.yaml"
     ids = {g.graph_id for g in load_graphs([root / "data/graphs"])[0]}
     assert ids == {"ORD_STAT_GBCD", "SLITM_APRVL_GBCD", "ITEM_ATHZ_GBCD", "ITEM_SELL_GBCD"}
-    d = json.loads(call(base + "/tap-data.js").split("= ", 1)[1].rstrip().rstrip(";"))
+    d = json.loads(call(base + "/api/admin/graphs"))
     assert {x["graph"]["id"] for x in d["drafts"]} == {"ORD_STAT_GBCD", "ITEM_SELL_GBCD"}         # 화면에서 저장한 것만 저장본
 
 
@@ -109,7 +138,6 @@ def fake_llm(messages, schema):
 def agent_server(tmp_path):
     root = tmp_path / "root"
     shutil.copytree(ROOT / "data", root / "data", **COPY_DATA)
-    (root / "web").mkdir()
     httpd = AppServer(create_app(root, llm=fake_llm))
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     yield f"http://127.0.0.1:{httpd.server_address[1]}", root
@@ -415,6 +443,8 @@ def test_responses_match_models(agent_server, stub_ir):
                                                                           "lookups": [{"state_name": "배송완료", "state_code": "P3"}]}))
     assert m.edges[0].candidates and m.lookups[0].candidates
 
+    M.PreprocessingStatus.model_validate(post("/api/admin/preprocessing/refresh", {}))          # 관리자 쓰기 응답 (R6 — 화면 데이터를 싣지 않는다)
+    M.BuildAgainResult.model_validate(post("/api/admin/build", {}))
     M.OperationsPart.model_validate(get("/api/admin/operations"))                              # 화면 데이터 — 옮긴 화면이 쓰는 부분
     M.EnvironmentPart.model_validate(get("/api/admin/environment"))
     spec = get("/api/openapi.json")
