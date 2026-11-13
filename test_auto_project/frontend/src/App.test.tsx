@@ -31,9 +31,9 @@ describe('레이아웃 · 메뉴', () => {
     expect(screen.getByRole('link', { name: '실행 이력' })).toHaveAttribute('aria-current', 'page');
   });
 
-  it('관리자는 범위가 주소에 — /admin 은 전사로', () => {
+  it('관리자는 범위가 주소에 — /admin 은 전사로 (화면은 열 때 불러온다)', async () => {
     renderWithApp(<AppRoutes />, '/admin');
-    expect(screen.getByRole('tab', { name: /전사/ })).toHaveAttribute('aria-selected', 'true');
+    expect(await screen.findByRole('tab', { name: /전사/ })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('link', { name: '관리자 메뉴' })).toHaveAttribute('aria-current', 'page');
   });
 

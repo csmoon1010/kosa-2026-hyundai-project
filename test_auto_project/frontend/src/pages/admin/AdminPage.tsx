@@ -10,7 +10,8 @@ import { DomainTable } from './DomainTable';
 import { EnvCard } from './EnvCard';
 import { RealCard } from './RealCard';
 import { RuleCard } from './rules/RuleCard';
-import { DOMAINS, type Scope } from './scope';
+import { GraphEditor } from './graph/GraphEditor';
+import { DOMAINS, REAL_DOM, type Scope } from './scope';
 import { ScopeBar } from './ScopeBar';
 import { SwaggerAll } from './SwaggerAll';
 
@@ -56,11 +57,8 @@ function AllScope({ a }: { a: AdminData }) {
 function DomainScope({ a, dom }: { a: AdminData; dom: string }) {
   return (
     <div className={styles.grid}>
-      <Card className={styles.wide} title="상태 그래프 만들기">
-        <p className={`note ${styles.placeholder}`}>
-          상태 그래프 편집기는 다음 단계(R5)에서 옮깁니다. 지금은 예전 화면(서버 주소 /)의 관리자 메뉴 ›
-          도메인에서 편집하세요.
-        </p>
+      <Card className={styles.wide}>
+        <GraphEditor dom={REAL_DOM[dom]!} />
       </Card>
       <DocGrid key={dom} a={a} dom={dom} />
       <RuleCard key={`rule-${dom}`} a={a} place="ov" dom={dom} />

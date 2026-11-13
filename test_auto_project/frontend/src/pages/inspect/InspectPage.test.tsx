@@ -157,7 +157,7 @@ describe('시나리오 등록(확인용) — 분석 · 승인 게이트', () => 
     fakeServer();
     renderWithApp(<AppRoutes />, '/inspect');
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: '분석 (의도 → 경로 → API)' }));
+    await user.click(await screen.findByRole('button', { name: '분석 (의도 → 경로 → API)' }));
     expect(screen.getByText('자연어 요청을 입력하세요.')).toBeInTheDocument();
     await analyzeOnce(user);
     await user.click(screen.getByRole('button', { name: '＋ 새 시나리오 등록' }));

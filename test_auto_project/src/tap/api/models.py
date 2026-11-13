@@ -683,7 +683,11 @@ class GraphHead(Doc):
     id: str
     name: Optional[str] = None
     domain: Optional[str] = None
+    entity: Optional[str] = Field(None, description="상태를 가진 대상 (판매상품 · 주문)")
+    state_field: Optional[str] = Field(None, description="조회 결과에서 현재 상태를 읽는 필드")
     entry_states: list[str] = []
+    external_states: list[str] = []
+    verify_key_fields: list[str] = []
 
 
 class CodeGroup(Doc):
@@ -708,11 +712,26 @@ class GraphLookup(Doc):
 
 
 class GraphFile(Doc):
-    """상태 그래프 YAML 한 개. 배치(layout) 등 편집기 칸은 그래프 편집기(R5)에서 적는다."""
+    """상태 그래프 YAML 한 개 (data/graphs). 화면에서 한 번이라도 저장한 것은 layout(배치) · version(승인본 번호)이 있다."""
     graph: GraphHead
     code_group: Optional[CodeGroup] = None
     transitions: list[GraphTransition] = []
     lookups: Optional[list[GraphLookup]] = None
+    version: Optional[int] = None
+    layout: Optional[dict[str, list[float]]] = Field(None, description="상태 코드 → 캔버스 가운데 [x, y]")
+    external_transitions: list[list[str]] = []
+
+
+class CodeTable(Doc):
+    """공통코드 그룹 (data/codes/common_codes.csv) — order 는 정렬순서."""
+    id: str
+    name: str
+    codes: dict[str, str]
+    order: list[str] = []
+
+
+class CodesPart(Doc):
+    codes: list[CodeTable]
 
 
 class GraphsPart(Doc):
@@ -723,7 +742,7 @@ class GraphsPart(Doc):
 DATA_PART_MODELS: dict[str, type[BaseModel]] = {"operations": OperationsPart, "environment": EnvironmentPart,
                                                  "graphs": GraphsPart, "catalog": CatalogPart, "metadata": MetadataPart,
                                                  "review": ReviewPart, "rules": RulesPart, "baselines": BaselinesPart,
-                                                 "preprocessing": PreprocessingPart}
+                                                 "preprocessing": PreprocessingPart, "codes": CodesPart}
 
 
 class RuleRequest(Body):

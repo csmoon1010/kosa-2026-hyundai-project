@@ -448,8 +448,3 @@
   color: var(--muted);
   background: var(--panel);
 }
-.placeholder {
-  padding: 12px 14px;
-  border: 1px dashed var(--hair);
-  border-radius: 8px;
-}

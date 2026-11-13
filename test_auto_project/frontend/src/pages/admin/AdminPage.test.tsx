@@ -44,11 +44,14 @@ function fakeServer() {
 
 const d = admin();
 
-describe('관리자 메뉴 — 전사', () => {
+// 관리자 화면은 열 때 불러오고 데이터 조각이 많아 jsdom 에서 느리다 — 넉넉히
+describe('관리자 메뉴 — 전사', { timeout: 20_000 }, () => {
   it('1단계 산출물 · 도메인별 현황 · 명세 소스 · 환경, 도메인 이름을 누르면 그 도메인으로', async () => {
     fakeServer();
     renderWithApp(<AppRoutes />, '/admin/all');
-    expect(await screen.findByRole('heading', { name: '1단계 산출물 · 검수 목록' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: '1단계 산출물 · 검수 목록' }, { timeout: 5000 }),
+    ).toBeInTheDocument();
     expect(
       screen.getByText(
         `${d.environment.build.operations}개 (쓰기 ${d.environment.build.kinds.write}개 · 조회 ${d.environment.build.kinds.read}개)`,
@@ -72,7 +75,7 @@ describe('관리자 메뉴 — 전사', () => {
     const sent = fakeServer();
     renderWithApp(<AppRoutes />, '/admin/all');
     const user = userEvent.setup();
-    await user.click(await screen.findByRole('button', { name: '전체 변경 확인' }));
+    await user.click(await screen.findByRole('button', { name: '전체 변경 확인' }, { timeout: 5000 }));
     expect(await screen.findByText('바뀐 것 없음 — catalog v3.')).toBeInTheDocument();
     expect(sent.build).toBe(1);
   });
@@ -81,7 +84,7 @@ describe('관리자 메뉴 — 전사', () => {
     fakeServer();
     renderWithApp(<AppRoutes />, '/admin/all');
     const user = userEvent.setup();
-    const tile = await screen.findByRole('button', { name: /API Catalog/ });
+    const tile = await screen.findByRole('button', { name: /API Catalog/ }, { timeout: 5000 });
     expect(tile).toHaveTextContent(
       `API ${d.metadata.metadata.length}개 · catalog v${d.environment.build.catalog_version}`,
     );
@@ -109,7 +112,7 @@ describe('관리자 메뉴 — 전사', () => {
     const sent = fakeServer();
     renderWithApp(<AppRoutes />, '/admin/all');
     const user = userEvent.setup();
-    await screen.findByRole('heading', { name: '규칙 입력' });
+    await screen.findByRole('heading', { name: '규칙 입력' }, { timeout: 5000 });
     await user.selectOptions(screen.getByLabelText('항목'), 'value');
     const body = screen.getByLabelText('값 해석');
     await user.type(body, '01');
@@ -142,12 +145,12 @@ describe('관리자 메뉴 — 전사', () => {
   });
 });
 
-describe('관리자 메뉴 — 도메인', () => {
+describe('관리자 메뉴 — 도메인', { timeout: 20_000 }, () => {
   it('규칙 입력(도메인) — 구분값은 그 API 의 요청 필드인지 본다, 등록된 내역에 overrides.yaml', async () => {
     const sent = fakeServer();
     renderWithApp(<AppRoutes />, '/admin/logistics');
     const user = userEvent.setup();
-    await screen.findByRole('heading', { name: '규칙 입력' });
+    await screen.findByRole('heading', { name: '규칙 입력' }, { timeout: 5000 });
     await user.selectOptions(screen.getByLabelText('저장 대상'), 'meta');
     await user.selectOptions(screen.getByLabelText('항목'), 'sel');
     await user.selectOptions(
@@ -173,7 +176,7 @@ describe('관리자 메뉴 — 도메인', () => {
     const sent = fakeServer();
     renderWithApp(<AppRoutes />, '/admin/goods');
     const user = userEvent.setup();
-    await user.click(await screen.findByRole('button', { name: /^등록된 내역 \(1\)$/ }));
+    await user.click(await screen.findByRole('button', { name: /^등록된 내역 \(1\)$/ }, { timeout: 5000 }));
     const dialog = screen.getByRole('dialog', { name: '등록된 내역' });
     await user.click(within(dialog).getByRole('button', { name: '삭제' }));
     await waitFor(() => expect(sent.deleted).toEqual([String(d.rules.rules[0]!.id)]));
@@ -184,7 +187,7 @@ describe('관리자 메뉴 — 도메인', () => {
     const sent = fakeServer();
     renderWithApp(<AppRoutes />, '/admin/logistics');
     const user = userEvent.setup();
-    const select = await screen.findByLabelText('대상 엔드포인트');
+    const select = await screen.findByLabelText('대상 엔드포인트', {}, { timeout: 5000 });
     expect(within(select).getAllByRole('option')).toHaveLength(2);
     const body = screen.getByLabelText('기본 요청값 · parameter_path별 JSON');
     expect(JSON.parse((body as HTMLTextAreaElement).value)).toEqual(expect.any(Object));

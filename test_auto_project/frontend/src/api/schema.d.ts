@@ -1084,6 +1084,34 @@ export interface components {
     } & {
       [key: string]: unknown;
     };
+    /**
+     * CodeTable
+     * @description 공통코드 그룹 (data/codes/common_codes.csv) — order 는 정렬순서.
+     */
+    CodeTable: {
+      /** Id */
+      id: string;
+      /** Name */
+      name: string;
+      /** Codes */
+      codes: {
+        [key: string]: string;
+      };
+      /**
+       * Order
+       * @default []
+       */
+      order: string[];
+    } & {
+      [key: string]: unknown;
+    };
+    /** CodesPart */
+    CodesPart: {
+      /** Codes */
+      codes: components['schemas']['CodeTable'][];
+    } & {
+      [key: string]: unknown;
+    };
     /** ConfirmStep */
     ConfirmStep: {
       /** Key */
@@ -1274,7 +1302,7 @@ export interface components {
     };
     /**
      * GraphFile
-     * @description 상태 그래프 YAML 한 개. 배치(layout) 등 편집기 칸은 그래프 편집기(R5)에서 적는다.
+     * @description 상태 그래프 YAML 한 개 (data/graphs). 화면에서 한 번이라도 저장한 것은 layout(배치) · version(승인본 번호)이 있다.
      */
     GraphFile: {
       graph: components['schemas']['GraphHead'];
@@ -1286,6 +1314,20 @@ export interface components {
       transitions: components['schemas']['GraphTransition'][];
       /** Lookups */
       lookups?: components['schemas']['GraphLookup'][] | null;
+      /** Version */
+      version?: number | null;
+      /**
+       * Layout
+       * @description 상태 코드 → 캔버스 가운데 [x, y]
+       */
+      layout?: {
+        [key: string]: number[];
+      } | null;
+      /**
+       * External Transitions
+       * @default []
+       */
+      external_transitions: string[][];
     } & {
       [key: string]: unknown;
     };
@@ -1298,10 +1340,30 @@ export interface components {
       /** Domain */
       domain?: string | null;
       /**
+       * Entity
+       * @description 상태를 가진 대상 (판매상품 · 주문)
+       */
+      entity?: string | null;
+      /**
+       * State Field
+       * @description 조회 결과에서 현재 상태를 읽는 필드
+       */
+      state_field?: string | null;
+      /**
        * Entry States
        * @default []
        */
       entry_states: string[];
+      /**
+       * External States
+       * @default []
+       */
+      external_states: string[];
+      /**
+       * Verify Key Fields
+       * @default []
+       */
+      verify_key_fields: string[];
     } & {
       [key: string]: unknown;
     };
@@ -3714,7 +3776,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          'application/json': unknown;
+          'application/json': components['schemas']['CodesPart'];
         };
       };
     };

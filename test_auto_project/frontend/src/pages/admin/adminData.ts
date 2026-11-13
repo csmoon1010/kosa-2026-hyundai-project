@@ -11,6 +11,7 @@ import {
   useRules,
 } from '../../api/queries';
 import { shortApi } from '../../lib/format';
+import { normalizeGraph } from './graph/editorModel';
 import { REAL_DOM } from './scope';
 
 export type Meta = Schemas['ApiMetadata'];
@@ -46,8 +47,8 @@ export function useAdminData() {
     return { ready: false as const, error };
 
   const meta = metadata.data.metadata;
-  const savedGraphs = graphs.data.graphs;
-  const drafts = graphs.data.drafts;
+  const savedGraphs = graphs.data.graphs.map(normalizeGraph);
+  const drafts = graphs.data.drafts.map(normalizeGraph);
   const d = {
     env: env.data,
     build: env.data.build,

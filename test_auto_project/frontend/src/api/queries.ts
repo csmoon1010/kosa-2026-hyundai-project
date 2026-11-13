@@ -121,6 +121,8 @@ export const usePreprocessing = () =>
 export const usePreprocessingStatus = () =>
   useQuery(part<Schemas['PreprocessingStatus']>('preprocessing/status'));
 export const useGraphReview = () => useQuery(part<Schemas['GraphReviewResult']>('graph-review'));
+/** 공통코드 그룹 전체 — 그래프 편집기의 팔레트 · 새 그래프 */
+export const useCodes = () => useQuery(part<Schemas['CodesPart']>('codes', 10 * 60_000));
 
 /** 관리자 저장(규칙 · 빌드 · Baseline · 전처리 갱신) 뒤 — 화면 데이터 · 등록 시나리오(재승인 필요 표시)를 다시 받는다 */
 export function useRefreshAdmin() {
