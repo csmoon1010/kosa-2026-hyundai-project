@@ -36,8 +36,8 @@
 |---|---|---|
 | `src/tap/ir/handoff.py` | ③ 결과 → 통합 승인 JSON (승인본 · 검토 초안) | 단계 번호 · 구분값 · 출처 칸 · 행 상태값을 채워 저장 |
 | `src/tap/api/` (FastAPI) | `/api/inspect/approve`(확인용 승인 → `tdg-*.json`) · `/api/register/ir`(검토 초안 + 생성) · `/api/inspect/ir`(승인본으로 생성) | 승인본 기반 IR 생성 API |
-| `web/scenario-ir-draft.js` | 확인용 등록 화면의 IR 영역 — 승인 직후 생성, 승인본 골라 다시 생성 | 생성 옵션 · 진행 · STEP 상세 · 로그 |
-| `web/scenario-register.js` | 최종 등록 화면 — 분석 뒤 검토 초안으로 바로 생성, 단계별 입력값 표시 | 생성 결과를 등록 시나리오에 고정 |
+| `frontend/src/pages/inspect/ir/` (React) | 확인용 등록 화면의 IR 영역 — 승인 직후 생성, 승인본 골라 다시 생성 | 생성 옵션 · 진행 · STEP 상세 · 로그 |
+| `frontend/src/pages/register/` (React) | 최종 등록 화면 — 분석 뒤 검토 초안으로 바로 생성, 단계별 입력값 표시 | 생성 결과를 등록 시나리오에 고정 |
 | `src/tap/ui/preprocessing.py` | API ID별 파라미터 자료 조회·정규화 | 원본 JSON 조회·API ID 정규화 로직 재사용 |
 
 ③ 이 고른 API 와 단계 순서는 IR 생성에서 다시 고르거나 다시 계산하지 않는다.
@@ -1028,7 +1028,7 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 | 3 | 후속 조건·조회 결과 의존성 및 완료 피드백 | `ir/dependencies.py`, `agent/tool_registry.py`, `agent/runtime.py` | 후속 업무 조건 전달, 빈 결과에도 필요한 조회 요구, 확인된 이전 출력 보완 |
 | 4 | 매핑 후보 중심 프롬프트 적용 | `agent/prompts.py` | 6.1 적용, 변경 여부·동일값 후보 생략 의무 제거 |
 | 5 | Backend 비교와 IR 조립 | `ir/draft_build.py` | replace/unchanged/response_binding/input_needed/comparison_unavailable 구분, 비교 메타데이터 부여 |
-| 6 | 화면·로그 | `web/scenario-ir-draft.js`, `agent/logging.py` | 도구 호출과 백엔드 비교를 구분하고 후보별 비교 결과 표시 |
+| 6 | 화면·로그 | `web/scenario-ir-draft.js`(당시 — 지금 `frontend/src/pages/inspect/ir/`), `agent/logging.py` | 도구 호출과 백엔드 비교를 구분하고 후보별 비교 결과 표시 |
 | 7 | 회귀 테스트 | `tests/test_scenario_ir_drafts.py`, `tests/test_scenario_ir_ui.py` | 아래 조건 충족 및 승인→생성→저장→미리보기 유지 |
 
 ## 11. 검증 계획과 완료 기준
@@ -1073,7 +1073,7 @@ Pydantic Structured Outputs 파싱, KB 기본 확보와 조건부 자료 확보�
 ## 12. 참고 자료
 
 - 승인본 만들기: `src/tap/ir/handoff.py` · 서버 `src/tap/api/` (services · routers)
-- 화면: `web/scenario-ir-draft.js`(확인용) · `web/scenario-register.js`(최종 등록)
+- 화면 (React): `frontend/src/pages/inspect/ir/`(확인용 IR 영역) · `frontend/src/pages/register/`(최종 등록)
 - 자료 조회: `src/tap/ui/preprocessing.py`
 - 실제 하네스·설정·도구: `src/tap/agent/runtime.py`, `config.py`, `tool_registry.py`, `parameter_tools.py`, `prompts.py`, `progress.py`, `logging.py`
 - 하네스: `hyejung/lecture/5. harness_core.ipynb`

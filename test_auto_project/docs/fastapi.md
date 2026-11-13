@@ -167,7 +167,7 @@ src/tap/api/
 
 ### 6.2 테스트
 
-- `.venv/bin/python -m pytest -q` · `node --test tests/*.cjs` 가 단계마다 모두 통과해야 다음 단계로 간다.
+- `.venv/bin/python -m pytest -q` · `node --test tests/*.cjs`(당시 — node 테스트는 React R6 에서 Vitest 로) 가 단계마다 모두 통과해야 다음 단계로 간다.
 - 테스트 서버는 `create_app(root, llm=fake_llm)` 으로 만든다. 실행 결과물 폴더는 복사하지 않는다 (`tests/test_ui.py` 의 `COPY_DATA`).
 - 진행 스트림 테스트: 이벤트가 **끝까지 모였다가 한꺼번에** 오지 않는지 — 첫 `stage` 이벤트가 마지막 결과보다 먼저 도착하는지 확인한다.
 - `/api/register/ir` 합친 API: 검토 초안 이벤트 → IR 이벤트 → 완료 순서, 차단 게이트 400, 자료 부족 400 을 테스트한다.

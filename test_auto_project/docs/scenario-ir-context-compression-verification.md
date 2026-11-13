@@ -7,7 +7,7 @@
 > - 실제 모델로 8개 조합을 비교했다 — `tap.eval_ir_options`, 정답셋 10문항, gpt-5.4, 11-07 조합당 1회 · 11-08 조합당 3회. 결과는 `data/out/eval/ir-options/` ([evaluation.md](evaluation.md)). 아래 '미실행' 절은 11-01 시점 기록이다.
 > - 예산은 숫자 설정 4개 대신 STEP 수 기반으로 바뀌었다 (11-02, [scenario-ir-budget-plan.md](scenario-ir-budget-plan.md)).
 > - 기록 파일(`data/out/evaluation/…`)은 처음 작업한 데모 폴더에 남아 있고 이 저장소에는 없다. 스크립트를 다시 돌리면 같은 위치에 생긴다.
-> - API 선택 결과 불러오기 화면과 그 테스트는 지웠다 — 지금 화면 테스트는 `node --test tests/*.cjs`.
+> - API 선택 결과 불러오기 화면과 그 테스트는 지웠다. 화면은 React 로 옮겼다(11-13) — 화면 테스트는 `cd frontend && npm test`.
 
 ## 구현 결과
 
@@ -75,7 +75,7 @@ UI의 생성 모드 select를 독립 체크박스 3개로 교체했다. 중지�
 
 ```bash
 .venv/bin/python -m pytest -q
-node --test tests/*.cjs
+cd frontend && npm test
 ```
 
 실제 API를 사용하는 두 평가 스크립트는 일반 회귀 검사에 포함하지 않았다. 로컬 자동 검증은 유료 모델 호출 없이 실행된다.
